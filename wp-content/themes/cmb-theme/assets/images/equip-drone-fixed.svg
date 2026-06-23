@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 180" fill="none">
+  <!-- Fuselage -->
+  <ellipse cx="80" cy="90" rx="12" ry="52" fill="#0379CC"/>
+  <!-- Nose cone -->
+  <ellipse cx="80" cy="40" rx="10" ry="14" fill="#1A8FE3"/>
+  <!-- Main wings -->
+  <path d="M 80 82 L 10 102 L 10 112 L 80 96 L 150 112 L 150 102 Z" fill="#0379CC" opacity="0.9"/>
+  <!-- Wing detail -->
+  <line x1="80" y1="97" x2="15" y2="109" stroke="#015A99" stroke-width="1.5" opacity="0.5"/>
+  <line x1="80" y1="97" x2="145" y2="109" stroke="#015A99" stroke-width="1.5" opacity="0.5"/>
+  <!-- Tail horizontal stabilizer -->
+  <path d="M 80 132 L 46 140 L 46 146 L 80 138 L 114 146 L 114 140 Z" fill="#1A8FE3"/>
+  <!-- Tail vertical fin -->
+  <path d="M 80 118 L 74 138 L 86 138 Z" fill="#015A99"/>
+  <!-- Camera nose -->
+  <circle cx="80" cy="54" r="8" fill="#C8E6FA" stroke="#015A99" stroke-width="1.5"/>
+  <circle cx="80" cy="54" r="4" fill="#0379CC"/>
+  <!-- Wing tips (upward) -->
+  <path d="M 10 107 Q 5 100 12 96" stroke="#015A99" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M 150 107 Q 155 100 148 96" stroke="#015A99" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Pusher propeller at rear -->
+  <ellipse cx="80" cy="145" rx="3" ry="3" fill="#015A99"/>
+  <ellipse cx="80" cy="145" rx="14" ry="4" fill="#0379CC" opacity="0.4" transform="rotate(45 80 145)"/>
+  <!-- Belly camera pod -->
+  <ellipse cx="80" cy="100" rx="8" ry="5" fill="#015A99"/>
+</svg>

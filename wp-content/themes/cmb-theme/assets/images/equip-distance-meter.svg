@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 180" fill="none">
+  <!-- Device body -->
+  <rect x="52" y="45" width="56" height="90" rx="10" fill="#0379CC"/>
+  <!-- Screen -->
+  <rect x="60" y="55" width="40" height="28" rx="4" fill="#C8E6FA"/>
+  <!-- Screen text lines -->
+  <rect x="64" y="60" width="22" height="3" rx="1.5" fill="#0379CC" opacity="0.5"/>
+  <rect x="64" y="67" width="32" height="5" rx="2" fill="#0379CC" opacity="0.8"/>
+  <rect x="64" y="75" width="18" height="3" rx="1.5" fill="#0379CC" opacity="0.5"/>
+  <!-- Buttons -->
+  <rect x="62" y="92" width="14" height="10" rx="3" fill="#015A99"/>
+  <rect x="80" y="92" width="14" height="10" rx="3" fill="#015A99"/>
+  <rect x="62" y="106" width="14" height="10" rx="3" fill="#015A99"/>
+  <rect x="80" y="106" width="14" height="10" rx="3" fill="#015A99"/>
+  <!-- OK button center -->
+  <circle cx="80" cy="125" r="9" fill="#015A99"/>
+  <circle cx="80" cy="125" r="5" fill="#1A8FE3"/>
+  <!-- Laser emitter top -->
+  <rect x="72" y="38" width="16" height="8" rx="3" fill="#015A99"/>
+  <circle cx="80" cy="34" r="4" fill="#E0F4FF" stroke="#015A99" stroke-width="1.5"/>
+  <!-- Laser beam -->
+  <line x1="80" y1="30" x2="80" y2="14" stroke="#ED3434" stroke-width="2" stroke-dasharray="3 2" stroke-linecap="round" opacity="0.8"/>
+  <circle cx="80" cy="12" r="3" fill="#ED3434" opacity="0.7"/>
+  <!-- Grip texture -->
+  <rect x="53" y="130" width="54" height="5" rx="2.5" fill="#015A99" opacity="0.5"/>
+</svg>

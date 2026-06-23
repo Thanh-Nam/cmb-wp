@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 180" fill="none">
+  <!-- Main cylinder body -->
+  <ellipse cx="80" cy="55" rx="38" ry="12" fill="#015A99"/>
+  <rect x="42" y="55" width="76" height="80" fill="#0379CC"/>
+  <ellipse cx="80" cy="135" rx="38" ry="12" fill="#1A8FE3" stroke="#015A99" stroke-width="1.5"/>
+  <!-- Body detail stripes -->
+  <rect x="42" y="75" width="76" height="3" fill="#015A99" opacity="0.5"/>
+  <rect x="42" y="95" width="76" height="3" fill="#015A99" opacity="0.5"/>
+  <rect x="42" y="115" width="76" height="3" fill="#015A99" opacity="0.5"/>
+  <!-- Top connector -->
+  <rect x="68" y="36" width="24" height="20" rx="4" fill="#015A99"/>
+  <rect x="73" y="28" width="14" height="10" rx="3" fill="#015A99"/>
+  <circle cx="80" cy="24" r="5" fill="#C8E6FA" stroke="#015A99" stroke-width="1.5"/>
+  <!-- 4 ADCP beams pointing down at angles -->
+  <line x1="80" y1="147" x2="52" y2="172" stroke="#0379CC" stroke-width="2.5" stroke-dasharray="4 2" opacity="0.7"/>
+  <line x1="80" y1="147" x2="108" y2="172" stroke="#0379CC" stroke-width="2.5" stroke-dasharray="4 2" opacity="0.7"/>
+  <line x1="80" y1="147" x2="62" y2="174" stroke="#0379CC" stroke-width="2" stroke-dasharray="4 2" opacity="0.5"/>
+  <line x1="80" y1="147" x2="98" y2="174" stroke="#0379CC" stroke-width="2" stroke-dasharray="4 2" opacity="0.5"/>
+  <!-- Transducer heads -->
+  <ellipse cx="52" cy="173" rx="7" ry="4" fill="#0379CC" opacity="0.7"/>
+  <ellipse cx="108" cy="173" rx="7" ry="4" fill="#0379CC" opacity="0.7"/>
+  <!-- Logo area -->
+  <rect x="58" y="60" width="44" height="24" rx="3" fill="#015A99" opacity="0.3"/>
+  <rect x="62" y="64" width="16" height="4" rx="2" fill="#E0F4FF" opacity="0.7"/>
+  <rect x="62" y="71" width="28" height="3" rx="1.5" fill="#E0F4FF" opacity="0.5"/>
+</svg>

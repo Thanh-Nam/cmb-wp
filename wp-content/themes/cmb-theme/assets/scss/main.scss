@@ -1,0 +1,54 @@
+// ============================================
+// MAIN.SCSS - Entry Point
+// Import theo thứ tự: base → layout → components → sections → utilities
+// Mỗi partial tự @use '../abstracts' as * để lấy biến/mixin
+// ============================================
+
+// 1. BASE
+@use 'base/reset';
+@use 'base/scroll-reveal';
+
+// 2. LAYOUT
+@use 'layout/grid';
+@use 'layout/header';
+@use 'layout/footer';
+
+// 3. COMPONENTS
+@use 'components/preloader';
+@use 'components/section-label';
+@use 'components/section-title';
+@use 'components/float-actions';
+@use 'components/page-hero';
+@use 'components/search-overlay';
+
+// 4. SECTIONS
+@use 'sections/hero';
+@use 'sections/about';
+@use 'sections/history';
+@use 'sections/info';
+@use 'sections/field';
+@use 'sections/location';
+@use 'sections/project';
+@use 'sections/news';
+@use 'sections/partner';
+@use 'sections/contact';
+@use 'sections/tin-tuc-page';
+@use 'sections/du-an-tieu-bieu';
+@use 'sections/thiet-bi';
+@use 'sections/phong-thi-nghiem';
+@use 'sections/lab-detail';
+@use 'sections/quan-he-co-dong';
+@use 'sections/lien-he';
+@use 'sections/gioi-thieu';
+@use 'sections/tin-tuc-detail';
+@use 'sections/du-an-detail';
+@use 'sections/search-results';
+
+
+// ============================================
+// Thêm file mới theo cú pháp:
+// @use 'components/modal';
+// @use 'components/slider';
+// @use 'sections/about';
+// @use 'pages/blog';
+// ============================================

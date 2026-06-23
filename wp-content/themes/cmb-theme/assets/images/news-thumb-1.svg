@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240">
+  <defs>
+    <linearGradient id="nt1-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0D3B6E"/>
+      <stop offset="60%" stop-color="#1565A8"/>
+      <stop offset="100%" stop-color="#0A2D54"/>
+    </linearGradient>
+    <linearGradient id="nt1-floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A2D54"/>
+      <stop offset="100%" stop-color="#040E1E"/>
+    </linearGradient>
+    <radialGradient id="nt1-sky" cx="50%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="rgba(100,180,255,0.2)"/>
+      <stop offset="100%" stop-color="rgba(100,180,255,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Sky/background -->
+  <rect width="360" height="240" fill="url(#nt1-bg)"/>
+  <rect width="360" height="240" fill="url(#nt1-sky)"/>
+
+  <!-- Ground/floor -->
+  <rect y="165" width="360" height="75" fill="url(#nt1-floor)"/>
+  <rect y="165" width="360" height="2" fill="rgba(100,180,255,0.2)"/>
+
+  <!-- Background: building/institution facade -->
+  <rect x="20" y="40" width="320" height="130" fill="rgba(255,255,255,0.06)" rx="2"/>
+  <rect x="40" y="55" width="280" height="20" fill="rgba(255,255,255,0.08)" rx="2"/>
+  <!-- Windows -->
+  <rect x="50" y="85" width="28" height="20" fill="rgba(255,255,255,0.12)" rx="1"/>
+  <rect x="90" y="85" width="28" height="20" fill="rgba(255,255,255,0.12)" rx="1"/>
+  <rect x="130" y="85" width="28" height="20" fill="rgba(255,255,255,0.12)" rx="1"/>
+  <rect x="200" y="85" width="28" height="20" fill="rgba(255,255,255,0.12)" rx="1"/>
+  <rect x="240" y="85" width="28" height="20" fill="rgba(255,255,255,0.12)" rx="1"/>
+  <rect x="280" y="85" width="28" height="20" fill="rgba(255,255,255,0.12)" rx="1"/>
+
+  <!-- People walking (delegation) — 5 figures -->
+  <!-- Leading figure -->
+  <ellipse cx="155" cy="145" rx="14" ry="14" fill="rgba(5,15,45,0.9)"/>
+  <path d="M142 159 Q155 153 168 159 L171 200 L139 200 Z" fill="rgba(5,15,45,0.9)"/>
+
+  <!-- Second figure -->
+  <ellipse cx="200" cy="147" rx="13" ry="13" fill="rgba(10,20,50,0.87)"/>
+  <path d="M188 160 Q200 155 212 160 L215 200 L185 200 Z" fill="rgba(10,20,50,0.87)"/>
+
+  <!-- Third figure -->
+  <ellipse cx="242" cy="149" rx="12" ry="12" fill="rgba(5,15,40,0.85)"/>
+  <path d="M231 161 Q242 156 253 161 L256 200 L228 200 Z" fill="rgba(5,15,40,0.85)"/>
+
+  <!-- Fourth figure -->
+  <ellipse cx="278" cy="150" rx="12" ry="12" fill="rgba(10,20,50,0.82)"/>
+  <path d="M267 162 Q278 157 289 162 L291 200 L265 200 Z" fill="rgba(10,20,50,0.82)"/>
+
+  <!-- Military officer (darker uniform, left) -->
+  <ellipse cx="112" cy="143" rx="15" ry="15" fill="rgba(20,40,20,0.9)"/>
+  <path d="M98 158 Q112 152 126 158 L129 200 L95 200 Z" fill="rgba(20,40,20,0.9)"/>
+  <!-- Rank marks on shoulder -->
+  <rect x="98" y="158" width="8" height="4" fill="rgba(255,215,0,0.5)" rx="1"/>
+  <rect x="116" y="158" width="8" height="4" fill="rgba(255,215,0,0.5)" rx="1"/>
+
+  <!-- Flag/banner carried by first person -->
+  <rect x="168" y="105" width="4" height="55" fill="rgba(0,0,0,0.5)"/>
+  <rect x="172" y="105" width="30" height="20" fill="rgba(220,10,20,0.7)"/>
+
+  <!-- Subtle vignette -->
+  <rect width="360" height="240" fill="rgba(0,0,40,0.15)"/>
+  <!-- Bottom dark -->
+  <rect y="195" width="360" height="45" fill="rgba(0,0,0,0.25)"/>
+</svg>

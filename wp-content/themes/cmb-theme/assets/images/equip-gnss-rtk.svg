@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 180" fill="none">
+  <!-- Survey pole -->
+  <line x1="80" y1="30" x2="80" y2="170" stroke="#0379CC" stroke-width="4" stroke-linecap="round"/>
+  <!-- Pole sections -->
+  <line x1="74" y1="110" x2="86" y2="110" stroke="#015A99" stroke-width="2"/>
+  <line x1="74" y1="130" x2="86" y2="130" stroke="#015A99" stroke-width="2"/>
+  <line x1="74" y1="150" x2="86" y2="150" stroke="#015A99" stroke-width="2"/>
+  <!-- Pole tip -->
+  <polygon points="80,168 75,158 85,158" fill="#015A99"/>
+  <!-- GNSS Antenna (flat disc) -->
+  <ellipse cx="80" cy="48" rx="32" ry="9" fill="#0379CC"/>
+  <ellipse cx="80" cy="46" rx="32" ry="9" fill="#0379CC" stroke="#015A99" stroke-width="1.5"/>
+  <ellipse cx="80" cy="43" rx="28" ry="7" fill="#1A8FE3"/>
+  <!-- Antenna connector -->
+  <rect x="74" y="54" width="12" height="8" rx="2" fill="#015A99"/>
+  <!-- Receiver box -->
+  <rect x="58" y="70" width="44" height="34" rx="6" fill="#0379CC"/>
+  <rect x="63" y="75" width="24" height="14" rx="3" fill="#C8E6FA"/>
+  <circle cx="96" cy="87" r="4" fill="#E0F4FF"/>
+  <!-- Signal arcs -->
+  <path d="M 108 40 Q 118 48 108 56" stroke="#0379CC" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+  <path d="M 115 35 Q 130 48 115 61" stroke="#0379CC" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.4"/>
+  <path d="M 52 40 Q 42 48 52 56" stroke="#0379CC" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+  <path d="M 45 35 Q 30 48 45 61" stroke="#0379CC" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.4"/>
+</svg>

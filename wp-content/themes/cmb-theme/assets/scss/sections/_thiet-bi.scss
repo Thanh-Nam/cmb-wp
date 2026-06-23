@@ -1,0 +1,367 @@
+// ============================================
+// THIET BI / P-EQUIPMENT-PAGE
+// Trang Thiết Bị Khảo Sát — Năng Lực
+// ============================================
+@use '../abstracts' as *;
+
+
+// ======= 1. EQUIPMENT LIST SECTION =======
+.p-equipment-list {
+  padding: rem(96) 0 rem(100);
+  background: $color-bg;
+
+  &__heading {
+    display: flex;
+    align-items: center;
+    gap: rem(14);
+    margin-bottom: rem(48);
+
+    &::before {
+      content: '';
+      display: block;
+      width: rem(4);
+      height: rem(24);
+      background: $color-primary;
+      border-radius: rem(2);
+      flex-shrink: 0;
+    }
+  }
+
+  &__section-title {
+    font-family: $font-primary;
+    font-size: rem(20);
+    font-weight: $font-weight-bold;
+    color: $color-cmb-navy;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: rem(20);
+
+    @include md {
+      grid-template-columns: repeat(2, 1fr);
+      gap: rem(16);
+    }
+
+    @include sp {
+      grid-template-columns: repeat(2, 1fr);
+      gap: rem(12);
+    }
+  }
+
+  @include sp {
+    padding: rem(40) 0 rem(56);
+  }
+}
+
+
+// ======= 2. EQUIPMENT GROUP =======
+.p-equipment-group {
+  margin-bottom: rem(28);
+  background: #f5f7fa;
+  border-radius: rem(16);
+  padding: rem(24) rem(24) rem(28);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  // ------ Group Header ------
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(16);
+    margin-bottom: rem(24);
+    padding-bottom: rem(16);
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: rem(17);
+    font-weight: $font-weight-semibold;
+    color: $color-cmb-navy;
+    margin: 0;
+  }
+
+  &__see-all {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(6);
+    font-family: $font-primary;
+    font-size: rem(13);
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: gap $transition-fast, color $transition-fast;
+
+    svg {
+      flex-shrink: 0;
+      transition: transform $transition-fast;
+    }
+
+    &:hover {
+      color: $color-primary-dark;
+      gap: rem(10);
+
+      svg {
+        transform: translateX(3px);
+      }
+    }
+  }
+
+  // ------ Grid ------
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: rem(20);
+
+    @include md {
+      grid-template-columns: repeat(2, 1fr);
+      gap: rem(16);
+    }
+
+    @include sp {
+      grid-template-columns: repeat(2, 1fr);
+      gap: rem(12);
+    }
+  }
+
+  @include sp {
+    margin-bottom: rem(40);
+
+    &__title {
+      font-size: rem(15);
+    }
+  }
+}
+
+
+// ======= 3. EQUIPMENT CARD =======
+.p-equipment-card {
+  background: $color-white;
+  border-radius: rem(12);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow $transition-normal, transform $transition-normal;
+
+  &:hover {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
+    transform: translateY(-4px);
+  }
+
+  // ------ Image ------
+  &__img-wrap {
+    background: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: rem(120);
+    overflow: hidden;
+  }
+
+  &__img {
+    width: rem(80);
+    height: rem(80);
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  &__badge { display: none; }
+
+  // ------ Body ------
+  &__body {
+    padding: rem(14) rem(16) rem(18);
+    display: flex;
+    flex-direction: column;
+    gap: rem(3);
+    border-top: 1px solid $color-border;
+  }
+
+  &__name {
+    font-family: $font-primary;
+    font-size: rem(14);
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    line-height: 1.4;
+    margin: 0;
+    text-align: center;
+    @include text-truncate(2);
+  }
+
+  &__model { display: none; }
+  &__specs { display: none; }
+
+  @include sp {
+    &__body {
+      padding: rem(10) rem(12) rem(14);
+    }
+
+    &__name {
+      font-size: rem(13);
+    }
+  }
+}
+
+
+// ======= 4. EQUIPMENT MODAL =======
+.p-equipment-modal {
+  position: fixed;
+  inset: 0;
+  z-index: $z-modal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem(20);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+
+    .p-equipment-modal__box {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  // ------ Overlay ------
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba($color-cmb-navy, 0.6);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+  }
+
+  // ------ Box ------
+  &__box {
+    position: relative;
+    z-index: 1;
+    background: $color-white;
+    border-radius: rem(16);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: rem(720);
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(rem(20));
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    scrollbar-width: thin;
+  }
+
+  // ------ Close button ------
+  &__close {
+    position: absolute;
+    top: rem(14);
+    right: rem(14);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(36);
+    height: rem(36);
+    border-radius: 50%;
+    background: $color-white;
+    border: 1px solid $color-border;
+    cursor: pointer;
+    color: $color-text-muted;
+    transition: background $transition-fast, color $transition-fast;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+    svg { flex-shrink: 0; }
+
+    &:hover {
+      background: $color-primary;
+      color: $color-white;
+      border-color: $color-primary;
+    }
+  }
+
+  // ------ Images ------
+  &__images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: rem(10);
+    padding: rem(20) rem(20) rem(16);
+  }
+
+  &__img-wrap {
+    border-radius: rem(10);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: #f5f7fa;
+
+    &:only-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  // ------ Description ------
+  &__desc {
+    padding: rem(4) rem(20) rem(24);
+  }
+
+  &__desc-inner {
+    display: flex;
+    gap: rem(14);
+    padding: rem(16) rem(18);
+    background: #f8fafc;
+    border-radius: rem(8);
+    border-left: rem(4) solid $color-primary;
+  }
+
+  &__desc-text {
+    font-family: $font-secondary;
+    font-size: rem(14);
+    line-height: 1.75;
+    color: $color-text;
+    margin: 0;
+
+    strong {
+      font-family: $font-primary;
+      font-weight: $font-weight-semibold;
+      color: $color-cmb-navy;
+    }
+  }
+
+  @include sp {
+    padding: rem(12);
+
+    &__images {
+      grid-template-columns: 1fr;
+      padding: rem(16) rem(16) rem(12);
+    }
+
+    &__desc {
+      padding: rem(4) rem(16) rem(20);
+    }
+
+    &__desc-text {
+      font-size: rem(13);
+    }
+  }
+}

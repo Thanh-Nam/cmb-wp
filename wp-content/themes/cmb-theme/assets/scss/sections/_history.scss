@@ -1,0 +1,616 @@
+// ============================================
+// PROJECT / P-HISTORY
+// Section lịch sử CMB — ship animateMotion trên SVG path
+// Canvas giữ tỷ lệ 1859:823 (kích thước gốc line-history.svg)
+// ============================================
+@use '../abstracts' as *;
+
+.p-history {
+  position: relative;
+  overflow: hidden;
+  padding: rem(80) rem(5) rem(64) rem(55);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: rem(80);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &::before {
+    top: 0;
+    background: linear-gradient(to bottom, $color-white, transparent);
+  }
+
+  &::after {
+    bottom: 0;
+    background: linear-gradient(to top, $color-white, transparent);
+  }
+
+  // ------ Background: phủ toàn section ------
+  &__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  &__bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.4;
+  }
+
+  // ------ Canvas: chỉ chứa SVG line + ship + wheels + cards ------
+  &__canvas {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1859 / 823;
+    z-index: 1;
+    margin-top: rem(-89);
+    // Đơn vị gốc cho card scaling: 10px ở design width 1859px
+    // Khi canvas co → font-size co → card/text co theo tỷ lệ
+    font-size: clamp(6px, calc((100vw - 60px) / 185.9), 10px);
+  }
+
+  // ------ Dashed line SVG (line-history.svg) ------
+  &__line {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  // ------ Ship animation overlay ------
+  &__ship-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  // ------ Header: "CỘT MỐC" + "LỊCH SỬ CMB" ------
+  &__header {
+    position: relative;
+    z-index: 2;
+    padding: 0 rem(105);
+    margin-bottom: 1.6rem;
+    pointer-events: none;
+  }
+
+  &__label {
+    position: relative;
+    display: inline-block;
+    margin-bottom: rem(40);
+
+    @include md {
+      display: block;
+    }
+  }
+
+  // ------ Navigation arrows (top-right) ------
+  &__nav {
+    position: absolute;
+    top: rem(110);
+    right: 8%;
+    z-index: 3;
+    display: flex;
+    gap: 2rem;
+  }
+
+  &__nav-btn {
+    width: 3.2rem;
+    height: 3.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transform: rotate(45deg);
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+
+    // Gradient background dùng pseudo-element để animate rotation
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #257AD6 0%, #76C7F7 100%);
+      transition: transform 0.4s ease;
+    }
+
+    .p-history__nav-arrow {
+      filter: brightness(0) invert(1);
+      position: relative; // nổi lên trên ::before
+      z-index: 1;
+    }
+
+    &:not(:disabled):hover::before {
+      transform: rotate(180deg);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      &::before {
+        background: #DCDCDC;
+      }
+
+      .p-history__nav-arrow {
+        filter: none;
+      }
+    }
+  }
+
+  &__nav-arrow {
+    width: 2.2rem;
+    height: auto;
+    display: block;
+    transform: rotate(-45deg); // counter-rotate: giữ mũi tên nằm ngang
+    flex-shrink: 0;
+
+    &--flip {
+      transform: rotate(-45deg) scaleX(-1); // lật sang phải cho nút next
+    }
+  }
+
+  // ------ Milestone cards container ------
+  &__milestones {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  // ------ Individual milestone card ------
+  &__item {
+    position: absolute;
+    background: rgba(34, 112, 186, 0.04);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid #EDF8FF;
+    border-radius: 1.2rem;
+    padding: 1.2em; // co theo canvas font-size
+    max-width: 32.6em; // co theo canvas font-size
+    pointer-events: auto;
+
+    &.is-sliding-next {
+      animation: historySlideNext 0.65s ease forwards;
+    }
+
+    &.is-sliding-prev {
+      animation: historySlidePrev 0.65s ease forwards;
+    }
+
+    transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, opacity 0.65s ease, transform 0.65s ease;
+
+    &.is-active {
+      background: radial-gradient(circle,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(3, 121, 204, 0.04) 40%,
+        rgba(3, 121, 204, 0.35) 100%);
+      border-color: transparent;
+      box-shadow:
+        inset 0 0 0 1px rgba(3, 121, 204, 0.45),
+        1px -1px 10px 0 rgba(3, 121, 204, 0.22);
+
+      .p-history__year {
+        background: linear-gradient(180deg, #0D5FB3 0%, #1976D2 40%, #2196F3 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    &:hover {
+      background: radial-gradient(circle,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(3, 121, 204, 0.04) 40%,
+          rgba(3, 121, 204, 0.5) 100%);
+      border-color: transparent;
+      box-shadow:
+        inset 0 0 0 1px rgba(3, 121, 204, 0.6),
+        1px -1px 12px 0 rgba(3, 121, 204, 0.32);
+
+      .p-history__year {
+        background: linear-gradient(180deg, #0D5FB3 0%, #1976D2 40%, #2196F3 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    // Toạ độ tính theo % canvas 1859×823
+    &--1966 {
+      left: 8.3%;
+      top: 86%;
+    }
+
+    &--1977 {
+      left: 7.7%;
+      top: 30%;
+    }
+
+    &--1995 {
+      left: 27.8%;
+      top: 55.5%;
+    }
+
+    &--1999 {
+      left: 49.2%;
+      top: 39%;
+    }
+
+    &--2004 {
+      left: 54.5%;
+      top: -5%;
+    }
+
+    &--2011 {
+      left: 74.5%;
+      top: 27%;
+    }
+  }
+
+  &__year {
+    font-family: $font-primary;
+    font-size: 3.2em; // co theo canvas font-size
+    font-weight: $font-weight-semibold;
+    color: $color-cmb-navy;
+    line-height: 1.35;
+    margin: 0 0 0.8rem;
+  }
+
+  &__desc {
+    font-family: $font-primary;
+    font-size: 1.4em; // co theo canvas font-size
+    font-weight: $font-weight-semibold;
+    line-height: 1.4;
+    color: #292929;
+    margin: 0;
+  }
+
+  // ------ Bánh lái tại mỗi mốc lịch sử (on path) ------
+  &__wheels {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  &__wheel {
+    position: absolute;
+    width: 4em; // co theo canvas font-size
+    height: 4em; // co theo canvas font-size
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: $color-white; // che đường line phía dưới
+
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    // Vị trí trên path SVG, tính theo % canvas 1859×823
+
+    &--1977 {
+      left: 9%;
+      top: 50.8%;
+    }
+
+    &--1995 {
+      left: 29%;
+      top: 50.8%;
+    }
+
+    &--1999 {
+      left: 47.2%;
+      top: 48.6%;
+    }
+
+    &--2004 {
+      left: 55.5%;
+      top: 19.9%;
+    }
+
+    &--2011 {
+      left: 75.7%;
+      top: 19.9%;
+    }
+  }
+
+  // ------ Mobile list (desktop: ẩn) ------
+  &__mobile-list {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  // ------ Mobile: ẩn canvas, hiện timeline dọc ------
+  @include md {
+    padding: 0;
+
+    &__canvas,
+    &__bg,
+    &__line,
+    &__ship-svg,
+    &__wheels {
+      display: none;
+    }
+
+    &__header {
+      padding: 2.4rem 2rem 1.6rem;
+      pointer-events: auto;
+    }
+
+    &__nav {
+      display: none;
+    }
+
+    // ---- Timeline list ----
+    // Cột icon cố định 6.4rem → tâm cột = 3.2rem từ trái
+    // Line X = padding-list (2rem) + tâm cột (3.2rem) = 5.2rem từ border list
+    &__mobile-list {
+      display: flex;
+      flex-direction: column;
+      padding: 0 2rem 0;
+      position: relative;
+
+      // Đường dọc: từ tâm compass (top: 3.2rem) đến trước điểm quẹo (bottom: 5.4rem)
+      // Dừng sớm hơn để nhường chỗ cho curve trong __mobile-end::before
+      &::before {
+        content: '';
+        position: absolute;
+        left: 5.2rem;
+        top: 3.2rem;
+        bottom: 5.4rem;
+        border-left: 2px dashed rgba($color-primary, 0.4);
+        pointer-events: none;
+      }
+    }
+
+    // history-2.png — nền đầu timeline (sau compass)
+    &__mobile-bg-top {
+      position: absolute;
+      top: 4rem;
+      right: 0;
+      left: 7rem;
+      height: 28rem;
+      pointer-events: none;
+      z-index: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        opacity: 0.5;
+      }
+    }
+
+    // history-1.png — nền giữa timeline
+    &__mobile-bg-middle {
+      position: absolute;
+      top: 48rem;
+      right: 0;
+      left: 0;
+      height: 32rem;
+      pointer-events: none;
+      z-index: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        opacity: 0.5;
+      }
+    }
+
+    // ---- Compass riêng biệt ở đầu timeline ----
+    &__mobile-start {
+      align-self: flex-start;
+      width: 6.4rem;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 0.8rem;
+    }
+
+    &__mobile-compass {
+      width: 6.4rem;
+      height: 6.4rem;
+      display: block;
+    }
+
+    // ---- Milestone items ----
+    &__mobile-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.6rem;
+      padding-bottom: 2.4rem;
+      position: relative;
+      z-index: 1;
+
+      &:hover {
+        .p-history__mobile-content {
+          background: radial-gradient(circle,
+              rgba(255, 255, 255, 0) 0%,
+              rgba(3, 121, 204, 0.04) 40%,
+              rgba(3, 121, 204, 0.5) 100%);
+          border-color: transparent;
+          box-shadow:
+            inset 0 0 0 1px rgba(3, 121, 204, 0.6),
+            1px -1px 12px 0 rgba(3, 121, 204, 0.32);
+        }
+
+        .p-history__year {
+          background: linear-gradient(180deg, #0D5FB3 0%, #1976D2 40%, #2196F3 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          font-weight: $font-weight-bold;
+        }
+      }
+    }
+
+    // Cột icon cố định 6.4rem — wheel nhỏ căn giữa trong đó
+    &__mobile-icon-col {
+      width: 6.4rem;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    &__mobile-wheel {
+      width: 3.2rem;
+      height: 3.2rem;
+      margin-top: 1.2rem; // căn nhẹ với dòng đầu card
+    }
+
+    // Item đầu tiên: ẩn wheel (compass phía trên đã đại diện)
+    // WP: chỉ cần thêm class này vào <li> đầu tiên trong loop, không cần if/else cho img
+    &__mobile-item--first &__mobile-icon-col {
+      visibility: hidden;
+    }
+
+    &__mobile-content {
+      flex: 1;
+      min-width: 0;
+      background: rgba(34, 112, 186, 0.04);
+      border: 1px solid #EDF8FF;
+      border-radius: 1.2rem;
+      padding: 1.6rem 2rem;
+      cursor: pointer;
+      transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    // ---- Footer: L-shape cong + lighthouse ----
+    // ::before = corner cong + đường ngang (border-left + border-bottom + radius)
+    // Nối tiếp với đường dọc __mobile-list::before (dừng ở bottom: 5.4rem)
+    &__mobile-end {
+      position: relative;
+      z-index: 1;
+      min-height: 8rem;
+
+      // Corner cong: height: 2.4rem = đoạn dọc nhỏ + curve
+      // bottom: 3rem = mức đường ngang; left căn với đường dọc trên
+      &::before {
+        content: '';
+        position: absolute;
+        left: calc(3.2rem - 1px);
+        bottom: 3.5rem;
+        height: 2.4rem;
+        right: 9rem;
+        border-left: 2px dashed rgba($color-primary, 0.4);
+        border-bottom: 2px dashed rgba($color-primary, 0.4);
+        border-bottom-left-radius: 2rem;
+        pointer-events: none;
+      }
+    }
+
+    // history-3.png — nền cuối timeline (trong __mobile-end)
+    &__mobile-bg-end {
+      position: absolute;
+      bottom: 16rem;
+      left: 0;
+      width: auto;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: bottom left;
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    &__mobile-lighthouse {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 11rem;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    &__year {
+      font-size: 2.8rem;
+      margin: 0 0 0.8rem;
+    }
+
+    &__desc {
+      font-size: 1.4rem;
+    }
+  }
+
+  @include sp {
+    &__header {
+      padding: 2.4rem 1.6rem 1.2rem;
+    }
+
+    &__mobile-list {
+      padding: 0 1.6rem 0;
+
+      // left = 1.6rem (padding) + 3.2rem (half col) = 4.8rem
+      &::before {
+        left: 4.8rem;
+      }
+    }
+
+    &__mobile-bg-top {
+      left: 6.4rem;
+    }
+
+    &__mobile-bg-middle {
+      top: 44rem;
+    }
+
+    // Corner: left không đổi — relative to __mobile-end, không phụ thuộc list padding
+    &__mobile-end::before {
+      left: 3.2rem;
+    }
+  }
+}
+
+@keyframes historySlideNext {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes historySlidePrev {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

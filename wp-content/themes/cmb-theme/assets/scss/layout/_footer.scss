@@ -1,0 +1,240 @@
+// ============================================
+// LAYOUT / L-FOOTER  (prefix: l-)
+// FLOCSS: Layout layer — PC First
+// lt = < 1024px | sp = < 768px
+// ============================================
+@use '../abstracts' as *;
+
+$footer-bg: #0B3068;
+$footer-text: rgba($color-white, 0.72);
+$footer-border: rgba($color-white, 0.12);
+
+.l-footer {
+  background-image: url('../images/bg-footer.png');
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+
+  margin-top: -11vw;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+
+  @include mq(1480px) {
+    margin-top: -23vw;
+  }
+
+  @include md {
+    background-color: #005AAB;
+    background-image: none;
+    margin-top: 8vw;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: calc(100% - 1px);
+      width: 100%;
+      height: 25vw;
+      background-image: url('../images/bg-footer-sp.png');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      pointer-events: none;
+    }
+  }
+
+  @include sp {
+    margin-top: 10vw;
+  }
+
+  &__body {
+    padding: 14vw 0 1.6rem;
+
+    @include mq(1480px) {
+      padding-top: 30vw;
+    }
+
+    @include md {
+      padding-top: 0;
+    }
+  }
+
+  // ------ TOP ROW: Logo + scroll-to-top ------
+  &__top {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2.4rem 0;
+    border-bottom: 1px solid $footer-border;
+
+    @include md {
+      padding: 0.2rem 0 3.2rem;
+    }
+  }
+
+  // ------ BOTTOM ROW: 4-column grid ------
+  &__inner {
+    pointer-events: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: $space-8;
+    padding: 2.4rem 0;
+
+    @include mq(1480px) {
+      grid-template-columns: 1fr 1fr;
+      gap: $space-6;
+    }
+
+    @include sp {
+      grid-template-columns: 1fr;
+      gap: $space-6;
+      padding-bottom: 3.2rem;
+    }
+  }
+
+  // ------ Column 1: Social + Copyright ------
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+
+    @include sp {
+      order: 4;
+      border-top: 1px solid $footer-border;
+      padding-top: 2.4rem;
+    }
+  }
+
+  &__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.6rem;
+    text-decoration: none;
+
+    &:hover .l-footer__logo-name {
+      color: rgba($color-white, 0.85);
+    }
+
+    @include sp {
+      gap: 0.8rem;
+    }
+  }
+
+  &__logo-img {
+    height: 7.1rem;
+    width: auto;
+    flex-shrink: 0;
+
+    @include sp {
+      height: 5rem;
+    }
+  }
+
+  &__logo-name {
+    font-size: rem(20);
+    font-weight: $font-weight-bold;
+    color: $color-white;
+    text-transform: uppercase;
+    line-height: 1.4;
+
+    @include sp {
+      font-size: 1.6rem;
+    }
+  }
+
+  &__social {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  &__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 50%;
+    background-color: $color-white;
+    color: $color-primary;
+    text-decoration: none;
+    transition: background-color $transition-normal, transform $transition-normal;
+
+    &:hover {
+      background-color: rgba($color-white, 0.85);
+      transform: translateY(-2px);
+    }
+
+    &:focus-visible {
+      outline: 3px solid rgba($color-white, 0.5);
+      outline-offset: 2px;
+    }
+  }
+
+  &__copy {
+    p {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-regular;
+      font-family: 'Google Sans Flex', $font-secondary;
+      color: $color-white;
+      margin: 0;
+      line-height: 1.4;
+
+      @include sp {
+        font-size: $font-size-xs;
+      }
+    }
+  }
+
+  // ------ Columns 2-4: Branches ------
+  &__branch {
+    font-style: normal;
+  }
+
+  &__branch-title {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    font-family: 'Google Sans Flex', $font-secondary;
+    color: $color-white;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+    margin-bottom: 1.6rem;
+  }
+
+  &__branch-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  &__branch-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-regular;
+    font-family: 'Google Sans Flex', $font-secondary;
+    color: $color-white;
+    line-height: 1.4;
+
+    svg {
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+      color: $color-white;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
+
+}

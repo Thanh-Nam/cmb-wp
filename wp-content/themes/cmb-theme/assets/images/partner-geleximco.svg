@@ -1,0 +1,8 @@
+<svg width="240" height="160" viewBox="0 0 240 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- G lettermark -->
+  <path d="M72 80 A32 32 0 1 1 104 112 L104 88 L88 88" stroke="#C8171E" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="148" y="74" font-family="Arial Black, sans-serif" font-size="16" font-weight="900" fill="#C8171E" text-anchor="middle">GELEX</text>
+  <text x="148" y="93" font-family="Arial Black, sans-serif" font-size="16" font-weight="900" fill="#C8171E" text-anchor="middle">IMCO</text>
+  <line x1="50" y1="124" x2="190" y2="124" stroke="#E5E5E5" stroke-width="1"/>
+  <text x="120" y="140" font-family="Arial, sans-serif" font-size="8" fill="#999" text-anchor="middle">Tập đoàn Geleximco</text>
+</svg>

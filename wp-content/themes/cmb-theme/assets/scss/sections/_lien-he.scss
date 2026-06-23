@@ -1,0 +1,505 @@
+// ============================================
+// PROJECT / P-LH (Liên Hệ)
+// Trang Liên Hệ — Contact Page
+// ============================================
+@use '../abstracts' as *;
+
+
+// ======= 1. HERO — thêm padding-bottom để infobar có chỗ đè =======
+.lien-he .p-page-hero {
+  padding-bottom: rem(80);
+
+  @include md { padding-bottom: rem(64); }
+  @include sp { padding-bottom: rem(56); }
+}
+
+
+// ======= 2. INFO BAR =======
+.p-lh-infobar {
+  background: transparent;
+  padding: 0;
+  margin-top: rem(-60);
+  position: relative;
+  z-index: 10;
+
+  &__card {
+    display: flex;
+    align-items: stretch;
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-radius: rem(16);
+    box-shadow: $shadow-md;
+    overflow: hidden;
+  }
+
+  &__item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: rem(18);
+    padding: rem(28) rem(32);
+    min-width: 0;
+  }
+
+  &__divider {
+    width: 1.5px;
+    flex-shrink: 0;
+    align-self: stretch;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      $color-border 30%,
+      $color-border 70%,
+      transparent 100%
+    );
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-primary;
+
+    svg { display: block; }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: rem(5);
+    min-width: 0;
+  }
+
+  &__label {
+    font-family: $font-primary;
+    font-size: rem(11);
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: $color-text-muted;
+  }
+
+  &__value {
+    font-family: $font-secondary;
+    font-size: rem(14);
+    color: $color-cmb-navy;
+    line-height: 1.6;
+
+    a {
+      color: $color-cmb-navy;
+      text-decoration: none;
+      display: block;
+      transition: color $transition-fast;
+      &:hover { color: $color-primary; }
+    }
+  }
+
+  @include md {
+    padding-bottom: rem(36);
+
+    &__card {
+      flex-wrap: wrap;
+      border-radius: rem(12);
+    }
+
+    &__item {
+      flex: 0 0 50%;
+      padding: rem(22) rem(24);
+
+      &:nth-child(1),
+      &:nth-child(3) { border-bottom: 1px solid $color-border; }
+    }
+
+    &__divider {
+      display: none;
+    }
+  }
+
+  @include sp {
+    margin-top: rem(-28);
+    padding-bottom: rem(28);
+
+    &__card {
+      flex-direction: column;
+      border-radius: rem(12);
+    }
+
+    &__item {
+      flex: none;
+      width: 100%;
+      padding: rem(16) rem(20);
+      border-bottom: 1px solid $color-border;
+
+      &:last-child { border-bottom: none; }
+    }
+
+    &__divider {
+      display: none;
+    }
+  }
+}
+
+
+// ======= 3. CONTACT BODY (Image + Form 50/50) =======
+.p-lh-body {
+  padding: rem(80) 0;
+  background: $color-bg-alt;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: rem(16);
+    overflow: hidden;
+    box-shadow: $shadow-lg;
+  }
+
+  &__image {
+    position: relative;
+
+    img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  &__form-wrap {
+    background: $color-white;
+    padding: rem(52) rem(48);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__form-title {
+    font-family: $font-primary;
+    font-size: rem(20);
+    font-weight: $font-weight-bold;
+    color: $color-cmb-navy;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 rem(32);
+    padding-bottom: rem(20);
+    border-bottom: 2px solid $color-primary;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: rem(48);
+      height: 2px;
+      background: $color-primary;
+    }
+  }
+
+  @include md {
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__image {
+      min-height: rem(300); // fallback khi stacked (1 cột)
+    }
+
+    &__form-wrap {
+      padding: rem(40) rem(36);
+    }
+  }
+
+  @include sp {
+    padding: rem(48) 0;
+
+    &__form-wrap {
+      padding: rem(32) rem(20);
+    }
+  }
+}
+
+
+// ======= 4. FORM =======
+.p-lh-form {
+  display: flex;
+  flex-direction: column;
+  gap: rem(18);
+  flex: 1;
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: rem(16);
+
+    @include sp {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: rem(6);
+  }
+
+  &__label {
+    font-family: $font-secondary;
+    font-size: rem(13);
+    font-weight: $font-weight-medium;
+    color: $color-cmb-navy;
+  }
+
+  &__required {
+    color: $color-accent;
+    margin-left: rem(2);
+  }
+
+  &__input,
+  &__select,
+  &__textarea {
+    width: 100%;
+    padding: rem(11) rem(14);
+    font-family: $font-secondary;
+    font-size: rem(14);
+    color: $color-text;
+    background: $color-bg-alt;
+    border: 1.5px solid $color-border;
+    border-radius: rem(6);
+    outline: none;
+    transition: border-color $transition-fast, box-shadow $transition-fast, background $transition-fast;
+
+    &::placeholder {
+      color: $color-text-light;
+      font-size: rem(13);
+    }
+
+    &:focus {
+      background: $color-white;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.10);
+    }
+  }
+
+  &__select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right rem(14) center;
+    background-size: rem(10) rem(6);
+    padding-right: rem(40);
+    cursor: pointer;
+    background-color: $color-bg-alt;
+  }
+
+  &__textarea {
+    resize: vertical;
+    min-height: rem(120);
+    line-height: 1.6;
+  }
+
+  &__checkbox-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: rem(10);
+  }
+
+  &__checkbox {
+    width: rem(16);
+    height: rem(16);
+    margin-top: rem(2);
+    accent-color: $color-primary;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  &__checkbox-label {
+    font-family: $font-secondary;
+    font-size: rem(13);
+    color: $color-text-muted;
+    line-height: 1.55;
+    cursor: pointer;
+
+    a {
+      color: $color-primary;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  }
+
+  &__submit {
+    width: 100%;
+    padding: rem(14) rem(24);
+    background: $color-primary;
+    color: $color-white;
+    border: none;
+    border-radius: rem(6);
+    font-family: $font-primary;
+    font-size: rem(14);
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background $transition-fast, transform $transition-fast;
+    margin-top: rem(6);
+
+    &:hover {
+      background: $color-primary-dark;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+
+// ======= 5. MAP SECTION =======
+.p-lh-map {
+  padding: rem(96) 0 rem(200);
+  background: $color-white;
+
+  &__wrapper {
+    display: grid;
+    grid-template-columns: rem(340) 1fr;
+    gap: 0;
+    border-radius: rem(16);
+    overflow: hidden;
+    box-shadow: $shadow-lg;
+    min-height: rem(500);
+  }
+
+  &__sidebar {
+    background: $color-white;
+    padding: rem(36) rem(28);
+    border-right: 1px solid $color-border;
+    overflow-y: auto;
+  }
+
+  &__sidebar-title {
+    font-family: $font-primary;
+    font-size: rem(13);
+    font-weight: $font-weight-bold;
+    color: $color-cmb-navy;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin: 0 0 rem(24);
+    padding-bottom: rem(16);
+    border-bottom: 2px solid $color-border;
+  }
+
+  &__embed {
+    position: relative;
+    flex: 1;
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: rem(500);
+      border: none;
+    }
+  }
+
+  @include md {
+    &__wrapper {
+      grid-template-columns: rem(280) 1fr;
+    }
+  }
+
+  @include sp {
+    padding: rem(48) 0 rem(56);
+
+    &__wrapper {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    &__embed iframe {
+      min-height: rem(320);
+    }
+  }
+}
+
+
+// ======= 6. OFFICE LIST =======
+.p-lh-offices {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.p-lh-office {
+  padding: rem(18) 0;
+  border-bottom: 1px solid $color-border;
+  transition: background $transition-fast;
+  cursor: pointer;
+  border-radius: rem(6);
+  padding-left: rem(8);
+  padding-right: rem(8);
+  margin-left: rem(-8);
+  margin-right: rem(-8);
+
+  &:hover {
+    background: rgba($color-primary, 0.04);
+  }
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    gap: rem(8);
+    font-family: $font-primary;
+    font-size: rem(14);
+    font-weight: $font-weight-semibold;
+    color: $color-cmb-navy;
+    margin-bottom: rem(8);
+    line-height: 1.3;
+  }
+
+  &__pin {
+    flex-shrink: 0;
+    color: $color-text-light;
+    transition: color $transition-fast;
+  }
+
+  &__address,
+  &__phone {
+    font-family: $font-secondary;
+    font-size: rem(13);
+    color: $color-text-muted;
+    line-height: 1.55;
+    margin: 0;
+    padding-left: rem(22);
+  }
+
+  &__phone {
+    margin-top: rem(4);
+
+    a {
+      color: $color-text-muted;
+      text-decoration: none;
+      transition: color $transition-fast;
+      &:hover { color: $color-primary; }
+    }
+  }
+
+  &--active &__name {
+    color: $color-primary;
+  }
+
+  &--active &__pin {
+    color: $color-primary;
+  }
+}

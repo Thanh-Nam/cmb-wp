@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 260" width="196" height="260">
+  <defs>
+    <linearGradient id="cover3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#005A9C;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#003668;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Shadow -->
+  <rect x="8" y="6" width="180" height="248" rx="4" fill="rgba(0,0,0,0.15)" />
+
+  <!-- Spine -->
+  <rect x="4" y="4" width="14" height="248" rx="3" fill="#002850" />
+
+  <!-- Cover body -->
+  <rect x="16" y="4" width="172" height="248" rx="3" fill="url(#cover3)" />
+
+  <!-- Top stripe -->
+  <rect x="16" y="4" width="172" height="5" rx="3" fill="#0379CC" opacity="0.8"/>
+
+  <!-- Concrete / hex pattern accent -->
+  <polygon points="88,50 104,42 120,50 120,66 104,74 88,66" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+  <polygon points="72,66 88,58 104,66 104,82 88,90 72,82" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <polygon points="104,66 120,58 136,66 136,82 120,90 104,82" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+  <!-- Cube / concrete block icon -->
+  <g transform="translate(62, 44)">
+    <!-- 3D cube for concrete -->
+    <polygon points="36,8 60,20 60,50 36,62 12,50 12,20" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linejoin="round"/>
+    <polygon points="36,8 60,20 36,32 12,20" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
+    <polygon points="60,20 60,50 36,62 36,32" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+    <!-- Center dot -->
+    <circle cx="36" cy="35" r="3" fill="white" opacity="0.6"/>
+  </g>
+
+  <!-- PDF badge -->
+  <rect x="26" y="120" width="36" height="18" rx="4" fill="rgba(255,255,255,0.2)"/>
+  <text x="44" y="133" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white" text-anchor="middle">PDF</text>
+
+  <!-- Lines decoration -->
+  <rect x="26" y="152" width="130" height="1" rx="1" fill="rgba(255,255,255,0.2)"/>
+  <rect x="26" y="159" width="100" height="1" rx="1" fill="rgba(255,255,255,0.15)"/>
+  <rect x="26" y="166" width="115" height="1" rx="1" fill="rgba(255,255,255,0.15)"/>
+  <rect x="26" y="173" width="85" height="1" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="26" y="180" width="95" height="1" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="26" y="187" width="75" height="1" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="26" y="194" width="90" height="1" rx="1" fill="rgba(255,255,255,0.1)"/>
+
+  <!-- White strip -->
+  <rect x="16" y="210" width="172" height="42" rx="0" fill="white" opacity="0.95"/>
+  <rect x="16" y="248" width="172" height="4" rx="3" fill="white" opacity="0.95"/>
+
+  <!-- Title -->
+  <text x="102" y="226" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#002036" text-anchor="middle" letter-spacing="0.5">BÁO CÁO THÍ NGHIỆM</text>
+  <text x="102" y="237" font-family="Arial, sans-serif" font-size="8" fill="#444" text-anchor="middle">Bê tông – Quý IV/2025</text>
+  <text x="102" y="256" font-family="Arial, sans-serif" font-size="7" fill="#0379CC" text-anchor="middle" letter-spacing="1" font-weight="bold">CMB • 01/2026</text>
+</svg>

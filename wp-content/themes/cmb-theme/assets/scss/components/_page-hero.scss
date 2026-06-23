@@ -1,0 +1,245 @@
+// ============================================
+// COMPONENT / P-PAGE-HERO
+// Banner hero dùng chung cho tất cả trang nội (trừ trang chủ)
+// Cấu trúc: image-side (ảnh nền) + fade (gradient) + content (breadcrumb + title + subtitle)
+// ============================================
+@use '../abstracts' as *;
+
+.p-page-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: rem(360);
+  background-color: $color-cmb-navy;
+  display: flex;
+  align-items: stretch;
+
+  // Ảnh phủ từ ~28% bên phải ra tận cạnh màn hình
+  &__image-side {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 72%;
+    z-index: 0;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center; // override per-page nếu cần: right center / top center
+    display: block;
+  }
+
+  // Gradient fade từ nền đặc sang trong suốt
+  &__fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(to right,
+        $color-cmb-navy 0%,
+        $color-cmb-navy 28%,
+        rgba($color-cmb-navy, 0.92) 40%,
+        rgba($color-cmb-navy, 0.6) 54%,
+        rgba($color-cmb-navy, 0.18) 66%,
+        transparent 74%);
+  }
+
+  .l-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: rem(20);
+  }
+
+  // Vùng chứa title + subtitle, nằm bên trái
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: rem(520); // chỉnh rộng/hẹp tại đây
+    padding-bottom: rem(60);
+  }
+
+  &__breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: rem(6);
+    margin-bottom: rem(16);
+    font-family: $font-secondary;
+    font-size: rem(13);
+    color: rgba($color-white, 0.55);
+    flex-wrap: wrap;
+
+    a {
+      color: rgba($color-white, 0.55);
+      text-decoration: none;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: rgba($color-white, 0.9);
+      }
+    }
+
+    &-sep {
+      color: rgba($color-white, 0.35);
+      font-size: rem(11);
+    }
+
+    &-current {
+      color: rgba($color-white, 0.85);
+    }
+  }
+
+  &__label {
+    display: inline-block;
+    font-family: $font-primary;
+    font-size: rem(12);
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba($color-white, 0.65);
+    margin-bottom: rem(10);
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: clamp(2.8rem, 3vw, 4rem);
+    font-weight: $font-weight-bold;
+    color: $color-white;
+    line-height: 1.3;
+    margin: 0 0 rem(12);
+    letter-spacing: 0.01em;
+  }
+
+  &__subtitle {
+    font-family: $font-secondary;
+    font-size: rem(15);
+    line-height: 1.7;
+    color: rgba($color-white, 0.75);
+    margin: 0;
+    max-height: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // ---- Tablet ----
+  @include md {
+    min-height: rem(280);
+
+    &__fade {
+      background: linear-gradient(to right,
+          $color-cmb-navy 0%,
+          $color-cmb-navy 22%,
+          rgba($color-cmb-navy, 0.9) 36%,
+          rgba($color-cmb-navy, 0.5) 52%,
+          rgba($color-cmb-navy, 0.1) 64%,
+          transparent 72%);
+    }
+
+    &__content {
+      padding-bottom: rem(40);
+    }
+
+    &__title {
+      font-size: clamp(2.2rem, 3.2vw, 3rem);
+    }
+  }
+
+  // ---- Mobile ----
+  @include sp {
+    min-height: rem(220);
+
+    &__image-side {
+      width: 100%; // ảnh phủ full
+    }
+
+    &__fade {
+      background: rgba($color-cmb-navy, 0.62); // overlay đặc thay gradient
+    }
+
+    .l-container {
+      justify-content: center;
+    }
+
+    &__content {
+      text-align: center;
+      padding: rem(48) 0;
+      max-width: 100%;
+    }
+
+    &__breadcrumb {
+      justify-content: flex-start;
+    }
+
+    &__title {
+      font-size: rem(26);
+    }
+
+    &__subtitle {
+      font-size: rem(14);
+    }
+  }
+}
+
+
+// ======= ENTRANCE ANIMATION (triggered by preloader is-loaded) =======
+// Ẩn ngay từ đầu khi có preloader — tránh flash trước khi animation chạy
+body.has-preloader {
+  .p-page-hero__breadcrumb,
+  .p-page-hero__title,
+  .p-page-hero__subtitle {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@keyframes heroReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+body.is-loaded {
+  .p-page-hero__breadcrumb {
+    animation: heroReveal 0.6s ease forwards 0.05s;
+  }
+
+  .p-page-hero__title {
+    animation: heroReveal 0.65s ease forwards 0.2s;
+  }
+
+  .p-page-hero__subtitle {
+    animation: heroReveal 0.65s ease forwards 0.35s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.has-preloader .p-page-hero__breadcrumb,
+  body.has-preloader .p-page-hero__title,
+  body.has-preloader .p-page-hero__subtitle {
+    opacity: 1;
+    transform: none;
+  }
+
+  body.is-loaded .p-page-hero__breadcrumb,
+  body.is-loaded .p-page-hero__title,
+  body.is-loaded .p-page-hero__subtitle {
+    animation: none;
+  }
+}

@@ -1,0 +1,866 @@
+// ============================================
+// LAYOUT / HEADER  (prefix: l-)
+// FLOCSS: Layout layer — PC First
+// Cấu trúc: topbar (email/lang) + main (logo/nav/search)
+// md = < 1024px (hamburger) | sp = < 768px (mobile)
+// ============================================
+@use '../abstracts' as *;
+
+// Breakpoint riêng cho header: nav collapse → hamburger tại < 1024px (giữ nguyên đến 1024px)
+$header-bp: 1023px;
+
+// ============================================
+// l-header — Wrapper chính
+// ============================================
+@keyframes l-header-slide-down {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+
+.l-header {
+  position: relative;
+  left: 0;
+  right: 0;
+  z-index: $z-header;
+
+  // bg-header.png phủ toàn bộ header (topbar + main)
+  background-color: #fff; // fallback khi ảnh chưa load
+  background-image: url('../images/bg-header.png');
+  background-size: cover;
+  background-position: left center;
+  background-repeat: no-repeat;
+  transition: box-shadow $transition-normal, background-position $transition-normal;
+
+  // Container header dùng 1600px để khớp tỉ lệ bg-header.png
+  .l-container {
+    max-width: 1600px;
+    position: relative;
+    z-index: 1; // nằm trên ::before / ::after ở màn > 1920px
+  }
+
+  &.is-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    animation: l-header-slide-down 0.35s ease forwards;
+  }
+
+  &.is-scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  // Màn > 1920px: giữ ảnh bg cố định 1920px căn giữa,
+  // dùng ::before/::after để fill màu 2 bên phần dư
+  @media (min-width: 1921px) {
+    background-size: 1920px 100%;
+    background-position: center center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: calc((100vw - 1920px) / 2);
+      height: 100%;
+      background-color: #0061a6; // khớp cạnh trái bg-header.png
+      z-index: 0;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: calc((100vw - 1920px) / 2);
+      height: $header-topbar-height;
+      background-color: #0398e7; // khớp màu topbar cạnh phải bg-header.png
+      z-index: 0;
+    }
+  }
+
+  @media (max-width: 1750px) {
+    background-position: -150px center;
+  }
+
+  @media (max-width: 1280px) {
+    background-position: -250px center;
+  }
+
+  @media (max-width: 1023px) {
+    background-color: $color-primary;
+    background-image: none;
+  }
+}
+
+// Wrapper cho cấu trúc flex mới
+.l-header__wrapper {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.l-header__left {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.l-header__right {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+// ============================================
+// l-header__topbar — Thanh thông tin trên cùng
+// ============================================
+.l-header__topbar {
+  background: transparent;
+  height: $header-topbar-height;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  // Ẩn trên mobile
+  @include md {
+    display: none;
+  }
+}
+
+.l-header__topbar-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.l-header__topbar-item {
+  display: flex;
+  align-items: center;
+
+  // Separator dọc giữa các item
+  &+& {
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 1px;
+      height: 13px;
+      background: rgba($color-white, 0.3);
+      margin: 0 rem(12);
+    }
+  }
+}
+
+.l-header__topbar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(6);
+
+  // Font Montserrat cho topbar (14px Regular)
+  font-family: $font-primary;
+  font-size: rem(14);
+  font-weight: $font-weight-regular;
+  color: $color-white;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  @media (max-width: 1599px) {
+    font-size: rem(16);
+    padding: rem(6) rem(10);
+  }
+
+  @media (max-width: 1439px) {
+    font-size: rem(15);
+    padding: rem(6) rem(8);
+  }
+
+  @media (max-width: 1279px) {
+    font-size: rem(13.5);
+    padding: rem(6) rem(6);
+  }
+
+  @media (max-width: 1120px) {
+    font-size: rem(12);
+    padding: rem(6) rem(4);
+  }
+
+  &:hover {
+    color: rgba($color-white, 0.72);
+  }
+}
+
+.l-header__topbar-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  // Ép icon sang màu trắng
+  filter: brightness(0) invert(1);
+}
+
+// ---- Nút ngôn ngữ (button reset) ----
+.l-header__lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(5);
+
+  // Font Montserrat
+  font-family: $font-primary;
+  font-size: rem(14);
+  font-weight: $font-weight-regular;
+  color: $color-white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: rgba($color-white, 0.72);
+  }
+
+  &[aria-expanded='true'] .l-header__lang-arrow {
+    transform: rotate(180deg);
+  }
+}
+
+.l-header__lang-arrow {
+  transition: transform $transition-fast;
+  flex-shrink: 0;
+}
+
+// ============================================
+// l-header__main — Row chứa logo + nav + search
+// ============================================
+.l-header__main {
+  // Không cần background riêng — dùng bg-header.png từ l-header
+  background: transparent;
+  display: flex;
+  align-items: center;
+  height: $header-height-desktop;
+  gap: $space-4;
+  justify-content: flex-end;
+  width: 100%;
+
+  @include md {
+    height: 7.4rem; // 74px
+    gap: $space-3;
+  }
+}
+
+// ============================================
+// l-logo
+// ============================================
+.l-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(12);
+  text-decoration: none;
+  flex-shrink: 0;
+  // Đẩy nav qua đường cong xanh của bg-header.png (cố định ~510px từ trái sau cover scale)
+  min-width: 350px;
+  transition: all $transition-normal;
+
+  // Fluid: logo min-width từ 350px (1750px màn) → 290px (1024px màn)
+  @media (max-width: 1750px) and (min-width: 1024px) {
+    min-width: calc(290px + 60 * (100vw - 1024px) / 726);
+    gap: calc(6px + 6 * (100vw - 1024px) / 726);
+  }
+
+  @media (max-width: 1023px) {
+    min-width: unset;
+    gap: rem(8);
+  }
+
+  &__image {
+    height: 58px;
+    width: auto;
+    flex-shrink: 0;
+    transition: height $transition-normal;
+
+    // Fluid: height từ 58px (1750px) → 40px (1024px)
+    @media (max-width: 1750px) and (min-width: 1024px) {
+      height: calc(40px + 18 * (100vw - 1024px) / 726);
+    }
+
+    @media (max-width: 1023px) {
+      height: 40px;
+    }
+
+    @include sp {
+      height: 40px;
+    }
+  }
+
+  &__text-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: rem(3);
+    line-height: 1.25;
+    transition: padding $transition-normal;
+
+    // Đường kẻ dọc phân cách logo image và text
+    border-left: 2px solid rgba($color-white, 0.45);
+    padding-left: rem(12);
+
+    // Fluid: padding từ 12px (1750px) → 8px (1024px)
+    @media (max-width: 1750px) and (min-width: 1024px) {
+      padding-left: calc(8px + 4 * (100vw - 1024px) / 726);
+    }
+
+    @media (max-width: 1023px) {
+      padding-left: rem(8);
+    }
+
+    @include sp {
+      display: none;
+    }
+  }
+
+  &__company {
+    font-family: $font-primary;
+    font-size: rem(16);
+    font-weight: $font-weight-semibold;
+    color: $color-white;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    transition: font-size $transition-normal;
+
+    // Fluid: font-size từ 16px (1750px) → 12px (1024px)
+    @media (max-width: 1750px) and (min-width: 1024px) {
+      font-size: calc(10px + 4 * (100vw - 1024px) / 726);
+    }
+
+    @media (max-width: 1023px) {
+      font-size: rem(12);
+    }
+  }
+
+  &__slogan {
+    font-family: $font-primary;
+    font-size: rem(16);
+    font-weight: $font-weight-semibold;
+    color: $color-white;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    transition: font-size $transition-normal;
+
+    // Fluid: font-size từ 16px (1750px) → 12px (1024px)
+    @media (max-width: 1750px) and (min-width: 1024px) {
+      font-size: calc(10px + 4 * (100vw - 1024px) / 726);
+    }
+
+    @media (max-width: 1023px) {
+      font-size: rem(12);
+    }
+  }
+
+  @include sp {
+    min-width: unset; // logo chỉ là icon trên mobile, không cần min-width
+    gap: rem(8);
+  }
+}
+
+// ============================================
+// l-nav — Navigation chính
+// ============================================
+.l-nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  // Drawer trên màn hình < 1280px
+  @media (max-width: $header-bp) {
+    position: fixed;
+    top: 7.4rem;
+    right: -100%;
+    width: 300px;
+    height: calc(100vh - 7.4rem);
+    height: calc(100dvh - 7.4rem);
+    background: $color-white;
+    box-shadow: none;
+    border-left: 1px solid #E5E7EB;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: rem(12) 0 rem(24);
+    transition: right $transition-normal;
+    z-index: $z-overlay;
+    overflow-y: auto;
+
+    &.is-open {
+      right: 0;
+    }
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @media (max-width: $header-bp) {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      gap: rem(8);
+      padding: rem(16) rem(24) rem(24);
+    }
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    // Chấm tròn phân cách giữa các item trên desktop
+    &+& {
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: #E2E8F0;
+        margin: 0 rem(12);
+        flex-shrink: 0;
+        transition: margin $transition-normal, width $transition-normal, height $transition-normal;
+
+        @media (max-width: 1599px) {
+          margin: 0 rem(8);
+        }
+
+        @media (max-width: 1439px) {
+          margin: 0 rem(6);
+        }
+
+        @media (max-width: 1279px) {
+          margin: 0 rem(4);
+          width: 4px;
+          height: 4px;
+        }
+
+        @media (max-width: 1120px) {
+          margin: 0 rem(2);
+          width: 3px;
+          height: 3px;
+        }
+
+        @media (max-width: $header-bp) {
+          display: none;
+        }
+      }
+    }
+
+    // Dropdown trigger on hover (desktop)
+    &.has-dropdown:hover .l-nav__dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    @media (max-width: $header-bp) {
+      width: 100%;
+      border-bottom: none;
+      display: block; // Trả về block trên mobile để tránh vỡ layout flex dọc
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    padding: rem(6) rem(13);
+
+    // Font Montserrat theo Figma spec: Medium 18px
+    font-family: $font-primary;
+    font-size: rem(18);
+    font-weight: $font-weight-medium;
+    line-height: 1.47;
+
+    // Nav nằm trên vùng TRẮNG của bg-header.png → màu tối
+    color: $color-cmb-navy;
+    text-decoration: none;
+    white-space: nowrap;
+    position: relative;
+    transition: color $transition-fast, font-size $transition-normal, padding $transition-normal;
+
+    @media (max-width: 1599px) {
+      font-size: rem(16);
+      padding: rem(6) rem(10);
+    }
+
+    @media (max-width: 1439px) {
+      font-size: rem(15);
+      padding: rem(6) rem(8);
+    }
+
+    @media (max-width: 1279px) {
+      font-size: rem(13.5);
+      padding: rem(6) rem(6);
+    }
+
+    @media (max-width: 1120px) {
+      font-size: rem(12);
+      padding: rem(6) rem(4);
+    }
+
+    // Underline slide-in khi hover (Dạng viên thuốc có bóng mờ phát quang xanh dương cực đẹp)
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: rem(-8);
+      left: rem(13);
+      right: rem(13);
+      height: 3px;
+      background: $color-cmb-blue;
+      border-radius: 999px;
+      box-shadow: 0 4px 10px rgba(0, 85, 179, 0.4), 0 0 6px rgba(0, 85, 179, 0.35);
+      transform: scaleX(0);
+      transition: transform $transition-fast;
+      transform-origin: center;
+
+      @media (max-width: 1599px) {
+        left: rem(10);
+        right: rem(10);
+        height: 2px;
+        bottom: rem(-6);
+      }
+
+      @media (max-width: 1439px) {
+        left: rem(8);
+        right: rem(8);
+      }
+
+      @media (max-width: 1279px) {
+        left: rem(6);
+        right: rem(6);
+      }
+
+      @media (max-width: 1120px) {
+        left: rem(4);
+        right: rem(4);
+      }
+    }
+
+    &:hover {
+      color: $color-cmb-blue;
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
+    // Active item: Montserrat SemiBold 18px (theo Figma)
+    .l-nav__item.is-current & {
+      font-size: rem(18);
+      font-weight: $font-weight-semibold;
+      color: $color-cmb-blue;
+
+      @media (max-width: 1599px) {
+        font-size: rem(16);
+      }
+
+      @media (max-width: 1439px) {
+        font-size: rem(15);
+      }
+
+      @media (max-width: 1279px) {
+        font-size: rem(13.5);
+      }
+
+      @media (max-width: 1120px) {
+        font-size: rem(12);
+      }
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
+    // Mobile styles
+    @media (max-width: $header-bp) {
+      color: #002036;
+      padding: rem(12) rem(24);
+      font-size: rem(18);
+      font-family: $font-primary;
+      font-weight: $font-weight-medium;
+      line-height: 1.47;
+      width: 100%;
+      border-radius: rem(12);
+      border: 1.5px solid transparent;
+      display: block;
+
+      &::after {
+        display: none;
+      }
+
+      &:hover {
+        color: $color-cmb-blue;
+      }
+
+      .l-nav__item.is-current & {
+        font-size: rem(18);
+        color: $color-cmb-blue;
+        font-weight: $font-weight-medium;
+        border: 1.5px solid $color-cmb-blue;
+        border-radius: rem(12);
+        background: transparent;
+      }
+    }
+  }
+
+  // Năng lực không có link — dùng span thay a
+  span.l-nav__link {
+    cursor: default;
+    user-select: none;
+
+    &:hover::after { transform: scaleX(0); } // tắt underline slide-in
+  }
+
+  &__dropdown-arrow {
+    margin-left: rem(4);
+    flex-shrink: 0;
+    transition: transform $transition-fast;
+    opacity: 0.6;
+  }
+
+  &.has-dropdown:hover &__dropdown-arrow {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + rem(4));
+    left: 0;
+    min-width: 210px;
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-top: 2px solid $color-cmb-blue;
+    border-radius: 0 0 $radius-md $radius-md;
+    box-shadow: $shadow-lg;
+    padding: rem(6) 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all $transition-normal;
+    z-index: $z-dropdown;
+
+    li a {
+      display: block;
+      padding: rem(10) rem(18);
+      font-family: $font-primary;
+      font-size: rem(14);
+      color: $color-text;
+      position: relative;
+      transition: $transition-normal;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        background: #0379CC;
+        transition: $transition-fast;
+        opacity: 0;
+      }
+
+      &:hover {
+        background: $color-primary-light;
+        color: $color-cmb-blue;
+        padding-left: rem(22);  
+        
+        &::before {
+          opacity: 1;
+        }
+
+      }
+
+    }
+
+    @media (max-width: $header-bp) {
+      position: static;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      box-shadow: none;
+      border: none;
+      border-left: 3px solid $color-primary-light;
+      border-radius: 0;
+      padding: rem(4) 0 rem(4) rem(16);
+      background: none;
+    }
+  }
+
+  // ---- Mobile footer info (inside drawer) ----
+  &__mobile-info {
+    display: none;
+    margin-top: 0;
+    padding: rem(32);
+    border-top: 1px solid #E5E7EB;
+    width: 100%;
+    gap: rem(24);
+    flex-direction: column;
+
+    @media (max-width: $header-bp) {
+      display: flex;
+    }
+  }
+
+  &__mobile-info-item {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(8);
+    font-family: $font-primary;
+    font-size: rem(14);
+    font-weight: $font-weight-regular;
+    line-height: 1.4;
+    color: $color-cmb-blue;
+    text-decoration: none;
+
+    img {
+      width: 16px;
+      height: 16px;
+      filter: brightness(0) saturate(100%) invert(37%) sepia(85%) saturate(2220%) hue-rotate(185deg) brightness(91%) contrast(101%);
+      opacity: 1;
+    }
+
+    &:hover {
+      color: $color-primary-dark;
+    }
+  }
+
+  &__mobile-info-arrow {
+    margin-left: rem(4);
+
+    path {
+      stroke: $color-cmb-blue;
+    }
+  }
+}
+
+// ============================================
+// l-header__search-btn — Icon tìm kiếm
+// ============================================
+.l-header__search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: rem(4);
+  flex-shrink: 0;
+  border-radius: $radius-md;
+  transition: transform $transition-fast, background $transition-fast;
+
+  img,
+  svg {
+    width: 24px;
+    height: 24px;
+
+    @include md {
+      path {
+        stroke: #fff;
+      }
+    }
+  }
+
+  &:hover {
+    transform: scale(1.12);
+    background: rgba($color-white, 0.1);
+    border-radius: $radius-full;
+  }
+
+  @media (max-width: $header-bp) {
+    display: none;
+  }
+
+  @include md {
+    border-radius: 100%;
+    background: rgba($color-white, 0.1);
+  }
+
+}
+
+// ============================================
+// l-header__mobile-actions — Search + Hamburger (mobile only)
+// ============================================
+.l-header__mobile-actions {
+  display: none;
+  align-items: center;
+  gap: rem(12);
+  margin-left: auto;
+
+  @media (max-width: $header-bp) {
+    display: flex;
+  }
+
+  // Search trên mobile dùng cùng class nhưng hiển thị trong nhóm này
+  .l-header__search-btn {
+    display: flex; // override ẩn phía trên
+  }
+}
+
+// ============================================
+// l-hamburger — Nút hamburger (mobile)
+// ============================================
+.l-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: rem(6);
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: $z-modal;
+
+  span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: $color-white;
+    border-radius: $radius-full;
+    transition: all $transition-normal;
+    transform-origin: center;
+  }
+
+  &.is-active {
+    span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+
+  @media (max-width: $header-bp) {
+    display: flex;
+  }
+}
+
+// ============================================
+// l-nav-overlay — Lớp mờ phía sau menu mobile
+// ============================================
+.l-nav-overlay {
+  display: none !important;
+}

@@ -1,0 +1,101 @@
+// ============================================
+// COMPONENT / C-FLOAT-ACTIONS
+// Widget nổi cố định bên phải: Zalo, Messenger, Phone, Back-to-top
+// Figma: 48×48, radius 24, padding 4, gradient #0061A5→#0398E7, shadow 0 0 7 3 #000 20%
+// ============================================
+@use '../abstracts' as *;
+
+@keyframes float-btn-ripple {
+  0% {
+    box-shadow:
+      0 0 0 0    rgba(3, 152, 231, 0.55),
+      0 0 0 0    rgba(3, 152, 231, 0.35),
+      0 0 0 0    rgba(3, 152, 231, 0.15);
+  }
+  100% {
+    box-shadow:
+      0 0 0 10px rgba(3, 152, 231, 0),
+      0 0 0 22px rgba(3, 152, 231, 0),
+      0 0 0 34px rgba(3, 152, 231, 0);
+  }
+}
+
+.c-float-actions {
+  position: fixed;
+  right: rem(32);
+  bottom: rem(32);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(20);
+
+  &__btn {
+    position: relative;
+    width: rem(48);
+    height: rem(48);
+    border-radius: 50%;
+    background: linear-gradient(180deg, #0061A5 0%, #0398E7 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: rem(4);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    flex-shrink: 0;
+    box-shadow: 0 0 7px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    // Ripple rings — 3 vòng tỏa ra khi hover (chỉ 3 nút liên hệ, không phải back-to-top)
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      animation: float-btn-ripple 1.8s ease-out infinite;
+      animation-play-state: paused;
+      transition: opacity 0.25s ease;
+    }
+
+    &:not(.c-float-actions__btn--top):hover::before {
+      opacity: 1;
+      animation-play-state: running;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.28);
+    }
+
+    &--top {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+
+      img {
+        width: rem(20);
+        height: rem(20);
+      }
+    }
+
+    &--top.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    img {
+      display: block;
+      object-fit: contain;
+    }
+  }
+
+  @include sp {
+    right: rem(16);
+    bottom: rem(16);
+  }
+}

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" width="360" height="240">
+  <defs>
+    <linearGradient id="nt3-sky" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#1A4A6E"/>
+      <stop offset="55%" stop-color="#1E6090"/>
+      <stop offset="100%" stop-color="#0F3A58"/>
+    </linearGradient>
+    <linearGradient id="nt3-sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1B5C8A"/>
+      <stop offset="100%" stop-color="#061E30"/>
+    </linearGradient>
+    <linearGradient id="nt3-ship" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E8E8E8"/>
+      <stop offset="100%" stop-color="#C0C8D0"/>
+    </linearGradient>
+    <radialGradient id="nt3-sun" cx="75%" cy="22%" r="30%">
+      <stop offset="0%" stop-color="rgba(255,235,180,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,235,180,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="360" height="240" fill="url(#nt3-sky)"/>
+  <rect width="360" height="240" fill="url(#nt3-sun)"/>
+
+  <!-- Sun glow -->
+  <circle cx="275" cy="50" r="25" fill="rgba(255,230,150,0.3)"/>
+  <circle cx="275" cy="50" r="18" fill="rgba(255,230,150,0.25)"/>
+  <circle cx="275" cy="50" r="12" fill="rgba(255,235,160,0.4)"/>
+
+  <!-- Clouds -->
+  <ellipse cx="90" cy="45" rx="55" ry="20" fill="rgba(255,255,255,0.1)"/>
+  <ellipse cx="130" cy="38" rx="40" ry="15" fill="rgba(255,255,255,0.08)"/>
+  <ellipse cx="60" cy="52" rx="30" ry="12" fill="rgba(255,255,255,0.06)"/>
+  <ellipse cx="200" cy="30" rx="45" ry="16" fill="rgba(255,255,255,0.07)"/>
+
+  <!-- Sea / water horizon -->
+  <rect y="148" width="360" height="92" fill="url(#nt3-sea)"/>
+  <rect y="148" width="360" height="3" fill="rgba(255,255,255,0.15)"/>
+
+  <!-- Wave lines -->
+  <path d="M0 160 Q45 155 90 160 Q135 165 180 160 Q225 155 270 160 Q315 165 360 160" stroke="rgba(255,255,255,0.12)" stroke-width="2" fill="none"/>
+  <path d="M0 172 Q50 167 100 172 Q150 177 200 172 Q250 167 300 172 Q330 175 360 172" stroke="rgba(255,255,255,0.09)" stroke-width="1.5" fill="none"/>
+  <path d="M0 185 Q60 180 120 185 Q180 190 240 185 Q300 180 360 185" stroke="rgba(255,255,255,0.07)" stroke-width="1.5" fill="none"/>
+
+  <!-- LNG Tanker Ship -->
+  <!-- Hull -->
+  <path d="M30 130 L330 130 L320 155 L40 155 Z" fill="url(#nt3-ship)"/>
+  <path d="M40 155 L320 155 L315 162 L45 162 Z" fill="#8A9BA8"/>
+  <!-- Bow (right side) -->
+  <path d="M330 130 L350 142 L320 155 Z" fill="#D0D8E0"/>
+  <!-- Stern (left side) -->
+  <path d="M30 130 L15 145 L40 155 Z" fill="#D0D8E0"/>
+
+  <!-- LNG tanks (spherical) -->
+  <ellipse cx="130" cy="115" rx="38" ry="34" fill="#E0E6EC"/>
+  <ellipse cx="130" cy="112" rx="35" ry="30" fill="#EDF1F5"/>
+  <ellipse cx="130" cy="109" rx="28" ry="24" fill="rgba(255,255,255,0.3)"/>
+
+  <ellipse cx="220" cy="118" rx="34" ry="30" fill="#E0E6EC"/>
+  <ellipse cx="220" cy="115" rx="31" ry="27" fill="#EDF1F5"/>
+  <ellipse cx="220" cy="112" rx="25" ry="21" fill="rgba(255,255,255,0.3)"/>
+
+  <!-- Superstructure / bridge -->
+  <rect x="55" y="98" width="50" height="33" fill="#B0BCC8" rx="2"/>
+  <rect x="58" y="102" width="44" height="25" fill="#C8D2DC" rx="1"/>
+  <!-- Bridge windows -->
+  <rect x="62" y="106" width="9" height="7" fill="rgba(100,180,255,0.4)" rx="1"/>
+  <rect x="75" y="106" width="9" height="7" fill="rgba(100,180,255,0.4)" rx="1"/>
+  <rect x="88" y="106" width="9" height="7" fill="rgba(100,180,255,0.4)" rx="1"/>
+
+  <!-- Mast / antenna -->
+  <rect x="77" y="75" width="2" height="24" fill="rgba(100,110,130,0.8)"/>
+  <rect x="65" y="82" width="26" height="2" fill="rgba(100,110,130,0.6)"/>
+
+  <!-- Pipes / details on deck -->
+  <rect x="165" y="128" width="30" height="3" fill="rgba(120,130,140,0.6)" rx="1"/>
+  <rect x="258" y="126" width="25" height="3" fill="rgba(120,130,140,0.5)" rx="1"/>
+
+  <!-- CMB flag on mast -->
+  <rect x="79" y="75" width="16" height="10" fill="rgba(3,121,204,0.7)"/>
+
+  <!-- Sea reflection of ship -->
+  <rect x="30" y="162" width="320" height="25" fill="rgba(200,210,220,0.08)"/>
+
+  <!-- Water sparkle -->
+  <circle cx="80" cy="175" r="2" fill="rgba(255,255,255,0.25)"/>
+  <circle cx="160" cy="183" r="1.5" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="240" cy="171" r="2" fill="rgba(255,255,255,0.22)"/>
+  <circle cx="310" cy="179" r="1.5" fill="rgba(255,255,255,0.18)"/>
+
+  <!-- Vignette -->
+  <rect width="360" height="240" fill="rgba(0,10,30,0.18)"/>
+</svg>

@@ -1,0 +1,247 @@
+// ============================================
+// PROJECT / P-PARTNER
+// Mô tả: Section Khách Hàng - Đối Tác với marquee loop tự động
+// Desktop: 1 hàng tất cả 9 logo, chạy trái→phải
+// Mobile:  2 hàng chia đôi logo, hàng 1 trái→phải, hàng 2 phải→trái
+// ============================================
+@use '../abstracts' as *;
+
+// ------ Marquee animations ------
+@keyframes partner-marquee-rtl {
+
+  // chạy trái→phải: track bắt đầu từ -50%, về 0
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes partner-marquee-ltr {
+
+  // chạy phải→trái: track từ 0 về -50%
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+// ------ Block ------
+.p-partner {
+  position: relative;
+  padding: rem(60) 0 rem(56);
+  background-color: #F7FCFF;
+  // Layer 1 (trên): gradient che đường trắng từ ~130px trở xuống
+  // Layer 2 (dưới): SVG decorative lines
+  background-image:
+    linear-gradient(to bottom, transparent rem(100), #F7FCFF rem(140)),
+    url('../images/bg-partner.svg');
+  background-position: top, center top;
+  background-size: auto, contain;
+  background-repeat: no-repeat, no-repeat;
+  overflow: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: rem(80);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &::before {
+    top: 0;
+    background: linear-gradient(to bottom, $color-white, transparent);
+  }
+
+  &::after {
+    bottom: 0;
+    background: linear-gradient(to top, $color-white, transparent);
+  }
+
+  // ------ Header ------
+  &__header {
+    text-align: center;
+    margin-bottom: rem(40);
+    position: relative;
+    z-index: 1;
+
+    @include sp {
+      margin-bottom: rem(36);
+    }
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: rem(28);
+    font-weight: $font-weight-bold;
+    color: $color-cmb-navy;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  // ------ Rows wrapper ------
+  &__rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  // ------ Track wrapper: masks overflow + fade edges ------
+  &__track-wrap {
+    position: relative;
+    overflow: hidden;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: rem(100);
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    &::before {
+      left: 0;
+      background: linear-gradient(to right, $color-white 0%, transparent 100%);
+    }
+
+    &::after {
+      right: 0;
+      background: linear-gradient(to left, $color-white 0%, transparent 100%);
+    }
+
+    // Mobile-only wrappers: ẩn trên desktop
+    &--sp-r1,
+    &--sp-r2 {
+      display: none;
+    }
+  }
+
+  // ------ Moving track ------
+  &__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    gap: rem(20);
+
+    &--rtl {
+      animation: partner-marquee-rtl 36s linear infinite;
+    }
+
+    &--ltr {
+      animation: partner-marquee-ltr 36s linear infinite;
+    }
+  }
+
+  // ------ Each logo slot: 240×160 ------
+  &__item {
+    flex: 0 0 auto;
+    width: rem(240);
+    height: rem(160);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__logo {
+    width: rem(240);
+    height: rem(160);
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  // ------ Responsive: md (tablet) ------
+  @include md {
+    padding: rem(48) 0 rem(44);
+
+    &__title {
+      font-size: rem(22);
+    }
+
+    &__track-wrap {
+
+      &::before,
+      &::after {
+        width: rem(60);
+      }
+    }
+
+    &__item {
+      width: rem(200);
+      height: rem(134);
+    }
+
+    &__logo {
+      width: rem(200);
+      height: rem(134);
+    }
+  }
+
+  // ------ Responsive: sp (mobile — 2 hàng chia đôi logo) ------
+  @include sp {
+    padding: rem(40) 0 rem(36);
+
+    &__title {
+      font-size: rem(18);
+    }
+
+    &__rows {
+      gap: rem(8);
+    }
+
+    &__track-wrap {
+
+      &::before,
+      &::after {
+        width: rem(32);
+      }
+
+      // Ẩn desktop track, hiện 2 mobile track
+      &--desktop {
+        display: none;
+      }
+
+      &--sp-r1,
+      &--sp-r2 {
+        display: block;
+      }
+    }
+
+    &__track {
+      gap: rem(12);
+
+      &--rtl {
+        animation-duration: 22s;
+      }
+
+      &--ltr {
+        animation-duration: 22s;
+      }
+    }
+
+    // Mobile item: 144×96, border-radius 12 (theo Figma)
+    &__item {
+      width: rem(144);
+      height: rem(96);
+      border-radius: rem(12);
+    }
+
+    &__logo {
+      width: rem(144);
+      height: rem(96);
+    }
+  }
+}

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 260" width="196" height="260">
+  <defs>
+    <linearGradient id="cover2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A5E9E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0D3E6E;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Shadow -->
+  <rect x="8" y="6" width="180" height="248" rx="4" fill="rgba(0,0,0,0.15)" />
+
+  <!-- Spine -->
+  <rect x="4" y="4" width="14" height="248" rx="3" fill="#0D3E6E" />
+
+  <!-- Cover body -->
+  <rect x="16" y="4" width="172" height="248" rx="3" fill="url(#cover2)" />
+
+  <!-- Diagonal accent -->
+  <path d="M16 4 L100 4 L16 88 Z" fill="rgba(255,255,255,0.07)" />
+
+  <!-- Top color bar -->
+  <rect x="16" y="4" width="172" height="8" rx="3" fill="#0379CC" opacity="0.7"/>
+
+  <!-- White bottom strip -->
+  <rect x="16" y="210" width="172" height="42" rx="0" fill="white" opacity="0.95"/>
+  <rect x="16" y="248" width="172" height="4" rx="3" fill="white" opacity="0.95"/>
+
+  <!-- Chart / bar icon -->
+  <g transform="translate(40, 42)">
+    <!-- Bar chart representing test results -->
+    <rect x="0" y="40" width="16" height="30" rx="2" fill="rgba(255,255,255,0.6)"/>
+    <rect x="20" y="20" width="16" height="50" rx="2" fill="rgba(255,255,255,0.8)"/>
+    <rect x="40" y="30" width="16" height="40" rx="2" fill="rgba(255,255,255,0.6)"/>
+    <rect x="60" y="10" width="16" height="60" rx="2" fill="white" opacity="0.9"/>
+    <!-- Base line -->
+    <rect x="0" y="72" width="80" height="2" rx="1" fill="rgba(255,255,255,0.4)"/>
+  </g>
+
+  <!-- PDF badge -->
+  <rect x="142" y="42" width="36" height="18" rx="4" fill="rgba(255,255,255,0.2)"/>
+  <text x="160" y="55" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white" text-anchor="middle">PDF</text>
+
+  <!-- Dotted lines decoration -->
+  <rect x="26" y="150" width="130" height="1" rx="1" fill="rgba(255,255,255,0.2)"/>
+  <rect x="26" y="157" width="100" height="1" rx="1" fill="rgba(255,255,255,0.15)"/>
+  <rect x="26" y="164" width="110" height="1" rx="1" fill="rgba(255,255,255,0.15)"/>
+  <rect x="26" y="171" width="80" height="1" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="26" y="178" width="90" height="1" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="26" y="185" width="70" height="1" rx="1" fill="rgba(255,255,255,0.1)"/>
+  <rect x="26" y="192" width="85" height="1" rx="1" fill="rgba(255,255,255,0.1)"/>
+
+  <!-- Title on white strip -->
+  <text x="102" y="226" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#002036" text-anchor="middle" letter-spacing="0.5">BÁO CÁO THÍ NGHIỆM</text>
+  <text x="102" y="237" font-family="Arial, sans-serif" font-size="8" fill="#444" text-anchor="middle">Vật liệu xây dựng – Q.I/2026</text>
+
+  <!-- CMB line -->
+  <text x="102" y="256" font-family="Arial, sans-serif" font-size="7" fill="#0379CC" text-anchor="middle" letter-spacing="1" font-weight="bold">CMB • 03/2026</text>
+</svg>

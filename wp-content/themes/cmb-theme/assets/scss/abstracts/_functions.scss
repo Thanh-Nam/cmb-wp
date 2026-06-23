@@ -1,0 +1,41 @@
+// ============================================
+// ABSTRACTS / FUNCTIONS
+// ============================================
+@use 'sass:map';
+
+// --- REM converter ---
+// Base = 10 (html font-size: 62.5% → 1rem = 10px)
+// Dùng: font-size: rem(18); => 1.8rem
+@function rem($px, $base: 10) {
+  @return #{$px / $base}rem;
+}
+
+// --- EM converter ---
+@function em($px, $base: 10) {
+  @return #{$px / $base}em;
+}
+
+// --- Tint: làm sáng màu ---
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+// --- Shade: làm tối màu ---
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}
+
+// --- Z-index lookup ---
+// Dùng trực tiếp: z('header') => 300
+$z-layers: (
+  'dropdown': 100,
+  'sticky':   200,
+  'header':   300,
+  'overlay':  400,
+  'modal':    500,
+  'toast':    600,
+);
+
+@function z($layer) {
+  @return map.get($z-layers, $layer);
+}

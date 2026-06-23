@@ -1,0 +1,524 @@
+// ============================================
+// PROJECT / P-LOCATION
+// Mô tả: Section Vị trí dự án — bản đồ VN tương tác,
+//        bánh lái quay quanh bản đồ, đường nét đứt chuyển động
+// ============================================
+@use '../abstracts' as *;
+
+// ============================================
+// KEYFRAMES
+// ============================================
+
+// Wheel orbit: xoay quanh map center nhờ transform-origin
+@keyframes loc-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Wheel self-spin: quay trục riêng (đặt trên .p-location__wheel bên trong pivot)
+@keyframes loc-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Dashed line flow: animate stroke-dashoffset của các path trong SVG inline
+// Dash cycle trong map.svg: 8.35 + 4.18 = 12.53px
+@keyframes loc-dash {
+  to {
+    stroke-dashoffset: -12.53;
+  }
+}
+
+@keyframes loc-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loc-ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  70% {
+    opacity: 0.25;
+  }
+
+  100% {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+
+// ============================================
+// BLOCK
+// ============================================
+.p-location {
+  position: relative;
+  overflow: hidden;
+  padding: rem(80) 0;
+  background: $color-bg url('../images/bg-location.png') center center / cover no-repeat;
+
+  @include md {
+    padding: rem(60) 0;
+  }
+
+  @include sp {
+    padding: rem(48) 0;
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: rem(80);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &::before {
+    top: 0;
+    background: linear-gradient(to bottom, $color-white, transparent);
+  }
+
+  &::after {
+    bottom: 0;
+    background: linear-gradient(to top, $color-white, transparent);
+  }
+
+  // Section header: luôn hiển thị cả desktop lẫn mobile
+  &__header {
+    margin-bottom: rem(40);
+
+    @include md {
+      margin-bottom: rem(32);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @include sp {
+      margin-bottom: rem(24);
+    }
+  }
+
+  // ---- 2-col grid ----
+  &__inner {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    align-items: center;
+    gap: rem(48);
+
+    @include md {
+      grid-template-columns: 1fr;
+      gap: rem(40);
+    }
+  }
+
+  // ============================================
+  // LEFT COLUMN — ẩn trên tablet/mobile (dùng popup thay thế)
+  // ============================================
+  &__left {
+    @include md {
+      display: none;
+    }
+  }
+
+  &__label {
+    margin-bottom: rem(14);
+  }
+
+  &__heading {
+    font-family: $font-primary;
+    font-size: clamp(rem(28), 3vw, rem(48));
+    font-weight: $font-weight-semibold;
+    color: $color-cmb-navy;
+    line-height: $line-height-tight;
+    text-transform: uppercase;
+    margin: 0 0 rem(28);
+  }
+
+  // ------ Info panel (changes on marker click) ------
+  &__panel {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+
+    &.is-hidden {
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+    }
+  }
+
+  // City row: line + name
+  &__city-row {
+    display: flex;
+    align-items: center;
+    gap: rem(14);
+    margin-bottom: rem(18);
+  }
+
+  &__city-line {
+    display: block;
+    width: rem(46);
+    height: rem(3);
+    background: $color-primary;
+    flex-shrink: 0;
+    border-radius: rem(2);
+  }
+
+  &__city-name {
+    font-family: $font-primary;
+    font-size: clamp(rem(28), 3.2vw, rem(40));
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  // ------ Detail list ------
+  &__details {
+    margin: 0 0 rem(20);
+  }
+
+  &__detail-row {
+    margin-bottom: rem(10);
+  }
+
+  &__detail-label {
+    display: block;
+    font-family: $font-primary;
+    font-size: rem(16);
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+    line-height: 1.4;
+    margin-bottom: rem(4);
+  }
+
+  &__detail-text {
+    font-family: $font-primary;
+    font-size: rem(16);
+    font-weight: $font-weight-regular;
+    line-height: 1.4;
+    color: #292929;
+    margin: 0;
+  }
+
+  // ------ Project image — blob shape ------
+  // img bị clip theo inner blob (mask = Path2). Border ring (Path1) đè lên qua ::after
+  &__img-wrap {
+    position: relative;
+    margin-bottom: rem(20);
+    width: 100%;
+    aspect-ratio: 663 / 460;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('../images/box-img-location.svg') center / 100% 100% no-repeat;
+      pointer-events: none;
+    }
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mask-image: url('../images/box-img-location-mask.svg');
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
+
+  // ------ CTA link ------
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(8);
+    font-family: $font-primary;
+    font-size: rem(14);
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    border-bottom: 1.5px solid currentColor;
+    padding-bottom: rem(2);
+    transition: color $transition-normal, opacity $transition-normal;
+
+    svg {
+      transition: transform $transition-normal;
+    }
+
+    &:hover {
+      opacity: 0.72;
+
+      svg {
+        transform: translateX(4px);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary;
+      outline-offset: 4px;
+      border-radius: 2px;
+    }
+  }
+
+  // ============================================
+  // RIGHT COLUMN — Map
+  // ============================================
+  &__right {
+    position: relative;
+
+    @include md {
+      max-width: rem(600);
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+
+  // Map wrapper: reference box for all overlays
+  &__map-wrap {
+    position: relative;
+    width: 100%;
+    user-select: none;
+    // overflow: visible allows wheel to orbit outside map edges
+  }
+
+  // Base map image (SVG)
+  &__map-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+  }
+
+  // ============================================
+  // Inline SVG (map.svg được JS fetch + inject thay thế img)
+  // ============================================
+  &__map-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+  }
+
+  // Các path stroke-dasharray bên trong SVG được JS thêm class này
+  // rồi CSS animate stroke-dashoffset để tạo hiệu ứng đường chạy
+  &__map-line {
+    animation: loc-dash 1.2s linear infinite;
+  }
+
+  // ============================================
+  // SVG interactive city labels
+  // Transparent overlay rects handle clicks; shadow added to the actual label path
+  // ============================================
+  &__map-svg {
+
+    // Click-target overlays — invisible, just capture pointer events
+    rect[data-loc] {
+      fill: transparent;
+      stroke: none;
+      cursor: pointer;
+      pointer-events: all;
+      transition: fill 0.15s ease;
+
+      &:hover {
+        fill: rgba($color-primary, 0.06);
+      }
+    }
+
+    // All city label boxes: light shadow by default
+    path[data-loc-bg] {
+      filter:
+        drop-shadow(0 2px 6px rgba($color-primary, 0.18)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.07));
+    }
+
+    // Active city: strong blue glow
+    path[data-loc-bg].is-loc-active {
+      filter:
+        drop-shadow(0 0 5px rgba($color-primary, 0.75)) drop-shadow(0 0 14px rgba($color-primary, 0.45)) drop-shadow(0 0 26px rgba($color-primary, 0.22));
+    }
+  }
+
+  // ============================================
+  // Orbiting steering wheel
+  //
+  // Kỹ thuật: transform-origin đặt tại TÂM BẢN ĐỒ.
+  // Pivot được định vị tại vị trí 3 o'clock (bên phải tâm),
+  // sau đó rotate(360deg) khiến nó quay QUANH tâm bản đồ.
+  // Wheel bên trong tự quay thêm (self-spin).
+  //
+  // Công thức:
+  //   pivot.left = 50% + orbit-r - halfW
+  //   pivot.top  = 50% - halfH
+  //   pivot.transform-origin = (-orbit-r + halfW)  halfH
+  //   → rotation center = (50%, 50%) = map center ✓
+  // ============================================
+  &__map-wrap {
+    // CSS custom property: orbit radius — responsive
+    // map radius ≈ 50% container, orbit ≈ 55-80% of map radius
+    --orbit-r: clamp(130px, 27vw, 290px);
+  }
+
+  &__wheel-pivot {
+    position: absolute;
+    width: rem(44); // = 4.4rem = 44px
+    height: rem(44);
+    pointer-events: none;
+    z-index: 3;
+    // Vị trí ban đầu: 3 o'clock (tâm + orbit-r)
+    left: calc(50% + var(--orbit-r) - 2.2rem);
+    top: calc(50% - 2.2rem);
+    // Transform-origin tại tâm bản đồ
+    transform-origin: calc(-1 * var(--orbit-r) + 2.2rem) 2.2rem;
+    animation: loc-orbit 12s linear infinite;
+
+    @include sp {
+      width: rem(32);
+      height: rem(32);
+      left: calc(50% + var(--orbit-r) - 1.6rem);
+      top: calc(50% - 1.6rem);
+      transform-origin: calc(-1 * var(--orbit-r) + 1.6rem) 1.6rem;
+    }
+  }
+
+  &__wheel {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0.85;
+    animation: loc-spin 4s linear infinite;
+  }
+
+  // ============================================
+  // MOBILE POPUP — chỉ hoạt động ≤1024px
+  // Dùng visibility + opacity để transition mượt (display:none không animate được)
+  // ============================================
+  &__popup {
+    // Desktop: ẩn hoàn toàn
+    display: none;
+
+    @include md {
+      // Mobile: luôn là flex, dùng visibility để animate
+      display: flex;
+      position: fixed;
+      inset: 0;
+      z-index: $z-overlay;
+      align-items: center;
+      justify-content: center;
+      padding: rem(20);
+
+      background: rgba(0, 0, 0, 0);
+      visibility: hidden;
+      pointer-events: none;
+      // delay visibility hidden đến sau transition kết thúc
+      transition: background 0.3s ease, visibility 0s linear 0.3s;
+
+      &.is-open {
+        background: rgba(0, 0, 0, 0.5);
+        visibility: visible;
+        pointer-events: auto;
+        transition: background 0.3s ease;
+      }
+    }
+  }
+
+  &__popup-card {
+    background: $color-white;
+    border-radius: rem(20);
+    padding: rem(28) rem(24) rem(32);
+    width: 100%;
+    max-width: rem(520);
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: $shadow-xl;
+
+    // Trạng thái ẩn: lệch xuống + mờ
+    opacity: 0;
+    transform: translateY(rem(24)) scale(0.97);
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
+
+    .p-location__popup.is-open & {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  &__popup-close {
+    position: absolute;
+    top: rem(16);
+    right: rem(16);
+    width: rem(36);
+    height: rem(36);
+    border: none;
+    background: $color-bg-alt;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-full;
+    color: $color-text-muted;
+    transition: background $transition-fast, color $transition-fast;
+
+    &:hover {
+      background: $color-border;
+      color: $color-text;
+    }
+  }
+
+  &__popup-city-row {
+    display: flex;
+    align-items: center;
+    gap: rem(14);
+    margin-bottom: rem(16);
+    padding-right: rem(44);
+  }
+
+  &__popup-city-name {
+    font-family: $font-primary;
+    font-size: clamp(rem(22), 5vw, rem(28));
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  // ============================================
+  // MAP DOT RIPPLE — injected by JS per city dot
+  // ============================================
+  &__map-svg {
+    circle[data-loc-ripple] {
+      transform-box: fill-box;
+      transform-origin: center;
+      pointer-events: none;
+      opacity: 0;
+
+      &.is-loc-ripple-active {
+        animation: loc-ripple 2s ease-out infinite;
+
+        &[data-ripple-delay='1'] {
+          animation-delay: 0.75s;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,127 @@
+// ============================================
+// COMPONENT / SEARCH OVERLAY  (prefix: l-search-overlay)
+// Full-screen dark backdrop, small input box centered in the middle.
+// ============================================
+@use '../abstracts' as *;
+
+body.search-overlay-open {
+  overflow: hidden;
+}
+
+.l-search-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  z-index: 1000; // above float-actions (z-index: 999)
+
+  &.is-open {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease, visibility 0s linear 0s;
+
+    .l-search-overlay__box {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+// Full-screen dark backdrop
+.l-search-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 15, 30, 0.82);
+  cursor: pointer;
+}
+
+// Centered input box
+.l-search-overlay__panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 60rem;
+  padding: 0 2.4rem;
+}
+
+.l-search-overlay__box {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+// Form row: [input] [search-btn]
+.l-search-overlay__form {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: #fff;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-xl;
+}
+
+.l-search-overlay__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: $font-primary;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+  background: transparent;
+  padding: 1.6rem 2rem;
+  min-width: 0;
+
+  &::placeholder {
+    color: $color-text-light;
+    font-weight: $font-weight-regular;
+  }
+}
+
+.l-search-overlay__submit {
+  flex-shrink: 0;
+  background: $color-primary;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.6rem 2rem;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $color-primary-dark;
+  }
+
+  svg { display: block; }
+}
+
+// Close button — top-right corner of the screen
+.l-search-overlay__close {
+  position: absolute;
+  top: 2.4rem;
+  right: 2.4rem;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: $radius-full;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+}

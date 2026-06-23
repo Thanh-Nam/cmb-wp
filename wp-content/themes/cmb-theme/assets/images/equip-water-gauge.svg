@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 180" fill="none">
+  <!-- Mounting bracket/pole -->
+  <rect x="74" y="18" width="12" height="30" rx="3" fill="#015A99"/>
+  <!-- Sensor body (cylinder) -->
+  <rect x="58" y="48" width="44" height="90" rx="10" fill="#0379CC"/>
+  <!-- Measurement markings on side -->
+  <line x1="72" y1="62" x2="82" y2="62" stroke="#E0F4FF" stroke-width="1.5" opacity="0.7"/>
+  <line x1="72" y1="72" x2="78" y2="72" stroke="#E0F4FF" stroke-width="1" opacity="0.5"/>
+  <line x1="72" y1="82" x2="82" y2="82" stroke="#E0F4FF" stroke-width="1.5" opacity="0.7"/>
+  <line x1="72" y1="92" x2="78" y2="92" stroke="#E0F4FF" stroke-width="1" opacity="0.5"/>
+  <line x1="72" y1="102" x2="82" y2="102" stroke="#E0F4FF" stroke-width="1.5" opacity="0.7"/>
+  <line x1="72" y1="112" x2="78" y2="112" stroke="#E0F4FF" stroke-width="1" opacity="0.5"/>
+  <line x1="72" y1="122" x2="82" y2="122" stroke="#E0F4FF" stroke-width="1.5" opacity="0.7"/>
+  <!-- Display window -->
+  <rect x="85" y="55" width="12" height="18" rx="3" fill="#C8E6FA"/>
+  <!-- Water level indicator -->
+  <rect x="58" y="110" width="44" height="28" rx="0 0 10 10" fill="#1A8FE3" opacity="0.6"/>
+  <rect x="58" y="108" width="44" height="4" rx="2" fill="#1A8FE3"/>
+  <!-- Bottom cap -->
+  <ellipse cx="80" cy="138" rx="22" ry="7" fill="#015A99"/>
+  <!-- Pressure port at bottom -->
+  <ellipse cx="80" cy="143" rx="10" ry="4" fill="#015A99"/>
+  <rect x="70" y="141" width="20" height="8" rx="2" fill="#015A99"/>
+  <!-- Top cap with connector -->
+  <ellipse cx="80" cy="48" rx="22" ry="7" fill="#015A99"/>
+  <!-- Data cable -->
+  <path d="M 80 18 Q 110 16 118 30 Q 126 44 118 55" stroke="#015A99" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <rect x="112" y="53" width="14" height="10" rx="3" fill="#015A99"/>
+</svg>

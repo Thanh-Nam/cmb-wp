@@ -1,0 +1,889 @@
+﻿// ============================================
+// PROJECT / P-NEWS-PAGE
+// Page Tin Tức & Sự Kiện — layout đầy đủ
+// ============================================
+@use '../abstracts' as *;
+
+// UTILITY — Screen reader only
+.u-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+
+// ======= 2. FILTER TABS =======
+.p-news-filter {
+  background: $color-white;
+  border-bottom: 1px solid $color-border;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  &__tabs {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+  }
+
+  &__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(8);
+    padding: rem(18) rem(28);
+    font-family: $font-primary;
+    font-size: rem(14);
+    font-weight: $font-weight-semibold;
+    color: $color-text-muted;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color $transition-fast, border-color $transition-fast;
+    letter-spacing: 0.01em;
+
+    svg {
+      width: rem(18);
+      height: rem(18);
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      color: $color-primary;
+    }
+
+    &.is-active {
+      color: $color-primary;
+      border-bottom-color: $color-primary;
+      font-weight: $font-weight-bold;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary;
+      outline-offset: -2px;
+    }
+  }
+}
+
+// ======= 3. FEATURED 3-COLUMN GRID =======
+.p-news-columns {
+  padding: rem(96) 0 rem(40);
+  background: #F7FCFF;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: rem(32);
+    align-items: flex-start;
+  }
+
+  // ------ Left: Featured wrapper (header + card stacked) ------
+  &__featured-wrap {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  &__featured-card {
+    border-radius: rem(16);
+    overflow: hidden;
+    position: relative;
+    min-height: rem(300);
+  }
+
+  &__featured-swiper {
+    width: 100%;
+    height: 100%;
+    min-height: rem(300);
+  }
+
+  &__featured-slide {
+    position: relative;
+    overflow: hidden;
+    min-height: rem(300);
+  }
+
+  &__featured-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  // Gradient tối từ dưới lên — để đọc text
+  &__featured-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(#002036, 0.96) 0%,
+      rgba(#002036, 0.65) 45%,
+      rgba(#002036, 0.15) 75%,
+      transparent 100%
+    );
+  }
+
+  // Toàn bộ text overlay phía dưới ảnh
+  &__featured-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: rem(20) rem(22) rem(56);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: rem(8);
+  }
+
+  &__featured-date {
+    font-family: $font-primary;
+    font-size: rem(12);
+    font-weight: $font-weight-semibold;
+    color: rgba(white, 0.65);
+    letter-spacing: 0.02em;
+  }
+
+  &__featured-col-title {
+    font-family: $font-primary;
+    font-size: rem(10);
+    font-weight: $font-weight-bold;
+    color: rgba(white, 0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  &__featured-title {
+    font-family: $font-primary;
+    font-size: rem(19);
+    font-weight: $font-weight-bold;
+    line-height: 1.38;
+    color: $color-white;
+    margin: 0;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      &:hover { color: #B3D4F5; }
+    }
+  }
+
+  &__featured-excerpt {
+    font-family: $font-secondary;
+    font-size: rem(13);
+    line-height: 1.6;
+    color: rgba(white, 0.65);
+    margin: 0;
+    @include text-truncate(3);
+  }
+
+  &__featured-link {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(6);
+    font-family: $font-primary;
+    font-size: rem(11);
+    font-weight: $font-weight-bold;
+    color: #6CB9F0;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: rem(4);
+    transition: gap $transition-fast, color $transition-fast;
+
+    svg { flex-shrink: 0; transition: transform $transition-fast; }
+
+    &:hover {
+      color: $color-white;
+      gap: rem(10);
+      svg { transform: translateX(4px); }
+    }
+  }
+
+  // Swiper pagination dots (override Swiper defaults)
+  &__featured-pagination {
+    position: absolute !important;
+    bottom: rem(20) !important;
+    left: 0 !important;
+    right: 0 !important;
+    display: flex !important;
+    justify-content: center;
+    gap: rem(6);
+    z-index: 2;
+
+    .swiper-pagination-bullet {
+      width: rem(8);
+      height: rem(8);
+      background: rgba(white, 0.35);
+      opacity: 1;
+      border-radius: rem(4);
+      transition: background $transition-fast, width $transition-fast;
+      margin: 0 !important;
+    }
+
+    .swiper-pagination-bullet-active {
+      background: $color-white;
+      width: rem(22);
+      border-radius: rem(4);
+    }
+  }
+
+  // ------ Center + Right columns ------
+  &__col {
+    display: flex;
+    flex-direction: column;
+    box-shadow: -1px 0 0 0 $color-border;
+    padding-left: rem(32);
+  }
+
+  &__col-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: rem(20);
+    padding-bottom: rem(12);
+    border-bottom: 2px solid $color-primary;
+  }
+
+  &__col-title {
+    font-family: $font-primary;
+    font-size: rem(15);
+    font-weight: $font-weight-bold;
+    color: $color-cmb-navy;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  &__col-viewall {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(4);
+    font-family: $font-primary;
+    font-size: rem(12);
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: gap $transition-fast;
+
+    svg { transition: transform $transition-fast; }
+
+    &:hover {
+      gap: rem(8);
+      svg { transform: translateX(3px); }
+    }
+  }
+
+  // News item inside column
+  &__item {
+    display: grid;
+    grid-template-columns: rem(90) 1fr;
+    gap: rem(12);
+    padding: rem(14) 0;
+    border-bottom: 1px solid $color-border;
+
+    &:last-child { border-bottom: none; }
+    &:first-child { padding-top: 0; }
+
+    &:hover .p-news-columns__item-img {
+      transform: scale(1.06);
+    }
+  }
+
+  &__item-img-wrap {
+    display: block;
+    border-radius: rem(6);
+    overflow: hidden;
+    aspect-ratio: 4/3;
+  }
+
+  &__item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform $transition-slow;
+  }
+
+  &__item-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  &__item-date {
+    font-family: $font-primary;
+    font-size: rem(11);
+    color: $color-text-muted;
+    font-weight: $font-weight-medium;
+    margin-bottom: rem(4);
+  }
+
+  &__item-title {
+    font-family: $font-primary;
+    font-size: rem(13);
+    font-weight: $font-weight-semibold;
+    line-height: 1.45;
+    color: $color-cmb-navy;
+    margin: 0;
+    @include text-truncate(3);
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      &:hover { color: $color-primary; }
+    }
+  }
+
+  &__item-badge {
+    display: inline-block;
+    padding: rem(3) rem(8);
+    font-family: $font-primary;
+    font-size: rem(10);
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: rem(3);
+    width: fit-content;
+
+    &--cang-bien  { background: #E6F2FC; color: $color-primary; }
+    &--logistics  { background: #E8F5E9; color: #2E7D32; }
+    &--hang-hai   { background: #FFF3E0; color: #E65100; }
+  }
+
+  @include md {
+    &__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: rem(24);
+    }
+
+    &__featured-wrap {
+      grid-column: 1 / -1;
+    }
+
+    // TIN NỘI BỘ là cột trái trong hàng 2 — không cần divider bên trái
+    &__col:nth-child(2) {
+      box-shadow: none;
+      padding-left: 0;
+    }
+  }
+
+  @include sp {
+    padding: rem(32) 0;
+
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: rem(24);
+    }
+
+    &__col {
+      box-shadow: none;
+      padding-left: 0;
+    }
+  }
+}
+
+// ======= 4. QUICK LINKS BAR =======
+.p-news-quicklinks {
+  padding: rem(32) 0;
+  background: $color-white;
+  border-top: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: rem(1);
+    background: $color-border;
+    border: 1px solid $color-border;
+    border-radius: rem(12);
+    overflow: hidden;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: rem(16);
+    padding: rem(24) rem(32);
+    background: $color-white;
+    text-decoration: none;
+    transition: background $transition-fast;
+
+    &:hover {
+      background: #F0F7FF;
+    }
+  }
+
+  &__icon {
+    width: rem(52);
+    height: rem(52);
+    border-radius: rem(12);
+    background: linear-gradient(135deg, #E6F2FC 0%, #C8E2F8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+      width: rem(26);
+      height: rem(26);
+      color: $color-primary;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: rem(2);
+  }
+
+  &__label {
+    font-family: $font-secondary;
+    font-size: rem(13);
+    color: $color-text-muted;
+    font-weight: $font-weight-medium;
+  }
+
+  &__count {
+    font-family: $font-primary;
+    font-size: rem(20);
+    font-weight: $font-weight-bold;
+    color: $color-cmb-navy;
+    line-height: 1;
+  }
+
+  @include md {
+    &__item {
+      padding: rem(20) rem(20);
+      gap: rem(12);
+    }
+  }
+
+  @include sp {
+    padding: rem(24) 0;
+
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// ======= 5. ALL NEWS =======
+.p-news-all {
+  padding: rem(56) 0 rem(100);
+  background: $color-bg-alt;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: rem(32);
+    flex-wrap: wrap;
+    gap: rem(16);
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: rem(24);
+    font-weight: $font-weight-bold;
+    color: $color-cmb-navy;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0;
+    position: relative;
+    padding-bottom: rem(10);
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: rem(48);
+      height: 3px;
+      background: $color-primary;
+      border-radius: rem(2);
+    }
+  }
+
+  &__filters {
+    display: flex;
+    gap: rem(12);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &__select {
+    width: auto; // override _reset.scss width: 100%
+    appearance: none;
+    padding: rem(10) rem(36) rem(10) rem(14);
+    font-family: $font-primary;
+    font-size: rem(14);
+    font-weight: $font-weight-medium;
+    color: $color-text;
+    background: $color-white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") no-repeat right rem(14) center;
+    border: 1px solid $color-border;
+    border-radius: rem(8);
+    cursor: pointer;
+    transition: border-color $transition-fast;
+    min-width: rem(150);
+
+    &:hover, &:focus {
+      border-color: $color-primary;
+      outline: none;
+    }
+  }
+
+  // News list (rows)
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: rem(160) 1fr auto;
+    gap: rem(24);
+    align-items: start;
+    padding: rem(20) 0;
+    border-bottom: 1px solid $color-border;
+    background: $color-white;
+    margin-bottom: rem(2);
+    padding-left: rem(20);
+    padding-right: rem(20);
+    border-radius: rem(8);
+    transition: box-shadow $transition-fast;
+
+    &:hover {
+      box-shadow: $shadow-md;
+      .p-news-all__item-img { transform: scale(1.05); }
+      .p-news-all__item-arrow { color: $color-primary; }
+    }
+  }
+
+  &__item-img-wrap {
+    display: block;
+    border-radius: rem(8);
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    flex-shrink: 0;
+  }
+
+  &__item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform $transition-slow;
+  }
+
+  &__item-body {
+    display: flex;
+    flex-direction: column;
+    gap: rem(6);
+    min-width: 0;
+  }
+
+  &__item-meta {
+    display: flex;
+    align-items: center;
+    gap: rem(12);
+  }
+
+  &__item-date {
+    font-family: $font-primary;
+    font-size: rem(13);
+    color: $color-text-muted;
+    font-weight: $font-weight-medium;
+    white-space: nowrap;
+  }
+
+  &__item-badge {
+    display: inline-block;
+    padding: rem(3) rem(10);
+    font-family: $font-primary;
+    font-size: rem(11);
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.05em;
+    border-radius: rem(4);
+
+    &--noi-bo       { background: #E6F2FC; color: $color-primary; }
+    &--chuyen-nganh { background: #E8F5E9; color: #2E7D32; }
+    &--du-an        { background: #FFF3E0; color: #E65100; }
+    &--thong-bao    { background: #F3E5F5; color: #7B1FA2; }
+  }
+
+  &__item-title {
+    font-family: $font-primary;
+    font-size: rem(16);
+    font-weight: $font-weight-bold;
+    line-height: 1.4;
+    color: $color-cmb-navy;
+    margin: 0;
+    @include text-truncate(2);
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      &:hover { color: $color-primary; }
+    }
+  }
+
+  &__item-excerpt {
+    font-family: $font-secondary;
+    font-size: rem(13);
+    line-height: 1.6;
+    color: $color-text-muted;
+    margin: 0;
+    @include text-truncate(2);
+  }
+
+  &__item-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: rem(36);
+    height: rem(36);
+    border-radius: 50%;
+    color: #9CA3AF;
+    flex-shrink: 0;
+    transition: border-color $transition-fast, color $transition-fast;
+  }
+
+  // Pagination
+  &__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: rem(8);
+    margin-top: rem(40);
+  }
+
+  &__page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(38);
+    height: rem(38);
+    border-radius: rem(8);
+    font-family: $font-primary;
+    font-size: rem(14);
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+    background: $color-white;
+    border: 1px solid $color-border;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all $transition-fast;
+
+    &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+
+    &.is-active {
+      background: $color-primary;
+      border-color: $color-primary;
+      color: $color-white;
+    }
+
+    &--dots {
+      border: none;
+      background: none;
+      cursor: default;
+      color: $color-text-muted;
+      &:hover { color: $color-text-muted; border: none; }
+    }
+  }
+
+  @include md {
+    &__item {
+      grid-template-columns: rem(120) 1fr auto;
+      gap: rem(16);
+    }
+  }
+
+  @include sp {
+    padding: rem(36) 0 rem(48);
+
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__item {
+      grid-template-columns: rem(100) 1fr;
+      gap: rem(12);
+      padding: rem(14) rem(14);
+    }
+
+    &__item-arrow {
+      display: none;
+    }
+
+    &__item-excerpt {
+      display: none;
+    }
+  }
+}
+
+// ======= 6. NEWSLETTER =======
+.p-newsletter {
+  background: $color-cmb-navy;
+  padding: rem(48) 0;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 40%;
+    background: linear-gradient(135deg, transparent 0%, rgba($color-primary, 0.08) 100%);
+    pointer-events: none;
+  }
+
+  &__inner {
+    display: grid;
+    grid-template-columns: rem(56) 1fr auto rem(56);
+    gap: rem(24);
+    align-items: center;
+  }
+
+  &__icon {
+    width: rem(56);
+    height: rem(56);
+    border: 2px solid rgba(white, 0.2);
+    border-radius: rem(14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: rem(28);
+      height: rem(28);
+      color: rgba(white, 0.7);
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: rem(4);
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: rem(18);
+    font-weight: $font-weight-bold;
+    color: $color-white;
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+
+  &__desc {
+    font-family: $font-secondary;
+    font-size: rem(13);
+    color: rgba(white, 0.55);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  &__form {
+    display: flex;
+    gap: rem(0);
+    align-items: center;
+  }
+
+  &__input {
+    padding: rem(13) rem(18);
+    font-family: $font-secondary;
+    font-size: rem(14);
+    color: $color-text;
+    background: $color-white;
+    border: none;
+    border-radius: rem(8) 0 0 rem(8);
+    min-width: rem(260);
+    outline: none;
+
+    &::placeholder {
+      color: $color-text-light;
+    }
+  }
+
+  &__submit {
+    padding: rem(13) rem(24);
+    font-family: $font-primary;
+    font-size: rem(14);
+    font-weight: $font-weight-bold;
+    color: $color-white;
+    background: #E8861A;
+    border: none;
+    border-radius: 0 rem(8) rem(8) 0;
+    cursor: pointer;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+    transition: background $transition-fast;
+
+    &:hover {
+      background: #D47A14;
+    }
+  }
+
+  &__plane {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    svg {
+      width: rem(48);
+      height: rem(48);
+      color: rgba(white, 0.15);
+    }
+  }
+
+  @include md {
+    &__inner {
+      grid-template-columns: rem(48) 1fr;
+      grid-template-rows: auto auto;
+      gap: rem(16) rem(16);
+    }
+
+    &__plane { display: none; }
+
+    &__form {
+      grid-column: 1 / -1;
+    }
+
+    &__input {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  @include sp {
+    padding: rem(36) 0;
+
+    &__inner {
+      grid-template-columns: 1fr;
+    }
+
+    &__icon { display: none; }
+
+    &__input { min-width: 0; }
+  }
+}
