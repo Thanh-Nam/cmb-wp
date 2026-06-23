@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-login.php
+Disallow: /?s=
+Disallow: /search/
+Allow: /wp-admin/admin-ajax.php
+
+Sitemap: https://cmbvn.com.vn/wp-sitemap.xml

@@ -1,4 +1,4 @@
-// ============================================
+﻿// ============================================
 // LAYOUT / L-FOOTER  (prefix: l-)
 // FLOCSS: Layout layer — PC First
 // lt = < 1024px | sp = < 768px
@@ -10,7 +10,7 @@ $footer-text: rgba($color-white, 0.72);
 $footer-border: rgba($color-white, 0.12);
 
 .l-footer {
-  background-image: url('../images/bg-footer.png');
+  background-image: url('../images/bg-footer.webp');
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
@@ -37,7 +37,7 @@ $footer-border: rgba($color-white, 0.12);
       bottom: calc(100% - 1px);
       width: 100%;
       height: 25vw;
-      background-image: url('../images/bg-footer-sp.png');
+      background-image: url('../images/bg-footer-sp.webp');
       background-size: 100% 100%;
       background-repeat: no-repeat;
       pointer-events: none;

@@ -1,4 +1,4 @@
-// ============================================
+﻿// ============================================
 // PROJECT / P-INFO
 // Mô tả: Section giới thiệu chung với stats (trụ sở, năm kinh nghiệm, khách hàng)
 // ============================================
@@ -16,7 +16,7 @@
   &__bg {
     position: absolute;
     inset: rem(80) 0; // top/bottom = section padding → khớp đúng với card
-    background-image: url('../images/bg-info.png');
+    background-image: url('../images/bg-info.webp');
     background-repeat: no-repeat;
     background-size: 92% 100%;
     background-position: left center;
@@ -43,7 +43,7 @@
 
     @include md {
       border-radius: $radius-xl;
-      background-image: url('../images/bg-info-sp.png');
+      background-image: url('../images/bg-info-sp.webp');
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center top;

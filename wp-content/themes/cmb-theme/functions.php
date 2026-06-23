@@ -88,25 +88,95 @@ add_action( 'after_setup_theme', 'cmb_theme_setup' );
 // ============================================================
 function cmb_enqueue_assets() {
     $ver = wp_get_theme()->get( 'Version' );
+    $uri = get_template_directory_uri();
 
-    // Main CSS (compiled from SCSS)
-    wp_enqueue_style( 'cmb-main', get_template_directory_uri() . '/assets/css/main.css', [], $ver );
+    // CSS — luôn load
+    wp_enqueue_style( 'cmb-main', $uri . '/assets/css/main.css', [], $ver );
 
-    // Swiper CSS
-    wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', [], '11.0.0' );
+    // Google Fonts: dùng local nếu có (assets/css/fonts.css), fallback CDN
+    $local_fonts = get_template_directory() . '/assets/css/fonts.css';
+    if ( file_exists( $local_fonts ) ) {
+        wp_enqueue_style( 'cmb-fonts', $uri . '/assets/css/fonts.css', [], $ver );
+    } else {
+        // Preconnect để giảm DNS lookup time khi còn dùng CDN
+        add_action( 'wp_head', function() {
+            echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
+            echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+        }, 1 );
+        wp_enqueue_style( 'cmb-fonts', 'https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap', [], null );
+    }
 
-    // Google Fonts
-    wp_enqueue_style( 'cmb-fonts', 'https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap', [], null );
+    // Global JS — mọi trang
+    wp_enqueue_script( 'cmb-global', $uri . '/assets/js/global.js', [], $ver, true );
 
-    // Swiper JS
-    wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', [], '11.0.0', true );
+    // Trang chủ (homepage)
+    if ( is_front_page() ) {
+        wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );
+        wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
+        wp_enqueue_script( 'cmb-hero-slider',    $uri . '/assets/js/modules/hero-slider.js',    ['swiper', 'cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-history',        $uri . '/assets/js/modules/history.js',        ['cmb-global'],           $ver, true );
+        wp_enqueue_script( 'cmb-location-map',   $uri . '/assets/js/modules/location-map.js',   ['cmb-global'],           $ver, true );
+        wp_enqueue_script( 'cmb-field-swiper',   $uri . '/assets/js/modules/field-swiper.js',   ['swiper', 'cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'],           $ver, true );
+        wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'],           $ver, true );
+        wp_enqueue_script( 'cmb-news-swiper',    $uri . '/assets/js/modules/news-swiper.js',    ['swiper', 'cmb-global'], $ver, true );
+    }
 
-    // Main JS
-    wp_enqueue_script( 'cmb-main', get_template_directory_uri() . '/assets/js/main.js', [ 'swiper' ], $ver, true );
+    // Trang giới thiệu
+    if ( is_page( 'gioi-thieu' ) ) {
+        wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );
+        wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
+        wp_enqueue_script( 'cmb-leadership',   $uri . '/assets/js/modules/leadership-swiper.js', ['swiper', 'cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-stat-counter', $uri . '/assets/js/modules/stat-counter.js',      ['cmb-global'],           $ver, true );
+    }
 
-    // Truyền history milestones từ ACF sang JS
-    $milestones = [];
-    if ( function_exists( 'get_field' ) ) {
+    // Trang liên hệ
+    if ( is_page( 'lien-he' ) ) {
+        wp_enqueue_script( 'cmb-form-validation', $uri . '/assets/js/modules/form-validation.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-google-map',      $uri . '/assets/js/modules/google-map.js',      ['cmb-global'], $ver, true );
+    }
+
+    // Archive tin tức
+    if ( is_home() || ( is_archive() && get_post_type() === 'post' ) ) {
+        wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );
+        wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
+        wp_enqueue_script( 'cmb-news-swiper', $uri . '/assets/js/modules/news-swiper.js', ['swiper', 'cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-news-filter', $uri . '/assets/js/modules/news-filter.js', ['cmb-global'],           $ver, true );
+    }
+
+    // Single tin tức
+    if ( is_singular( 'post' ) ) {
+        wp_enqueue_script( 'cmb-gallery-lightbox', $uri . '/assets/js/modules/gallery-lightbox.js', ['cmb-global'], $ver, true );
+    }
+
+    // Archive thiết bị
+    if ( is_post_type_archive( 'thiet-bi' ) ) {
+        wp_enqueue_script( 'cmb-equipment-modal', $uri . '/assets/js/modules/equipment-modal.js', ['cmb-global'], $ver, true );
+    }
+
+    // Archive / single dự án
+    if ( is_post_type_archive( 'du-an' ) || is_singular( 'du-an' ) ) {
+        wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'], $ver, true );
+    }
+
+    // Quan hệ cổ đông
+    if ( is_post_type_archive( 'quan-he-co-dong' ) || is_singular( 'quan-he-co-dong' ) ) {
+        wp_enqueue_script( 'cmb-ir-tabs', $uri . '/assets/js/modules/ir-tabs.js', ['cmb-global'], $ver, true );
+    }
+
+    // CMB_Theme và CMB_Ajax — luôn cần cho global
+    wp_localize_script( 'cmb-global', 'CMB_Theme', [
+        'uri' => $uri,
+    ] );
+    wp_localize_script( 'cmb-global', 'CMB_Ajax', [
+        'url' => admin_url( 'admin-ajax.php' ),
+    ] );
+
+    // Localize ACF data chỉ cho trang chủ
+    if ( is_front_page() && function_exists( 'get_field' ) ) {
+
+        // History milestones
+        $milestones = [];
         $items = get_field( 'history_item', 'option' );
         if ( $items ) {
             foreach ( $items as $item ) {
@@ -116,14 +186,9 @@ function cmb_enqueue_assets() {
                 ];
             }
         }
-    }
-    wp_localize_script( 'cmb-main', 'CMB_History', $milestones );
+        wp_localize_script( 'cmb-global', 'CMB_History', $milestones );
 
-    // Location map data override từ ACF Options
-    // Tạo ACF Options group fields: location_hai_phong, location_nghe_an,
-    // location_tay_ninh, location_tp_hcm, location_dong_nai
-    // Mỗi group có sub-fields: project (Text), desc (Textarea), img (Image), link (URL)
-    if ( function_exists( 'get_field' ) ) {
+        // Location map data override từ ACF Options
         $loc_map = [
             'hai-phong' => 'location_hai_phong',
             'nghe-an'   => 'location_nghe_an',
@@ -158,19 +223,9 @@ function cmb_enqueue_assets() {
             }
         }
         if ( !empty( $location_data ) ) {
-            wp_localize_script( 'cmb-main', 'CMB_LocationData', $location_data );
+            wp_localize_script( 'cmb-global', 'CMB_LocationData', $location_data );
         }
     }
-
-    // Theme URI cho JS dùng build đường dẫn ảnh tĩnh
-    wp_localize_script( 'cmb-main', 'CMB_Theme', [
-        'uri' => get_template_directory_uri(),
-    ] );
-
-    // AJAX endpoint URL cho news filter
-    wp_localize_script( 'cmb-main', 'CMB_Ajax', [
-        'url' => admin_url( 'admin-ajax.php' ),
-    ] );
 }
 add_action( 'wp_enqueue_scripts', 'cmb_enqueue_assets' );
 
@@ -318,6 +373,323 @@ function cmb_field( $key, $fallback = '', $post_id = false ) {
     }
     return $fallback;
 }
+
+// ============================================================
+// HELPER: Get medal image src + alt từ ACF field value
+// ============================================================
+if ( ! function_exists( 'cmb_get_medal_img' ) ) {
+    function cmb_get_medal_img( $medal ) {
+        if ( empty( $medal['img'] ) ) return [ '', '' ];
+        $img = $medal['img'];
+        if ( is_numeric( $img ) ) {
+            $src = wp_get_attachment_image_src( (int) $img, 'large' );
+            return [
+                $src ? $src[0] : '',
+                get_post_meta( (int) $img, '_wp_attachment_image_alt', true ) ?: strip_tags( $medal['name'] ?? '' ),
+            ];
+        }
+        return [
+            is_array( $img ) ? ( $img['url'] ?? '' ) : $img,
+            is_array( $img ) ? ( $img['alt'] ?? strip_tags( $medal['name'] ?? '' ) ) : strip_tags( $medal['name'] ?? '' ),
+        ];
+    }
+}
+
+// ============================================================
+// TRANSIENT CACHE INVALIDATION
+// Xóa cache khi admin save/delete post thuộc các CPT
+// ============================================================
+function cmb_invalidate_cpt_cache( $post_id, $post ) {
+    if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) ) return;
+
+    switch ( $post->post_type ) {
+        case 'thiet-bi':
+            delete_transient( 'cmb_thiet_bi_grouped' );
+            break;
+
+        case 'quan-he-co-dong':
+            $terms = get_the_terms( $post_id, 'quan-he-co-dong-category' );
+            if ( $terms && ! is_wp_error( $terms ) ) {
+                foreach ( $terms as $term ) {
+                    delete_transient( 'cmb_ir_grouped_'  . $term->term_id );
+                    delete_transient( 'cmb_ir_featured_' . $term->term_id );
+                }
+            }
+            break;
+
+        case 'du-an':
+            delete_transient( 'cmb_featured_du_an_id' );
+            break;
+    }
+}
+add_action( 'save_post',   'cmb_invalidate_cpt_cache', 10, 2 );
+add_action( 'delete_post', function( $post_id ) {
+    $post = get_post( $post_id );
+    if ( $post ) cmb_invalidate_cpt_cache( $post_id, $post );
+} );
+
+// ============================================================
+// SECURITY: Tắt XML-RPC + ẩn user enumeration qua REST API
+// ============================================================
+add_filter( 'xmlrpc_enabled', '__return_false' );
+
+add_filter( 'wp_headers', function( $headers ) {
+    unset( $headers['X-Pingback'] );
+    return $headers;
+} );
+
+add_filter( 'rest_endpoints', function( $endpoints ) {
+    if ( ! current_user_can( 'administrator' ) ) {
+        unset( $endpoints['/wp/v2/users'] );
+        unset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] );
+    }
+    return $endpoints;
+} );
+
+// ============================================================
+// PERFORMANCE: Preload LCP (hero) image — priority 1 = output sớm nhất
+// ============================================================
+add_action( 'wp_head', function() {
+    $preload_url = '';
+
+    // Front page: lấy ảnh slide đầu tiên từ ACF
+    if ( is_front_page() && function_exists( 'get_field' ) ) {
+        $slides = get_field( 'slide_banner', 'option' );
+        if ( ! empty( $slides[0]['img']['url'] ) ) {
+            $preload_url = $slides[0]['img']['url'];
+        }
+    }
+
+    // Trang đơn có featured image
+    if ( ! $preload_url && is_singular() && has_post_thumbnail() ) {
+        $preload_url = get_the_post_thumbnail_url( null, 'large' );
+    }
+
+    // Fallback: ảnh hero mặc định của theme
+    if ( ! $preload_url ) {
+        $preload_url = get_template_directory_uri() . '/assets/images/hero_port.jpg';
+    }
+
+    $ext      = strtolower( pathinfo( wp_parse_url( $preload_url, PHP_URL_PATH ), PATHINFO_EXTENSION ) );
+    $type_map = [
+        'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg',
+        'png' => 'image/png',  'webp' => 'image/webp',
+        'svg' => 'image/svg+xml',
+    ];
+    $preload_type = $type_map[ $ext ] ?? 'image/jpeg';
+
+    echo '<link rel="preload" as="image" href="' . esc_url( $preload_url ) . '" type="' . esc_attr( $preload_type ) . '">' . "\n";
+}, 1 );
+
+// WordPress core tự output rel_canonical — xóa để tránh trùng với canonical của chúng ta
+remove_action( 'wp_head', 'rel_canonical' );
+
+// ============================================================
+// SEO: Meta Description + Canonical + Open Graph + Twitter Card
+// ============================================================
+add_action( 'wp_head', function() {
+    global $post;
+
+    // Title
+    if ( is_singular() && ! empty( $post ) ) {
+        $title = get_the_title( $post );
+    } elseif ( is_home() || is_front_page() ) {
+        $title = get_bloginfo( 'name' ) . ' — ' . get_bloginfo( 'description' );
+    } else {
+        $title = wp_title( '—', false, 'right' ) . get_bloginfo( 'name' );
+    }
+
+    // Description
+    $desc = get_bloginfo( 'description' );
+    if ( is_singular() && ! empty( $post ) ) {
+        $raw     = has_excerpt() ? get_the_excerpt( $post ) : wp_strip_all_tags( get_the_content( null, false, $post ) );
+        $trimmed = wp_trim_words( $raw, 30, '...' );
+        if ( $trimmed ) $desc = $trimmed;
+    }
+
+    // Canonical URL
+    $url = is_singular() ? (string) get_permalink() : ( is_home() ? home_url( '/' ) : (string) get_pagenum_link() );
+
+    // OG image: featured → ACF logo → nothing
+    $image = '';
+    if ( is_singular() && has_post_thumbnail() ) {
+        $image = (string) get_the_post_thumbnail_url( null, 'large' );
+    }
+    if ( ! $image && function_exists( 'get_field' ) ) {
+        $logo  = get_field( 'logo', 'option' );
+        $image = is_array( $logo ) ? ( $logo['url'] ?? '' ) : (string) $logo;
+    }
+
+    // --- Meta description & canonical (Google SERP) ---
+    echo '<meta name="description" content="' . esc_attr( $desc ) . '">' . "\n";
+    echo '<link rel="canonical" href="' . esc_url( $url ) . '">' . "\n";
+
+    // --- Open Graph ---
+    $og_type = is_singular( 'post' ) ? 'article' : 'website';
+    echo '<meta property="og:locale"      content="vi_VN">' . "\n";
+    echo '<meta property="og:type"        content="' . esc_attr( $og_type ) . '">' . "\n";
+    echo '<meta property="og:site_name"   content="' . esc_attr( get_bloginfo( 'name' ) ) . '">' . "\n";
+    echo '<meta property="og:url"         content="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:title"       content="' . esc_attr( $title ) . '">' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr( $desc ) . '">' . "\n";
+    if ( $image ) {
+        echo '<meta property="og:image"        content="' . esc_url( $image ) . '">' . "\n";
+        echo '<meta property="og:image:width"  content="1200">' . "\n";
+        echo '<meta property="og:image:height" content="630">' . "\n";
+        echo '<meta property="og:image:alt"    content="' . esc_attr( $title ) . '">' . "\n";
+    }
+
+    // Article-specific: published/modified time
+    if ( $og_type === 'article' && ! empty( $post ) ) {
+        $pub = get_the_date( DATE_ATOM, $post );
+        $mod = get_the_modified_date( DATE_ATOM, $post );
+        if ( $pub ) echo '<meta property="article:published_time" content="' . esc_attr( $pub ) . '">' . "\n";
+        if ( $mod ) echo '<meta property="article:modified_time"  content="' . esc_attr( $mod ) . '">' . "\n";
+    }
+
+    // --- Twitter Card ---
+    echo '<meta name="twitter:card"        content="summary_large_image">' . "\n";
+    echo '<meta name="twitter:title"       content="' . esc_attr( $title ) . '">' . "\n";
+    echo '<meta name="twitter:description" content="' . esc_attr( $desc ) . '">' . "\n";
+    if ( $image ) {
+        echo '<meta name="twitter:image" content="' . esc_url( $image ) . '">' . "\n";
+    }
+}, 2 );
+
+// ============================================================
+// SEO: JSON-LD Schema — Organization + BreadcrumbList
+// ============================================================
+add_action( 'wp_head', function() {
+    $site_name = get_bloginfo( 'name' );
+    $site_url  = home_url( '/' );
+
+    // Dữ liệu công ty từ ACF Options
+    $logo_url = $phone = $email = $address = '';
+    if ( function_exists( 'get_field' ) ) {
+        $logo     = get_field( 'logo', 'option' );
+        $logo_url = is_array( $logo ) ? ( $logo['url'] ?? '' ) : (string) $logo;
+        $phone    = (string) ( get_field( 'company_phone',   'option' ) ?: '' );
+        $email    = (string) ( get_field( 'company_email',   'option' ) ?: '' );
+        $address  = (string) ( get_field( 'company_address', 'option' ) ?: '' );
+    }
+
+    $schema = [
+        '@context'     => 'https://schema.org',
+        '@type'        => [ 'Organization', 'LocalBusiness' ],
+        'name'         => $site_name,
+        'url'          => $site_url,
+        'foundingDate' => '1997',
+        'areaServed'   => 'Vietnam',
+    ];
+    if ( $logo_url ) {
+        $schema['logo']  = [ '@type' => 'ImageObject', 'url' => $logo_url ];
+        $schema['image'] = $logo_url;
+    }
+    if ( $phone ) {
+        $schema['telephone'] = trim( explode( "\n", $phone )[0] );
+    }
+    if ( $email ) {
+        $schema['email'] = trim( explode( "\n", $email )[0] );
+    }
+    if ( $address ) {
+        $schema['address'] = [
+            '@type'          => 'PostalAddress',
+            'streetAddress'  => wp_strip_all_tags( $address ),
+            'addressCountry' => 'VN',
+        ];
+    }
+
+    echo '<script type="application/ld+json">' . "\n";
+    echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
+    echo "\n</script>\n";
+
+    // NewsArticle schema cho bài viết đơn
+    if ( is_singular( 'post' ) ) {
+        global $post;
+        $article = [
+            '@context'      => 'https://schema.org',
+            '@type'         => 'NewsArticle',
+            'headline'      => get_the_title( $post ),
+            'url'           => get_permalink( $post ),
+            'datePublished' => get_the_date( DATE_ATOM, $post ),
+            'dateModified'  => get_the_modified_date( DATE_ATOM, $post ),
+            'inLanguage'    => 'vi',
+            'description'   => wp_trim_words( wp_strip_all_tags( get_the_excerpt( $post ) ?: get_the_content( null, false, $post ) ), 30, '...' ),
+            'publisher'     => [
+                '@type' => 'Organization',
+                'name'  => $site_name,
+                'url'   => $site_url,
+            ],
+        ];
+        if ( $logo_url ) {
+            $article['publisher']['logo'] = [ '@type' => 'ImageObject', 'url' => $logo_url ];
+        }
+        if ( has_post_thumbnail( $post ) ) {
+            $article['image'] = [ '@type' => 'ImageObject', 'url' => get_the_post_thumbnail_url( $post, 'large' ) ];
+        }
+        $author_name = get_the_author_meta( 'display_name', $post->post_author );
+        if ( $author_name ) {
+            $article['author'] = [ '@type' => 'Person', 'name' => $author_name ];
+        }
+        echo '<script type="application/ld+json">' . "\n";
+        echo wp_json_encode( $article, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
+        echo "\n</script>\n";
+    }
+
+    // BreadcrumbList (bỏ qua trang chủ)
+    if ( is_front_page() || is_home() ) return;
+
+    $items   = [ [ '@type' => 'ListItem', 'position' => 1, 'name' => 'Trang chủ', 'item' => $site_url ] ];
+    $pos     = 2;
+
+    if ( is_singular() ) {
+        $post_type = get_post_type();
+        if ( ! in_array( $post_type, [ 'post', 'page' ], true ) ) {
+            $archive_url = get_post_type_archive_link( $post_type );
+            if ( $archive_url ) {
+                $pt_label  = get_post_type_object( $post_type )->label ?? $post_type;
+                $items[]   = [ '@type' => 'ListItem', 'position' => $pos++, 'name' => $pt_label, 'item' => $archive_url ];
+            }
+        }
+        $items[] = [ '@type' => 'ListItem', 'position' => $pos, 'name' => get_the_title(), 'item' => (string) get_permalink() ];
+    } elseif ( is_post_type_archive() || is_archive() ) {
+        $pt_obj  = get_post_type_object( get_post_type() );
+        $label   = $pt_obj ? $pt_obj->label : (string) get_queried_object()->label;
+        $items[] = [ '@type' => 'ListItem', 'position' => $pos, 'name' => $label, 'item' => (string) get_pagenum_link() ];
+    } elseif ( is_page() ) {
+        $items[] = [ '@type' => 'ListItem', 'position' => $pos, 'name' => get_the_title(), 'item' => (string) get_permalink() ];
+    }
+
+    $breadcrumb = [
+        '@context'        => 'https://schema.org',
+        '@type'           => 'BreadcrumbList',
+        'itemListElement' => $items,
+    ];
+
+    echo '<script type="application/ld+json">' . "\n";
+    echo wp_json_encode( $breadcrumb, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
+    echo "\n</script>\n";
+}, 3 );
+
+// ============================================================
+// SEO: Meta Robots — cho phép Google lấy preview dài + ảnh lớn
+// ============================================================
+add_action( 'wp_head', function() {
+    echo '<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">' . "\n";
+}, 4 );
+
+// ============================================================
+// SEO: robots.txt — thêm Disallow + Sitemap (tự đổi domain đúng)
+// ============================================================
+add_filter( 'robots_txt', function( $output, $public ) {
+    if ( ! $public ) return $output;
+    $output .= "Disallow: /wp-includes/\n";
+    $output .= "Disallow: /wp-login.php\n";
+    $output .= "Disallow: /?s=\n";
+    $output .= "Disallow: /search/\n";
+    $output .= "\nSitemap: " . home_url( '/wp-sitemap.xml' ) . "\n";
+    return $output;
+}, 10, 2 );
 
 // Allow SVG uploads
 add_filter( 'upload_mimes', function( $mimes ) {

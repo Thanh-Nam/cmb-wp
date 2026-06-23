@@ -1,4 +1,4 @@
-// ============================================
+﻿// ============================================
 // PROJECT / P-CONTACT
 // CTA section — Dịch vụ tư vấn
 // ============================================
@@ -7,7 +7,7 @@
 .p-contact {
   position: relative;
   overflow: hidden;
-  background-image: url('../images/bg-contact.png');
+  background-image: url('../images/bg-contact.webp');
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -81,7 +81,7 @@
   @include sp {
     padding-top: 10vw;
     padding-bottom: 30vw;
-    background-image: url('../images/bg-contact-sp.png');
+    background-image: url('../images/bg-contact-sp.webp');
     background-position: center top;
 
     &__inner {

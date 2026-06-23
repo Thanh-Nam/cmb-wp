@@ -1,4 +1,4 @@
-// ============================================
+﻿// ============================================
 // LAYOUT / HEADER  (prefix: l-)
 // FLOCSS: Layout layer — PC First
 // Cấu trúc: topbar (email/lang) + main (logo/nav/search)
@@ -23,15 +23,15 @@ $header-bp: 1023px;
   right: 0;
   z-index: $z-header;
 
-  // bg-header.png phủ toàn bộ header (topbar + main)
+  // bg-header.webp phủ toàn bộ header (topbar + main)
   background-color: #fff; // fallback khi ảnh chưa load
-  background-image: url('../images/bg-header.png');
+  background-image: url('../images/bg-header.webp');
   background-size: cover;
   background-position: left center;
   background-repeat: no-repeat;
   transition: box-shadow $transition-normal, background-position $transition-normal;
 
-  // Container header dùng 1600px để khớp tỉ lệ bg-header.png
+  // Container header dùng 1600px để khớp tỉ lệ bg-header.webp
   .l-container {
     max-width: 1600px;
     position: relative;
@@ -63,7 +63,7 @@ $header-bp: 1023px;
       left: 0;
       width: calc((100vw - 1920px) / 2);
       height: 100%;
-      background-color: #0061a6; // khớp cạnh trái bg-header.png
+      background-color: #0061a6; // khớp cạnh trái bg-header.webp
       z-index: 0;
     }
 
@@ -74,7 +74,7 @@ $header-bp: 1023px;
       right: 0;
       width: calc((100vw - 1920px) / 2);
       height: $header-topbar-height;
-      background-color: #0398e7; // khớp màu topbar cạnh phải bg-header.png
+      background-color: #0398e7; // khớp màu topbar cạnh phải bg-header.webp
       z-index: 0;
     }
   }
@@ -235,7 +235,7 @@ $header-bp: 1023px;
 // l-header__main — Row chứa logo + nav + search
 // ============================================
 .l-header__main {
-  // Không cần background riêng — dùng bg-header.png từ l-header
+  // Không cần background riêng — dùng bg-header.webp từ l-header
   background: transparent;
   display: flex;
   align-items: center;
@@ -259,7 +259,7 @@ $header-bp: 1023px;
   gap: rem(12);
   text-decoration: none;
   flex-shrink: 0;
-  // Đẩy nav qua đường cong xanh của bg-header.png (cố định ~510px từ trái sau cover scale)
+  // Đẩy nav qua đường cong xanh của bg-header.webp (cố định ~510px từ trái sau cover scale)
   min-width: 350px;
   transition: all $transition-normal;
 
@@ -483,7 +483,7 @@ $header-bp: 1023px;
     font-weight: $font-weight-medium;
     line-height: 1.47;
 
-    // Nav nằm trên vùng TRẮNG của bg-header.png → màu tối
+    // Nav nằm trên vùng TRẮNG của bg-header.webp → màu tối
     color: $color-cmb-navy;
     text-decoration: none;
     white-space: nowrap;

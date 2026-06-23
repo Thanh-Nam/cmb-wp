@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 *,
 *::before,
 *::after {
@@ -337,7 +337,7 @@ hr {
   right: 0;
   z-index: 300;
   background-color: #fff;
-  background-image: url("../images/bg-header.png");
+  background-image: url("../images/bg-header.webp");
   background-size: cover;
   background-position: left center;
   background-repeat: no-repeat;
@@ -1114,7 +1114,7 @@ hr {
 }
 
 .l-footer {
-  background-image: url("../images/bg-footer.png");
+  background-image: url("../images/bg-footer.webp");
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
@@ -1142,7 +1142,7 @@ hr {
     bottom: calc(100% - 1px);
     width: 100%;
     height: 25vw;
-    background-image: url("../images/bg-footer-sp.png");
+    background-image: url("../images/bg-footer-sp.webp");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     pointer-events: none;
@@ -1946,7 +1946,7 @@ body.search-overlay-open {
   position: relative;
   width: 100%;
   padding: 11.4rem 0 23.7rem;
-  background-image: url("../images/bg-about.png");
+  background-image: url("../images/bg-about.webp");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -2704,7 +2704,7 @@ body.search-overlay-open {
 .p-info__bg {
   position: absolute;
   inset: 8rem 0;
-  background-image: url("../images/bg-info.png");
+  background-image: url("../images/bg-info.webp");
   background-repeat: no-repeat;
   background-size: 92% 100%;
   background-position: left center;
@@ -2729,7 +2729,7 @@ body.search-overlay-open {
 @media (max-width: 1023px) {
   .p-info__card {
     border-radius: 16px;
-    background-image: url("../images/bg-info-sp.png");
+    background-image: url("../images/bg-info-sp.webp");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center top;
@@ -3319,7 +3319,7 @@ body.search-overlay-open {
   position: relative;
   overflow: hidden;
   padding: 8rem 0;
-  background: #FFFFFF url("../images/bg-location.png") center center/cover no-repeat;
+  background: #FFFFFF url("../images/bg-location.webp") center center/cover no-repeat;
 }
 @media (max-width: 1023px) {
   .p-location {
@@ -4702,7 +4702,7 @@ body.search-overlay-open {
 .p-contact {
   position: relative;
   overflow: hidden;
-  background-image: url("../images/bg-contact.png");
+  background-image: url("../images/bg-contact.webp");
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -4772,7 +4772,7 @@ body.search-overlay-open {
   .p-contact {
     padding-top: 10vw;
     padding-bottom: 30vw;
-    background-image: url("../images/bg-contact-sp.png");
+    background-image: url("../images/bg-contact-sp.webp");
     background-position: center top;
   }
   .p-contact__inner {

@@ -49,7 +49,7 @@
         <div class="l-footer__top">
           <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="l-footer__logo" id="footer-logo" title="CMB - Trang chủ">
             <img src="<?php echo esc_url( $acf_logo_url ?: get_template_directory_uri() . '/assets/images/Company Logo.svg' ); ?>"
-              alt="Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải" class="l-footer__logo-img" />
+              alt="Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải" class="l-footer__logo-img" loading="lazy" />
             <span class="l-footer__logo-name">CÔNG TY CỔ PHẦN TƯ VẤN XÂY DỰNG CÔNG TRÌNH HÀNG HẢI</span>
           </a>
         </div>

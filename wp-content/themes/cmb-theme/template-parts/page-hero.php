@@ -9,7 +9,7 @@ $image    = function_exists('get_field') ? get_field('page_hero_image')    : '';
 ?>
 <section class="c-page-hero">
   <?php if ( $image ) : ?>
-    <img src="<?php echo esc_url( is_array($image) ? $image['url'] : $image ); ?>" alt="" class="c-page-hero__bg" />
+    <img src="<?php echo esc_url( is_array($image) ? $image['url'] : $image ); ?>" alt="" class="c-page-hero__bg" loading="eager" />
   <?php endif; ?>
   <div class="c-page-hero__overlay"></div>
   <div class="l-container">
