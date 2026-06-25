@@ -1,8 +1,8 @@
 node_modules/
-wp-content/uploads/
 wp-content/cache/
 wp-content/upgrade/
 wp-content/backups-dup-lite/
 *.log
 .DS_Store
 Thumbs.db
+wp-config.php

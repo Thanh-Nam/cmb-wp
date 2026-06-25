@@ -1,0 +1,7 @@
+<svg width="240" height="160" viewBox="0 0 240 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Oil drop icon -->
+  <path d="M120 20 C120 20 96 52 96 68 A24 24 0 0 0 144 68 C144 52 120 20 120 20Z" fill="#F5A623"/>
+  <path d="M120 36 C120 36 108 56 108 67 A12 12 0 0 0 132 67 C132 56 120 36 120 36Z" fill="white" opacity="0.4"/>
+  <text x="120" y="115" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="#004B8D" text-anchor="middle" letter-spacing="0.5">PETRO</text>
+  <text x="120" y="133" font-family="Arial, sans-serif" font-size="9" fill="#F5A623" text-anchor="middle" letter-spacing="1">VIETNAM</text>
+</svg>
