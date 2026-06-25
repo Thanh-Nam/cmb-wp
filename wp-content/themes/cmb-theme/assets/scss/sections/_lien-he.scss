@@ -357,6 +357,109 @@
 }
 
 
+// ======= 4b. CF7 OVERRIDES =======
+// CF7 bọc mỗi field bằng <span class="wpcf7-form-control-wrap">, cần reset để không vỡ flex layout
+.p-lh-form {
+  .wpcf7-form-control-wrap {
+    display: block;
+    width: 100%;
+  }
+
+  // Acceptance field: wpautop thêm <p> bọc ngoài → reset để không vỡ flex
+  &__checkbox-wrap {
+    > p { margin: 0; display: contents; }
+
+    .wpcf7-form-control-wrap {
+      display: inline;
+      width: auto;
+    }
+
+    .wpcf7-list-item {
+      display: flex;
+      align-items: flex-start;
+      margin: 0;
+    }
+
+    label {
+      display: flex;
+      align-items: flex-start;
+      gap: rem(10);
+      cursor: pointer;
+    }
+
+    input[type='checkbox'] {
+      width: rem(16);
+      height: rem(16);
+      margin-top: rem(2);
+      flex-shrink: 0;
+      accent-color: $color-primary;
+      cursor: pointer;
+    }
+
+    .wpcf7-list-item-label {
+      font-family: $font-secondary;
+      font-size: rem(13);
+      color: $color-text-muted;
+      line-height: 1.55;
+
+      a {
+        color: $color-primary;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+    }
+  }
+
+  // Validation error tip
+  .wpcf7-not-valid-tip {
+    display: block;
+    font-size: rem(11);
+    color: $color-accent;
+    margin-top: rem(4);
+  }
+}
+
+// CF7 form cần flex:1 để fill hết chiều cao form-wrap (giống static HTML)
+.p-lh-body__form-wrap {
+  .wpcf7 {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .wpcf7-form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+}
+
+// Response message (success / error)
+.p-lh-body__form-wrap .wpcf7-response-output {
+  margin-top: rem(16);
+  padding: rem(11) rem(14);
+  border-radius: rem(6);
+  font-family: $font-secondary;
+  font-size: rem(13);
+  border-width: 1px;
+  border-style: solid;
+
+  &.wpcf7-mail-sent-ok {
+    background: rgba(#22c55e, 0.08);
+    border-color: #22c55e;
+    color: #166534;
+  }
+
+  &.wpcf7-mail-sent-ng,
+  &.wpcf7-validation-errors,
+  &.wpcf7-spam-blocked {
+    background: rgba($color-accent, 0.08);
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+}
+
+
 // ======= 5. MAP SECTION =======
 .p-lh-map {
   padding: rem(96) 0 rem(200);

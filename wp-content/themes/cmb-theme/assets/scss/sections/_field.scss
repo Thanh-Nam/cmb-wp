@@ -141,7 +141,9 @@
   }
 
   // ------ Slide ------
-  &__slide {
+  // Dùng 2-class specificity (.p-field__swiper .p-field__slide) để thắng
+  // Swiper CSS (.swiper-slide { width: 100% }) bất kể thứ tự load stylesheet.
+  &__swiper &__slide {
     width: rem(370);
     height: auto;
 

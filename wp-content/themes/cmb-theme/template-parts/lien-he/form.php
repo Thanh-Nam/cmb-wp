@@ -33,7 +33,7 @@ $privacy_url = function_exists('get_privacy_policy_url') && get_privacy_policy_u
       <div class="p-lh-body__form-wrap" data-reveal="fade-left">
         <h2 id="form-title" class="p-lh-body__form-title">GỬI THÔNG TIN LIÊN HỆ</h2>
 
-        <?php if ($cf7_html) : ?>
+        <?php if (get_the_content()) : the_content(); elseif ($cf7_html) : ?>
           <?php echo $cf7_html; ?>
         <?php else : ?>
         <form class="p-lh-form" id="contact-form" action="#" method="post" novalidate aria-label="Form liên hệ">

@@ -708,3 +708,35 @@ add_filter( 'wp_check_filetype_and_ext', function( $data, $file, $filename, $mim
     }
     return $data;
 }, 10, 4 );
+
+// ============================================================
+// ADMIN: Đổi nhãn "Bài viết" → "Tin tức & Sự kiện"
+// ============================================================
+add_action( 'init', function() {
+    global $wp_post_types;
+    if ( isset( $wp_post_types['post'] ) ) {
+        $labels = $wp_post_types['post']->labels;
+        $labels->name               = 'Tin tức & Sự kiện';
+        $labels->singular_name      = 'Tin tức';
+        $labels->add_new            = 'Thêm mới';
+        $labels->add_new_item       = 'Thêm tin tức mới';
+        $labels->edit_item          = 'Sửa tin tức';
+        $labels->new_item           = 'Tin tức mới';
+        $labels->view_item          = 'Xem tin tức';
+        $labels->search_items       = 'Tìm tin tức';
+        $labels->not_found          = 'Không tìm thấy tin tức nào';
+        $labels->not_found_in_trash = 'Không có tin tức trong thùng rác';
+        $labels->all_items          = 'Tất cả tin tức';
+        $labels->menu_name          = 'Tin tức';
+    }
+} );
+
+// ACF Local JSON — lưu field groups vào theme để track bằng git
+add_filter('acf/settings/save_json', function () {
+    return get_stylesheet_directory() . '/acf-json';
+});
+add_filter('acf/settings/load_json', function ($paths) {
+    $paths[] = get_stylesheet_directory() . '/acf-json';
+    return $paths;
+});
+

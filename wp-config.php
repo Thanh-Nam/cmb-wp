@@ -91,6 +91,12 @@ define( 'WP_DEBUG', false );
 
 
 
+define( 'WP_SITEURL', 'http://localhost/CMB' );
+define( 'WP_HOME', 'http://localhost/CMB' );
+define( 'COOKIEPATH', '/CMB/' );
+define( 'SITECOOKIEPATH', '/CMB/' );
+define( 'ADMIN_COOKIE_PATH', '/CMB/' );
+
 /* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */

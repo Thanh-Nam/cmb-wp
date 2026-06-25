@@ -7,7 +7,7 @@
 $ir_terms = get_terms([
     'taxonomy'   => 'quan-he-co-dong-category',
     'hide_empty' => true,
-    'orderby'    => 'term_order',
+    'orderby'    => 'name',
     'order'      => 'ASC',
 ]);
 if (is_wp_error($ir_terms)) $ir_terms = [];
@@ -137,19 +137,21 @@ if (empty($ir_terms)) : ?>
                 <?php foreach ($posts as $post_data) :
                   $highlight  = ($first_year && $first_post) ? ' p-ir-timeline__item--highlight' : '';
                   $first_post = false;
-                  $href       = $post_data['pdf_url'] ?: $post_data['permalink'];
-                  $dl_attr    = $post_data['pdf_url'] ? ' download' : '';
                 ?>
-                <a href="<?php echo esc_url($href); ?>" class="p-ir-timeline__item<?php echo $highlight; ?>"<?php echo $dl_attr; ?>>
+                <div class="p-ir-timeline__item<?php echo $highlight; ?>">
                   <span class="p-ir-timeline__date"><?php echo esc_html($post_data['date_md']); ?></span>
-                  <p class="p-ir-timeline__title"><?php echo esc_html($post_data['title']); ?></p>
-                  <span class="p-ir-timeline__action" aria-label="Tải tài liệu">
+                  <a href="<?php echo esc_url($post_data['permalink']); ?>" class="p-ir-timeline__title"><?php echo esc_html($post_data['title']); ?></a>
+                  <?php if ($post_data['pdf_url']) : ?>
+                  <a href="<?php echo esc_url($post_data['pdf_url']); ?>" class="p-ir-timeline__action" aria-label="Tải PDF" download>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                       <path d="M8 2V10M8 10L5 7M8 10L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                       <path d="M2 13H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
                     </svg>
-                  </span>
-                </a>
+                  </a>
+                  <?php else : ?>
+                  <span></span>
+                  <?php endif; ?>
+                </div>
                 <?php endforeach; ?>
               </div>
             </div>
@@ -168,12 +170,9 @@ if (empty($ir_terms)) : ?>
             </div>
             <?php if (!empty($feat_data)) : ?>
             <ul class="p-ir-featured__list" role="list">
-              <?php foreach ($feat_data as $doc) :
-                $href    = $doc['pdf_url'] ?: $doc['permalink'];
-                $dl_attr = $doc['pdf_url'] ? ' download' : '';
-              ?>
+              <?php foreach ($feat_data as $doc) : ?>
               <li>
-                <a href="<?php echo esc_url($href); ?>" class="p-ir-feat-doc"<?php echo $dl_attr; ?>>
+                <a href="<?php echo esc_url($doc['permalink']); ?>" class="p-ir-feat-doc">
                   <div class="p-ir-feat-doc__thumb">
                     <?php if ($doc['thumb_src']) : ?>
                     <img src="<?php echo esc_url($doc['thumb_src']); ?>"
@@ -195,10 +194,19 @@ if (empty($ir_terms)) : ?>
                         <rect x="1" y="0.5" width="10" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
                         <path d="M3.5 4H8.5M3.5 6.5H6.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
                       </svg>
-                      <span>PDF<?php echo $doc['size'] ? ' · ' . esc_html($doc['size']) : ''; ?></span>
+                      <span><?php echo $doc['size'] ? esc_html($doc['size']) : 'Xem chi tiết'; ?></span>
                     </div>
                   </div>
                 </a>
+                <?php if ($doc['pdf_url']) : ?>
+                <a href="<?php echo esc_url($doc['pdf_url']); ?>" class="p-ir-feat-doc__download" aria-label="Tải PDF" download>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M8 2V10M8 10L5 7M8 10L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 13H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                  Tải PDF
+                </a>
+                <?php endif; ?>
               </li>
               <?php endforeach; ?>
             </ul>
