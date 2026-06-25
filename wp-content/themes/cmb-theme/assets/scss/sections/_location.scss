@@ -297,6 +297,7 @@
     position: relative;
     width: 100%;
     user-select: none;
+    container-type: inline-size; // cho phép cqw trong children track map-wrap width
     // overflow: visible allows wheel to orbit outside map edges
   }
 
@@ -371,9 +372,9 @@
   //   → rotation center = (50%, 50%) = map center ✓
   // ============================================
   &__map-wrap {
-    // CSS custom property: orbit radius — responsive
-    // map radius ≈ 50% container, orbit ≈ 55-80% of map radius
-    --orbit-r: clamp(130px, 27vw, 290px);
+    // orbit-r = bán kính vòng tròn ngoài SVG: r=489 trong viewBox 980 → 49.9% width
+    // cqw = 1% của map-wrap inline-size (nhờ container-type: inline-size ở trên)
+    --orbit-r: 49.9cqw;
   }
 
   &__wheel-pivot {

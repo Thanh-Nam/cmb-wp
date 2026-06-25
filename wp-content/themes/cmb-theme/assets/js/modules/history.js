@@ -124,10 +124,11 @@
   (function initHistoryShipActivation() {
     var section = document.querySelector('.p-history');
     var pathEl = document.getElementById('ship-route');
+    var svgEl = document.querySelector('.p-history__ship-svg');
     var slots = Array.from(document.querySelectorAll('.p-history__item'));
-    if (!pathEl || !slots.length) return;
+    if (!pathEl || !svgEl || !slots.length) return;
 
-    var DUR = 22000; // ms — phải khớp với dur="22s" trong animateMotion
+    var DUR_S = 22; // seconds — phải khớp với dur="22s" trong animateMotion
 
     var COORDS = [
       { x: 67.5, y: 690.0 },
@@ -153,8 +154,9 @@
 
     var rafStarted = false;
 
-    function tick(now) {
-      var progress = (now % DUR) / DUR;
+    function tick() {
+      // Dùng SVG clock thay vì performance.now() để luôn sync với SMIL animateMotion
+      var progress = (svgEl.getCurrentTime() % DUR_S) / DUR_S;
 
       var activeIndex = 0;
       for (var i = 0; i < fractions.length; i++) {
