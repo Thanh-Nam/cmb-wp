@@ -6,3 +6,4 @@ wp-content/backups-dup-lite/
 .DS_Store
 Thumbs.db
 wp-config.php
+.claude/worktrees/
