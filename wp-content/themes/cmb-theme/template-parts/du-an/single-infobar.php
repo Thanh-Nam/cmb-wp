@@ -23,7 +23,7 @@ $services = get_field('project_services');
           </svg>
         </div>
         <span class="p-project-infobar__label">CHỦ ĐẦU TƯ</span>
-        <span class="p-project-infobar__value"><?php echo esc_html($owner); ?></span>
+        <span class="p-project-infobar__value"><?php echo $owner; ?></span>
       </div>
       <?php endif; ?>
 
@@ -36,7 +36,7 @@ $services = get_field('project_services');
           </svg>
         </div>
         <span class="p-project-infobar__label">ĐỊA ĐIỂM</span>
-        <span class="p-project-infobar__value"><?php echo esc_html($location); ?></span>
+        <span class="p-project-infobar__value"><?php echo $location; ?></span>
       </div>
       <?php endif; ?>
 
@@ -49,7 +49,7 @@ $services = get_field('project_services');
           </svg>
         </div>
         <span class="p-project-infobar__label">QUY MÔ</span>
-        <span class="p-project-infobar__value"><?php echo esc_html($scale); ?></span>
+        <span class="p-project-infobar__value"><?php echo $scale; ?></span>
       </div>
       <?php endif; ?>
 
@@ -62,7 +62,7 @@ $services = get_field('project_services');
           </svg>
         </div>
         <span class="p-project-infobar__label">THỜI GIAN</span>
-        <span class="p-project-infobar__value"><?php echo esc_html($timeline); ?></span>
+        <span class="p-project-infobar__value"><?php echo $timeline; ?></span>
       </div>
       <?php endif; ?>
 
@@ -77,7 +77,7 @@ $services = get_field('project_services');
           </svg>
         </div>
         <span class="p-project-infobar__label">DỊCH VỤ TƯ VẤN CHÍNH</span>
-        <span class="p-project-infobar__value"><?php echo esc_html($services); ?></span>
+        <span class="p-project-infobar__value"><?php echo $services; ?></span>
       </div>
       <?php endif; ?>
 

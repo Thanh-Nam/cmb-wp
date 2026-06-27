@@ -32,7 +32,7 @@ $tech_specs    = get_field('project_tech_specs');
             <div class="p-project-services__item" id="service-<?php echo $i + 1; ?>">
               <div class="p-project-services__icon" aria-hidden="true">
                 <?php if (!empty($service['icon'])) : ?>
-                <img src="<?php echo esc_url($service['icon']['url']); ?>" alt="" width="28" height="28" loading="lazy" />
+                <img src="<?php echo $service['icon']['url']; ?>" alt="" width="28" height="28" loading="lazy" />
                 <?php else : ?>
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                   <rect x="5" y="3" width="15" height="20" rx="2" stroke="#0379CC" stroke-width="1.5"/>
@@ -40,7 +40,7 @@ $tech_specs    = get_field('project_tech_specs');
                 </svg>
                 <?php endif; ?>
               </div>
-              <span class="p-project-services__label"><?php echo esc_html($service['label']); ?></span>
+              <span class="p-project-services__label"><?php echo $service['label']; ?></span>
             </div>
             <?php endforeach; ?>
           </div>
@@ -53,8 +53,8 @@ $tech_specs    = get_field('project_tech_specs');
           <div class="p-project-gallery" id="project-gallery">
             <?php foreach ($gallery as $i => $img) : ?>
             <figure class="p-project-gallery__item" data-lightbox-index="<?php echo $i; ?>">
-              <img src="<?php echo esc_url($img['url']); ?>"
-                   alt="<?php echo esc_attr($img['alt']); ?>"
+              <img src="<?php echo $img['url']; ?>"
+                   alt="<?php echo $img['alt']; ?>"
                    class="p-project-gallery__img" loading="lazy" />
             </figure>
             <?php endforeach; ?>
@@ -91,7 +91,7 @@ $tech_specs    = get_field('project_tech_specs');
                 </svg>
               </div>
               <div class="p-project-info-card__text">
-                <span class="p-project-info-card__label"><?php echo esc_html($spec['label']); ?></span>
+                <span class="p-project-info-card__label"><?php echo $spec['label']; ?></span>
                 <span class="p-project-info-card__value"><?php echo wp_kses($spec['value'] ?? '', ['br' => []]); ?></span>
               </div>
             </li>

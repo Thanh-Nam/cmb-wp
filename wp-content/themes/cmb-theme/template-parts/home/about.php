@@ -18,10 +18,10 @@ $about_position  = cmb_get_option( 'about_position' );
     <!-- Header -->
     <div class="p-about__header" data-reveal="fade-up">
       <?php if ( $about_sub_title ) : ?>
-        <span class="c-section-label c-section-label--center"><?php echo esc_html( $about_sub_title ); ?></span>
+        <span class="c-section-label c-section-label--center"><?php echo $about_sub_title; ?></span>
       <?php endif; ?>
       <?php if ( $about_title ) : ?>
-        <h2 class="c-section-title p-about__title"><?php echo esc_html( $about_title ); ?></h2>
+        <h2 class="c-section-title p-about__title"><?php echo $about_title; ?></h2>
       <?php endif; ?>
     </div>
 
@@ -49,7 +49,7 @@ $about_position  = cmb_get_option( 'about_position' );
 
         <?php if ( $about_content ) : ?>
           <blockquote class="p-about__quote" data-reveal="fade-left" data-reveal-delay="1">
-            <?php echo wp_kses_post( $about_content ); ?>
+            <?php echo $about_content; ?>
           </blockquote>
         <?php endif; ?>
 
@@ -59,10 +59,10 @@ $about_position  = cmb_get_option( 'about_position' );
             <span class="p-about__author-line" aria-hidden="true"></span>
             <div class="p-about__author-info">
               <?php if ( $about_name ) : ?>
-                <cite class="p-about__author-name"><?php echo esc_html( $about_name ); ?></cite>
+                <cite class="p-about__author-name"><?php echo $about_name; ?></cite>
               <?php endif; ?>
               <?php if ( $about_position ) : ?>
-                <span class="p-about__author-title"><?php echo esc_html( $about_position ); ?></span>
+                <span class="p-about__author-title"><?php echo $about_position; ?></span>
               <?php endif; ?>
             </div>
           </div>
@@ -71,7 +71,7 @@ $about_position  = cmb_get_option( 'about_position' );
         <!-- Button -->
         <?php if ( $about_link ) : ?>
           <div class="p-about__action">
-            <a href="<?php echo esc_url( $about_link ); ?>" class="c-btn p-about__btn" id="btn-about-more">
+            <a href="<?php echo $about_link; ?>" class="c-btn p-about__btn" id="btn-about-more">
               <span class="p-about__btn-text">Về CMB</span>
               <span class="p-about__btn-arrow">
                 <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -87,7 +87,7 @@ $about_position  = cmb_get_option( 'about_position' );
       <?php if ( $about_img ) : ?>
         <div class="p-about__ceo" data-reveal="fade-right">
           <div class="p-about__ceo-wrapper">
-            <img src="<?php echo esc_url( $about_img['url'] ); ?>"
+            <img src="<?php echo $about_img['url']; ?>"
                  alt="<?php echo esc_attr( $about_img['alt'] ?: $about_name ); ?>"
                  class="p-about__ceo-img" loading="lazy" />
           </div>

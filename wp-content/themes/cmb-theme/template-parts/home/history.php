@@ -20,11 +20,11 @@ $history_items    = get_field( 'history_item', 'option' );
   <div class="p-history__header" data-reveal="fade-up">
     <?php if ( $history_subtitle ) : ?>
       <div class="p-history__label">
-        <span class="c-section-label"><?php echo esc_html( $history_subtitle ); ?></span>
+        <span class="c-section-label"><?php echo $history_subtitle; ?></span>
       </div>
     <?php endif; ?>
     <?php if ( $history_title ) : ?>
-      <h2 class="c-section-title p-history__title"><?php echo esc_html( $history_title ); ?></h2>
+      <h2 class="c-section-title p-history__title"><?php echo $history_title; ?></h2>
     <?php endif; ?>
   </div>
 

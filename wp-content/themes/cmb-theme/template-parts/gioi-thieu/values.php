@@ -54,11 +54,11 @@
         <div class="p-values__item">
           <?php if ($icon) : ?>
           <div class="p-values__icon" aria-hidden="true">
-            <img src="<?php echo esc_url($icon['url']); ?>" alt="" loading="lazy" />
+            <img src="<?php echo $icon['url']; ?>" alt="" loading="lazy" />
           </div>
           <?php endif; ?>
-          <h3 class="p-values__name"><?php echo esc_html($title); ?></h3>
-          <p class="p-values__desc"><?php echo esc_html($content); ?></p>
+          <h3 class="p-values__name"><?php echo $title; ?></h3>
+          <p class="p-values__desc"><?php echo $content; ?></p>
         </div>
         <?php endwhile; endif; ?>
       </div>

@@ -80,29 +80,29 @@ $default_thumb = get_template_directory_uri() . '/assets/images/equip-total-stat
 
     <div class="p-equipment-group" data-reveal="fade-up">
       <div class="p-equipment-group__header">
-        <h3 class="p-equipment-group__title"><?php echo esc_html($group['name']); ?></h3>
+        <h3 class="p-equipment-group__title"><?php echo $group['name']; ?></h3>
       </div>
       <div class="p-equipment-group__grid">
 
         <?php foreach ($group['items'] as $delay => $item) : ?>
         <a href="#" class="p-equipment-card js-equip-card"
            data-reveal="fade-up" data-reveal-delay="<?php echo ($delay % 6) + 1; ?>"
-           data-title="<?php echo esc_attr($item['title']); ?>"
-           data-images="<?php echo esc_attr($item['images_json']); ?>"
-           data-desc="<?php echo esc_attr($item['content']); ?>">
+           data-title="<?php echo $item['title']; ?>"
+           data-images="<?php echo $item['images_json']; ?>"
+           data-desc="<?php echo $item['content']; ?>">
           <div class="p-equipment-card__img-wrap">
             <?php if ($item['thumb_src']) : ?>
-            <img src="<?php echo esc_url($item['thumb_src']); ?>"
+            <img src="<?php echo $item['thumb_src']; ?>"
                  alt="<?php echo esc_attr($item['thumb_alt'] ?: $item['title']); ?>"
                  class="p-equipment-card__img" loading="lazy" />
             <?php else : ?>
-            <img src="<?php echo esc_url($default_thumb); ?>"
-                 alt="<?php echo esc_attr($item['title']); ?>"
+            <img src="<?php echo $default_thumb; ?>"
+                 alt="<?php echo $item['title']; ?>"
                  class="p-equipment-card__img" loading="lazy" />
             <?php endif; ?>
           </div>
           <div class="p-equipment-card__body">
-            <h4 class="p-equipment-card__name"><?php echo esc_html($item['title']); ?></h4>
+            <h4 class="p-equipment-card__name"><?php echo $item['title']; ?></h4>
           </div>
         </a>
         <?php endforeach; ?>

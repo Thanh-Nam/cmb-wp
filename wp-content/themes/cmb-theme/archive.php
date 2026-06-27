@@ -205,8 +205,8 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
               </a>
               <div class="p-news-columns__item-content">
                 <?php if ($cs_label) : ?>
-                <span class="p-news-columns__item-badge p-news-columns__item-badge--<?php echo esc_attr($cs_slug); ?>">
-                  <?php echo esc_html($cs_label); ?>
+                <span class="p-news-columns__item-badge p-news-columns__item-badge--<?php echo $cs_slug; ?>">
+                  <?php echo $cs_label; ?>
                 </span>
                 <?php endif; ?>
                 <h3 class="p-news-columns__item-title">
@@ -240,8 +240,8 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
             <select class="p-news-all__select" id="filter-category" aria-label="Lọc theo chủ đề">
               <option value="">Tất cả chủ đề</option>
               <?php foreach ($news_cats as $cat) : ?>
-              <option value="<?php echo esc_attr($cat->slug); ?>">
-                <?php echo esc_html($cat->name); ?>
+              <option value="<?php echo $cat->slug; ?>">
+                <?php echo $cat->name; ?>
               </option>
               <?php endforeach; ?>
             </select>

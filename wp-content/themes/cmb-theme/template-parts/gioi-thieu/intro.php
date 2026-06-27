@@ -23,17 +23,17 @@ $content = cmb_get_option( 'about_banner_content' );
       <div class="p-cmb-intro__body" data-reveal="fade-up">
         <?php if ($logo) : ?>
         <div class="p-cmb-intro__logo-wrap" aria-hidden="true">
-          <img src="<?php echo esc_url($logo['url']); ?>" alt="CMB" class="p-cmb-intro__logo" loading="lazy" />
+          <img src="<?php echo $logo['url']; ?>" alt="CMB" class="p-cmb-intro__logo" loading="lazy" />
         </div>
         <?php endif; ?>
         <?php if ($slogan) : ?>
-        <p class="p-cmb-intro__tagline"><?php echo esc_html($slogan); ?></p>
+        <p class="p-cmb-intro__tagline"><?php echo $slogan; ?></p>
         <?php endif; ?>
         <?php if ($title) : ?>
-        <h2 class="p-cmb-intro__title"><?php echo nl2br(esc_html($title)); ?></h2>
+        <h2 class="p-cmb-intro__title"><?php echo $title; ?></h2>
         <?php endif; ?>
         <?php if ($content) : ?>
-        <div class="p-cmb-intro__text"><?php echo wp_kses_post($content); ?></div>
+        <div class="p-cmb-intro__text"><?php echo $content; ?></div>
         <?php endif; ?>
       </div>
     </div>

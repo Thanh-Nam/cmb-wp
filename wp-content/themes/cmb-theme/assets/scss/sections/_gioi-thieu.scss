@@ -793,15 +793,15 @@
 
 .p-leadership {
   position: relative;
-  padding: rem(120) 0;
+  padding: rem(80) 0 rem(60);
   overflow: hidden;
 
   @include md {
-    padding: rem(90) 0;
+    padding: rem(64) 0 rem(48);
   }
 
   @include sp {
-    padding: rem(64) 0;
+    padding: rem(48) 0 rem(32);
   }
 
   // Background image
@@ -896,6 +896,10 @@
   &__swiper {
     padding: rem(56) rem(5) rem(5) !important;
     overflow: visible !important;
+
+    .swiper-wrapper {
+      height: auto;
+    }
 
     .swiper-button-prev,
     .swiper-button-next {

@@ -12,8 +12,8 @@ $stats = function_exists('get_field') ? get_field('archive_du_an_stats', 'option
       <?php if ($stats) : ?>
       <?php foreach ($stats as $i => $stat) : ?>
       <div class="p-projects-stats__item" data-reveal="fade-up" data-reveal-delay="<?php echo $i + 1; ?>">
-        <span class="p-projects-stats__number"><?php echo esc_html($stat['number']); ?></span>
-        <span class="p-projects-stats__label"><?php echo esc_html($stat['label']); ?></span>
+        <span class="p-projects-stats__number"><?php echo $stat['number']; ?></span>
+        <span class="p-projects-stats__label"><?php echo $stat['label']; ?></span>
       </div>
       <?php endforeach; ?>
       <?php else : ?>

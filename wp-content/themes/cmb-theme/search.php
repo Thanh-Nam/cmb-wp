@@ -33,7 +33,7 @@ $search_q     = $GLOBALS['wp_query'];
         <h1 class="p-page-hero__title">KẾT QUẢ TÌM KIẾM</h1>
         <?php if ( $search_query ) : ?>
         <p class="p-page-hero__subtitle">
-          Từ khóa: <strong>"<?php echo esc_html( $search_query ); ?>"</strong>
+          Từ khóa: <strong>"<?php echo $search_query; ?>"</strong>
           &mdash; <?php echo intval( $search_q->found_posts ); ?> kết quả
         </p>
         <?php endif; ?>
@@ -57,7 +57,7 @@ $search_q     = $GLOBALS['wp_query'];
           wp_reset_postdata();
         else : ?>
         <div class="p-search-results__empty">
-          <p>Không tìm thấy kết quả nào cho từ khóa <strong>"<?php echo esc_html( $search_query ); ?>"</strong>.</p>
+          <p>Không tìm thấy kết quả nào cho từ khóa <strong>"<?php echo $search_query; ?>"</strong>.</p>
           <p>Thử tìm với từ khóa khác hoặc <a href="<?php echo esc_url( home_url( '/' ) ); ?>">quay về trang chủ</a>.</p>
         </div>
         <?php endif; ?>

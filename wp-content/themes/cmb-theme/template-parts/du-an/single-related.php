@@ -36,7 +36,7 @@ if (!$related->have_posts()) {
           <a href="<?php the_permalink(); ?>" class="p-related-projects__card-link" title="<?php the_title_attribute(); ?>">
             <div class="p-related-projects__card-img-wrap">
               <?php if ($rel_img) : ?>
-              <img src="<?php echo esc_url($rel_img['url']); ?>"
+              <img src="<?php echo $rel_img['url']; ?>"
                    alt="<?php echo esc_attr($rel_img['alt'] ?: get_the_title()); ?>"
                    class="p-related-projects__card-img" loading="lazy" />
               <?php elseif (has_post_thumbnail()) : ?>

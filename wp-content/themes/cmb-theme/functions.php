@@ -36,12 +36,12 @@ class CMB_Nav_Walker extends Walker_Nav_Menu {
 
         // Build extra attributes (target, rel, title)
         $attrs = '';
-        if ( ! empty( $item->target ) )     $attrs .= ' target="' . esc_attr( $item->target ) . '"';
-        if ( ! empty( $item->xfn ) )        $attrs .= ' rel="' . esc_attr( $item->xfn ) . '"';
-        if ( ! empty( $item->attr_title ) ) $attrs .= ' title="' . esc_attr( $item->attr_title ) . '"';
+        if ( ! empty( $item->target ) )     $attrs .= ' target="' . $item->target . '"';
+        if ( ! empty( $item->xfn ) )        $attrs .= ' rel="' . $item->xfn . '"';
+        if ( ! empty( $item->attr_title ) ) $attrs .= ' title="' . $item->attr_title . '"';
 
-        $url   = esc_url( $item->url );
-        $title = esc_html( $item->title );
+        $url   = $item->url;
+        $title = $item->title;
 
         if ( $depth === 0 && $has_children ) {
             // Top-level dropdown trigger: use <span> (not a link)
@@ -511,7 +511,7 @@ add_action( 'wp_head', function() {
     ];
     $preload_type = $type_map[ $ext ] ?? 'image/jpeg';
 
-    echo '<link rel="preload" as="image" href="' . esc_url( $preload_url ) . '" type="' . esc_attr( $preload_type ) . '">' . "\n";
+    echo '<link rel="preload" as="image" href="' . $preload_url . '" type="' . $preload_type . '">' . "\n";
 }, 1 );
 
 // WordPress core tự output rel_canonical — xóa để tránh trùng với canonical của chúng ta
@@ -554,38 +554,38 @@ add_action( 'wp_head', function() {
     }
 
     // --- Meta description & canonical (Google SERP) ---
-    echo '<meta name="description" content="' . esc_attr( $desc ) . '">' . "\n";
-    echo '<link rel="canonical" href="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta name="description" content="' . $desc . '">' . "\n";
+    echo '<link rel="canonical" href="' . $url . '">' . "\n";
 
     // --- Open Graph ---
     $og_type = is_singular( 'post' ) ? 'article' : 'website';
     echo '<meta property="og:locale"      content="vi_VN">' . "\n";
-    echo '<meta property="og:type"        content="' . esc_attr( $og_type ) . '">' . "\n";
+    echo '<meta property="og:type"        content="' . $og_type . '">' . "\n";
     echo '<meta property="og:site_name"   content="' . esc_attr( get_bloginfo( 'name' ) ) . '">' . "\n";
-    echo '<meta property="og:url"         content="' . esc_url( $url ) . '">' . "\n";
-    echo '<meta property="og:title"       content="' . esc_attr( $title ) . '">' . "\n";
-    echo '<meta property="og:description" content="' . esc_attr( $desc ) . '">' . "\n";
+    echo '<meta property="og:url"         content="' . $url . '">' . "\n";
+    echo '<meta property="og:title"       content="' . $title . '">' . "\n";
+    echo '<meta property="og:description" content="' . $desc . '">' . "\n";
     if ( $image ) {
-        echo '<meta property="og:image"        content="' . esc_url( $image ) . '">' . "\n";
+        echo '<meta property="og:image"        content="' . $image . '">' . "\n";
         echo '<meta property="og:image:width"  content="1200">' . "\n";
         echo '<meta property="og:image:height" content="630">' . "\n";
-        echo '<meta property="og:image:alt"    content="' . esc_attr( $title ) . '">' . "\n";
+        echo '<meta property="og:image:alt"    content="' . $title . '">' . "\n";
     }
 
     // Article-specific: published/modified time
     if ( $og_type === 'article' && ! empty( $post ) ) {
         $pub = get_the_date( DATE_ATOM, $post );
         $mod = get_the_modified_date( DATE_ATOM, $post );
-        if ( $pub ) echo '<meta property="article:published_time" content="' . esc_attr( $pub ) . '">' . "\n";
-        if ( $mod ) echo '<meta property="article:modified_time"  content="' . esc_attr( $mod ) . '">' . "\n";
+        if ( $pub ) echo '<meta property="article:published_time" content="' . $pub . '">' . "\n";
+        if ( $mod ) echo '<meta property="article:modified_time"  content="' . $mod . '">' . "\n";
     }
 
     // --- Twitter Card ---
     echo '<meta name="twitter:card"        content="summary_large_image">' . "\n";
-    echo '<meta name="twitter:title"       content="' . esc_attr( $title ) . '">' . "\n";
-    echo '<meta name="twitter:description" content="' . esc_attr( $desc ) . '">' . "\n";
+    echo '<meta name="twitter:title"       content="' . $title . '">' . "\n";
+    echo '<meta name="twitter:description" content="' . $desc . '">' . "\n";
     if ( $image ) {
-        echo '<meta name="twitter:image" content="' . esc_url( $image ) . '">' . "\n";
+        echo '<meta name="twitter:image" content="' . $image . '">' . "\n";
     }
 }, 2 );
 

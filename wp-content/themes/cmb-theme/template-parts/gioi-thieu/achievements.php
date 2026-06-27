@@ -26,10 +26,10 @@ $ach_row3 = get_field('about_achievements_row-3', 'option');
       ?>
       <div class="p-achievements__medal-item">
         <div class="p-achievements__medal-img-wrap p-achievements__medal-img-wrap--lg">
-          <img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($img_alt); ?>" loading="lazy" />
+          <img src="<?php echo $img_url; ?>" alt="<?php echo $img_alt; ?>" loading="lazy" />
         </div>
         <?php if (!empty($medal['name'])) : ?>
-        <p class="p-achievements__medal-caption"><?php echo nl2br(esc_html($medal['name'])); ?></p>
+        <p class="p-achievements__medal-caption"><?php echo $medal['name']; ?></p>
         <?php endif; ?>
       </div>
       <?php endforeach; ?>
@@ -45,10 +45,10 @@ $ach_row3 = get_field('about_achievements_row-3', 'option');
       ?>
       <div class="p-achievements__medal-item">
         <div class="p-achievements__medal-img-wrap">
-          <img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($img_alt); ?>" loading="lazy" />
+          <img src="<?php echo $img_url; ?>" alt="<?php echo $img_alt; ?>" loading="lazy" />
         </div>
         <?php if (!empty($medal['name'])) : ?>
-        <p class="p-achievements__medal-caption"><?php echo nl2br(esc_html($medal['name'])); ?></p>
+        <p class="p-achievements__medal-caption"><?php echo $medal['name']; ?></p>
         <?php endif; ?>
       </div>
       <?php endforeach; ?>
@@ -60,21 +60,21 @@ $ach_row3 = get_field('about_achievements_row-3', 'option');
       <div class="p-achievements__cert-row">
         <?php if (!empty($ach_row3['img-1'])) : ?>
         <div class="p-achievements__cert-item">
-          <img src="<?php echo esc_url($ach_row3['img-1']['url']); ?>"
-               alt="<?php echo esc_attr($ach_row3['img-1']['alt']); ?>"
+          <img src="<?php echo $ach_row3['img-1']['url']; ?>"
+               alt="<?php echo $ach_row3['img-1']['alt']; ?>"
                class="p-achievements__cert-img" loading="lazy" />
         </div>
         <?php endif; ?>
         <?php if (!empty($ach_row3['img-2'])) : ?>
         <div class="p-achievements__cert-item">
-          <img src="<?php echo esc_url($ach_row3['img-2']['url']); ?>"
-               alt="<?php echo esc_attr($ach_row3['img-2']['alt']); ?>"
+          <img src="<?php echo $ach_row3['img-2']['url']; ?>"
+               alt="<?php echo $ach_row3['img-2']['alt']; ?>"
                class="p-achievements__cert-img" loading="lazy" />
         </div>
         <?php endif; ?>
       </div>
       <?php if (!empty($ach_row3['name'])) : ?>
-      <p class="p-achievements__cert-caption"><?php echo nl2br(esc_html($ach_row3['name'])); ?></p>
+      <p class="p-achievements__cert-caption"><?php echo $ach_row3['name']; ?></p>
       <?php endif; ?>
     </div>
     <?php endif; ?>

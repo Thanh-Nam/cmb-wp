@@ -33,7 +33,7 @@
           ?>
           <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="l-logo" id="site-logo" title="CMB - Trang chủ">
             <?php if ( $acf_logo_url ) : ?>
-            <img src="<?php echo esc_url( $acf_logo_url ); ?>"
+            <img src="<?php echo $acf_logo_url; ?>"
               alt="Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải" class="l-logo__image" />
             <?php elseif ( has_custom_logo() ) :
                 the_custom_logo();
@@ -59,13 +59,13 @@
             ?>
             <ul class="l-header__topbar-list" role="list" aria-label="Thông tin liên hệ và ngôn ngữ">
               <li class="l-header__topbar-item" id="topbar-item-email">
-                <a href="mailto:<?php echo esc_attr( $hdr_email ); ?>" class="l-header__topbar-link" id="topbar-email" aria-label="Gửi email tới <?php echo esc_attr( $hdr_email ); ?>">
+                <a href="mailto:<?php echo $hdr_email; ?>" class="l-header__topbar-link" id="topbar-email" aria-label="Gửi email tới <?php echo $hdr_email; ?>">
                   <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Email Icon.svg" alt="" role="presentation" class="l-header__topbar-icon" />
-                  <span><?php echo esc_html( $hdr_email ); ?></span>
+                  <span><?php echo $hdr_email; ?></span>
                 </a>
               </li>
               <li class="l-header__topbar-item" id="topbar-item-eoffice">
-                <a href="<?php echo esc_url( $hdr_eoffice ); ?>" class="l-header__topbar-link" id="topbar-eoffice" title="Truy cập E-office"<?php echo ( $hdr_eoffice !== '#' ) ? ' target="_blank" rel="noopener"' : ''; ?>>
+                <a href="<?php echo $hdr_eoffice; ?>" class="l-header__topbar-link" id="topbar-eoffice" title="Truy cập E-office"<?php echo ( $hdr_eoffice !== '#' ) ? ' target="_blank" rel="noopener"' : ''; ?>>
                   <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Document Icon.svg" alt="" role="presentation" class="l-header__topbar-icon" />
                   <span>E-office</span>
                 </a>
@@ -85,7 +85,7 @@
                     <?php else : ?>
                       <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Language Icon.svg" alt="" role="presentation" class="l-header__topbar-icon" />
                     <?php endif; ?>
-                    <span><?php echo esc_html( $cur_slug ); ?></span>
+                    <span><?php echo $cur_slug; ?></span>
                     <svg class="l-header__lang-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
                       <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
@@ -94,7 +94,7 @@
                   <ul class="l-header__lang-dropdown" role="listbox" aria-label="Chọn ngôn ngữ">
                     <?php foreach ( $alt_langs as $lang ) : ?>
                     <li role="option">
-                      <a href="<?php echo esc_url( $lang['url'] ); ?>" class="l-header__lang-option" hreflang="<?php echo esc_attr( $lang['slug'] ); ?>">
+                      <a href="<?php echo $lang['url']; ?>" class="l-header__lang-option" hreflang="<?php echo $lang['slug']; ?>">
                         <?php if ( ! empty( $lang['flag'] ) ) : ?>
                           <span class="l-header__lang-flag"><?php echo $lang['flag']; ?></span>
                         <?php endif; ?>
@@ -131,7 +131,7 @@
                     <?php else : ?>
                       <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Language Icon.svg" alt="" role="presentation" />
                     <?php endif; ?>
-                    <span><?php echo esc_html( $cur_slug ); ?></span>
+                    <span><?php echo $cur_slug; ?></span>
                     <svg class="l-header__lang-arrow l-nav__mobile-info-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
                       <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
@@ -140,7 +140,7 @@
                   <ul class="l-header__lang-dropdown l-header__lang-dropdown--mobile" role="listbox">
                     <?php foreach ( $alt_langs as $lang ) : ?>
                     <li role="option">
-                      <a href="<?php echo esc_url( $lang['url'] ); ?>" class="l-header__lang-option" hreflang="<?php echo esc_attr( $lang['slug'] ); ?>">
+                      <a href="<?php echo $lang['url']; ?>" class="l-header__lang-option" hreflang="<?php echo $lang['slug']; ?>">
                         <?php if ( ! empty( $lang['flag'] ) ) : ?>
                           <span class="l-header__lang-flag"><?php echo $lang['flag']; ?></span>
                         <?php endif; ?>
@@ -151,11 +151,11 @@
                   </ul>
                   <?php endif; ?>
                 </div>
-                <a href="mailto:<?php echo esc_attr( $hdr_email ); ?>" class="l-nav__mobile-info-item" aria-label="Email CMB">
+                <a href="mailto:<?php echo $hdr_email; ?>" class="l-nav__mobile-info-item" aria-label="Email CMB">
                   <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Email Icon.svg" alt="" role="presentation" />
-                  <?php echo esc_html( $hdr_email ); ?>
+                  <?php echo $hdr_email; ?>
                 </a>
-                <a href="<?php echo esc_url( $hdr_eoffice ); ?>" class="l-nav__mobile-info-item" title="E-office"<?php echo ( $hdr_eoffice !== '#' ) ? ' target="_blank" rel="noopener"' : ''; ?>>
+                <a href="<?php echo $hdr_eoffice; ?>" class="l-nav__mobile-info-item" title="E-office"<?php echo ( $hdr_eoffice !== '#' ) ? ' target="_blank" rel="noopener"' : ''; ?>>
                   <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Document Icon.svg" alt="" role="presentation" />
                   E-office
                 </a>

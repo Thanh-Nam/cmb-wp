@@ -29,20 +29,20 @@ $field_q = new WP_Query( [
       <div class="p-field__left" data-reveal="fade-left">
 
         <div class="p-field__label">
-          <span class="c-section-label"><?php echo esc_html( $field_subtitle ); ?></span>
+          <span class="c-section-label"><?php echo $field_subtitle; ?></span>
         </div>
 
         <h2 class="c-section-title p-field__title">
           <?php if ( isset( $field_title_lines[0] ) ) : ?>
-          <span class="p-field__title-line p-field__title-line--blue"><?php echo esc_html( $field_title_lines[0] ); ?></span>
+          <span class="p-field__title-line p-field__title-line--blue"><?php echo $field_title_lines[0]; ?></span>
           <?php endif; ?>
           <?php if ( isset( $field_title_lines[1] ) ) : ?>
-          <span class="p-field__title-line p-field__title-line--red"><?php echo esc_html( $field_title_lines[1] ); ?></span>
+          <span class="p-field__title-line p-field__title-line--red"><?php echo $field_title_lines[1]; ?></span>
           <?php endif; ?>
         </h2>
 
         <?php if ( $field_content ) : ?>
-        <div class="p-field__desc"><?php echo wp_kses_post( $field_content ); ?></div>
+        <div class="p-field__desc"><?php echo $field_content; ?></div>
         <?php endif; ?>
 
       </div>
@@ -64,15 +64,15 @@ $field_q = new WP_Query( [
             ?>
             <div class="swiper-slide p-field__slide">
               <article class="p-field__card" aria-label="<?php the_title_attribute(); ?>">
-                <img src="<?php echo esc_url( $thumb_url ); ?>"
+                <img src="<?php echo $thumb_url; ?>"
                   alt="<?php the_title_attribute(); ?>"
                   class="p-field__card-img" loading="lazy" />
                 <div class="p-field__card-overlay" aria-hidden="true"></div>
                 <div class="p-field__card-content">
-                  <span class="p-field__card-num" aria-hidden="true"><?php echo esc_html( $slide_num ); ?></span>
+                  <span class="p-field__card-num" aria-hidden="true"><?php echo $slide_num; ?></span>
                   <h3 class="p-field__card-title"><?php the_title(); ?></h3>
                   <?php if ( $slide_excerpt ) : ?>
-                  <p class="p-field__card-desc"><?php echo esc_html( $slide_excerpt ); ?></p>
+                  <p class="p-field__card-desc"><?php echo $slide_excerpt; ?></p>
                   <?php endif; ?>
                   <a href="<?php the_permalink(); ?>" class="p-field__card-link"
                     title="Xem thêm về <?php the_title_attribute(); ?>">

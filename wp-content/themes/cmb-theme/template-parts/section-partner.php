@@ -22,14 +22,14 @@ $partner_logos = get_field('partner_list', 'option');
       <div class="p-partner__track p-partner__track--rtl" role="list">
         <?php foreach ($partner_logos as $item) : if (empty($item['logo'])) continue; ?>
         <div class="p-partner__item" role="listitem">
-          <img src="<?php echo esc_url($item['logo']['url']); ?>"
-               alt="<?php echo esc_attr($item['logo']['alt']); ?>"
+          <img src="<?php echo $item['logo']['url']; ?>"
+               alt="<?php echo $item['logo']['alt']; ?>"
                class="p-partner__logo" loading="lazy" />
         </div>
         <?php endforeach; ?>
         <?php foreach ($partner_logos as $item) : if (empty($item['logo'])) continue; ?>
         <div class="p-partner__item" aria-hidden="true">
-          <img src="<?php echo esc_url($item['logo']['url']); ?>"
+          <img src="<?php echo $item['logo']['url']; ?>"
                alt="" class="p-partner__logo" loading="lazy" />
         </div>
         <?php endforeach; ?>
@@ -41,13 +41,13 @@ $partner_logos = get_field('partner_list', 'option');
       <div class="p-partner__track p-partner__track--rtl">
         <?php foreach ($partner_logos as $item) : if (empty($item['logo'])) continue; ?>
         <div class="p-partner__item">
-          <img src="<?php echo esc_url($item['logo']['url']); ?>"
+          <img src="<?php echo $item['logo']['url']; ?>"
                alt="" class="p-partner__logo" loading="lazy" />
         </div>
         <?php endforeach; ?>
         <?php foreach ($partner_logos as $item) : if (empty($item['logo'])) continue; ?>
         <div class="p-partner__item">
-          <img src="<?php echo esc_url($item['logo']['url']); ?>"
+          <img src="<?php echo $item['logo']['url']; ?>"
                alt="" class="p-partner__logo" loading="lazy" />
         </div>
         <?php endforeach; ?>
@@ -59,13 +59,13 @@ $partner_logos = get_field('partner_list', 'option');
       <div class="p-partner__track p-partner__track--ltr">
         <?php foreach ($partner_logos as $item) : if (empty($item['logo'])) continue; ?>
         <div class="p-partner__item">
-          <img src="<?php echo esc_url($item['logo']['url']); ?>"
+          <img src="<?php echo $item['logo']['url']; ?>"
                alt="" class="p-partner__logo" loading="lazy" />
         </div>
         <?php endforeach; ?>
         <?php foreach ($partner_logos as $item) : if (empty($item['logo'])) continue; ?>
         <div class="p-partner__item">
-          <img src="<?php echo esc_url($item['logo']['url']); ?>"
+          <img src="<?php echo $item['logo']['url']; ?>"
                alt="" class="p-partner__logo" loading="lazy" />
         </div>
         <?php endforeach; ?>

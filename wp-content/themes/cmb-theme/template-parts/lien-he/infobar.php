@@ -32,7 +32,7 @@ $emails = $emails_raw
         </span>
         <div class="p-lh-infobar__text">
           <span class="p-lh-infobar__label">Địa chỉ</span>
-          <span class="p-lh-infobar__value"><?php echo nl2br(esc_html($address)); ?></span>
+          <span class="p-lh-infobar__value"><?php echo $address; ?></span>
         </div>
       </div>
 
@@ -48,7 +48,7 @@ $emails = $emails_raw
           <span class="p-lh-infobar__label">Điện thoại</span>
           <span class="p-lh-infobar__value">
             <?php foreach ($phones as $phone) : ?>
-            <a href="tel:+<?php echo esc_attr(preg_replace('/[^0-9]/', '', $phone)); ?>"><?php echo esc_html($phone); ?></a>
+            <a href="tel:+<?php echo esc_attr(preg_replace('/[^0-9]/', '', $phone)); ?>"><?php echo $phone; ?></a>
             <?php endforeach; ?>
           </span>
         </div>
@@ -67,7 +67,7 @@ $emails = $emails_raw
           <span class="p-lh-infobar__label">Email</span>
           <span class="p-lh-infobar__value">
             <?php foreach ($emails as $email) : ?>
-            <a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a>
+            <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a>
             <?php endforeach; ?>
           </span>
         </div>
@@ -84,7 +84,7 @@ $emails = $emails_raw
         </span>
         <div class="p-lh-infobar__text">
           <span class="p-lh-infobar__label">Giờ làm việc</span>
-          <span class="p-lh-infobar__value"><?php echo nl2br(esc_html($working_hours)); ?></span>
+          <span class="p-lh-infobar__value"><?php echo $working_hours; ?></span>
         </div>
       </div>
 

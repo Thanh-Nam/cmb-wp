@@ -60,11 +60,11 @@ while (have_posts()) : the_post();
         <nav class="p-page-hero__breadcrumb" aria-label="Đường dẫn">
           <a href="<?php echo esc_url(home_url('/')); ?>">Trang chủ</a>
           <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
-          <a href="<?php echo esc_url($news_url); ?>">Tin tức</a>
+          <a href="<?php echo $news_url; ?>">Tin tức</a>
           <?php if ($post_cat) : ?>
           <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
           <a href="<?php echo esc_url(get_category_link($post_cat->term_id)); ?>">
-            <?php echo esc_html($post_cat->name); ?>
+            <?php echo $post_cat->name; ?>
           </a>
           <?php endif; ?>
           <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
@@ -102,9 +102,9 @@ while (have_posts()) : the_post();
                 <path d="M1 5.5H13" stroke="currentColor" stroke-width="1.3"/>
                 <path d="M4 1V3M10 1V3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
               </svg>
-              <time datetime="<?php echo esc_attr($pub_datetime); ?>">
-                Đăng lúc <strong><?php echo esc_html($pub_time); ?></strong>
-                ngày <strong><?php echo esc_html($pub_date_str); ?></strong>
+              <time datetime="<?php echo $pub_datetime; ?>">
+                Đăng lúc <strong><?php echo $pub_time; ?></strong>
+                ngày <strong><?php echo $pub_date_str; ?></strong>
               </time>
             </div>
 
@@ -121,7 +121,7 @@ while (have_posts()) : the_post();
               <div class="p-news-detail__gallery-grid" id="event-gallery">
                 <?php foreach ($gallery as $i => $img) : ?>
                 <figure data-lightbox-index="<?php echo $i; ?>" tabindex="0">
-                  <img src="<?php echo esc_url($img['url']); ?>"
+                  <img src="<?php echo $img['url']; ?>"
                     alt="<?php echo esc_attr($img['alt'] ?: get_the_title()); ?>"
                     loading="lazy" />
                 </figure>
@@ -202,7 +202,7 @@ while (have_posts()) : the_post();
                 </li>
                 <?php endwhile; wp_reset_postdata(); ?>
               </ul>
-              <a href="<?php echo esc_url($news_url); ?>" class="p-news-detail__sidebar-cta" id="btn-all-news">
+              <a href="<?php echo $news_url; ?>" class="p-news-detail__sidebar-cta" id="btn-all-news">
                 Xem tất cả tin tức
                 <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
                   <path d="M1 5H13M9 1L13 5L9 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>

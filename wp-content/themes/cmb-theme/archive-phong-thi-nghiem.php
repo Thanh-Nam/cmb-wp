@@ -91,7 +91,7 @@ $lab_q  = new WP_Query([
             <div class="p-lab-item__body">
 
               <?php if ($cat_label) : ?>
-              <span class="<?php echo esc_attr($cat_class); ?>"><?php echo esc_html($cat_label); ?></span>
+              <span class="<?php echo $cat_class; ?>"><?php echo $cat_label; ?></span>
               <?php endif; ?>
 
               <h3 class="p-lab-item__title">
@@ -102,15 +102,15 @@ $lab_q  = new WP_Query([
 
               <p class="p-lab-item__meta" aria-label="Thông tin tài liệu">
                 <?php if ($updated_label) : ?>
-                <span>Cập nhật: <?php echo esc_html($updated_label); ?></span>
+                <span>Cập nhật: <?php echo $updated_label; ?></span>
                 <?php endif; ?>
                 <?php if ($doc_pages) : ?>
                 <span class="p-lab-item__meta-sep" aria-hidden="true">|</span>
-                <span><?php echo esc_html($doc_pages); ?> trang</span>
+                <span><?php echo $doc_pages; ?> trang</span>
                 <?php endif; ?>
                 <?php if ($doc_size) : ?>
                 <span class="p-lab-item__meta-sep" aria-hidden="true">|</span>
-                <span><?php echo esc_html($doc_size); ?></span>
+                <span><?php echo $doc_size; ?></span>
                 <?php endif; ?>
               </p>
 
@@ -123,7 +123,7 @@ $lab_q  = new WP_Query([
                   Xem trực tuyến
                 </a>
                 <?php if ($pdf_url) : ?>
-                <a href="<?php echo esc_url($pdf_url); ?>" class="p-lab-item__btn p-lab-item__btn--outline" title="Tải PDF" download>
+                <a href="<?php echo $pdf_url; ?>" class="p-lab-item__btn p-lab-item__btn--outline" title="Tải PDF" download>
                   Tải PDF
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M7 1V9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

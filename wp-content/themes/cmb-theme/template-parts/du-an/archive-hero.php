@@ -12,11 +12,11 @@ $subtitle = function_exists('get_field') ? get_field('archive_du_an_subtitle', '
 
   <div class="p-page-hero__image-side">
     <?php if ($hero_img) : ?>
-    <img src="<?php echo esc_url($hero_img['url']); ?>"
-         alt="<?php echo esc_attr($hero_img['alt']); ?>"
+    <img src="<?php echo $hero_img['url']; ?>"
+         alt="<?php echo $hero_img['alt']; ?>"
          class="p-page-hero__image" loading="eager" />
     <?php else : ?>
-    <img src="<?php echo esc_url($theme); ?>/assets/images/hero_port.jpg"
+    <img src="<?php echo $theme; ?>/assets/images/hero_port.jpg"
          alt="Cảng container hiện đại - CMB tư vấn xây dựng công trình hàng hải"
          class="p-page-hero__image" loading="eager" />
     <?php endif; ?>
@@ -34,7 +34,7 @@ $subtitle = function_exists('get_field') ? get_field('archive_du_an_subtitle', '
       <h1 class="p-page-hero__title">DỰ ÁN TIÊU BIỂU</h1>
       <p class="p-page-hero__subtitle">
         <?php if ($subtitle) : ?>
-        <?php echo wp_kses_post($subtitle); ?>
+        <?php echo $subtitle; ?>
         <?php else : ?>
         300+ dự án đa dạng lĩnh vực hàng hải, logistics,<br />
         khu công nghiệp và hạ tầng kỹ thuật trên toàn quốc.

@@ -31,8 +31,8 @@ $type_label = isset( $type_labels[ $post_type ] ) ? $type_labels[ $post_type ] :
       <time class="p-search-results__item-date" datetime="<?php echo esc_attr( get_the_date( 'Y-m-d' ) ); ?>">
         <?php echo get_the_date( 'd/m/Y' ); ?>
       </time>
-      <span class="p-search-results__item-type p-search-results__item-type--<?php echo esc_attr( $post_type ); ?>">
-        <?php echo esc_html( $type_label ); ?>
+      <span class="p-search-results__item-type p-search-results__item-type--<?php echo $post_type; ?>">
+        <?php echo $type_label; ?>
       </span>
     </div>
     <h3 class="p-search-results__item-title">

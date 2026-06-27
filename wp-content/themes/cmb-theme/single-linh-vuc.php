@@ -63,9 +63,9 @@ $next_post = get_next_post( false, '', 'post_type' );
               <path d="M1 5.5H13" stroke="currentColor" stroke-width="1.3"/>
               <path d="M4 1V3M10 1V3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
             </svg>
-            <time datetime="<?php echo esc_attr( $pub_datetime ); ?>">
-              Đăng lúc <strong><?php echo esc_html( $pub_time ); ?></strong>
-              ngày <strong><?php echo esc_html( $pub_date_str ); ?></strong>
+            <time datetime="<?php echo $pub_datetime; ?>">
+              Đăng lúc <strong><?php echo $pub_time; ?></strong>
+              ngày <strong><?php echo $pub_date_str; ?></strong>
             </time>
           </div>
 

@@ -32,7 +32,7 @@ $mission = get_field('about_mission', 'option');
             <li class="p-vision__item">
               <?php if (!empty($item['icon'])) : ?>
               <div class="p-vision__item-icon" aria-hidden="true">
-                <img src="<?php echo esc_url($item['icon']['url']); ?>" alt="" loading="lazy" />
+                <img src="<?php echo $item['icon']['url']; ?>" alt="" loading="lazy" />
               </div>
               <?php endif; ?>
               <div class="p-vision__item-body">

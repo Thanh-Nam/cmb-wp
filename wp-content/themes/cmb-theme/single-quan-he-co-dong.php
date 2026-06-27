@@ -79,7 +79,7 @@ $related_q    = new WP_Query([
                 <path d="M1 5.5H13" stroke="currentColor" stroke-width="1.3"/>
                 <path d="M4 1V3M10 1V3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
               </svg>
-              <?php echo esc_html($updated_full); ?>
+              <?php echo $updated_full; ?>
             </span>
             <?php endif; ?>
             <?php if ($doc_pages) : ?>
@@ -90,7 +90,7 @@ $related_q    = new WP_Query([
                 <path d="M9 2V5H12" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
                 <path d="M5 7H9M5 9H8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
               </svg>
-              <?php echo esc_html($doc_pages); ?> trang
+              <?php echo $doc_pages; ?> trang
             </span>
             <?php endif; ?>
             <?php if ($doc_size) : ?>
@@ -100,14 +100,14 @@ $related_q    = new WP_Query([
                 <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/>
                 <path d="M4.5 7C4.5 5.62 5.62 4.5 7 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
               </svg>
-              <?php echo esc_html($doc_size); ?>
+              <?php echo $doc_size; ?>
             </span>
             <?php endif; ?>
           </div>
 
           <?php if ($pdf_url) : ?>
           <div class="p-lab-detail__actions">
-            <a href="<?php echo esc_url($pdf_url); ?>" class="p-lab-detail__btn p-lab-detail__btn--primary" download title="Tải xuống PDF">
+            <a href="<?php echo $pdf_url; ?>" class="p-lab-detail__btn p-lab-detail__btn--primary" download title="Tải xuống PDF">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M7 1V9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M2 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -129,7 +129,7 @@ $related_q    = new WP_Query([
               <?php if ($pdf_url) : ?>
               <iframe
                 id="pdf-iframe"
-                src="<?php echo esc_url($pdf_url); ?>"
+                src="<?php echo $pdf_url; ?>"
                 title="<?php the_title_attribute(); ?>"
                 allowfullscreen
                 loading="lazy"
@@ -142,7 +142,7 @@ $related_q    = new WP_Query([
                   <path d="M14 28H34M14 34H28M14 40H22" stroke="#0379CC" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
                 <p>Trình duyệt của bạn không hỗ trợ xem PDF trực tiếp.</p>
-                <a href="<?php echo esc_url($pdf_url); ?>" download>
+                <a href="<?php echo $pdf_url; ?>" download>
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                     <path d="M7 1V9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M2 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -197,7 +197,7 @@ $related_q    = new WP_Query([
                   </span>
                   <span class="p-lab-detail__info-text">
                     <span class="p-lab-detail__info-label">Số trang</span>
-                    <span class="p-lab-detail__info-value"><?php echo esc_html($doc_pages); ?> trang</span>
+                    <span class="p-lab-detail__info-value"><?php echo $doc_pages; ?> trang</span>
                   </span>
                 </li>
                 <?php endif; ?>
@@ -212,7 +212,7 @@ $related_q    = new WP_Query([
                   </span>
                   <span class="p-lab-detail__info-text">
                     <span class="p-lab-detail__info-label">Dung lượng</span>
-                    <span class="p-lab-detail__info-value"><?php echo esc_html($doc_size); ?></span>
+                    <span class="p-lab-detail__info-value"><?php echo $doc_size; ?></span>
                   </span>
                 </li>
                 <?php endif; ?>
@@ -228,7 +228,7 @@ $related_q    = new WP_Query([
                   </span>
                   <span class="p-lab-detail__info-text">
                     <span class="p-lab-detail__info-label">Cập nhật</span>
-                    <span class="p-lab-detail__info-value"><?php echo esc_html($updated_full); ?></span>
+                    <span class="p-lab-detail__info-value"><?php echo $updated_full; ?></span>
                   </span>
                 </li>
                 <?php endif; ?>

@@ -24,7 +24,7 @@ $leadership_list     = get_field('about_leadership_list', 'option');
         <span class="p-leadership__title-line" aria-hidden="true"></span>
       </div>
       <?php if ($leadership_subtitle) : ?>
-      <p class="p-leadership__subtitle"><?php echo esc_html($leadership_subtitle); ?></p>
+      <p class="p-leadership__subtitle"><?php echo $leadership_subtitle; ?></p>
       <?php endif; ?>
     </div>
 
@@ -41,13 +41,13 @@ $leadership_list     = get_field('about_leadership_list', 'option');
             <div class="p-leadership__card">
               <div class="p-leadership__photo-outer">
                 <div class="p-leadership__photo-wrap">
-                  <img src="<?php echo esc_url($member['img']['url']); ?>"
+                  <img src="<?php echo $member['img']['url']; ?>"
                        alt="<?php echo esc_attr( $m_name . ' - ' . $m_position ); ?>"
                        class="p-leadership__photo" loading="lazy" />
                 </div>
               </div>
-              <h3 class="p-leadership__name"><?php echo esc_html( $m_name ); ?></h3>
-              <p class="p-leadership__role"><?php echo esc_html( $m_position ); ?></p>
+              <h3 class="p-leadership__name"><?php echo $m_name; ?></h3>
+              <p class="p-leadership__role"><?php echo $m_position; ?></p>
               <div class="p-leadership__underline"></div>
             </div>
           </div>
@@ -60,12 +60,12 @@ $leadership_list     = get_field('about_leadership_list', 'option');
             <div class="p-leadership__card">
               <div class="p-leadership__photo-outer">
                 <div class="p-leadership__photo-wrap">
-                  <img src="<?php echo esc_url($member['img']['url']); ?>" alt=""
+                  <img src="<?php echo $member['img']['url']; ?>" alt=""
                        class="p-leadership__photo" loading="lazy" />
                 </div>
               </div>
-              <h3 class="p-leadership__name"><?php echo esc_html( $m_name ); ?></h3>
-              <p class="p-leadership__role"><?php echo esc_html( $m_position ); ?></p>
+              <h3 class="p-leadership__name"><?php echo $m_name; ?></h3>
+              <p class="p-leadership__role"><?php echo $m_position; ?></p>
               <div class="p-leadership__underline"></div>
             </div>
           </div>

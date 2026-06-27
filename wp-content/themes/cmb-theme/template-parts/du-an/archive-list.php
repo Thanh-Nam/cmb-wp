@@ -56,19 +56,19 @@ $projects_q = new WP_Query([
         $c_svc   = get_field('project_services');
       ?>
       <article class="p-projects-card" id="project-card-<?php echo $ci; ?>" role="listitem"
-               data-category="<?php echo esc_attr($c_slug); ?>"
+               data-category="<?php echo $c_slug; ?>"
                data-reveal="fade-up" data-reveal-delay="<?php echo ($ci % 3) + 1; ?>">
 
         <div class="p-projects-card__img-wrap">
           <?php if ($c_img) : ?>
-          <img src="<?php echo esc_url($c_img['url']); ?>"
+          <img src="<?php echo $c_img['url']; ?>"
                alt="<?php echo esc_attr($c_img['alt'] ?: get_the_title()); ?>"
                class="p-projects-card__img" loading="lazy" />
           <?php elseif (has_post_thumbnail()) : ?>
           <?php the_post_thumbnail('medium_large', ['class' => 'p-projects-card__img', 'loading' => 'lazy']); ?>
           <?php endif; ?>
           <?php if ($c_name) : ?>
-          <span class="p-projects-card__tag p-projects-card__tag--<?php echo esc_attr($c_slug); ?>">
+          <span class="p-projects-card__tag p-projects-card__tag--<?php echo $c_slug; ?>">
             <?php echo esc_html(strtoupper($c_name)); ?>
           </span>
           <?php endif; ?>
@@ -87,11 +87,11 @@ $projects_q = new WP_Query([
                     stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
               <circle cx="6" cy="6" r="2" stroke="currentColor" stroke-width="1.4" />
             </svg>
-            <?php echo esc_html($c_loc); ?>
+            <?php echo $c_loc; ?>
           </p>
           <?php endif; ?>
           <?php if ($c_svc) : ?>
-          <p class="p-projects-card__services"><?php echo esc_html($c_svc); ?></p>
+          <p class="p-projects-card__services"><?php echo $c_svc; ?></p>
           <?php endif; ?>
         </div>
 

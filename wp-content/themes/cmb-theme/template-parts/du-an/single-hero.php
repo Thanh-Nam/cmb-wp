@@ -12,7 +12,7 @@ $term_name = ($terms && !is_wp_error($terms)) ? $terms[0]->name : 'Dự án Tiê
 
   <div class="p-page-hero__image-side" aria-hidden="true">
     <?php if ($hero_img) : ?>
-    <img src="<?php echo esc_url($hero_img['url']); ?>"
+    <img src="<?php echo $hero_img['url']; ?>"
          alt="<?php echo esc_attr($hero_img['alt'] ?: get_the_title()); ?>"
          class="p-page-hero__image" loading="eager" />
     <?php elseif (has_post_thumbnail()) : ?>
@@ -31,7 +31,7 @@ $term_name = ($terms && !is_wp_error($terms)) ? $terms[0]->name : 'Dự án Tiê
       <span class="p-page-hero__breadcrumb-current" aria-current="page">Chi tiết dự án</span>
     </nav>
     <div class="p-page-hero__content">
-      <span class="p-page-hero__label"><?php echo esc_html($term_name); ?></span>
+      <span class="p-page-hero__label"><?php echo $term_name; ?></span>
       <?php the_title('<h1 class="p-page-hero__title">', '</h1>'); ?>
     </div>
   </div>

@@ -74,19 +74,21 @@
     function renderMobileList() {
       if (!mobileList) return;
 
-      var startEl = '<li class="p-history__mobile-start" role="presentation"><img src="assets/images/icon-banh-lai.png" alt="" class="p-history__mobile-compass" aria-hidden="true" /></li>';
+      var _img = (window.CMB_Theme && window.CMB_Theme.uri) ? window.CMB_Theme.uri + '/assets/images/' : 'assets/images/';
 
-      var bgTopEl = '<li class="p-history__mobile-bg-top" role="presentation" aria-hidden="true"><img src="assets/images/history-2.png" alt="" /></li>';
-      var bgMiddleEl = '<li class="p-history__mobile-bg-middle" role="presentation" aria-hidden="true"><img src="assets/images/history-1.png" alt="" /></li>';
+      var startEl = '<li class="p-history__mobile-start" role="presentation"><img src="' + _img + 'icon-banh-lai.png" alt="" class="p-history__mobile-compass" aria-hidden="true" /></li>';
+
+      var bgTopEl = '<li class="p-history__mobile-bg-top" role="presentation" aria-hidden="true"><img src="' + _img + 'history-2.png" alt="" /></li>';
+      var bgMiddleEl = '<li class="p-history__mobile-bg-middle" role="presentation" aria-hidden="true"><img src="' + _img + 'history-1.png" alt="" /></li>';
 
       var itemsHtml = MILESTONES.map(function (m, i) {
         return '<li class="p-history__mobile-item' + (i === 0 ? ' p-history__mobile-item--first' : '') + '" data-index="' + i + '"' + (!mobileListInitialized ? ' data-reveal="fade-left"' : '') + '>' +
-          '<div class="p-history__mobile-icon-col"><img src="assets/images/banh-lai.svg" alt="" class="p-history__mobile-wheel" aria-hidden="true" /></div>' +
+          '<div class="p-history__mobile-icon-col"><img src="' + _img + 'banh-lai.svg" alt="" class="p-history__mobile-wheel" aria-hidden="true" /></div>' +
           '<div class="p-history__mobile-content"><h3 class="p-history__year">' + m.year + '</h3><p class="p-history__desc">' + m.desc + '</p></div>' +
           '</li>';
       }).join('');
 
-      var endEl = '<li class="p-history__mobile-end" role="presentation" aria-hidden="true"><img src="assets/images/history-3.png" alt="" class="p-history__mobile-bg-end" aria-hidden="true" /><img src="assets/images/icon-hai-dang.png" alt="" class="p-history__mobile-lighthouse" /></li>';
+      var endEl = '<li class="p-history__mobile-end" role="presentation" aria-hidden="true"><img src="' + _img + 'history-3.png" alt="" class="p-history__mobile-bg-end" aria-hidden="true" /><img src="' + _img + 'icon-hai-dang.png" alt="" class="p-history__mobile-lighthouse" /></li>';
 
       mobileList.innerHTML = startEl + bgTopEl + bgMiddleEl + itemsHtml + endEl;
 

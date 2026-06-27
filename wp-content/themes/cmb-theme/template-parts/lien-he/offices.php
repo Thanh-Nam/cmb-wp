@@ -64,11 +64,11 @@ $first_map_src = !empty($offices[0]['office_map_src']) ? $offices[0]['office_map
               <?php echo esc_html($office['office_name'] ?? ''); ?>
             </div>
             <?php if (!empty($office['office_address'])) : ?>
-            <p class="p-lh-office__address"><?php echo nl2br(esc_html($office['office_address'])); ?></p>
+            <p class="p-lh-office__address"><?php echo $office['office_address']; ?></p>
             <?php endif; ?>
             <?php if ($phone_raw) : ?>
             <p class="p-lh-office__phone">
-              <a href="<?php echo esc_attr($phone_href); ?>"><?php echo esc_html($phone_raw); ?></a>
+              <a href="<?php echo $phone_href; ?>"><?php echo $phone_raw; ?></a>
             </p>
             <?php endif; ?>
           </li>
@@ -79,7 +79,7 @@ $first_map_src = !empty($offices[0]['office_map_src']) ? $offices[0]['office_map
       <!-- Map -->
       <div class="p-lh-map__embed" id="google-map">
         <iframe
-          src="<?php echo esc_url($first_map_src); ?>"
+          src="<?php echo $first_map_src; ?>"
           title="Bản đồ vị trí văn phòng CMB"
           allowfullscreen
           loading="lazy"

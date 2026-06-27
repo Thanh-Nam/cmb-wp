@@ -18,7 +18,7 @@ if ($is_featured) {
 
 $badge_class = 'p-news-all__item-badge' . ($cat_slug ? ' p-news-all__item-badge--' . $cat_slug : '');
 ?>
-<article class="p-news-all__item" data-category="<?php echo esc_attr($cat_slug); ?>" data-reveal="fade-up">
+<article class="p-news-all__item" data-category="<?php echo $cat_slug; ?>" data-reveal="fade-up">
 
   <a href="<?php the_permalink(); ?>" class="p-news-all__item-img-wrap" tabindex="-1" aria-hidden="true">
     <?php if (has_post_thumbnail()) :
@@ -37,7 +37,7 @@ $badge_class = 'p-news-all__item-badge' . ($cat_slug ? ' p-news-all__item-badge-
         <?php echo get_the_date('d/m/Y'); ?>
       </time>
       <?php if ($cat_label) : ?>
-      <span class="<?php echo esc_attr($badge_class); ?>"><?php echo esc_html($cat_label); ?></span>
+      <span class="<?php echo $badge_class; ?>"><?php echo $cat_label; ?></span>
       <?php endif; ?>
     </div>
     <h3 class="p-news-all__item-title">

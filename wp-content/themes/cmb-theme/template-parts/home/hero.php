@@ -17,7 +17,7 @@ $theme = get_template_directory_uri();
           ?>
           <div class="swiper-slide p-hero__slide">
             <?php if ( $img ) : ?>
-              <img src="<?php echo esc_url( $img['url'] ); ?>"
+              <img src="<?php echo $img['url']; ?>"
                    alt="<?php echo esc_attr( $img['alt'] ?: $title ); ?>"
                    class="p-hero__bg"
                    <?php echo $slide_idx === 1 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'; ?> />
@@ -26,7 +26,7 @@ $theme = get_template_directory_uri();
             <div class="l-container">
               <div class="p-hero__content">
                 <?php if ( $title ) : ?>
-                  <h1 class="p-hero__title"><?php echo wp_kses_post( $title ); ?></h1>
+                  <h1 class="p-hero__title"><?php echo $title; ?></h1>
                 <?php endif; ?>
               </div>
             </div>

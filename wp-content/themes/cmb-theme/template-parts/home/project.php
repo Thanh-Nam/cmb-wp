@@ -24,9 +24,9 @@
         <?php if ($project_cats && !is_wp_error($project_cats)) : ?>
         <?php foreach ($project_cats as $cat) : ?>
         <button class="p-project__tab" role="tab" aria-selected="false"
-                data-filter="<?php echo esc_attr($cat->slug); ?>"
-                id="tab-<?php echo esc_attr($cat->slug); ?>">
-          <span><?php echo esc_html($cat->name); ?></span>
+                data-filter="<?php echo $cat->slug; ?>"
+                id="tab-<?php echo $cat->slug; ?>">
+          <span><?php echo $cat->name; ?></span>
         </button>
         <?php endforeach; ?>
         <?php endif; ?>
@@ -58,11 +58,11 @@
       ?>
       <article class="p-project__card<?php echo $is_feat ? ' p-project__card--featured' : ''; ?>"
                id="project-card-<?php echo $ci; ?>" role="listitem"
-               data-category="<?php echo esc_attr($p_cat_slug); ?>"
+               data-category="<?php echo $p_cat_slug; ?>"
                data-reveal="fade-up" data-reveal-delay="<?php echo $ci; ?>">
 
         <?php if ($p_img) : ?>
-        <img src="<?php echo esc_url($p_img['url']); ?>"
+        <img src="<?php echo $p_img['url']; ?>"
              alt="<?php echo esc_attr($p_img['alt'] ?: get_the_title()); ?>"
              class="p-project__card-img" loading="lazy" />
         <?php elseif (has_post_thumbnail()) : ?>
@@ -77,15 +77,15 @@
           <div class="p-project__card-content">
             <div class="p-project__card-meta">
               <span class="p-project__card-tag-dot" aria-hidden="true"></span>
-              <span class="p-project__card-cat"><?php echo esc_html($p_cat_name); ?></span>
+              <span class="p-project__card-cat"><?php echo $p_cat_name; ?></span>
             </div>
             <h3 class="p-project__card-title"><?php the_title(); ?></h3>
             <div class="p-project__card-extra">
               <?php if ($is_feat && ($p_owner || $p_loc || $p_svc)) : ?>
               <ul class="p-project__card-info" aria-label="Thông tin dự án">
-                <?php if ($p_owner) : ?><li>Chủ đầu tư: <?php echo esc_html($p_owner); ?></li><?php endif; ?>
-                <?php if ($p_loc) : ?><li>Địa điểm/vị trí: <?php echo esc_html($p_loc); ?></li><?php endif; ?>
-                <?php if ($p_svc) : ?><li>Dịch vụ tư vấn chính: <?php echo esc_html($p_svc); ?></li><?php endif; ?>
+                <?php if ($p_owner) : ?><li>Chủ đầu tư: <?php echo $p_owner; ?></li><?php endif; ?>
+                <?php if ($p_loc) : ?><li>Địa điểm/vị trí: <?php echo $p_loc; ?></li><?php endif; ?>
+                <?php if ($p_svc) : ?><li>Dịch vụ tư vấn chính: <?php echo $p_svc; ?></li><?php endif; ?>
               </ul>
               <?php endif; ?>
               <a href="<?php the_permalink(); ?>" class="p-project__card-btn"

@@ -16,7 +16,7 @@ $image    = function_exists('get_field') ? get_field('page_hero_image')    : '';
     <div class="c-page-hero__content">
       <h1 class="c-page-hero__title"><?php echo wp_kses_post( $title ?: get_the_title() ); ?></h1>
       <?php if ( $subtitle ) : ?>
-        <p class="c-page-hero__subtitle"><?php echo esc_html( $subtitle ); ?></p>
+        <p class="c-page-hero__subtitle"><?php echo $subtitle; ?></p>
       <?php endif; ?>
     </div>
   </div>

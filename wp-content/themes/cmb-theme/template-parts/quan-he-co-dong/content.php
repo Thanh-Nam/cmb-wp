@@ -28,7 +28,7 @@ if (empty($ir_terms)) : ?>
                 aria-selected="<?php echo ($i === 0) ? 'true' : 'false'; ?>"
                 aria-controls="<?php echo esc_attr('panel-' . $term->slug); ?>"
                 data-target="<?php echo esc_attr('panel-' . $term->slug); ?>">
-          <span class="p-ir-tabs__label"><?php echo esc_html($term->name); ?></span>
+          <span class="p-ir-tabs__label"><?php echo $term->name; ?></span>
         </button>
       </li>
       <?php endforeach; ?>
@@ -130,7 +130,7 @@ if (empty($ir_terms)) : ?>
             ?>
             <div class="p-ir-timeline__group">
               <div class="p-ir-timeline__year">
-                <span class="p-ir-timeline__year-label"><?php echo esc_html($year); ?></span>
+                <span class="p-ir-timeline__year-label"><?php echo $year; ?></span>
                 <span class="p-ir-timeline__year-line" aria-hidden="true"></span>
               </div>
               <div class="p-ir-timeline__items">
@@ -139,10 +139,10 @@ if (empty($ir_terms)) : ?>
                   $first_post = false;
                 ?>
                 <div class="p-ir-timeline__item<?php echo $highlight; ?>">
-                  <span class="p-ir-timeline__date"><?php echo esc_html($post_data['date_md']); ?></span>
-                  <a href="<?php echo esc_url($post_data['permalink']); ?>" class="p-ir-timeline__title"><?php echo esc_html($post_data['title']); ?></a>
+                  <span class="p-ir-timeline__date"><?php echo $post_data['date_md']; ?></span>
+                  <a href="<?php echo $post_data['permalink']; ?>" class="p-ir-timeline__title"><?php echo $post_data['title']; ?></a>
                   <?php if ($post_data['pdf_url']) : ?>
-                  <a href="<?php echo esc_url($post_data['pdf_url']); ?>" class="p-ir-timeline__action" aria-label="Tải PDF" download>
+                  <a href="<?php echo $post_data['pdf_url']; ?>" class="p-ir-timeline__action" aria-label="Tải PDF" download>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                       <path d="M8 2V10M8 10L5 7M8 10L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                       <path d="M2 13H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
@@ -172,11 +172,11 @@ if (empty($ir_terms)) : ?>
             <ul class="p-ir-featured__list" role="list">
               <?php foreach ($feat_data as $doc) : ?>
               <li>
-                <a href="<?php echo esc_url($doc['permalink']); ?>" class="p-ir-feat-doc">
+                <a href="<?php echo $doc['permalink']; ?>" class="p-ir-feat-doc">
                   <div class="p-ir-feat-doc__thumb">
                     <?php if ($doc['thumb_src']) : ?>
-                    <img src="<?php echo esc_url($doc['thumb_src']); ?>"
-                         alt="<?php echo esc_attr($doc['thumb_alt']); ?>"
+                    <img src="<?php echo $doc['thumb_src']; ?>"
+                         alt="<?php echo $doc['thumb_alt']; ?>"
                          class="p-ir-feat-doc__thumb-img" loading="lazy" />
                     <?php else : ?>
                     <svg width="48" height="62" viewBox="0 0 48 62" fill="none" aria-hidden="true">
@@ -188,18 +188,18 @@ if (empty($ir_terms)) : ?>
                     <?php endif; ?>
                   </div>
                   <div class="p-ir-feat-doc__body">
-                    <h3 class="p-ir-feat-doc__title"><?php echo esc_html($doc['title']); ?></h3>
+                    <h3 class="p-ir-feat-doc__title"><?php echo $doc['title']; ?></h3>
                     <div class="p-ir-feat-doc__meta">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                         <rect x="1" y="0.5" width="10" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
                         <path d="M3.5 4H8.5M3.5 6.5H6.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
                       </svg>
-                      <span><?php echo $doc['size'] ? esc_html($doc['size']) : 'Xem chi tiết'; ?></span>
+                      <span><?php echo $doc['size'] ? $doc['size'] : 'Xem chi tiết'; ?></span>
                     </div>
                   </div>
                 </a>
                 <?php if ($doc['pdf_url']) : ?>
-                <a href="<?php echo esc_url($doc['pdf_url']); ?>" class="p-ir-feat-doc__download" aria-label="Tải PDF" download>
+                <a href="<?php echo $doc['pdf_url']; ?>" class="p-ir-feat-doc__download" aria-label="Tải PDF" download>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                     <path d="M8 2V10M8 10L5 7M8 10L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M2 13H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>

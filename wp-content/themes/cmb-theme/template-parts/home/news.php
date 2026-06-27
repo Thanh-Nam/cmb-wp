@@ -68,8 +68,8 @@ $arrow_svg = '<svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns=
             <?php echo get_the_date( 'd - m - Y' ); ?>
           </time>
           <?php if ( $hp_f_cat_name ) : ?>
-          <span class="p-news__cat p-news__cat--<?php echo esc_attr( $hp_f_cat_slug ); ?>">
-            <?php echo esc_html( $hp_f_cat_name ); ?>
+          <span class="p-news__cat p-news__cat--<?php echo $hp_f_cat_slug; ?>">
+            <?php echo $hp_f_cat_name; ?>
           </span>
           <?php endif; ?>
         </div>
@@ -124,8 +124,8 @@ $arrow_svg = '<svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns=
               <?php echo get_the_date( 'd - m - Y' ); ?>
             </time>
             <?php if ( $hp_cat_name ) : ?>
-            <span class="p-news__cat p-news__cat--<?php echo esc_attr( $hp_cat_slug ); ?>">
-              <?php echo esc_html( $hp_cat_name ); ?>
+            <span class="p-news__cat p-news__cat--<?php echo $hp_cat_slug; ?>">
+              <?php echo $hp_cat_name; ?>
             </span>
             <?php endif; ?>
           </div>

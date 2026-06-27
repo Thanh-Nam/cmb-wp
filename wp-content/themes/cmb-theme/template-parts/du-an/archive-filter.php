@@ -15,9 +15,9 @@ $project_cats = get_terms(['taxonomy' => 'du-an-category', 'hide_empty' => false
         <?php if ($project_cats && !is_wp_error($project_cats)) : ?>
         <?php foreach ($project_cats as $cat) : ?>
         <button class="p-projects-filter__tab" role="tab" aria-selected="false"
-                data-filter="<?php echo esc_attr($cat->slug); ?>"
-                id="filter-tab-<?php echo esc_attr($cat->slug); ?>">
-          <?php echo esc_html($cat->name); ?>
+                data-filter="<?php echo $cat->slug; ?>"
+                id="filter-tab-<?php echo $cat->slug; ?>">
+          <?php echo $cat->name; ?>
         </button>
         <?php endforeach; ?>
         <?php endif; ?>

@@ -51,7 +51,7 @@ $f_specs = get_field('project_tech_specs');
 
       <div class="p-projects-featured__img-wrap" id="featured-img-wrap" data-reveal="fade-right">
         <?php if ($f_img) : ?>
-        <img src="<?php echo esc_url($f_img['url']); ?>"
+        <img src="<?php echo $f_img['url']; ?>"
              alt="<?php echo esc_attr($f_img['alt'] ?: get_the_title()); ?>"
              class="p-projects-featured__img" id="featured-img" loading="eager" />
         <?php elseif (has_post_thumbnail()) : ?>
@@ -70,7 +70,7 @@ $f_specs = get_field('project_tech_specs');
                   stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
             <circle cx="7" cy="6" r="2" stroke="currentColor" stroke-width="1.4" />
           </svg>
-          <?php echo esc_html($f_loc); ?>
+          <?php echo $f_loc; ?>
         </p>
         <?php endif; ?>
 
@@ -86,8 +86,8 @@ $f_specs = get_field('project_tech_specs');
             $shown++;
           ?>
           <div class="p-projects-featured__metric" id="featured-metric-<?php echo $shown; ?>">
-            <span class="p-projects-featured__metric-value"><?php echo esc_html($spec['value']); ?></span>
-            <span class="p-projects-featured__metric-label"><?php echo esc_html($spec['label']); ?></span>
+            <span class="p-projects-featured__metric-value"><?php echo $spec['value']; ?></span>
+            <span class="p-projects-featured__metric-label"><?php echo $spec['label']; ?></span>
           </div>
           <?php endforeach; ?>
         </div>
