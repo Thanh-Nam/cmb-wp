@@ -85,17 +85,20 @@ $table_prefix = 'wp_';
  *
  * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
  */
-define( 'WP_DEBUG', false );
+define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
+define( 'WP_DEBUG_DISPLAY', false );
 
 /* Add any custom values between this line and the "stop editing" line. */
 
 
 
-define( 'WP_SITEURL', 'http://localhost/CMB' );
-define( 'WP_HOME', 'http://localhost/CMB' );
-define( 'COOKIEPATH', '/CMB/' );
-define( 'SITECOOKIEPATH', '/CMB/' );
-define( 'ADMIN_COOKIE_PATH', '/CMB/' );
+define( 'WP_SITEURL', 'http://localhost/cmb' );
+define( 'WP_HOME', 'http://localhost/cmb' );
+define( 'COOKIEPATH', '/cmb/' );
+define( 'SITECOOKIEPATH', '/cmb/' );
+define( 'ADMIN_COOKIE_PATH', '/cmb/wp-admin' );
+define( 'COOKIE_DOMAIN', false );
 
 /* That's all, stop editing! Happy publishing. */
 

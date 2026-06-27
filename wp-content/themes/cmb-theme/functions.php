@@ -106,8 +106,9 @@ function cmb_enqueue_assets() {
         wp_enqueue_style( 'cmb-fonts', 'https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap', [], null );
     }
 
-    // Global JS — mọi trang
-    wp_enqueue_script( 'cmb-global', $uri . '/assets/js/global.js', [], $ver, true );
+    // Global JS — mọi trang (dùng filemtime để bust cache khi file thay đổi)
+    $global_js = get_template_directory() . '/assets/js/global.js';
+    wp_enqueue_script( 'cmb-global', $uri . '/assets/js/global.js', [], filemtime( $global_js ), true );
 
     // Trang chủ (homepage)
     if ( is_front_page() ) {
@@ -178,11 +179,13 @@ function cmb_enqueue_assets() {
         // History milestones
         $milestones = [];
         $items = get_field( 'history_item', 'option' );
+        $lang  = function_exists( 'pll_current_language' ) ? pll_current_language() : 'vi';
         if ( $items ) {
             foreach ( $items as $item ) {
+                $desc = ( $lang === 'en' && ! empty( $item['content_en'] ) ) ? $item['content_en'] : $item['content'];
                 $milestones[] = [
                     'year' => $item['year'],
-                    'desc' => $item['content'],
+                    'desc' => $desc,
                 ];
             }
         }
@@ -372,6 +375,36 @@ function cmb_field( $key, $fallback = '', $post_id = false ) {
         return $val ?: $fallback;
     }
     return $fallback;
+}
+
+// ============================================================
+// MULTILINGUAL HELPERS (Polylang + ACF _en fields)
+// ============================================================
+
+// Get ACF options field, auto-pick EN version when current lang = en
+function cmb_get_option( $key ) {
+    if ( function_exists( 'pll_current_language' ) && pll_current_language() === 'en' ) {
+        $en = get_field( $key . '_en', 'option' );
+        if ( $en ) return $en;
+    }
+    return get_field( $key, 'option' );
+}
+
+// Get sub_field inside have_rows(), auto-pick _en when current lang = en
+function cmb_sub( $key ) {
+    if ( function_exists( 'pll_current_language' ) && pll_current_language() === 'en' ) {
+        $en = get_sub_field( $key . '_en' );
+        if ( $en ) return $en;
+    }
+    return get_sub_field( $key );
+}
+
+// Get value from ACF group/repeater array, auto-pick _en when current lang = en
+function cmb_arr( $arr, $key ) {
+    if ( function_exists( 'pll_current_language' ) && pll_current_language() === 'en' ) {
+        if ( ! empty( $arr[ $key . '_en' ] ) ) return $arr[ $key . '_en' ];
+    }
+    return $arr[ $key ] ?? '';
 }
 
 // ============================================================
@@ -730,6 +763,67 @@ add_action( 'init', function() {
         $labels->menu_name          = 'Tin tức';
     }
 } );
+
+// ============================================================
+// POLYLANG: Redirect front page translation to clean /lang/ URL
+// e.g. /en/trang-chu-english/ → /en/
+// Also prevents WordPress canonical redirect from reversing it.
+// ============================================================
+
+// Step 1: When at /en/trang-chu-english/, redirect to /en/
+add_action('template_redirect', function () {
+    if ( ! function_exists('pll_current_language') || ! function_exists('pll_default_language') ) return;
+
+    $lang = pll_current_language();
+    if ( ! $lang || $lang === pll_default_language() ) return;
+
+    $front_page_id = (int) get_option('page_on_front');
+    if ( ! $front_page_id ) return;
+
+    $translations  = function_exists('pll_get_post_translations') ? pll_get_post_translations($front_page_id) : [];
+    $lang_front_id = (int) ( $translations[$lang] ?? 0 );
+    if ( ! $lang_front_id ) return;
+
+    $lang_front_post = get_post($lang_front_id);
+    if ( ! $lang_front_post ) return;
+
+    $slug = $lang_front_post->post_name;
+
+    if ( strpos( $_SERVER['REQUEST_URI'], '/' . $slug ) === false ) return;
+
+    wp_redirect( trailingslashit( site_url( '/' . $lang ) ), 301 );
+    exit;
+}, 1 );
+
+// Step 2: Prevent WordPress canonical redirect from sending /en/ back to /en/trang-chu-english/
+add_filter('redirect_canonical', function ( $redirect_url, $requested_url ) {
+    if ( ! function_exists('pll_current_language') || ! function_exists('pll_default_language') ) return $redirect_url;
+
+    $lang = pll_current_language();
+    if ( ! $lang || $lang === pll_default_language() ) return $redirect_url;
+
+    $clean_home = trailingslashit( site_url( '/' . $lang ) );
+    if ( trailingslashit( $requested_url ) === $clean_home ) {
+        return false;
+    }
+
+    return $redirect_url;
+}, 10, 2 );
+
+// CF7 — đổi messages sang tiếng Việt (filter này override cả form đã có sẵn)
+add_filter('wpcf7_display_message', function($message, $status) {
+    $vi = [
+        'mail_sent_ok'      => 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.',
+        'mail_sent_ng'      => 'Đã xảy ra lỗi khi gửi mail. Vui lòng thử lại sau.',
+        'validation_errors' => 'Vui lòng kiểm tra lại thông tin đã nhập.',
+        'spam'              => 'Có lỗi xảy ra. Vui lòng thử lại.',
+        'accept_terms'      => 'Bạn cần đồng ý với Chính sách bảo mật để tiếp tục.',
+        'invalid_required'  => 'Vui lòng điền thông tin bắt buộc này.',
+        'invalid_email'     => 'Địa chỉ email không hợp lệ.',
+        'invalid_tel'       => 'Số điện thoại không hợp lệ.',
+    ];
+    return $vi[$status] ?? $message;
+}, 10, 2);
 
 // ACF Local JSON — lưu field groups vào theme để track bằng git
 add_filter('acf/settings/save_json', function () {

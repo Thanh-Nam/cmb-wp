@@ -13,7 +13,7 @@ $theme = get_template_directory_uri();
         <?php while ( have_rows( 'slide_banner', 'option' ) ) : the_row(); $slide_idx++; ?>
           <?php
             $img   = get_sub_field( 'img' );
-            $title = get_sub_field( 'title' );
+            $title = cmb_sub( 'title' );
           ?>
           <div class="swiper-slide p-hero__slide">
             <?php if ( $img ) : ?>

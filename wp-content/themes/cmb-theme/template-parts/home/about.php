@@ -3,13 +3,13 @@
  * template-parts/home/about.php
  * Section: About / CEO Quote
  */
-$about_sub_title = get_field( 'about_sub_title', 'option' );
-$about_title     = get_field( 'about_title', 'option' );
-$about_content   = get_field( 'about_content', 'option' );
+$about_sub_title = cmb_get_option( 'about_sub_title' );
+$about_title     = cmb_get_option( 'about_title' );
+$about_content   = cmb_get_option( 'about_content' );
 $about_link      = get_field( 'about_link', 'option' );
 $about_img       = get_field( 'about_img', 'option' );
-$about_name      = get_field( 'about_name', 'option' );
-$about_position  = get_field( 'about_position', 'option' );
+$about_name      = cmb_get_option( 'about_name' );
+$about_position  = cmb_get_option( 'about_position' );
 ?>
 <!-- ======= ABOUT ======= -->
 <section class="p-about" id="about">

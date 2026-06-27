@@ -3,11 +3,11 @@
  * template-parts/gioi-thieu/intro.php
  * Section: CMB Intro Banner
  */
-$bg      = get_field('about_banner_bg',      'option');
-$logo    = get_field('about_banner_logo',    'option');
-$slogan  = get_field('about_banner_slogan',  'option');
-$title   = get_field('about_banner_title',   'option');
-$content = get_field('about_banner_content', 'option');
+$bg      = get_field('about_banner_bg',   'option');
+$logo    = get_field('about_banner_logo', 'option');
+$slogan  = cmb_get_option( 'about_banner_slogan' );
+$title   = cmb_get_option( 'about_banner_title' );
+$content = cmb_get_option( 'about_banner_content' );
 ?>
 <!-- ======= CMB INTRO ======= -->
 <section class="p-cmb-intro" id="cmb-intro" aria-label="Hơn nửa thế kỷ đồng hành">

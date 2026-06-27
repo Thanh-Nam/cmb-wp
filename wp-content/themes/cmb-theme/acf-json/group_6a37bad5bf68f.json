@@ -45,6 +45,48 @@
             "append": ""
         },
         {
+            "key": "field_6aff001000019",
+            "label": "Tiêu đề (EN)",
+            "name": "about_leadership_title_en",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6aff00100001a",
+            "label": "Tiêu đề phụ (EN)",
+            "name": "about_leadership_subtitle_en",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_6a37bb0b72035",
             "label": "Danh sách",
             "name": "about_leadership_list",
@@ -136,6 +178,50 @@
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_6a37bb0b72035"
+                },
+                {
+                    "key": "field_6aff00100001b",
+                    "label": "Họ tên (EN)",
+                    "name": "name_en",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_6a37bb0b72035"
+                },
+                {
+                    "key": "field_6aff00100001c",
+                    "label": "Chức vụ (EN)",
+                    "name": "position_en",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_6a37bb0b72035"
                 }
             ]
         }
@@ -161,5 +247,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1782306992
+    "modified": 1782552114
 }

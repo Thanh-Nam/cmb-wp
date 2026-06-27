@@ -45,6 +45,48 @@
             "append": ""
         },
         {
+            "key": "field_6aff001000007",
+            "label": "Tiêu đề phụ (EN)",
+            "name": "history_subtitle_en",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6aff001000008",
+            "label": "Tiêu đề (EN)",
+            "name": "history_title_en",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_6a375e74a481d",
             "label": "Các giá trị",
             "name": "history_item",
@@ -109,6 +151,28 @@
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_6a375e74a481d"
+                },
+                {
+                    "key": "field_6aff001000009",
+                    "label": "Nội dung (EN)",
+                    "name": "content_en",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_6a375e74a481d"
                 }
             ]
         }
@@ -134,5 +198,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1782306992
+    "modified": 1782552113
 }

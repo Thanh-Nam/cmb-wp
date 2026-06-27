@@ -3,9 +3,9 @@
  * template-parts/home/info.php
  * Section: Info Stats / Count-up
  */
-$info_title   = get_field( 'info_title', 'option' );
-$info_slogan  = get_field( 'info_slogan', 'option' );
-$info_content = get_field( 'info_content', 'option' );
+$info_title   = cmb_get_option( 'info_title' );
+$info_slogan  = cmb_get_option( 'info_slogan' );
+$info_content = cmb_get_option( 'info_content' );
 $info_items   = get_field( 'info_item', 'option' );
 ?>
 <!-- ======= INFO ======= -->
@@ -57,8 +57,8 @@ $info_items   = get_field( 'info_item', 'option' );
                   <?php if ( isset( $stat['number'] ) && $stat['number'] !== '' ) : ?>
                     <span class="p-info__stat-number"><?php echo esc_html( $stat['number'] ); ?></span>
                   <?php endif; ?>
-                  <?php if ( ! empty( $stat['content'] ) ) : ?>
-                    <span class="p-info__stat-label"><?php echo wp_kses_post( $stat['content'] ); ?></span>
+                  <?php if ( ! empty( $stat['content'] ) || ! empty( $stat['content_en'] ) ) : ?>
+                    <span class="p-info__stat-label"><?php echo wp_kses_post( cmb_arr( $stat, 'content' ) ); ?></span>
                   <?php endif; ?>
                 </div>
               </div>

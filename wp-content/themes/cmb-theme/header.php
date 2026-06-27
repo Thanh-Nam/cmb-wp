@@ -71,13 +71,40 @@
                 </a>
               </li>
               <li class="l-header__topbar-item" id="topbar-item-lang">
-                <button class="l-header__lang-btn" id="topbar-lang-btn" aria-expanded="false" aria-haspopup="listbox" aria-label="Chuyển đổi ngôn ngữ">
-                  <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Language Icon.svg" alt="" role="presentation" class="l-header__topbar-icon" />
-                  <span>VN</span>
-                  <svg class="l-header__lang-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-                    <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </button>
+                <?php
+                $pll_langs = function_exists( 'pll_the_languages' ) ? pll_the_languages( [ 'raw' => 1, 'show_flags' => 1 ] ) : [];
+                $cur_lang  = current( array_filter( $pll_langs, fn( $l ) => $l['current_lang'] ) ) ?: null;
+                $cur_slug  = $cur_lang ? strtoupper( $cur_lang['slug'] ) : 'VI';
+                $cur_flag  = $cur_lang['flag'] ?? '';
+                $alt_langs = array_filter( $pll_langs, fn( $l ) => ! $l['current_lang'] );
+                ?>
+                <div class="l-header__lang-wrap" id="lang-wrap">
+                  <button class="l-header__lang-btn" id="topbar-lang-btn" aria-expanded="false" aria-haspopup="listbox" aria-label="Chuyển đổi ngôn ngữ">
+                    <?php if ( $cur_flag ) : ?>
+                      <span class="l-header__lang-flag"><?php echo $cur_flag; ?></span>
+                    <?php else : ?>
+                      <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Language Icon.svg" alt="" role="presentation" class="l-header__topbar-icon" />
+                    <?php endif; ?>
+                    <span><?php echo esc_html( $cur_slug ); ?></span>
+                    <svg class="l-header__lang-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                      <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                  <?php if ( $alt_langs ) : ?>
+                  <ul class="l-header__lang-dropdown" role="listbox" aria-label="Chọn ngôn ngữ">
+                    <?php foreach ( $alt_langs as $lang ) : ?>
+                    <li role="option">
+                      <a href="<?php echo esc_url( $lang['url'] ); ?>" class="l-header__lang-option" hreflang="<?php echo esc_attr( $lang['slug'] ); ?>">
+                        <?php if ( ! empty( $lang['flag'] ) ) : ?>
+                          <span class="l-header__lang-flag"><?php echo $lang['flag']; ?></span>
+                        <?php endif; ?>
+                        <?php echo esc_html( strtoupper( $lang['slug'] ) ); ?>
+                      </a>
+                    </li>
+                    <?php endforeach; ?>
+                  </ul>
+                  <?php endif; ?>
+                </div>
               </li>
             </ul>
           </div>
@@ -97,13 +124,33 @@
 
               <!-- Mobile info -->
               <div class="l-nav__mobile-info" id="nav-mobile-info" aria-label="Thông tin liên hệ">
-                <span class="l-nav__mobile-info-item">
-                  <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Language Icon.svg" alt="" role="presentation" />
-                  <span>VN</span>
-                  <svg class="l-nav__mobile-info-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-                    <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </span>
+                <div class="l-header__lang-wrap l-header__lang-wrap--mobile" id="lang-wrap-mobile">
+                  <button class="l-header__lang-btn l-nav__mobile-info-item" id="topbar-lang-btn-mobile" aria-expanded="false" aria-haspopup="listbox" aria-label="Chuyển đổi ngôn ngữ">
+                    <?php if ( $cur_flag ) : ?>
+                      <span class="l-header__lang-flag"><?php echo $cur_flag; ?></span>
+                    <?php else : ?>
+                      <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Language Icon.svg" alt="" role="presentation" />
+                    <?php endif; ?>
+                    <span><?php echo esc_html( $cur_slug ); ?></span>
+                    <svg class="l-header__lang-arrow l-nav__mobile-info-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                      <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                  <?php if ( $alt_langs ) : ?>
+                  <ul class="l-header__lang-dropdown l-header__lang-dropdown--mobile" role="listbox">
+                    <?php foreach ( $alt_langs as $lang ) : ?>
+                    <li role="option">
+                      <a href="<?php echo esc_url( $lang['url'] ); ?>" class="l-header__lang-option" hreflang="<?php echo esc_attr( $lang['slug'] ); ?>">
+                        <?php if ( ! empty( $lang['flag'] ) ) : ?>
+                          <span class="l-header__lang-flag"><?php echo $lang['flag']; ?></span>
+                        <?php endif; ?>
+                        <?php echo esc_html( strtoupper( $lang['slug'] ) ); ?>
+                      </a>
+                    </li>
+                    <?php endforeach; ?>
+                  </ul>
+                  <?php endif; ?>
+                </div>
                 <a href="mailto:<?php echo esc_attr( $hdr_email ); ?>" class="l-nav__mobile-info-item" aria-label="Email CMB">
                   <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Email Icon.svg" alt="" role="presentation" />
                   <?php echo esc_html( $hdr_email ); ?>

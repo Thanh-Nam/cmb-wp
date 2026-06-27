@@ -5,12 +5,12 @@
  */
 
 // Section header from Options Page
-$field_subtitle    = get_field( 'homefield_subtitle', 'option' ) ?: 'Khám Phá';
-$field_title_raw   = get_field( 'homefield_title', 'option' ) ?: '';
+$field_subtitle    = cmb_get_option( 'homefield_subtitle' ) ?: 'Khám Phá';
+$field_title_raw   = cmb_get_option( 'homefield_title' ) ?: '';
 $field_title_lines = $field_title_raw
     ? array_values( array_filter( array_map( 'trim', explode( "\n", $field_title_raw ) ) ) )
     : [ 'Lĩnh Vực', 'Hoạt Động' ];
-$field_content     = get_field( 'homefield_content', 'option' );
+$field_content     = cmb_get_option( 'homefield_content' );
 
 // Slides from linh-vuc CPT
 $field_q = new WP_Query( [

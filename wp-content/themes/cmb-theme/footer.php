@@ -1,6 +1,6 @@
 <!-- ======= CONTACT CTA ======= -->
   <?php
-  $cta_title       = get_field( 'footer_cta_title', 'option' ) ?: 'Dịch Vụ Tư Vấn Tận Tâm, Nâng Tầm Giá Trị';
+  $cta_title       = cmb_get_option( 'footer_cta_title' ) ?: 'Dịch Vụ Tư Vấn Tận Tâm, Nâng Tầm Giá Trị';
   $cta_link        = get_field( 'footer_cta_link', 'option' ) ?: home_url( '/lien-he' );
   $acf_logo_field  = get_field( 'logo', 'option' );
   $acf_logo_url    = is_array( $acf_logo_field ) ? ( $acf_logo_field['url'] ?? '' ) : $acf_logo_field;

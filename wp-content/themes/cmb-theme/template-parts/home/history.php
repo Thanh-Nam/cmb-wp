@@ -4,8 +4,8 @@
  * Section: History Milestones + Ship Animation
  */
 $theme            = get_template_directory_uri();
-$history_subtitle = get_field( 'history_subtitle', 'option' );
-$history_title    = get_field( 'history_title', 'option' );
+$history_subtitle = cmb_get_option( 'history_subtitle' );
+$history_title    = cmb_get_option( 'history_title' );
 $history_items    = get_field( 'history_item', 'option' );
 ?>
 <!-- ======= HISTORY ======= -->

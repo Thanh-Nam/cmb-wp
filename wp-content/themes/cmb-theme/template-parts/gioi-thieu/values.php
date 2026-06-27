@@ -42,14 +42,14 @@
       </svg>
 
       <div class="p-values__title-bar">
-        <h2 class="p-values__title"><?php echo esc_html(get_field('about_value_title', 'option') ?: 'GIÁ TRỊ CỐT LÕI'); ?></h2>
+        <h2 class="p-values__title"><?php echo esc_html( cmb_get_option( 'about_value_title' ) ?: 'GIÁ TRỊ CỐT LÕI' ); ?></h2>
       </div>
 
       <div class="p-values__grid">
         <?php if (have_rows('about_value_list', 'option')) : while (have_rows('about_value_list', 'option')) : the_row();
           $icon    = get_sub_field('icon');
-          $title   = get_sub_field('title');
-          $content = get_sub_field('content');
+          $title   = cmb_sub('title');
+          $content = cmb_sub('content');
         ?>
         <div class="p-values__item">
           <?php if ($icon) : ?>

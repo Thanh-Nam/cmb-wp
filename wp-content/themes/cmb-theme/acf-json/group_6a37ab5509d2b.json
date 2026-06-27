@@ -66,6 +66,69 @@
             "new_lines": "br"
         },
         {
+            "key": "field_6aff00100000a",
+            "label": "Tiêu đề (EN)",
+            "name": "info_title_en",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6aff00100000b",
+            "label": "Khẩu hiệu (EN)",
+            "name": "info_slogan_en",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6aff00100000c",
+            "label": "Nội dung (EN)",
+            "name": "info_content_en",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
             "key": "field_6a37abef293e8",
             "label": "Danh sách",
             "name": "info_item",
@@ -159,6 +222,28 @@
                     "placeholder": "",
                     "new_lines": "br",
                     "parent_repeater": "field_6a37abef293e8"
+                },
+                {
+                    "key": "field_6aff00100000d",
+                    "label": "Nội dung (EN)",
+                    "name": "content_en",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": "",
+                    "placeholder": "",
+                    "new_lines": "br",
+                    "parent_repeater": "field_6a37abef293e8"
                 }
             ]
         }
@@ -184,5 +269,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1782306992
+    "modified": 1782552114
 }

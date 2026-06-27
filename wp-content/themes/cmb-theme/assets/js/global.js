@@ -301,6 +301,40 @@ window.CMB_lazyInit = function(selector, initFn, rootMargin) {
 
 
 // ============================================
+// LANGUAGE SWITCHER
+// ============================================
+(function initLangSwitcher() {
+  const wraps = document.querySelectorAll('.l-header__lang-wrap');
+  if (!wraps.length) return;
+
+  function closeAll() {
+    wraps.forEach((w) => {
+      w.classList.remove('is-open');
+      const btn = w.querySelector('[aria-expanded]');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  wraps.forEach((wrap) => {
+    const btn = wrap.querySelector('[aria-haspopup="listbox"]');
+    if (!btn) return;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = wrap.classList.contains('is-open');
+      closeAll();
+      if (!isOpen) {
+        wrap.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  document.addEventListener('click', closeAll);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+})();
+
+
+// ============================================
 // SEARCH OVERLAY
 // ============================================
 (function initSearchOverlay() {
@@ -336,3 +370,5 @@ window.CMB_lazyInit = function(selector, initFn, rootMargin) {
     if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeSearch();
   });
 })();
+
+

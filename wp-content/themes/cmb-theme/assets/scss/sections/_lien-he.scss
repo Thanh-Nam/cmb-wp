@@ -359,6 +359,11 @@
 
 // ======= 4b. CF7 OVERRIDES =======
 // CF7 bọc mỗi field bằng <span class="wpcf7-form-control-wrap">, cần reset để không vỡ flex layout
+.p-lh-form__group > .wpcf7-form-control-wrap {
+  display: block;
+  width: 100%;
+}
+
 .p-lh-form {
   .wpcf7-form-control-wrap {
     display: block;
@@ -431,12 +436,41 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    gap: rem(18);
   }
 }
 
-// Response message (success / error)
+// CF7: <p> bao input + spinner — dùng relative để neo spinner vào trong button
+.p-lh-body__form-wrap .wpcf7-form p:has(.wpcf7-submit) {
+  position: relative;
+  margin: rem(6) 0 0;
+}
+
+// Submit input nhường padding-right để spinner không đè lên text
+.p-lh-body__form-wrap .wpcf7-submit {
+  padding-right: rem(52) !important;
+}
+
+// Spinner nằm absolute bên trong vùng button, căn giữa dọc
+.p-lh-body__form-wrap .wpcf7-spinner {
+  position: absolute;
+  right: rem(16);
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  background-color: rgba($color-white, 0.3);
+  opacity: 1;
+
+  &::before {
+    background-color: $color-white;
+  }
+}
+
+// Response message (success / error) — hiện ở trên đầu form
 .p-lh-body__form-wrap .wpcf7-response-output {
-  margin-top: rem(16);
+  order: -1;
+  margin-top: 0;
+  margin-bottom: rem(4);
   padding: rem(11) rem(14);
   border-radius: rem(6);
   font-family: $font-secondary;
