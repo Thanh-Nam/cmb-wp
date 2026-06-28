@@ -24,9 +24,9 @@
             "append": ""
         },
         {
-            "key": "field_6a37bafc72034",
-            "label": "Tiêu đề phụ",
-            "name": "about_leadership_subtitle",
+            "key": "field_6aff001000019",
+            "label": "Tiêu đề (EN)",
+            "name": "about_leadership_title_en",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -45,9 +45,9 @@
             "append": ""
         },
         {
-            "key": "field_6aff001000019",
-            "label": "Tiêu đề (EN)",
-            "name": "about_leadership_title_en",
+            "key": "field_6aff00100001a",
+            "label": "Tiêu đề phụ",
+            "name": "about_leadership_subtitle",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -158,9 +158,9 @@
                     "parent_repeater": "field_6a37bb0b72035"
                 },
                 {
-                    "key": "field_6a37bb4172038",
-                    "label": "Chức vụ",
-                    "name": "position",
+                    "key": "field_6aff00100001b",
+                    "label": "Họ tên (EN)",
+                    "name": "name_en",
                     "aria-label": "",
                     "type": "text",
                     "instructions": "",
@@ -180,9 +180,9 @@
                     "parent_repeater": "field_6a37bb0b72035"
                 },
                 {
-                    "key": "field_6aff00100001b",
-                    "label": "Họ tên (EN)",
-                    "name": "name_en",
+                    "key": "field_6a37bb4172038",
+                    "label": "Chức vụ",
+                    "name": "position",
                     "aria-label": "",
                     "type": "text",
                     "instructions": "",

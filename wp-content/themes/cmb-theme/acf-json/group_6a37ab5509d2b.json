@@ -24,9 +24,9 @@
             "append": ""
         },
         {
-            "key": "field_6a37ab7e293e6",
-            "label": "Khẩu hiệu",
-            "name": "info_slogan",
+            "key": "field_6aff00100000a",
+            "label": "Tiêu đề (EN)",
+            "name": "info_title_en",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -45,30 +45,9 @@
             "append": ""
         },
         {
-            "key": "field_6a37aba9293e7",
-            "label": "Nội dung",
-            "name": "info_content",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "rows": "",
-            "placeholder": "",
-            "new_lines": "br"
-        },
-        {
-            "key": "field_6aff00100000a",
-            "label": "Tiêu đề (EN)",
-            "name": "info_title_en",
+            "key": "field_6a37ab7e293e6",
+            "label": "Khẩu hiệu",
+            "name": "info_slogan",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -106,6 +85,27 @@
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_6a37aba9293e7",
+            "label": "Nội dung",
+            "name": "info_content",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "br"
         },
         {
             "key": "field_6aff00100000c",

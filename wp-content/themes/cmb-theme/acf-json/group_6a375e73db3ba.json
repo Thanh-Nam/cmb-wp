@@ -24,9 +24,9 @@
             "append": ""
         },
         {
-            "key": "field_6a375ef6a4821",
-            "label": "Tiêu đề",
-            "name": "history_title",
+            "key": "field_6aff001000007",
+            "label": "Tiêu đề phụ (EN)",
+            "name": "history_subtitle_en",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -45,9 +45,9 @@
             "append": ""
         },
         {
-            "key": "field_6aff001000007",
-            "label": "Tiêu đề phụ (EN)",
-            "name": "history_subtitle_en",
+            "key": "field_6a375ef6a4821",
+            "label": "Tiêu đề",
+            "name": "history_title",
             "aria-label": "",
             "type": "text",
             "instructions": "",

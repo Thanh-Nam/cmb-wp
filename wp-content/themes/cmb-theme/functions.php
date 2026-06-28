@@ -204,9 +204,23 @@ function cmb_enqueue_assets() {
             $group = get_field( $field_key, 'option' );
             if ( empty( $group ) ) continue;
             $entry = [];
-            if ( !empty( $group['project'] ) ) $entry['project'] = $group['project'];
-            if ( !empty( $group['desc'] ) )    $entry['desc']    = wp_strip_all_tags( $group['desc'] );
-            if ( !empty( $group['link'] ) )    $entry['link']    = $group['link'];
+
+            // city (đa ngôn ngữ)
+            $city = ( $lang === 'en' && ! empty( $group['city_en'] ) ) ? $group['city_en'] : ( $group['city'] ?? '' );
+            if ( $city ) $entry['city'] = $city;
+
+            // project (đa ngôn ngữ)
+            $project = ( $lang === 'en' && ! empty( $group['project_en'] ) ) ? $group['project_en'] : ( $group['project'] ?? '' );
+            if ( $project ) $entry['project'] = $project;
+
+            // desc (đa ngôn ngữ)
+            $desc = ( $lang === 'en' && ! empty( $group['desc_en'] ) ) ? $group['desc_en'] : ( $group['desc'] ?? '' );
+            if ( $desc ) $entry['desc'] = wp_strip_all_tags( $desc );
+
+            // link (không cần dịch)
+            if ( !empty( $group['link'] ) ) $entry['link'] = $group['link'];
+
+            // img (không cần dịch)
             if ( !empty( $group['img'] ) ) {
                 $img = $group['img'];
                 if ( is_array( $img ) ) {
@@ -221,6 +235,7 @@ function cmb_enqueue_assets() {
                     $entry['imgAlt'] = '';
                 }
             }
+
             if ( !empty( $entry ) ) {
                 $location_data[ $key ] = $entry;
             }
