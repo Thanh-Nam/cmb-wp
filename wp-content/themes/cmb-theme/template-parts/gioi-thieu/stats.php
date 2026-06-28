@@ -12,7 +12,8 @@
       <?php if (have_rows('about_stat_list', 'option')) : $delay = 0; while (have_rows('about_stat_list', 'option')) : the_row(); $delay++;
         $icon    = get_sub_field('icon');
         $number  = get_sub_field('number');
-        $content = cmb_sub_field('content');
+        $is_en   = function_exists('pll_current_language') && pll_current_language() === 'en';
+        $content = ($is_en && get_sub_field('content_en')) ? get_sub_field('content_en') : get_sub_field('content');
       ?>
       <div class="p-stats__item" data-reveal="fade-up" data-reveal-delay="<?php echo $delay; ?>">
         <?php if ($icon) : ?>

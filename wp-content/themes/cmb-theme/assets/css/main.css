@@ -2141,10 +2141,10 @@ body.search-overlay-open {
   bottom: 6rem;
   z-index: 10;
   text-align: center;
-  max-width: 28.5rem;
 }
 @media (max-width: 1450px) {
   .p-about__author {
+    max-width: 28.5rem;
     bottom: 5rem;
   }
 }

@@ -133,9 +133,9 @@
     bottom: rem(60);
     z-index: 10;
     text-align: center;
-    max-width: rem(285);
 
     @include mq(1450px) {
+      max-width: rem(285);
       bottom: rem(50);
     }
 
