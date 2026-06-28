@@ -80,6 +80,27 @@
                             "rows": "",
                             "placeholder": "",
                             "new_lines": "br"
+                        },
+                        {
+                            "key": "field_6aff00300001a",
+                            "label": "Tên danh hiệu (EN)",
+                            "name": "name_en",
+                            "aria-label": "",
+                            "type": "textarea",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "rows": "",
+                            "placeholder": "",
+                            "new_lines": "br"
                         }
                     ]
                 },
@@ -129,6 +150,27 @@
                             "key": "field_6a37bece30fcd",
                             "label": "Tên danh hiệu",
                             "name": "name",
+                            "aria-label": "",
+                            "type": "textarea",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "rows": "",
+                            "placeholder": "",
+                            "new_lines": "br"
+                        },
+                        {
+                            "key": "field_6aff00300001b",
+                            "label": "Tên danh hiệu (EN)",
+                            "name": "name_en",
                             "aria-label": "",
                             "type": "textarea",
                             "instructions": "",
@@ -228,6 +270,27 @@
                             "rows": "",
                             "placeholder": "",
                             "new_lines": "br"
+                        },
+                        {
+                            "key": "field_6aff00300001c",
+                            "label": "Tên danh hiệu (EN)",
+                            "name": "name_en",
+                            "aria-label": "",
+                            "type": "textarea",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "rows": "",
+                            "placeholder": "",
+                            "new_lines": "br"
                         }
                     ]
                 },
@@ -293,6 +356,27 @@
                             "rows": "",
                             "placeholder": "",
                             "new_lines": "br"
+                        },
+                        {
+                            "key": "field_6aff00300001d",
+                            "label": "Tên danh hiệu (EN)",
+                            "name": "name_en",
+                            "aria-label": "",
+                            "type": "textarea",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "rows": "",
+                            "placeholder": "",
+                            "new_lines": "br"
                         }
                     ]
                 },
@@ -342,6 +426,27 @@
                             "key": "field_6a37bef630fd7",
                             "label": "Tên danh hiệu",
                             "name": "name",
+                            "aria-label": "",
+                            "type": "textarea",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "rows": "",
+                            "placeholder": "",
+                            "new_lines": "br"
+                        },
+                        {
+                            "key": "field_6aff00300001e",
+                            "label": "Tên danh hiệu (EN)",
+                            "name": "name_en",
                             "aria-label": "",
                             "type": "textarea",
                             "instructions": "",
@@ -435,6 +540,27 @@
                     "key": "field_6a37bf3c30fdb",
                     "label": "Tên danh hiệu",
                     "name": "name",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": "",
+                    "placeholder": "",
+                    "new_lines": "br"
+                },
+                {
+                    "key": "field_6aff00300001f",
+                    "label": "Tên danh hiệu (EN)",
+                    "name": "name_en",
                     "aria-label": "",
                     "type": "textarea",
                     "instructions": "",

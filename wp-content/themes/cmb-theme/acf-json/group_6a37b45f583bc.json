@@ -94,6 +94,28 @@
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_6a37b45f64e3b"
+                },
+                {
+                    "key": "field_6aff00200001a",
+                    "label": "Nội dung (EN)",
+                    "name": "content_en",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_6a37b45f64e3b"
                 }
             ]
         }

@@ -1,10 +1,10 @@
 {
     "key": "group_6a38dbca62a38",
-    "title": "Hình ảnh thiết bị",
+    "title": "Hình ảnh nội dung",
     "fields": [
         {
             "key": "field_6a38dbcaf9ace",
-            "label": "Hình ảnh thiết bị",
+            "label": "Hình ảnh nội dung",
             "name": "device_gallery",
             "aria-label": "",
             "type": "gallery",
@@ -38,6 +38,13 @@
                 "operator": "==",
                 "value": "thiet-bi"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "phan-mem"
+            }
         ]
     ],
     "menu_order": 0,
@@ -52,5 +59,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1782306992
+    "modified": 1782645189
 }

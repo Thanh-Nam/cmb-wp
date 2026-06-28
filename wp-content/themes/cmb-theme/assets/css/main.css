@@ -355,6 +355,14 @@ hr {
   right: 0;
   animation: l-header-slide-down 0.35s ease forwards;
 }
+.admin-bar .l-header.is-fixed {
+  top: 32px;
+}
+@media (max-width: 782px) {
+  .admin-bar .l-header.is-fixed {
+    top: 46px;
+  }
+}
 .l-header.is-scrolled {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
@@ -2133,6 +2141,7 @@ body.search-overlay-open {
   bottom: 6rem;
   z-index: 10;
   text-align: center;
+  max-width: 28.5rem;
 }
 @media (max-width: 1450px) {
   .p-about__author {
@@ -6751,6 +6760,279 @@ body.search-overlay-open {
     padding: 0.4rem 1.6rem 2rem;
   }
   .p-equipment-modal__desc-text {
+    font-size: 1.3rem;
+  }
+}
+
+.p-software-list {
+  padding: 9.6rem 0 10rem;
+  background: #FFFFFF;
+}
+.p-software-list__heading {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  margin-bottom: 4.8rem;
+}
+.p-software-list__heading::before {
+  content: "";
+  display: block;
+  width: 0.4rem;
+  height: 2.4rem;
+  background: #0379CC;
+  border-radius: 0.2rem;
+  flex-shrink: 0;
+}
+.p-software-list__section-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #002036;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0;
+}
+@media (max-width: 767px) {
+  .p-software-list {
+    padding: 4rem 0 5.6rem;
+  }
+}
+
+.p-software-group {
+  margin-bottom: 2.8rem;
+  background: #f5f7fa;
+  border-radius: 1.6rem;
+  padding: 2.4rem 2.4rem 2.8rem;
+}
+.p-software-group:last-child {
+  margin-bottom: 0;
+}
+.p-software-group__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  margin-bottom: 2.4rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid #E5E7EB;
+}
+.p-software-group__title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #002036;
+  margin: 0;
+}
+.p-software-group__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+@media (max-width: 1023px) {
+  .p-software-group__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.6rem;
+  }
+}
+@media (max-width: 767px) {
+  .p-software-group__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+}
+@media (max-width: 767px) {
+  .p-software-group {
+    margin-bottom: 4rem;
+  }
+  .p-software-group__title {
+    font-size: 1.5rem;
+  }
+}
+
+.p-software-card {
+  background: #FFFFFF;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.p-software-card:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
+  transform: translateY(-4px);
+}
+.p-software-card__img-wrap {
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 12rem;
+  overflow: hidden;
+}
+.p-software-card__img {
+  width: 8rem;
+  height: 8rem;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  flex-shrink: 0;
+}
+.p-software-card__body {
+  padding: 1.4rem 1.6rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  border-top: 1px solid #E5E7EB;
+}
+.p-software-card__name {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0379CC;
+  line-height: 1.4;
+  margin: 0;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+@media (max-width: 767px) {
+  .p-software-card__body {
+    padding: 1rem 1.2rem 1.4rem;
+  }
+  .p-software-card__name {
+    font-size: 1.3rem;
+  }
+}
+
+.p-software-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+.p-software-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+.p-software-modal.is-open .p-software-modal__box {
+  transform: translateY(0);
+  opacity: 1;
+}
+.p-software-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 32, 54, 0.6);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+.p-software-modal__box {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  border-radius: 1.6rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 72rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(2rem);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  scrollbar-width: thin;
+}
+.p-software-modal__close {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  cursor: pointer;
+  color: #6B7280;
+  transition: background 0.15s ease, color 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.p-software-modal__close svg {
+  flex-shrink: 0;
+}
+.p-software-modal__close:hover {
+  background: #0379CC;
+  color: #FFFFFF;
+  border-color: #0379CC;
+}
+.p-software-modal__images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 2rem 2rem 1.6rem;
+}
+.p-software-modal__img-wrap {
+  border-radius: 1rem;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: #f5f7fa;
+}
+.p-software-modal__img-wrap:only-child {
+  grid-column: 1/-1;
+}
+.p-software-modal__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.p-software-modal__desc {
+  padding: 0.4rem 2rem 2.4rem;
+}
+.p-software-modal__desc-inner {
+  display: flex;
+  gap: 1.4rem;
+  padding: 1.6rem 1.8rem;
+  background: #f8fafc;
+  border-radius: 0.8rem;
+  border-left: 0.4rem solid #0379CC;
+}
+.p-software-modal__desc-text {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.75;
+  color: #111827;
+  margin: 0;
+}
+.p-software-modal__desc-text strong {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  color: #002036;
+}
+@media (max-width: 767px) {
+  .p-software-modal {
+    padding: 1.2rem;
+  }
+  .p-software-modal__images {
+    grid-template-columns: 1fr;
+    padding: 1.6rem 1.6rem 1.2rem;
+  }
+  .p-software-modal__desc {
+    padding: 0.4rem 1.6rem 2rem;
+  }
+  .p-software-modal__desc-text {
     font-size: 1.3rem;
   }
 }

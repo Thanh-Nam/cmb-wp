@@ -12,7 +12,7 @@
       <?php if (have_rows('about_stat_list', 'option')) : $delay = 0; while (have_rows('about_stat_list', 'option')) : the_row(); $delay++;
         $icon    = get_sub_field('icon');
         $number  = get_sub_field('number');
-        $content = get_sub_field('content');
+        $content = cmb_sub_field('content');
       ?>
       <div class="p-stats__item" data-reveal="fade-up" data-reveal-delay="<?php echo $delay; ?>">
         <?php if ($icon) : ?>

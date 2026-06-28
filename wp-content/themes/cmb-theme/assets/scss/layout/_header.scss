@@ -44,6 +44,15 @@ $header-bp: 1023px;
     left: 0;
     right: 0;
     animation: l-header-slide-down 0.35s ease forwards;
+
+    // Bù admin bar khi đăng nhập WordPress (32px desktop, 46px mobile)
+    .admin-bar & {
+      top: 32px;
+
+      @media (max-width: 782px) {
+        top: 46px;
+      }
+    }
   }
 
   &.is-scrolled {

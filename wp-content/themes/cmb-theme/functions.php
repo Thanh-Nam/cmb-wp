@@ -155,6 +155,11 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'cmb-equipment-modal', $uri . '/assets/js/modules/equipment-modal.js', ['cmb-global'], $ver, true );
     }
 
+    // Archive phần mềm
+    if ( is_post_type_archive( 'phan-mem' ) ) {
+        wp_enqueue_script( 'cmb-software-modal', $uri . '/assets/js/modules/software-modal.js', ['cmb-global'], $ver, true );
+    }
+
     // Archive / single dự án
     if ( is_post_type_archive( 'du-an' ) || is_singular( 'du-an' ) ) {
         wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'], $ver, true );

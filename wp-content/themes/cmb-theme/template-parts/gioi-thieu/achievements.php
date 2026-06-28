@@ -28,8 +28,8 @@ $ach_row3 = get_field('about_achievements_row-3', 'option');
         <div class="p-achievements__medal-img-wrap p-achievements__medal-img-wrap--lg">
           <img src="<?php echo $img_url; ?>" alt="<?php echo $img_alt; ?>" loading="lazy" />
         </div>
-        <?php if (!empty($medal['name'])) : ?>
-        <p class="p-achievements__medal-caption"><?php echo $medal['name']; ?></p>
+        <?php $medal_name = cmb_arr($medal, 'name'); if ($medal_name) : ?>
+        <p class="p-achievements__medal-caption"><?php echo $medal_name; ?></p>
         <?php endif; ?>
       </div>
       <?php endforeach; ?>
@@ -47,8 +47,8 @@ $ach_row3 = get_field('about_achievements_row-3', 'option');
         <div class="p-achievements__medal-img-wrap">
           <img src="<?php echo $img_url; ?>" alt="<?php echo $img_alt; ?>" loading="lazy" />
         </div>
-        <?php if (!empty($medal['name'])) : ?>
-        <p class="p-achievements__medal-caption"><?php echo $medal['name']; ?></p>
+        <?php $medal_name = cmb_arr($medal, 'name'); if ($medal_name) : ?>
+        <p class="p-achievements__medal-caption"><?php echo $medal_name; ?></p>
         <?php endif; ?>
       </div>
       <?php endforeach; ?>
@@ -73,8 +73,8 @@ $ach_row3 = get_field('about_achievements_row-3', 'option');
         </div>
         <?php endif; ?>
       </div>
-      <?php if (!empty($ach_row3['name'])) : ?>
-      <p class="p-achievements__cert-caption"><?php echo $ach_row3['name']; ?></p>
+      <?php $cert_name = cmb_arr($ach_row3, 'name'); if ($cert_name) : ?>
+      <p class="p-achievements__cert-caption"><?php echo $cert_name; ?></p>
       <?php endif; ?>
     </div>
     <?php endif; ?>
