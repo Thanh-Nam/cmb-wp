@@ -135,7 +135,7 @@
     text-align: center;
 
     @include mq(1450px) {
-      bottom: rem(-20);
+      bottom: rem(50);
     }
 
     @include md {
@@ -176,6 +176,10 @@
       line-height: 1.2;
 
       @include mq(1450px) {
+        font-size: rem(36);
+      }
+
+      @include mq(1280px) {
         font-size: rem(30);
       }
 
@@ -191,7 +195,7 @@
       color: #656565;
       margin-top: rem(12);
 
-      @include mq(1450px) {
+      @include mq(1280px) {
         font-size: rem(14);
         margin-top: rem(8);
       }
