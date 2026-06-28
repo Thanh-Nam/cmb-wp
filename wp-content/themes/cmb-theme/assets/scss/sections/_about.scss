@@ -175,6 +175,10 @@
       font-style: normal;
       line-height: 1.2;
 
+      @include mq(1450px) {
+        font-size: rem(30);
+      }
+
       @include md {
         font-size: rem(28);
       }
@@ -186,6 +190,11 @@
       font-weight: $font-weight-semibold;
       color: #656565;
       margin-top: rem(12);
+
+      @include mq(1450px) {
+        font-size: rem(14);
+        margin-top: rem(8);
+      }
 
       @include md {
         font-size: rem(12);
