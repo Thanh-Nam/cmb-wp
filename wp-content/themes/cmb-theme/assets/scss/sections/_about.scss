@@ -16,6 +16,10 @@
 
   @include mq(1450px) {
     padding: rem(80) 0 rem(120);
+
+    .l-container {
+      padding-inline: rem(60);
+    }
   }
 
   @include md {
@@ -26,6 +30,10 @@
   @include sp {
     background-position: left top;
     background-size: 200%;
+
+    .l-container {
+      padding-inline: $container-px;
+    }
   }
 
   &::before,
@@ -63,6 +71,10 @@
     font-size: rem(48);
     font-weight: $font-weight-semibold;
     margin-top: rem(40);
+
+    @include mq(1450px) {
+      font-size: rem(40);
+    }
 
     @include md {
       font-size: rem(24);
@@ -115,6 +127,10 @@
     color: $color-primary;
     margin: 0 0 rem(40) 0;
 
+    @include mq(1450px) {
+      font-size: rem(28);
+    }
+
     @include md {
       font-size: rem(24);
       margin-bottom: rem(24);
@@ -127,44 +143,36 @@
   }
 
   // ------ Author Block ------
+  // Positioned inside .p-about__ceo-wrapper (position: relative)
   &__author {
     position: absolute;
-    right: rem(20);
-    bottom: rem(60);
+    right: rem(-80);
+    bottom: rem(50);
     z-index: 10;
     text-align: center;
 
     @include mq(1450px) {
-      max-width: rem(285);
-      bottom: rem(50);
+      max-width: rem(290);
+      bottom: rem(35);
+      right: rem(-160);
+    }
+
+    @include mq(1280px) {
+      right: rem(-80);
     }
 
     @include md {
-      position: static;
-      text-align: left;
-      margin: rem(24) 0;
-      display: flex;
-      align-items: center;
-      gap: rem(16);
+      right: rem(-35);
     }
 
-    &-line {
-      display: none;
-      width: rem(40);
-      height: rem(2);
-      background-color: $color-primary;
-
-      @include md {
-        display: block;
-      }
+    @include sp {
+      position: static;
+      text-align: center;
+      margin-top: rem(16);
     }
 
     &-info {
       text-align: center;
-
-      @include md {
-        text-align: left;
-      }
     }
 
     &-name {
@@ -185,6 +193,10 @@
       }
 
       @include md {
+        font-size: rem(26);
+      }
+
+      @include sp {
         font-size: rem(28);
       }
     }
@@ -203,6 +215,11 @@
 
       @include md {
         font-size: rem(12);
+      }
+
+      @include sp {
+        font-size: rem(14);
+        margin-top: rem(8);
       }
     }
   }
@@ -275,6 +292,7 @@
     @include md {
       width: 100%;
       justify-content: center;
+      margin: 0 auto;
     }
 
     &-wrapper {
@@ -283,11 +301,15 @@
       max-width: rem(575);
 
       @include mq(1450px) {
-        max-width: rem(420);
+        max-width: rem(380);
       }
 
       @include md {
-        max-width: rem(360);
+        max-width: rem(420);
+      }
+
+      @include sp {
+        max-width: rem(320);
       }
     }
 

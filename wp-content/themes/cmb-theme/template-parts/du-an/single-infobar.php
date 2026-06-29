@@ -14,8 +14,9 @@ $services = get_field('project_services');
   <div class="l-container">
     <div class="p-project-infobar__inner">
 
-      <?php if ($owner) : ?>
-      <div class="p-project-infobar__item">
+      <?php $delay = 0; ?>
+      <?php if ($owner) : $delay++; ?>
+      <div class="p-project-infobar__item p-project-infobar__item--anim" style="--delay: <?php echo ($delay - 1) * 0.08; ?>s">
         <div class="p-project-infobar__icon" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
             <circle cx="11" cy="7" r="4" stroke="#0379CC" stroke-width="1.5"/>
@@ -27,8 +28,8 @@ $services = get_field('project_services');
       </div>
       <?php endif; ?>
 
-      <?php if ($location) : ?>
-      <div class="p-project-infobar__item">
+      <?php if ($location) : $delay++; ?>
+      <div class="p-project-infobar__item p-project-infobar__item--anim" style="--delay: <?php echo ($delay - 1) * 0.08; ?>s">
         <div class="p-project-infobar__icon" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
             <path d="M11 2C7.96 2 5.5 4.46 5.5 7.5C5.5 11.88 11 18 11 18C11 18 16.5 11.88 16.5 7.5C16.5 4.46 14.04 2 11 2Z" stroke="#0379CC" stroke-width="1.5" stroke-linejoin="round"/>
@@ -40,8 +41,8 @@ $services = get_field('project_services');
       </div>
       <?php endif; ?>
 
-      <?php if ($scale) : ?>
-      <div class="p-project-infobar__item">
+      <?php if ($scale) : $delay++; ?>
+      <div class="p-project-infobar__item p-project-infobar__item--anim" style="--delay: <?php echo ($delay - 1) * 0.08; ?>s">
         <div class="p-project-infobar__icon" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
             <rect x="2" y="9" width="18" height="4" rx="2" stroke="#0379CC" stroke-width="1.5"/>
@@ -53,8 +54,8 @@ $services = get_field('project_services');
       </div>
       <?php endif; ?>
 
-      <?php if ($timeline) : ?>
-      <div class="p-project-infobar__item">
+      <?php if ($timeline) : $delay++; ?>
+      <div class="p-project-infobar__item p-project-infobar__item--anim" style="--delay: <?php echo ($delay - 1) * 0.08; ?>s">
         <div class="p-project-infobar__icon" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
             <circle cx="11" cy="11" r="8.5" stroke="#0379CC" stroke-width="1.5"/>
@@ -66,8 +67,8 @@ $services = get_field('project_services');
       </div>
       <?php endif; ?>
 
-      <?php if ($services) : ?>
-      <div class="p-project-infobar__item p-project-infobar__item--services">
+      <?php if ($services) : $delay++; ?>
+      <div class="p-project-infobar__item p-project-infobar__item--services p-project-infobar__item--anim" style="--delay: <?php echo ($delay - 1) * 0.08; ?>s">
         <div class="p-project-infobar__icon" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
             <rect x="3" y="2" width="13" height="17" rx="2" stroke="#0379CC" stroke-width="1.5"/>

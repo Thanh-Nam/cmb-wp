@@ -6,7 +6,7 @@
  */
 $ir_terms = get_terms([
     'taxonomy'   => 'quan-he-co-dong-category',
-    'hide_empty' => true,
+    'hide_empty' => false,
     'orderby'    => 'name',
     'order'      => 'ASC',
 ]);

@@ -3,28 +3,44 @@
  * template-parts/gioi-thieu/stats.php
  * Section: Stats (Những con số ấn tượng)
  */
+$is_en = function_exists('pll_current_language') && pll_current_language() === 'en';
+
+// Collect all items into array
+$stat_items = [];
+if (have_rows('about_stat_list', 'option')) {
+  while (have_rows('about_stat_list', 'option')) {
+    the_row();
+    $stat_items[] = [
+      'icon'    => get_sub_field('icon'),
+      'number'  => get_sub_field('number'),
+      'content' => ($is_en && get_sub_field('content_en')) ? get_sub_field('content_en') : get_sub_field('content'),
+    ];
+  }
+}
+
+// Swap icons of position 3 and 4 (index 2 and 3)
+if (isset($stat_items[2], $stat_items[3])) {
+  $tmp = $stat_items[2]['icon'];
+  $stat_items[2]['icon'] = $stat_items[3]['icon'];
+  $stat_items[3]['icon'] = $tmp;
+}
 ?>
 <!-- ======= STATS ======= -->
 <section class="p-stats" id="stats" aria-label="Những con số ấn tượng">
   <div class="l-container">
     <div class="p-stats__inner">
 
-      <?php if (have_rows('about_stat_list', 'option')) : $delay = 0; while (have_rows('about_stat_list', 'option')) : the_row(); $delay++;
-        $icon    = get_sub_field('icon');
-        $number  = get_sub_field('number');
-        $is_en   = function_exists('pll_current_language') && pll_current_language() === 'en';
-        $content = ($is_en && get_sub_field('content_en')) ? get_sub_field('content_en') : get_sub_field('content');
-      ?>
-      <div class="p-stats__item" data-reveal="fade-up" data-reveal-delay="<?php echo $delay; ?>">
-        <?php if ($icon) : ?>
+      <?php foreach ($stat_items as $i => $stat) : ?>
+      <div class="p-stats__item p-stats__item--anim" style="--delay: <?php echo $i * 0.1; ?>s">
+        <?php if ($stat['icon']) : ?>
         <div class="p-stats__icon" aria-hidden="true">
-          <img src="<?php echo $icon['url']; ?>" alt="" width="60" height="60" loading="lazy" />
+          <img src="<?php echo $stat['icon']['url']; ?>" alt="" width="60" height="60" loading="lazy" />
         </div>
         <?php endif; ?>
-        <span class="p-stats__value"><?php echo $number; ?></span>
-        <span class="p-stats__label"><?php echo $content; ?></span>
+        <span class="p-stats__value" data-countup><?php echo $stat['number']; ?></span>
+        <span class="p-stats__label"><?php echo $stat['content']; ?></span>
       </div>
-      <?php endwhile; endif; ?>
+      <?php endforeach; ?>
 
     </div>
   </div>

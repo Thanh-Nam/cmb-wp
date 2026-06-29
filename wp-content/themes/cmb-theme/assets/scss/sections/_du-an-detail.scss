@@ -152,6 +152,17 @@
     padding: rem(24) rem(20) rem(22);
     position: relative;
 
+    &--anim {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.45s ease calc(var(--delay, 0s)), transform 0.45s ease calc(var(--delay, 0s));
+
+      &.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     &:not(:last-child)::after {
       content: '';
       position: absolute;

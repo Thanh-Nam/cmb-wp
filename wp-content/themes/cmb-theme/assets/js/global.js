@@ -106,6 +106,11 @@ window.CMB_lazyInit = function(selector, initFn, rootMargin) {
       overlay.setAttribute('aria-hidden', 'true');
     }
     document.body.style.overflow = '';
+    document.querySelectorAll('.l-nav__item.has-dropdown').forEach((item) => {
+      item.classList.remove('is-open');
+      const dd = item.querySelector('.l-nav__dropdown');
+      if (dd) dd.style.maxHeight = '0';
+    });
   };
 
   hamburger.addEventListener('click', () => {
@@ -182,23 +187,35 @@ window.CMB_lazyInit = function(selector, initFn, rootMargin) {
 
 
 // ============================================
-// DROPDOWN: Click-based on mobile
+// DROPDOWN: Click-based on mobile (smooth slide)
 // ============================================
 (function initDropdowns() {
   const isMobile = () => window.innerWidth <= 1023;
+
+  function closeItem(item) {
+    const dd = item.querySelector('.l-nav__dropdown');
+    item.classList.remove('is-open');
+    if (dd) dd.style.maxHeight = '0';
+  }
+
+  function openItem(item) {
+    const dd = item.querySelector('.l-nav__dropdown');
+    item.classList.add('is-open');
+    if (dd) dd.style.maxHeight = dd.scrollHeight + 'px';
+  }
 
   document.querySelectorAll('.has-dropdown > .l-nav__link').forEach((link) => {
     link.addEventListener('click', (e) => {
       if (!isMobile()) return;
       e.preventDefault();
-      const dropdown = link.nextElementSibling;
-      if (!dropdown) return;
+      const item = link.closest('.has-dropdown');
+      if (!item) return;
 
-      const isOpen = dropdown.classList.contains('is-open');
-      document.querySelectorAll('.l-nav__dropdown').forEach((d) => {
-        d.classList.remove('is-open');
+      const isOpen = item.classList.contains('is-open');
+      document.querySelectorAll('.l-nav__item.has-dropdown').forEach((d) => {
+        if (d !== item) closeItem(d);
       });
-      if (!isOpen) dropdown.classList.add('is-open');
+      isOpen ? closeItem(item) : openItem(item);
     });
   });
 })();

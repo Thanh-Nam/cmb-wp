@@ -63,6 +63,17 @@
       width: 1px;
       background: rgba($color-white, 0.3);
     }
+
+    &--anim {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease calc(var(--delay, 0s)), transform 0.5s ease calc(var(--delay, 0s));
+
+      &.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   }
 
   &__value {
@@ -948,7 +959,7 @@
 
     // Parallelogram bg — only this pseudo-element is skewed
     &::before {
-      content: '';
+      content: none;
       position: absolute;
       inset: 0;
       background: linear-gradient(135deg, #0398e7 0%, #0061a6 100%);

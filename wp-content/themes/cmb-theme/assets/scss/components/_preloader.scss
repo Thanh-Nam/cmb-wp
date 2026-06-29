@@ -24,12 +24,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 36px;
+    gap: 16px;
   }
 
   &__logo {
-    width: 180px;
+    width: 130px;
     height: auto;
+    animation: preloader-ship-rock 3s ease-in-out infinite;
+    transform-origin: center 85%;
+    mix-blend-mode: multiply;
   }
 
   &__bar {
@@ -63,5 +66,14 @@ body.has-preloader.is-loaded > *:not(#page-preloader) {
 @keyframes preloader-line-fill {
   from { width: 0; }
   to   { width: 70%; }
+}
+
+// Tàu lắc lư nhẹ
+@keyframes preloader-ship-rock {
+  0%   { transform: rotate(-2deg) translateY(0px); }
+  30%  { transform: rotate(0deg)  translateY(-4px); }
+  50%  { transform: rotate(2deg)  translateY(0px); }
+  80%  { transform: rotate(0deg)  translateY(-4px); }
+  100% { transform: rotate(-2deg) translateY(0px); }
 }
 

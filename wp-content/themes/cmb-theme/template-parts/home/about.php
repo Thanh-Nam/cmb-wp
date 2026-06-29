@@ -53,21 +53,6 @@ $about_position  = cmb_get_option( 'about_position' );
           </blockquote>
         <?php endif; ?>
 
-        <!-- Author info -->
-        <?php if ( $about_name || $about_position ) : ?>
-          <div class="p-about__author">
-            <span class="p-about__author-line" aria-hidden="true"></span>
-            <div class="p-about__author-info">
-              <?php if ( $about_name ) : ?>
-                <cite class="p-about__author-name"><?php echo $about_name; ?></cite>
-              <?php endif; ?>
-              <?php if ( $about_position ) : ?>
-                <span class="p-about__author-title"><?php echo $about_position; ?></span>
-              <?php endif; ?>
-            </div>
-          </div>
-        <?php endif; ?>
-
         <!-- Button -->
         <?php if ( $about_link ) : ?>
           <div class="p-about__action">
@@ -90,6 +75,19 @@ $about_position  = cmb_get_option( 'about_position' );
             <img src="<?php echo $about_img['url']; ?>"
                  alt="<?php echo esc_attr( $about_img['alt'] ?: $about_name ); ?>"
                  class="p-about__ceo-img" loading="lazy" />
+            <!-- Author info -->
+            <?php if ( $about_name || $about_position ) : ?>
+              <div class="p-about__author">
+                <div class="p-about__author-info">
+                  <?php if ( $about_name ) : ?>
+                    <cite class="p-about__author-name"><?php echo $about_name; ?></cite>
+                  <?php endif; ?>
+                  <?php if ( $about_position ) : ?>
+                    <span class="p-about__author-title"><?php echo $about_position; ?></span>
+                  <?php endif; ?>
+                </div>
+              </div>
+            <?php endif; ?>
           </div>
         </div>
       <?php endif; ?>

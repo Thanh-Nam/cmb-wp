@@ -13,7 +13,7 @@
   <!-- ======= PRELOADER ======= -->
   <div id="page-preloader" class="preloader" aria-hidden="true">
     <div class="preloader__inner">
-      <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Company Logo.svg" alt="CMB Logo" class="preloader__logo" />
+      <img src="<?php echo get_template_directory_uri(); ?>/assets/images/tau.gif" alt="CMB Logo" class="preloader__logo" />
       <div class="preloader__bar">
         <div class="preloader__line"></div>
       </div>
