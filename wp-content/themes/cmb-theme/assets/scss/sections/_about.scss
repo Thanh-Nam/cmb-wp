@@ -146,23 +146,30 @@
   // Positioned inside .p-about__ceo-wrapper (position: relative)
   &__author {
     position: absolute;
-    right: rem(-80);
+    right: rem(-150);
     bottom: rem(50);
     z-index: 10;
     text-align: center;
 
+    @include mq(1600px) {
+      right: rem(-110);
+      bottom: rem(15);
+    }
+
     @include mq(1450px) {
       max-width: rem(290);
-      bottom: rem(35);
-      right: rem(-160);
+      bottom: rem(5);
+      right: rem(-180);
     }
 
     @include mq(1280px) {
-      right: rem(-80);
+      right: rem(-100);
+      bottom: 0;
     }
 
     @include md {
-      right: rem(-35);
+      right: rem(-75);
+      bottom: rem(25);
     }
 
     @include sp {
