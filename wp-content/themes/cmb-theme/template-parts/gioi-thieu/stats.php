@@ -18,12 +18,6 @@ if (have_rows('about_stat_list', 'option')) {
   }
 }
 
-// Swap icons of position 3 and 4 (index 2 and 3)
-if (isset($stat_items[2], $stat_items[3])) {
-  $tmp = $stat_items[2]['icon'];
-  $stat_items[2]['icon'] = $stat_items[3]['icon'];
-  $stat_items[3]['icon'] = $tmp;
-}
 ?>
 <!-- ======= STATS ======= -->
 <section class="p-stats" id="stats" aria-label="Những con số ấn tượng">

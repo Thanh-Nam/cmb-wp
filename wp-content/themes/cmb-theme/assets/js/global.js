@@ -109,7 +109,7 @@ window.CMB_lazyInit = function(selector, initFn, rootMargin) {
     document.querySelectorAll('.l-nav__item.has-dropdown').forEach((item) => {
       item.classList.remove('is-open');
       const dd = item.querySelector('.l-nav__dropdown');
-      if (dd) dd.style.maxHeight = '0';
+      if (dd) dd.style.maxHeight = '';
     });
   };
 
@@ -195,7 +195,7 @@ window.CMB_lazyInit = function(selector, initFn, rootMargin) {
   function closeItem(item) {
     const dd = item.querySelector('.l-nav__dropdown');
     item.classList.remove('is-open');
-    if (dd) dd.style.maxHeight = '0';
+    if (dd) dd.style.maxHeight = '';
   }
 
   function openItem(item) {
