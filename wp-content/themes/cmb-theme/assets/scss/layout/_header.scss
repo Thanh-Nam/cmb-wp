@@ -45,12 +45,17 @@ $header-bp: 1023px;
     right: 0;
     animation: l-header-slide-down 0.35s ease forwards;
 
-    // Bù admin bar khi đăng nhập WordPress (32px desktop, 46px mobile)
+    // Bù admin bar khi đăng nhập WordPress (32px desktop, 46px tablet)
+    // ≤600px: admin bar chuyển thành position:absolute nên không cần offset
     .admin-bar & {
       top: 32px;
 
       @media (max-width: 782px) {
         top: 46px;
+      }
+
+      @media (max-width: 600px) {
+        top: 0;
       }
     }
   }
