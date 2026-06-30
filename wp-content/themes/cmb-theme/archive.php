@@ -53,14 +53,24 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
   <!-- ======= MAIN ======= -->
   <main class="site-main" id="main-content">
 
+    <?php
+    $news_img      = get_field('banner_tin_tuc_img', 'option');
+    $news_title    = cmb_get_option('banner_tin_tuc_title');
+    $news_subtitle = cmb_get_option('banner_tin_tuc_desc');
+    ?>
     <!-- ======= PAGE HERO ======= -->
     <section class="p-page-hero" id="news-hero" aria-label="Tin tức & Sự kiện CMB">
 
       <div class="p-page-hero__image-side">
+        <?php if ($news_img) : ?>
+        <img src="<?php echo esc_url($news_img['url']); ?>"
+          alt="<?php echo esc_attr($news_img['alt'] ?: strip_tags($news_title)); ?>"
+          class="p-page-hero__image" loading="eager" />
+        <?php else : ?>
         <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero_port.jpg"
           alt="Cảng container hiện đại - CMB tư vấn xây dựng công trình hàng hải"
-          class="p-page-hero__image"
-          loading="eager" />
+          class="p-page-hero__image" loading="eager" />
+        <?php endif; ?>
       </div>
 
       <div class="p-page-hero__fade" aria-hidden="true"></div>
@@ -73,11 +83,8 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
         </nav>
 
         <div class="p-page-hero__content">
-          <h1 class="p-page-hero__title">TIN TỨC &amp; SỰ KIỆN</h1>
-          <p class="p-page-hero__subtitle">
-            Cập nhật hoạt động, thông tin chuyên ngành<br />
-            và các sự kiện nổi bật của CMB.
-          </p>
+          <h1 class="p-page-hero__title"><?php echo wp_kses_post($news_title); ?></h1>
+          <p class="p-page-hero__subtitle"><?php echo wp_kses_post($news_subtitle); ?></p>
         </div>
       </div>
 

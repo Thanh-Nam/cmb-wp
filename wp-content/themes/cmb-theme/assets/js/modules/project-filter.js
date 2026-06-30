@@ -16,24 +16,45 @@
     var cards = document.querySelectorAll('.p-project__card');
     if (!tabs.length || !cards.length) return;
 
+    function applyFilter(filter) {
+      var visibleIndex = 0;
+
+      cards.forEach(function (card) {
+        var show = filter === 'all' || card.dataset.category === filter;
+
+        if (show) {
+          visibleIndex++;
+          card.classList.remove('is-hidden');
+
+          // First visible card gets the featured (large) slot
+          if (visibleIndex === 1) {
+            card.classList.add('p-project__card--featured');
+          } else {
+            card.classList.remove('p-project__card--featured');
+          }
+
+          // Re-number
+          var numEl = card.querySelector('.p-project__card-num');
+          if (numEl) {
+            var pad = visibleIndex < 10 ? '0' + visibleIndex : '' + visibleIndex;
+            numEl.innerHTML = pad + '<span class="p-project__card-num-dot">.</span>';
+          }
+        } else {
+          card.classList.add('is-hidden');
+          card.classList.remove('p-project__card--featured');
+        }
+      });
+    }
+
     tabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
-        var filter = this.dataset.filter;
-
         tabs.forEach(function (t) {
           t.classList.remove('is-active');
           t.setAttribute('aria-selected', 'false');
         });
         this.classList.add('is-active');
         this.setAttribute('aria-selected', 'true');
-
-        cards.forEach(function (card) {
-          if (filter === 'all' || card.dataset.category === filter) {
-            card.classList.remove('is-hidden');
-          } else {
-            card.classList.add('is-hidden');
-          }
-        });
+        applyFilter(this.dataset.filter);
       });
     });
   })();

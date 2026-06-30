@@ -13,14 +13,24 @@ $lab_q  = new WP_Query([
 
   <main class="site-main" id="main-content">
 
+    <?php
+    $ptl_img      = get_field('banner_ptl_img', 'option');
+    $ptl_title    = cmb_get_option('banner_ptl_title');
+    $ptl_subtitle = cmb_get_option('banner_ptl_desc');
+    ?>
     <!-- ======= PAGE HERO ======= -->
     <section class="p-page-hero" id="lab-hero" aria-label="Phòng thí nghiệm CMB">
 
       <div class="p-page-hero__image-side">
+        <?php if ($ptl_img) : ?>
+        <img src="<?php echo esc_url($ptl_img['url']); ?>"
+          alt="<?php echo esc_attr($ptl_img['alt'] ?: $ptl_title); ?>"
+          class="p-page-hero__image" loading="eager" />
+        <?php else : ?>
         <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero_port.jpg"
           alt="Phòng thí nghiệm chuyên ngành xây dựng CMB"
-          class="p-page-hero__image"
-          loading="eager" />
+          class="p-page-hero__image" loading="eager" />
+        <?php endif; ?>
       </div>
 
       <div class="p-page-hero__fade" aria-hidden="true"></div>
@@ -34,11 +44,8 @@ $lab_q  = new WP_Query([
         </nav>
 
         <div class="p-page-hero__content">
-          <h1 class="p-page-hero__title">PHÒNG THÍ NGHIỆM</h1>
-          <p class="p-page-hero__subtitle">
-            Công bố các báo cáo, chứng nhận và năng lực phòng thí nghiệm<br />
-            chuyên ngành xây dựng theo quy định của Bộ Xây dựng.
-          </p>
+          <h1 class="p-page-hero__title"><?php echo wp_kses_post($ptl_title); ?></h1>
+          <p class="p-page-hero__subtitle"><?php echo wp_kses_post($ptl_subtitle); ?></p>
         </div>
 
       </div>

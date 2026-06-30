@@ -3,20 +3,20 @@
  * template-parts/du-an/archive-hero.php
  * Section: Archive Page Hero — Dự án tiêu biểu
  */
-$theme    = get_template_directory_uri();
-$hero_img = function_exists('get_field') ? get_field('archive_du_an_hero_img', 'option') : null;
-$subtitle = function_exists('get_field') ? get_field('archive_du_an_subtitle', 'option') : '';
+$hero_img = get_field('banner_du_an_img', 'option');
+$title    = cmb_get_option('banner_du_an_title');
+$subtitle = cmb_get_option('banner_du_an_desc');
 ?>
 <!-- ======= PAGE HERO ======= -->
 <section class="p-page-hero" id="projects-hero" aria-label="Dự án tiêu biểu CMB">
 
   <div class="p-page-hero__image-side">
     <?php if ($hero_img) : ?>
-    <img src="<?php echo $hero_img['url']; ?>"
-         alt="<?php echo $hero_img['alt']; ?>"
+    <img src="<?php echo esc_url($hero_img['url']); ?>"
+         alt="<?php echo esc_attr($hero_img['alt'] ?: strip_tags($title)); ?>"
          class="p-page-hero__image" loading="eager" />
     <?php else : ?>
-    <img src="<?php echo $theme; ?>/assets/images/hero_port.jpg"
+    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero_port.jpg"
          alt="Cảng container hiện đại - CMB tư vấn xây dựng công trình hàng hải"
          class="p-page-hero__image" loading="eager" />
     <?php endif; ?>
@@ -31,15 +31,10 @@ $subtitle = function_exists('get_field') ? get_field('archive_du_an_subtitle', '
       <span class="p-page-hero__breadcrumb-current" aria-current="page">Dự án tiêu biểu</span>
     </nav>
     <div class="p-page-hero__content">
-      <h1 class="p-page-hero__title">DỰ ÁN TIÊU BIỂU</h1>
-      <p class="p-page-hero__subtitle">
-        <?php if ($subtitle) : ?>
-        <?php echo $subtitle; ?>
-        <?php else : ?>
-        300+ dự án đa dạng lĩnh vực hàng hải, logistics,<br />
-        khu công nghiệp và hạ tầng kỹ thuật trên toàn quốc.
-        <?php endif; ?>
-      </p>
+      <h1 class="p-page-hero__title"><?php echo wp_kses_post($title); ?></h1>
+      <?php if ($subtitle) : ?>
+      <p class="p-page-hero__subtitle"><?php echo wp_kses_post($subtitle); ?></p>
+      <?php endif; ?>
     </div>
   </div>
 

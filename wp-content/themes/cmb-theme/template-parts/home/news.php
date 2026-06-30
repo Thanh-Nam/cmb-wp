@@ -5,7 +5,7 @@
  */
 $theme = get_template_directory_uri();
 
-// Featured: ưu tiên bài có is_featured=1, fallback bài mới nhất
+// Kiểm tra có bài is_featured=1 không — nếu không thì ẩn toàn bộ section
 $hp_featured_q = new WP_Query([
     'post_type'      => 'post',
     'posts_per_page' => 1,
@@ -17,14 +17,12 @@ $hp_featured_q = new WP_Query([
         'compare' => '=',
     ]],
 ]);
+
 if ( ! $hp_featured_q->have_posts() ) {
-    $hp_featured_q = new WP_Query([
-        'post_type'      => 'post',
-        'posts_per_page' => 1,
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-    ]);
+    wp_reset_postdata();
+    return;
 }
+
 $hp_featured_id = 0;
 
 // Arrow SVG dùng lại nhiều lần
@@ -64,8 +62,19 @@ $arrow_svg = '<svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns=
       <div class="p-news__featured-content">
 
         <div class="p-news__meta">
-          <time class="p-news__date" datetime="<?php echo esc_attr( get_the_date( 'Y-m-d' ) ); ?>">
-            <?php echo get_the_date( 'd - m - Y' ); ?>
+          <?php
+            $hp_f_custom_date = get_field( 'post_publish_date' );
+            if ( $hp_f_custom_date ) {
+                $hp_f_date_obj    = DateTime::createFromFormat( 'd/m/Y g:i a', $hp_f_custom_date );
+                $hp_f_datetime    = $hp_f_date_obj ? $hp_f_date_obj->format( 'Y-m-d' ) : '';
+                $hp_f_date_display = $hp_f_date_obj ? $hp_f_date_obj->format( 'd - m - Y' ) : $hp_f_custom_date;
+            } else {
+                $hp_f_datetime     = get_the_date( 'Y-m-d' );
+                $hp_f_date_display = get_the_date( 'd - m - Y' );
+            }
+          ?>
+          <time class="p-news__date" datetime="<?php echo esc_attr( $hp_f_datetime ); ?>">
+            <?php echo esc_html( $hp_f_date_display ); ?>
           </time>
           <?php if ( $hp_f_cat_name ) : ?>
           <span class="p-news__cat p-news__cat--<?php echo $hp_f_cat_slug; ?>">
@@ -98,6 +107,11 @@ $arrow_svg = '<svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns=
         'orderby'        => 'date',
         'order'          => 'DESC',
         'post__not_in'   => $hp_featured_id ? [ $hp_featured_id ] : [],
+        'meta_query'     => [[
+            'key'     => 'is_featured',
+            'value'   => '1',
+            'compare' => '=',
+        ]],
     ]);
     ?>
     <div class="p-news__list">
@@ -120,8 +134,19 @@ $arrow_svg = '<svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns=
         </a>
         <div class="p-news__item-content">
           <div class="p-news__meta">
-            <time class="p-news__date" datetime="<?php echo esc_attr( get_the_date( 'Y-m-d' ) ); ?>">
-              <?php echo get_the_date( 'd - m - Y' ); ?>
+            <?php
+              $hp_custom_date = get_field( 'post_publish_date' );
+              if ( $hp_custom_date ) {
+                  $hp_date_obj    = DateTime::createFromFormat( 'd/m/Y g:i a', $hp_custom_date );
+                  $hp_datetime    = $hp_date_obj ? $hp_date_obj->format( 'Y-m-d' ) : '';
+                  $hp_date_display = $hp_date_obj ? $hp_date_obj->format( 'd - m - Y' ) : $hp_custom_date;
+              } else {
+                  $hp_datetime     = get_the_date( 'Y-m-d' );
+                  $hp_date_display = get_the_date( 'd - m - Y' );
+              }
+            ?>
+            <time class="p-news__date" datetime="<?php echo esc_attr( $hp_datetime ); ?>">
+              <?php echo esc_html( $hp_date_display ); ?>
             </time>
             <?php if ( $hp_cat_name ) : ?>
             <span class="p-news__cat p-news__cat--<?php echo $hp_cat_slug; ?>">

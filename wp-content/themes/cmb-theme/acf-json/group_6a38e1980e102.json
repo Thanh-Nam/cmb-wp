@@ -23,50 +23,6 @@
             "default_to_current_date": 0
         },
         {
-            "key": "field_6a38e21f5e6e5",
-            "label": "Số trang",
-            "name": "document_pages",
-            "aria-label": "",
-            "type": "number",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "min": "",
-            "max": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "step": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_6a38e2355e6e6",
-            "label": "Dung lượng",
-            "name": "document_size",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
             "key": "field_6a38e2405e6e7",
             "label": "File PDF",
             "name": "document_pdf",
@@ -116,5 +72,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1782306992
+    "modified": 1751299200
 }

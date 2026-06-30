@@ -166,6 +166,11 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'], $ver, true );
         wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'], $ver, true );
     }
+    if ( is_post_type_archive( 'du-an' ) ) {
+        wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );
+        wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
+        wp_enqueue_script( 'cmb-featured-swiper', $uri . '/assets/js/modules/featured-swiper.js', ['swiper', 'cmb-global'], $ver, true );
+    }
 
     // Quan hệ cổ đông
     if ( is_post_type_archive( 'quan-he-co-dong' ) || is_singular( 'quan-he-co-dong' ) ) {
@@ -856,6 +861,20 @@ add_filter('acf/settings/load_json', function ($paths) {
     return $paths;
 });
 
+// ============================================================
+// ACF OPTIONS: Cấu hình banner
+// ============================================================
+add_action('acf/init', function () {
+    if ( ! function_exists('acf_add_options_sub_page') ) return;
+    acf_add_options_sub_page([
+        'page_title'  => 'Cấu hình banner',
+        'menu_title'  => 'Cấu hình banner',
+        'parent_slug' => 'cau-hinh-chung',
+        'capability'  => 'manage_options',
+        'menu_slug'   => 'cau-hinh-banner',
+    ]);
+});
+
 
 
 define('FS_METHOD', 'direct');
@@ -892,3 +911,45 @@ add_filter( 'menu_order', function( $menu_order ) {
         'separator-last',
     ];
 } );
+
+
+// ============================================================
+// Tự động cập nhật số trang & dung lượng khi lưu file PDF
+// Áp dụng cho: phong-thi-nghiem, quan-he-co-dong
+// ============================================================
+add_action( 'acf/save_post', function( $post_id ) {
+    $post_type = get_post_type( $post_id );
+    if ( ! in_array( $post_type, [ 'phong-thi-nghiem', 'quan-he-co-dong' ], true ) ) {
+        return;
+    }
+
+    $pdf_field = get_field( 'document_pdf', $post_id );
+    if ( empty( $pdf_field['id'] ) ) {
+        return;
+    }
+
+    $attachment_id = (int) $pdf_field['id'];
+    $file_path     = get_attached_file( $attachment_id );
+
+    if ( ! $file_path || ! file_exists( $file_path ) ) {
+        return;
+    }
+
+    // Dung lượng
+    $bytes     = filesize( $file_path );
+    $formatted = $bytes >= 1048576
+        ? round( $bytes / 1048576, 1 ) . ' MB'
+        : round( $bytes / 1024 ) . ' KB';
+    update_field( 'document_size', $formatted, $post_id );
+
+    // Số trang — đọc cấu trúc PDF, tìm /Type /Page (không phải /Pages)
+    $content    = file_get_contents( $file_path );
+    $page_count = 0;
+    if ( $content ) {
+        preg_match_all( '/\/Type\s*\/Page[^s]/i', $content, $matches );
+        $page_count = count( $matches[0] );
+    }
+    if ( $page_count > 0 ) {
+        update_field( 'document_pages', $page_count, $post_id );
+    }
+}, 20 );

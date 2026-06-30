@@ -3,6 +3,22 @@
  * template-parts/home/project.php
  * Section: Featured Projects (du-an CPT with category filter tabs)
  */
+$projects_q = new WP_Query([
+    'post_type'      => 'du-an',
+    'posts_per_page' => 5,
+    'orderby'        => 'menu_order date',
+    'order'          => 'ASC',
+    'meta_query'     => [[
+        'key'     => 'project_featured',
+        'value'   => '1',
+        'compare' => '=',
+    ]],
+]);
+
+if ( ! $projects_q->have_posts() ) {
+    wp_reset_postdata();
+    return;
+}
 ?>
 <!-- ======= PROJECT ======= -->
 <section class="p-project" id="project" aria-label="Dự án tiêu biểu">
@@ -14,14 +30,27 @@
       <h2 class="c-section-title p-project__title">Dự Án Tiêu Biểu</h2>
     </div>
 
-    <!-- Filter tabs -->
-    <?php $project_cats = get_terms(['taxonomy' => 'du-an-category', 'hide_empty' => false]); ?>
+    <!-- Filter tabs — chỉ lấy category có trong các dự án nổi bật -->
+    <?php
+    $project_cats = [];
+    $seen_cat_ids = [];
+    foreach ( $projects_q->posts as $p ) {
+        $terms = get_the_terms( $p->ID, 'du-an-category' );
+        if ( $terms && ! is_wp_error( $terms ) ) {
+            foreach ( $terms as $t ) {
+                if ( ! in_array( $t->term_id, $seen_cat_ids, true ) ) {
+                    $seen_cat_ids[]  = $t->term_id;
+                    $project_cats[]  = $t;
+                }
+            }
+        }
+    }
+    ?>
     <div class="p-project__filter-wrap" data-reveal="fade-up" data-reveal-delay="2">
       <nav class="p-project__filter" role="tablist" aria-label="Lọc dự án theo danh mục">
         <button class="p-project__tab is-active" role="tab" aria-selected="true" data-filter="all" id="tab-all">
           <span>Tất Cả</span>
         </button>
-        <?php if ($project_cats && !is_wp_error($project_cats)) : ?>
         <?php foreach ($project_cats as $cat) : ?>
         <button class="p-project__tab" role="tab" aria-selected="false"
                 data-filter="<?php echo $cat->slug; ?>"
@@ -29,23 +58,13 @@
           <span><?php echo $cat->name; ?></span>
         </button>
         <?php endforeach; ?>
-        <?php endif; ?>
       </nav>
     </div>
 
     <!-- Grid -->
-    <?php
-    $projects_q = new WP_Query([
-        'post_type'      => 'du-an',
-        'posts_per_page' => 5,
-        'orderby'        => 'menu_order date',
-        'order'          => 'ASC',
-    ]);
-    ?>
     <div class="p-project__grid" id="project-grid" role="list">
 
-      <?php if ($projects_q->have_posts()) : $ci = 0; ?>
-      <?php while ($projects_q->have_posts()) : $projects_q->the_post(); $ci++; ?>
+      <?php $ci = 0; while ($projects_q->have_posts()) : $projects_q->the_post(); $ci++; ?>
       <?php
         $p_terms    = get_the_terms(get_the_ID(), 'du-an-category');
         $p_cat_slug = ($p_terms && !is_wp_error($p_terms)) ? $p_terms[0]->slug : '';
@@ -100,7 +119,6 @@
         </div>
       </article>
       <?php endwhile; wp_reset_postdata(); ?>
-      <?php endif; ?>
 
     </div>
     <!-- /Grid -->
