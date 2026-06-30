@@ -4,8 +4,8 @@
  * Section: Page Hero — Liên hệ
  */
 $hero_img = get_field('banner_lien_he_img', 'option');
-$title    = cmb_get_option('banner_lien_he_title');
-$subtitle = cmb_get_option('banner_lien_he_desc');
+$title    = cmb_get_option('banner_lien_he_title') ?: 'LIÊN HỆ';
+$subtitle = cmb_get_option('banner_lien_he_desc') ?: 'Kết nối cùng CMB<br>Kiến tạo những công trình hàng hải bền vững';
 ?>
 <!-- ======= PAGE HERO ======= -->
 <section class="p-page-hero" id="lien-he-hero" aria-label="Liên hệ CMB">

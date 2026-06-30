@@ -55,8 +55,8 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
 
     <?php
     $news_img      = get_field('banner_tin_tuc_img', 'option');
-    $news_title    = cmb_get_option('banner_tin_tuc_title');
-    $news_subtitle = cmb_get_option('banner_tin_tuc_desc');
+    $news_title    = cmb_get_option('banner_tin_tuc_title') ?: 'TIN TỨC & SỰ KIỆN';
+    $news_subtitle = cmb_get_option('banner_tin_tuc_desc') ?: 'Cập nhật hoạt động, thông tin chuyên ngành<br>và các sự kiện nổi bật của CMB.';
     ?>
     <!-- ======= PAGE HERO ======= -->
     <section class="p-page-hero" id="news-hero" aria-label="Tin tức & Sự kiện CMB">

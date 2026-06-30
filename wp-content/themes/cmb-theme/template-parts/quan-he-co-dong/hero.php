@@ -4,8 +4,8 @@
  * Section: Page Hero — Quan hệ cổ đông
  */
 $hero_img = get_field('banner_qhcd_img', 'option');
-$title    = cmb_get_option('banner_qhcd_title');
-$subtitle = cmb_get_option('banner_qhcd_desc');
+$title    = cmb_get_option('banner_qhcd_title') ?: 'QUAN HỆ CỔ ĐÔNG';
+$subtitle = cmb_get_option('banner_qhcd_desc') ?: 'Minh bạch thông tin, bảo vệ quyền lợi cổ đông<br>và cam kết phát triển bền vững cùng nhà đầu tư.';
 ?>
 <!-- ======= PAGE HERO ======= -->
 <section class="p-page-hero" id="ir-hero" aria-label="Quan hệ cổ đông CMB">

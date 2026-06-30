@@ -4,8 +4,8 @@
  * Section: Archive Page Hero — Dự án tiêu biểu
  */
 $hero_img = get_field('banner_du_an_img', 'option');
-$title    = cmb_get_option('banner_du_an_title');
-$subtitle = cmb_get_option('banner_du_an_desc');
+$title    = cmb_get_option('banner_du_an_title') ?: 'DỰ ÁN TIÊU BIỂU';
+$subtitle = cmb_get_option('banner_du_an_desc') ?: '300+ dự án đa dạng lĩnh vực hàng hải, logistics,<br>khu công nghiệp và hạ tầng kỹ thuật trên toàn quốc.';
 ?>
 <!-- ======= PAGE HERO ======= -->
 <section class="p-page-hero" id="projects-hero" aria-label="Dự án tiêu biểu CMB">

@@ -4,8 +4,8 @@
  * Section: Page Hero — Thiết bị khảo sát
  */
 $hero_img = get_field('banner_thiet_bi_img', 'option');
-$title    = cmb_get_option('banner_thiet_bi_title');
-$subtitle = cmb_get_option('banner_thiet_bi_desc');
+$title    = cmb_get_option('banner_thiet_bi_title') ?: 'THIẾT BỊ KHẢO SÁT';
+$subtitle = cmb_get_option('banner_thiet_bi_desc') ?: 'Hệ thống thiết bị hiện đại, đồng bộ phục vụ<br>khảo sát địa hình, địa chất và thủy hải văn.';
 ?>
 <!-- ======= PAGE HERO ======= -->
 <section class="p-page-hero" id="equipment-hero" aria-label="Thiết bị khảo sát CMB">

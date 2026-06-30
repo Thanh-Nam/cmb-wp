@@ -4,8 +4,8 @@
  * Section: Page Hero — Phần mềm
  */
 $hero_img = get_field('banner_phan_mem_img', 'option');
-$title    = cmb_get_option('banner_phan_mem_title');
-$subtitle = cmb_get_option('banner_phan_mem_desc');
+$title    = cmb_get_option('banner_phan_mem_title') ?: 'PHẦN MỀM';
+$subtitle = cmb_get_option('banner_phan_mem_desc') ?: 'Hệ thống phần mềm chuyên dụng, hiện đại phục vụ<br>khảo sát, thiết kế và quản lý công trình.';
 ?>
 <!-- ======= PAGE HERO ======= -->
 <section class="p-page-hero" id="software-hero" aria-label="Phần mềm CMB">
