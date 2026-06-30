@@ -56,6 +56,7 @@
             <?php
             $hdr_email      = get_field( 'header_email', 'option' ) ?: 'cmbhcm@cmbvn.com.vn';
             $hdr_eoffice    = get_field( 'header_eoffice_url', 'option' ) ?: '#';
+            $hdr_eoffice_v1mc = get_field( 'header_eoffice_v1mc_url', 'option' ) ?: '#';
             ?>
             <ul class="l-header__topbar-list" role="list" aria-label="Thông tin liên hệ và ngôn ngữ">
               <li class="l-header__topbar-item" id="topbar-item-email">
@@ -65,9 +66,15 @@
                 </a>
               </li>
               <li class="l-header__topbar-item" id="topbar-item-eoffice">
-                <a href="<?php echo $hdr_eoffice; ?>" class="l-header__topbar-link" id="topbar-eoffice" title="Truy cập E-office"<?php echo ( $hdr_eoffice !== '#' ) ? ' target="_blank" rel="noopener"' : ''; ?>>
+                <a href="<?php echo $hdr_eoffice; ?>" class="l-header__topbar-link" id="topbar-eoffice" title="Truy cập E-Office CMB"<?php echo ( $hdr_eoffice !== '#' ) ? ' target="_blank" rel="noopener"' : ''; ?>>
                   <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Document Icon.svg" alt="" role="presentation" class="l-header__topbar-icon" />
-                  <span>E-office</span>
+                  <span>E-Office CMB</span>
+                </a>
+              </li>
+              <li class="l-header__topbar-item" id="topbar-item-eoffice-v1mc">
+                <a href="<?php echo $hdr_eoffice_v1mc; ?>" class="l-header__topbar-link" id="topbar-eoffice-v1mc" title="Truy cập E-Office V1MC"<?php echo ( $hdr_eoffice_v1mc !== '#' ) ? ' target="_blank" rel="noopener"' : ''; ?>>
+                  <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Document Icon.svg" alt="" role="presentation" class="l-header__topbar-icon" />
+                  <span>E-Office V1MC</span>
                 </a>
               </li>
               <li class="l-header__topbar-item" id="topbar-item-lang">
@@ -155,9 +162,13 @@
                   <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Email Icon.svg" alt="" role="presentation" />
                   <?php echo $hdr_email; ?>
                 </a>
-                <a href="<?php echo $hdr_eoffice; ?>" class="l-nav__mobile-info-item" title="E-office"<?php echo ( $hdr_eoffice !== '#' ) ? ' target="_blank" rel="noopener"' : ''; ?>>
+                <a href="<?php echo $hdr_eoffice; ?>" class="l-nav__mobile-info-item" title="E-Office CMB"<?php echo ( $hdr_eoffice !== '#' ) ? ' target="_blank" rel="noopener"' : ''; ?>>
                   <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Document Icon.svg" alt="" role="presentation" />
-                  E-office
+                  E-Office CMB
+                </a>
+                <a href="<?php echo $hdr_eoffice_v1mc; ?>" class="l-nav__mobile-info-item" title="E-Office V1MC"<?php echo ( $hdr_eoffice_v1mc !== '#' ) ? ' target="_blank" rel="noopener"' : ''; ?>>
+                  <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Document Icon.svg" alt="" role="presentation" />
+                  E-Office V1MC
                 </a>
               </div>
             </nav>

@@ -88,7 +88,7 @@ $default_thumb = get_template_directory_uri() . '/assets/images/equip-total-stat
         <a href="#" class="p-equipment-card js-equip-card"
            data-reveal="fade-up" data-reveal-delay="<?php echo ($delay % 6) + 1; ?>"
            data-title="<?php echo $item['title']; ?>"
-           data-images="<?php echo $item['images_json']; ?>"
+           data-images="<?php echo esc_attr($item['images_json']); ?>"
            data-desc="<?php echo $item['content']; ?>">
           <div class="p-equipment-card__img-wrap">
             <?php if ($item['thumb_src']) : ?>

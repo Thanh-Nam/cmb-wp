@@ -24,8 +24,26 @@
         },
         {
             "key": "field_6a39055a517f5",
-            "label": "URL E office",
+            "label": "URL E-Office CMB",
             "name": "header_eoffice_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_6a39055a517f6",
+            "label": "URL E-Office V1MC",
+            "name": "header_eoffice_v1mc_url",
             "aria-label": "",
             "type": "url",
             "instructions": "",
