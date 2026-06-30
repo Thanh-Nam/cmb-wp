@@ -153,6 +153,7 @@ function cmb_enqueue_assets() {
     // Archive thiết bị
     if ( is_post_type_archive( 'thiet-bi' ) ) {
         wp_enqueue_script( 'cmb-equipment-modal', $uri . '/assets/js/modules/equipment-modal.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-stat-counter',    $uri . '/assets/js/modules/stat-counter.js',    ['cmb-global'], $ver, true );
     }
 
     // Archive phần mềm
@@ -163,6 +164,7 @@ function cmb_enqueue_assets() {
     // Archive / single dự án
     if ( is_post_type_archive( 'du-an' ) || is_singular( 'du-an' ) ) {
         wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'], $ver, true );
     }
 
     // Quan hệ cổ đông
@@ -857,3 +859,36 @@ add_filter('acf/settings/load_json', function ($paths) {
 
 
 define('FS_METHOD', 'direct');
+
+// ============================================================
+// ADMIN: Ẩn Comments + Sắp xếp sidebar menu
+// ============================================================
+add_action( 'admin_menu', function() {
+    remove_menu_page( 'edit-comments.php' );
+} );
+
+add_filter( 'custom_menu_order', '__return_true' );
+add_filter( 'menu_order', function( $menu_order ) {
+    return [
+        'index.php',                                  // Dashboard
+        // -- Nội dung do khách nhập --
+        'cau-hinh-chung',                             // Cấu hình chung
+        'edit.php?post_type=du-an',                   // Dự án
+        'edit.php?post_type=thiet-bi',                // Thiết bị
+        'edit.php?post_type=phong-thi-nghiem',        // Phòng thí nghiệm
+        'edit.php?post_type=quan-he-co-dong',         // Quan hệ cổ đông
+        'edit.php?post_type=phan-mem',                // Phần mềm
+        'edit.php?post_type=linh-vuc',                // Lĩnh vực
+        'edit.php',                                   // Tin tức
+        // -- Mặc định WordPress --
+        'separator1',
+        'upload.php',
+        'edit.php?post_type=page',
+        'themes.php',
+        'plugins.php',
+        'users.php',
+        'tools.php',
+        'options-general.php',
+        'separator-last',
+    ];
+} );

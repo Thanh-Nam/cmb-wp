@@ -1,15 +1,15 @@
 {
-    "key": "ui_options_page_6a37b2b6b5818",
-    "title": "Cấu hình trang giới thiệu",
+    "key": "ui_options_page_6b38da_thiet_bi",
+    "title": "Cấu hình trang Thiết bị",
     "active": true,
     "menu_order": 0,
-    "page_title": "Cấu hình trang giới thiệu",
-    "menu_slug": "gioi-thieu",
+    "page_title": "Cấu hình trang Thiết bị",
+    "menu_slug": "cau-hinh-thiet-bi",
     "parent_slug": "cau-hinh-chung",
     "advanced_configuration": 1,
     "icon_url": "",
     "menu_title": "",
-    "position": 2,
+    "position": "",
     "redirect": false,
     "description": "",
     "menu_icon": [],
@@ -19,6 +19,5 @@
     "data_storage": "options",
     "post_id": "",
     "autoload": 0,
-    "_parent": 11,
-    "modified": 1782782330
+    "modified": 1751300000
 }

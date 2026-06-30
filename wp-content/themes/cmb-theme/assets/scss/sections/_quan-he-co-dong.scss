@@ -12,6 +12,7 @@
 
   &__list {
     display: flex;
+    justify-content: safe center;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;

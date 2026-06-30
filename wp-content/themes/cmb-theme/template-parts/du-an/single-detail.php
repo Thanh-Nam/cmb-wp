@@ -27,12 +27,17 @@ $tech_specs    = get_field('project_tech_specs');
           <h2 class="p-project-section__title">DỊCH VỤ CMB ĐẢM NHẬN</h2>
           <div class="p-project-services" id="project-services-grid">
             <?php foreach ($services_list as $i => $service) :
-              if (empty($service['label'])) continue;
+              if (empty($service['name'])) continue;
+              $icon_url = '';
+              if (!empty($service['icon'])) {
+                $icon_src = wp_get_attachment_image_src($service['icon'], 'full');
+                if ($icon_src) $icon_url = $icon_src[0];
+              }
             ?>
             <div class="p-project-services__item" id="service-<?php echo $i + 1; ?>">
               <div class="p-project-services__icon" aria-hidden="true">
-                <?php if (!empty($service['icon'])) : ?>
-                <img src="<?php echo $service['icon']['url']; ?>" alt="" width="28" height="28" loading="lazy" />
+                <?php if ($icon_url) : ?>
+                <img src="<?php echo esc_url($icon_url); ?>" alt="" width="28" height="28" loading="lazy" />
                 <?php else : ?>
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                   <rect x="5" y="3" width="15" height="20" rx="2" stroke="#0379CC" stroke-width="1.5"/>
@@ -40,7 +45,7 @@ $tech_specs    = get_field('project_tech_specs');
                 </svg>
                 <?php endif; ?>
               </div>
-              <span class="p-project-services__label"><?php echo $service['label']; ?></span>
+              <span class="p-project-services__label"><?php echo esc_html($service['name']); ?></span>
             </div>
             <?php endforeach; ?>
           </div>

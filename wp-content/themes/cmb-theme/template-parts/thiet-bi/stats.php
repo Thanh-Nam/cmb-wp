@@ -3,7 +3,8 @@
  * template-parts/thiet-bi/stats.php
  * Section: Stats Bar — Thiết bị
  */
-$stats = [
+$acf_stats = function_exists('get_field') ? get_field('archive_thiet_bi_stats', 'option') : [];
+$stats = $acf_stats ?: [
   ['number' => '35+', 'label' => 'Thiết bị khảo sát'],
   ['number' => '12+', 'label' => 'Thiết bị thủy văn'],
   ['number' => '8+',  'label' => 'Drone chuyên dụng'],
@@ -17,7 +18,7 @@ $stats = [
       <?php foreach ($stats as $i => $stat) : ?>
       <div class="p-projects-stats__item p-projects-stats__item--anim" style="--delay: <?php echo $i * 0.1; ?>s">
         <span class="p-projects-stats__number" data-countup><?php echo $stat['number']; ?></span>
-        <span class="p-projects-stats__label"><?php echo $stat['label']; ?></span>
+        <span class="p-projects-stats__label"><?php echo cmb_arr($stat, 'label'); ?></span>
       </div>
       <?php endforeach; ?>
     </div>

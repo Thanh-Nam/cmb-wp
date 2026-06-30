@@ -9,7 +9,7 @@
     "advanced_configuration": 1,
     "icon_url": "",
     "menu_title": "",
-    "position": "",
+    "position": 1,
     "redirect": false,
     "description": "",
     "menu_icon": [],
@@ -20,5 +20,5 @@
     "post_id": "",
     "autoload": 0,
     "_parent": 11,
-    "modified": 1782306992
+    "modified": 1782782308
 }

@@ -6025,7 +6025,7 @@ body.search-overlay-open {
   display: grid;
   grid-template-columns: 1.15fr 1fr;
   gap: 0;
-  align-items: start;
+  align-items: stretch;
   background: #FFFFFF;
   border-radius: 1.6rem;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.09);
@@ -6034,10 +6034,11 @@ body.search-overlay-open {
 .p-projects-featured__img-wrap {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 16/10;
-  height: 100%;
+  min-height: 32rem;
 }
 .p-projects-featured__img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -6197,42 +6198,74 @@ body.search-overlay-open {
 .p-projects-featured__cta:hover svg {
   transform: translateX(4px);
 }
+.p-projects-featured__content {
+  min-width: 0;
+}
+.p-projects-featured__metric-value {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+@media (max-width: 1400px) {
+  .p-projects-featured__body {
+    grid-template-columns: 0.85fr 1fr;
+  }
+}
+@media (max-width: 1200px) {
+  .p-projects-featured__body {
+    grid-template-columns: 0.7fr 1fr;
+  }
+}
 @media (max-width: 1023px) {
   .p-projects-featured {
     padding: 5.2rem 0 6rem;
   }
   .p-projects-featured__body {
     grid-template-columns: 1fr;
-    gap: 3.2rem;
+    align-items: start;
   }
   .p-projects-featured__img-wrap {
+    min-height: unset;
     aspect-ratio: 16/9;
+  }
+  .p-projects-featured__img {
+    position: static;
+    width: 100%;
+    height: 100%;
   }
   .p-projects-featured__title {
     font-size: 2.4rem;
   }
-}
-@media (max-width: 767px) {
-  .p-projects-featured {
-    padding: 4rem 0 4.8rem;
+  .p-projects-featured__content {
+    padding: 2.8rem 3.2rem;
   }
-  .p-projects-featured__title {
-    font-size: 2rem;
+  .p-projects-featured__metric-value {
+    font-size: 1.8rem;
   }
   .p-projects-featured__metrics {
     flex-wrap: wrap;
-    gap: 1.2rem;
+    gap: 1rem;
   }
   .p-projects-featured__metric {
-    flex: 0 0 calc(50% - 0.6rem);
+    flex: 0 0 calc(50% - 0.5rem);
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
   .p-projects-featured__metric::before {
     display: none !important;
   }
+}
+@media (max-width: 767px) {
+  .p-projects-featured {
+    padding: 4rem 0 4.8rem;
+  }
+  .p-projects-featured__content {
+    padding: 2.4rem 2rem;
+  }
+  .p-projects-featured__title {
+    font-size: 2rem;
+  }
   .p-projects-featured__metric-value {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 }
 
@@ -7743,6 +7776,7 @@ li:last-child .p-lab-detail__related-item {
 }
 .p-ir-tabs__list {
   display: flex;
+  justify-content: safe center;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
