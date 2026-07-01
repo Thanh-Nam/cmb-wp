@@ -507,6 +507,47 @@ add_filter( 'rest_endpoints', function( $endpoints ) {
 } );
 
 // ============================================================
+// REST API CORS — cho phép trang tuyển dụng (app React ở domain khác,
+// VD Vercel) gọi GET vào REST API để lấy danh sách tin tuyển dụng.
+// Domain cho phép cấu hình tại wp-admin > Cấu hình chung > API Tuyển Dụng,
+// không cần sửa code khi đổi domain demo/production.
+// ============================================================
+function cmb_is_allowed_cors_origin( $origin ) {
+    $host = wp_parse_url( $origin, PHP_URL_HOST );
+    if ( ! $host ) return false;
+    $host = strtolower( $host );
+
+    $configured = function_exists( 'get_field' ) ? get_field( 'cors_allowed_origins', 'option' ) : '';
+    // Fallback khi admin chưa lưu trang "Cấu hình chung" lần nào (get_field không tự áp dụng default_value)
+    if ( empty( $configured ) ) {
+        $configured = "cmb-recruitment.vercel.app\n*.vercel.app";
+    }
+    $allowed = array_filter( array_map( 'trim', explode( "\n", (string) $configured ) ) );
+
+    foreach ( $allowed as $pattern ) {
+        $pattern = strtolower( $pattern );
+        if ( $pattern === $host ) return true;
+        if ( strpos( $pattern, '*.' ) === 0 && substr( $host, -( strlen( $pattern ) - 1 ) ) === substr( $pattern, 1 ) ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+add_action( 'rest_api_init', function () {
+    remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
+    add_filter( 'rest_pre_serve_request', function ( $value ) {
+        $origin = get_http_origin();
+        if ( $origin && cmb_is_allowed_cors_origin( $origin ) ) {
+            header( 'Access-Control-Allow-Origin: ' . esc_url_raw( $origin ) );
+            header( 'Access-Control-Allow-Methods: GET' );
+            header( 'Vary: Origin' );
+        }
+        return $value;
+    } );
+}, 15 );
+
+// ============================================================
 // PERFORMANCE: Preload LCP (hero) image — priority 1 = output sớm nhất
 // ============================================================
 add_action( 'wp_head', function() {
@@ -898,6 +939,7 @@ add_filter( 'menu_order', function( $menu_order ) {
         'edit.php?post_type=quan-he-co-dong',         // Quan hệ cổ đông
         'edit.php?post_type=phan-mem',                // Phần mềm
         'edit.php?post_type=linh-vuc',                // Lĩnh vực
+        'edit.php?post_type=tuyen-dung',              // Tuyển dụng
         'edit.php',                                   // Tin tức
         // -- Mặc định WordPress --
         'separator1',

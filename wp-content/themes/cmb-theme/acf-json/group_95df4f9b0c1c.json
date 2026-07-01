@@ -1,0 +1,45 @@
+{
+    "key": "group_95df4f9b0c1c",
+    "title": "API Tuyển Dụng (CORS)",
+    "fields": [
+        {
+            "key": "field_95df4f9b0c1d",
+            "label": "Domain được phép gọi API tuyển dụng",
+            "name": "cors_allowed_origins",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Mỗi domain 1 dòng, không kèm https://. Dùng *.vercel.app để cho phép mọi domain preview của Vercel (tiện khi domain demo còn thay đổi). Chỉ áp dụng cho các request đọc (GET) tới REST API.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "cmb-recruitment.vercel.app\n*.vercel.app",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "cmb-recruitment.vercel.app",
+            "new_lines": "",
+            "rows": 4
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "cau-hinh-chung"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1782306992
+}
