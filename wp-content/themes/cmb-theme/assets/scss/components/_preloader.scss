@@ -27,12 +27,59 @@
     gap: 16px;
   }
 
-  &__logo {
-    width: 130px;
-    height: auto;
-    animation: preloader-ship-rock 3s ease-in-out infinite;
-    transform-origin: center 85%;
-    mix-blend-mode: multiply;
+  &__compass {
+    width: 110px;
+    height: 110px;
+  }
+
+  &__ring {
+    fill: none;
+    stroke: $color-cmb-navy;
+    stroke-width: 1;
+  }
+
+  &__ring--inner {
+    stroke: $color-border;
+    stroke-width: 0.8;
+  }
+
+  &__tick {
+    stroke: $color-cmb-navy;
+    stroke-width: 0.7;
+  }
+
+  &__tick--fine {
+    stroke: $color-border;
+    stroke-width: 0.5;
+  }
+
+  &__label {
+    font-family: $font-primary;
+    font-size: 9px;
+    fill: $color-cmb-navy;
+  }
+
+  &__needle {
+    transform-origin: 63px 63px;
+    animation: preloader-needle-swing 5.4s ease-in-out infinite;
+  }
+
+  &__needle-tip {
+    fill: $color-primary;
+  }
+
+  &__needle-tail {
+    fill: $color-cmb-navy;
+  }
+
+  &__needle-core {
+    fill: none;
+    stroke: $color-cmb-navy;
+    stroke-width: 1;
+  }
+
+  &__needle-dot {
+    fill: $color-primary;
   }
 
   &__bar {
@@ -68,12 +115,12 @@ body.has-preloader.is-loaded > *:not(#page-preloader) {
   to   { width: 70%; }
 }
 
-// Tàu lắc lư nhẹ
-@keyframes preloader-ship-rock {
-  0%   { transform: rotate(-2deg) translateY(0px); }
-  30%  { transform: rotate(0deg)  translateY(-4px); }
-  50%  { transform: rotate(2deg)  translateY(0px); }
-  80%  { transform: rotate(0deg)  translateY(-4px); }
-  100% { transform: rotate(-2deg) translateY(0px); }
+// Kim la bàn lắc dò hướng Bắc rồi trở lại
+@keyframes preloader-needle-swing {
+  0%   { transform: rotate(0deg); }
+  22%  { transform: rotate(28deg); }
+  46%  { transform: rotate(-9deg); }
+  70%  { transform: rotate(15deg); }
+  100% { transform: rotate(0deg); }
 }
 

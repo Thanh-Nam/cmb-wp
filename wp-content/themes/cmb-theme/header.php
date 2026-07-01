@@ -13,7 +13,63 @@
   <!-- ======= PRELOADER ======= -->
   <div id="page-preloader" class="preloader" aria-hidden="true">
     <div class="preloader__inner">
-      <img src="<?php echo get_template_directory_uri(); ?>/assets/images/tau.gif" alt="CMB Logo" class="preloader__logo" />
+      <svg class="preloader__compass" viewBox="0 0 126 126" role="img" aria-label="CMB">
+        <circle class="preloader__ring" cx="63" cy="63" r="54" />
+        <circle class="preloader__ring preloader__ring--inner" cx="63" cy="63" r="42" />
+
+        <!-- tick chéo góc NE / SE / SW / NW -->
+        <g class="preloader__tick preloader__tick--diag">
+          <line x1="25" y1="25" x2="31" y2="31" />
+          <line x1="101" y1="25" x2="95" y2="31" />
+          <line x1="25" y1="101" x2="31" y2="95" />
+          <line x1="101" y1="101" x2="95" y2="95" />
+        </g>
+
+        <!-- tick nhỏ chia độ, bỏ trống tại 4 hướng chính để nhường chỗ cho chữ -->
+        <g class="preloader__tick preloader__tick--fine">
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(11.25 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(22.5 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(33.75 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(56.25 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(67.5 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(78.75 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(101.25 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(112.5 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(123.75 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(146.25 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(157.5 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(168.75 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(191.25 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(202.5 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(213.75 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(236.25 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(247.5 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(258.75 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(281.25 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(292.5 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(303.75 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(326.25 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(337.5 63 63)" />
+          <line x1="63" y1="10" x2="63" y2="14" transform="rotate(348.75 63 63)" />
+        </g>
+
+        <!-- chữ hướng -->
+        <g class="preloader__label">
+          <text x="63" y="21" text-anchor="middle">N</text>
+          <text x="63" y="110" text-anchor="middle">S</text>
+          <text x="17" y="66" text-anchor="middle">W</text>
+          <text x="109" y="66" text-anchor="middle">E</text>
+        </g>
+
+        <!-- kim mũi tàu, lắc dò hướng -->
+        <g class="preloader__needle">
+          <path class="preloader__needle-tip" d="M63 26 L70 63 L63 56 L56 63 Z" />
+          <circle class="preloader__needle-core" cx="63" cy="63" r="7" />
+          <path class="preloader__needle-tail" d="M63 100 L56 66 L63 73 L70 66 Z" />
+        </g>
+
+        <circle class="preloader__needle-dot" cx="63" cy="63" r="2.2" />
+      </svg>
       <div class="preloader__bar">
         <div class="preloader__line"></div>
       </div>
