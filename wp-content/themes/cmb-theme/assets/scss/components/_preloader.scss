@@ -35,7 +35,7 @@
   &__ring {
     fill: none;
     stroke: $color-cmb-navy;
-    stroke-width: 1;
+    stroke-width: 1.8;
   }
 
   &__ring--inner {
@@ -55,8 +55,13 @@
 
   &__label {
     font-family: $font-primary;
-    font-size: 9px;
+    font-size: 11px;
+    font-weight: 700;
     fill: $color-cmb-navy;
+  }
+
+  &__label--north {
+    fill: $color-accent;
   }
 
   &__needle {

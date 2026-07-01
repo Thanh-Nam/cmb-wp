@@ -55,7 +55,7 @@
 
         <!-- chữ hướng -->
         <g class="preloader__label">
-          <text x="63" y="21" text-anchor="middle">N</text>
+          <text x="63" y="21" text-anchor="middle" class="preloader__label--north">N</text>
           <text x="63" y="110" text-anchor="middle">S</text>
           <text x="17" y="66" text-anchor="middle">W</text>
           <text x="109" y="66" text-anchor="middle">E</text>
