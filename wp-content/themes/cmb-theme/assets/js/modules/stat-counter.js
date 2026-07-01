@@ -8,13 +8,56 @@
 (function () {
   if (!('IntersectionObserver' in window)) return;
 
-  // Tách prefix / số / suffix từ chuỗi như "35+", "100%", "300+"
+  // Thêm dấu chấm phân cách hàng nghìn kiểu VN: 1000 -> "1.000"
+  function formatThousands(n) {
+    return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+
+  // Tách prefix / số / suffix từ chuỗi như "35+", "100%", "300+", "1.000", "1.234,5"
+  // Quy ước VN: "." là phân cách hàng nghìn, "," là phân cách thập phân
   function parseValue(raw) {
     var match = raw.match(/^([^\d]*)(\d[\d,.]*)([^\d]*)$/);
     if (!match) return null;
+
+    var numStr = match[2];
+    var decimals = 0;
+    var useThousands = false;
+    var num;
+
+    if (numStr.indexOf(',') !== -1) {
+      // Có dấu phẩy -> phần sau dấu phẩy cuối cùng là thập phân
+      var commaParts = numStr.split(',');
+      var decPart = commaParts.pop();
+      decimals = decPart.length;
+      num = parseFloat(commaParts.join('').replace(/\./g, '') + '.' + decPart);
+      useThousands = true;
+    } else if (numStr.indexOf('.') !== -1) {
+      var dotParts = numStr.split('.');
+      var allThreeDigits = true;
+      for (var i = 1; i < dotParts.length; i++) {
+        if (dotParts[i].length !== 3) { allThreeDigits = false; break; }
+      }
+      if (allThreeDigits) {
+        // Các dấu chấm là phân cách hàng nghìn: "1.000" -> 1000
+        num = parseFloat(dotParts.join(''));
+        useThousands = true;
+      } else if (dotParts.length === 2) {
+        // Một dấu chấm, không phải nhóm 3 số -> số thập phân: "1.5" -> 1.5
+        decimals = dotParts[1].length;
+        num = parseFloat(numStr);
+      } else {
+        num = parseFloat(dotParts.join(''));
+        useThousands = true;
+      }
+    } else {
+      num = parseFloat(numStr);
+    }
+
     return {
       prefix: match[1],
-      num: parseFloat(match[2].replace(/,/g, '')),
+      num: num,
+      decimals: decimals,
+      useThousands: useThousands,
       suffix: match[3]
     };
   }
@@ -25,8 +68,7 @@
     if (!parsed || isNaN(parsed.num)) return;
 
     var target   = parsed.num;
-    var isFloat  = String(parsed.num).indexOf('.') !== -1;
-    var decimals = isFloat ? (String(parsed.num).split('.')[1] || '').length : 0;
+    var decimals = parsed.decimals;
     duration = duration || 1600;
     var startTime = null;
 
@@ -36,7 +78,16 @@
       var progress = Math.min(elapsed / duration, 1);
       var ease     = 1 - Math.pow(1 - progress, 4);
       var current  = ease * target;
-      var display  = isFloat ? current.toFixed(decimals) : Math.round(current);
+      var display;
+      if (decimals > 0) {
+        display = current.toFixed(decimals).replace('.', ',');
+        if (parsed.useThousands) {
+          var parts = display.split(',');
+          display = formatThousands(parseFloat(parts[0])) + ',' + parts[1];
+        }
+      } else {
+        display = parsed.useThousands ? formatThousands(current) : Math.round(current);
+      }
       el.textContent = parsed.prefix + display + parsed.suffix;
       if (progress < 1) requestAnimationFrame(tick);
     }
@@ -72,9 +123,10 @@
         if (!entry.isIntersecting) return;
         var el     = entry.target;
         var raw    = el.textContent.trim();
-        var target = parseInt(raw, 10);
-        if (isNaN(target)) return;
-        var padLen    = raw.length;
+        var parsed = parseValue(raw);
+        if (!parsed || isNaN(parsed.num)) return;
+        var target    = parsed.num;
+        var padLen    = raw.replace(/[^\d]/g, '').length;
         var duration  = 1800;
         var startTime = performance.now();
 
@@ -82,7 +134,9 @@
           var elapsed  = now - startTime;
           var progress = Math.min(elapsed / duration, 1);
           var ease     = 1 - Math.pow(1 - progress, 4);
-          el.textContent = String(Math.round(ease * target)).padStart(padLen, '0');
+          var current  = Math.round(ease * target);
+          var display  = parsed.useThousands ? formatThousands(current) : String(current).padStart(padLen, '0');
+          el.textContent = parsed.prefix + display + parsed.suffix;
           if (progress < 1) requestAnimationFrame(tick);
         }
         requestAnimationFrame(tick);
