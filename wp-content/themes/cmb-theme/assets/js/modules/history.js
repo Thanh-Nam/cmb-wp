@@ -130,7 +130,7 @@
     var slots = Array.from(document.querySelectorAll('.p-history__item'));
     if (!pathEl || !svgEl || !slots.length) return;
 
-    var DUR_S = 22; // seconds — phải khớp với dur="22s" trong animateMotion
+    var DUR_S = 44; // seconds — phải khớp với dur="44s" trong animateMotion
 
     var COORDS = [
       { x: 67.5, y: 690.0 },

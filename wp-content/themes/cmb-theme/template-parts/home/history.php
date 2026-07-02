@@ -54,9 +54,9 @@ $history_items    = get_field( 'history_item', 'option' );
         <path id="ship-route"
           d="M67.5 690.103V442.103C67.5 428.848 78.2452 418.103 91.5 418.103H854.667C867.922 418.103 878.667 407.357 878.667 394.103V188.103C878.667 174.848 889.412 164.103 902.667 164.103H1676" />
       </defs>
-      <image id="ship-icon" href="<?php echo $theme; ?>/assets/images/tau.gif" xlink:href="<?php echo $theme; ?>/assets/images/tau.gif" x="-65" y="-58"
-        width="90" height="90" transform="rotate(0)" />
-      <animateMotion href="#ship-icon" dur="22s" begin="0s" repeatCount="indefinite" rotate="auto"
+      <image id="ship-icon" href="<?php echo $theme; ?>/assets/images/tau.gif" xlink:href="<?php echo $theme; ?>/assets/images/tau.gif" x="-43.33" y="-38.67"
+        width="60" height="60" transform="rotate(0)" />
+      <animateMotion href="#ship-icon" dur="44s" begin="0s" repeatCount="indefinite" rotate="auto"
         calcMode="linear">
         <mpath href="#ship-route" />
       </animateMotion>
