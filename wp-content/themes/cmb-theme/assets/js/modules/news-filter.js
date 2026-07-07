@@ -43,6 +43,11 @@
           if (pagination) {
             pagination.innerHTML = data.data.pagination;
           }
+          if (window.CMB_revealObserver) {
+            list.querySelectorAll('[data-reveal]').forEach(function (el) {
+              window.CMB_revealObserver.observe(el);
+            });
+          }
         }
       })
       .catch(function () { })

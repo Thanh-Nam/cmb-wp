@@ -205,11 +205,23 @@ function cmb_enqueue_assets() {
 
         // Location map data override từ ACF Options
         $loc_map = [
-            'hai-phong' => 'location_hai_phong',
-            'nghe-an'   => 'location_nghe_an',
-            'tay-ninh'  => 'location_tay_ninh',
-            'tp-hcm'    => 'location_tp_hcm',
-            'dong-nai'  => 'location_dong_nai',
+            'hai-phong'       => 'location_hai_phong',
+            'quang-ninh'      => 'location_quang_ninh',
+            'thanh-hoa'       => 'location_thanh_hoa',
+            'nghe-an'         => 'location_nghe_an',
+            'quang-tri'       => 'location_quang_tri',
+            'da-nang'         => 'location_da_nang',
+            'quang-ngai'      => 'location_quang_ngai',
+            'khanh-hoa'       => 'location_khanh_hoa',
+            'ninh-thuan'      => 'location_ninh_thuan',
+            'binh-thuan'      => 'location_binh_thuan',
+            'dong-nai'        => 'location_dong_nai',
+            'ba-ria-vung-tau' => 'location_ba_ria_vung_tau',
+            'tay-ninh'        => 'location_tay_ninh',
+            'tp-hcm'          => 'location_tp_hcm',
+            'tien-giang'      => 'location_tien_giang',
+            'ben-tre'         => 'location_ben_tre',
+            'can-tho'         => 'location_can_tho',
         ];
         $location_data = [];
         foreach ( $loc_map as $key => $field_key ) {

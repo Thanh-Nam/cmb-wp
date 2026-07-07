@@ -8,6 +8,12 @@
  * _locPanel, _locCityEl, _locProjectEl, _locDescEl, _locLinkEl, _locImgEl
  * _locPopup, _popupCityEl, _popupProjectEl, _popupDescEl, _popupImgEl
  * _themeUri, _locationData
+ *
+ * Nhãn tỉnh trong map.svg là chữ đã vector hoá (path), không thể chèn
+ * text mới theo đúng kiểu cũ. Vì vậy: Hải Phòng / TP. Hồ Chí Minh / Đồng Nai
+ * (vị trí đã đúng) giữ nguyên nhãn gốc trong SVG; các tỉnh còn lại (mới thêm,
+ * hoặc bị sai vị trí như Nghệ An / Tây Ninh) dùng nhãn HTML/CSS đè lên bản đồ,
+ * định vị theo % toạ độ viewBox (980 × 981) để luôn khớp khi resize.
  */
 
 'use strict';
@@ -19,6 +25,7 @@
   var _locPopup, _popupCityEl, _popupProjectEl, _popupDescEl, _popupImgEl;
 
   var _themeUri = (window.CMB_Theme && window.CMB_Theme.uri) ? window.CMB_Theme.uri.replace(/\/$/, '') : '';
+  var _placeholderImg = _themeUri + '/assets/images/demo-du-an.png';
 
   var _locationData = {
     'nghe-an': {
@@ -60,7 +67,19 @@
       link: '#',
       imgSrc: _themeUri + '/assets/images/tan-cang-long-binh.jpg',
       imgAlt: 'Thành phố Biên Hòa, tỉnh Đồng Nai'
-    }
+    },
+    'quang-ninh': { city: 'QUẢNG NINH', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Quảng Ninh' },
+    'thanh-hoa': { city: 'THANH HÓA', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Thanh Hóa' },
+    'quang-tri': { city: 'QUẢNG TRỊ', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Quảng Trị' },
+    'da-nang': { city: 'ĐÀ NẴNG', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Đà Nẵng' },
+    'quang-ngai': { city: 'QUẢNG NGÃI', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Quảng Ngãi' },
+    'khanh-hoa': { city: 'KHÁNH HÒA', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Khánh Hòa' },
+    'ninh-thuan': { city: 'NINH THUẬN', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Ninh Thuận' },
+    'binh-thuan': { city: 'BÌNH THUẬN', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Bình Thuận' },
+    'ba-ria-vung-tau': { city: 'BÀ RỊA - VŨNG TÀU', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Bà Rịa - Vũng Tàu' },
+    'tien-giang': { city: 'TIỀN GIANG', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Tiền Giang' },
+    'ben-tre': { city: 'BẾN TRE', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Bến Tre' },
+    'can-tho': { city: 'CẦN THƠ', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Cần Thơ' }
   };
 
   // Override location data từ ACF Options (wp_localize_script → window.CMB_LocationData)
@@ -130,6 +149,9 @@
     var imgEl = wrap.querySelector('.p-location__map-img');
     if (!imgEl) return;
 
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    var VB_W = 980, VB_H = 981;
+
     fetch(imgEl.src)
       .then(function (r) { return r.text(); })
       .then(function (svgText) {
@@ -164,7 +186,7 @@
           }
         });
 
-        // 3. Animate dashed connector lines
+        // 3. Animate dashed connector lines (bao gồm cả line trang trí gốc)
         svg.querySelectorAll('[stroke-dasharray]').forEach(function (el, i) {
           el.classList.add('p-location__map-line');
           el.style.animationDelay = (-i * 0.2) + 's';
@@ -190,72 +212,142 @@
           }
         });
 
-        // 5. Tag each city's white label box for shadow toggling
-        var cityBoxes = [
-          { id: 'hai-phong', x: 543, y: 156, w: 188, h: 55, bgStart: 'M551.301' },
-          { id: 'nghe-an', x: 224, y: 202, w: 130, h: 39, bgStart: 'M224.207' },
-          { id: 'tp-hcm', x: 210, y: 755, w: 191, h: 39, bgStart: 'M210.223' },
-          { id: 'dong-nai', x: 677, y: 736, w: 138, h: 39, bgStart: 'M677.66' },
-          { id: 'tay-ninh', x: 366, y: 679, w: 130, h: 39, bgStart: 'M366.98' }
+        // 4b. Ẩn TOÀN BỘ nhãn gốc (box nền + chữ vector) và connector cũ của
+        // map.svg — kể cả 3 tỉnh vị trí đúng (Hải Phòng / TP.HCM / Đồng Nai).
+        // Toàn bộ 17 tỉnh dùng LẠI một hệ thống nhãn HTML/CSS + dot + line
+        // thống nhất phía dưới để box, dot, line luôn đều nhau cho mọi tỉnh.
+        var hidePrefixes = [
+          'M551.301', 'M597.735',                      // hải phòng — box + chữ
+          'M210.223', 'M239.055', 'M362.875',           // tp.hcm — box + chữ + connector
+          'M677.66', 'M704.379', 'M717.695',            // đồng nai — box + chữ + connector
+          'M224.207', 'M250.766',                       // nghệ an cũ — box + chữ (vị trí sai)
+          'M366.98', 'M395.234', 'M450.57'              // tây ninh cũ — box + chữ + connector (vị trí sai)
+        ];
+        svg.querySelectorAll('path').forEach(function (p) {
+          var d = p.getAttribute('d') || '';
+          if (hidePrefixes.some(function (pre) { return d.startsWith(pre); })) {
+            p.style.display = 'none';
+          }
+        });
+
+        // Ẩn TOÀN BỘ dot/halo có sẵn trong artwork — mỗi tỉnh sẽ được vẽ dot
+        // mới, đồng nhất kích thước, để tránh chồng dot cũ/mới hoặc sai vị trí.
+        var legacyDotCoords = [
+          [462.818, 229.352], [428.541, 251.448], [521.286, 806.69],
+          [564.776, 789.622], [603.876, 743.123], [578.64, 484.569],
+          [607.452, 517.94], [613.526, 536.143], [624.144, 537.66],
+          [625.659, 554.345], [643.858, 683.281], [649.937, 652.943],
+          [651.444, 674.179], [486.104, 860.756], [489.136, 197.878],
+          [493.69, 182.709]
+        ];
+        svg.querySelectorAll('circle').forEach(function (c) {
+          var ccx = parseFloat(c.getAttribute('cx') || '0');
+          var ccy = parseFloat(c.getAttribute('cy') || '0');
+          var r = parseFloat(c.getAttribute('r') || '0');
+          if (r > 15) return; // giữ lại vòng viền lớn quanh bản đồ + halo trang trí riêng
+          var isLegacyDot = legacyDotCoords.some(function (p) {
+            return Math.abs(ccx - p[0]) < 1 && Math.abs(ccy - p[1]) < 1;
+          });
+          if (isLegacyDot) c.style.display = 'none';
+        });
+
+        // 5. Dữ liệu 17 tỉnh — toạ độ viewBox 980×981, đúng vị trí địa lý thực tế.
+        // dot = chấm trên bản đồ; box = tâm nhãn tên tỉnh.
+        var PROVINCES = [
+          { id: 'quang-ninh', name: 'QUẢNG NINH', dot: { x: 493.7, y: 182.7 }, box: { x: 550, y: 80 } },
+          { id: 'hai-phong', name: 'HẢI PHÒNG', dot: { x: 462.8, y: 229.4 }, box: { x: 660, y: 183 } },
+          { id: 'thanh-hoa', name: 'THANH HÓA', dot: { x: 428.5, y: 251.4 }, box: { x: 288, y: 222 } },
+          { id: 'nghe-an', name: 'NGHỆ AN', dot: { x: 455, y: 350 }, box: { x: 255, y: 320 } },
+          { id: 'quang-tri', name: 'QUẢNG TRỊ', dot: { x: 555, y: 460 }, box: { x: 390, y: 465 } },
+          { id: 'da-nang', name: 'ĐÀ NẴNG', dot: { x: 607.5, y: 517.9 }, box: { x: 790, y: 455 } },
+          { id: 'quang-ngai', name: 'QUẢNG NGÃI', dot: { x: 600, y: 554.3 }, box: { x: 400, y: 565 } },
+          { id: 'khanh-hoa', name: 'KHÁNH HÒA', dot: { x: 643.9, y: 683.3 }, box: { x: 790, y: 595 } },
+          { id: 'ninh-thuan', name: 'NINH THUẬN', dot: { x: 650, y: 745 }, box: { x: 830, y: 660 } },
+          { id: 'binh-thuan', name: 'BÌNH THUẬN', dot: { x: 595, y: 780 }, box: { x: 790, y: 720 } },
+          { id: 'dong-nai', name: 'ĐỒNG NAI', dot: { x: 564.8, y: 789.6 }, box: { x: 280, y: 630 } },
+          { id: 'ba-ria-vung-tau', name: 'BÀ RỊA - VŨNG TÀU', dot: { x: 570, y: 815 }, box: { x: 800, y: 780 } },
+          { id: 'tay-ninh', name: 'TÂY NINH', dot: { x: 410, y: 775 }, box: { x: 300, y: 690 } },
+          { id: 'tp-hcm', name: 'TP. HỒ CHÍ MINH', dot: { x: 521.3, y: 806.7 }, box: { x: 260, y: 758 } },
+          { id: 'tien-giang', name: 'TIỀN GIANG', dot: { x: 445, y: 825 }, box: { x: 250, y: 820 } },
+          { id: 'ben-tre', name: 'BẾN TRE', dot: { x: 500, y: 850 }, box: { x: 620, y: 895 } },
+          { id: 'can-tho', name: 'CẦN THƠ', dot: { x: 486.1, y: 860.8 }, box: { x: 470, y: 955 } }
         ];
 
-        svg.querySelectorAll('path').forEach(function (path) {
-          var d = path.getAttribute('d') || '';
-          cityBoxes.forEach(function (box) {
-            if (d.startsWith(box.bgStart)) path.dataset.locBg = box.id;
-          });
-        });
+        var DOT_R = 9;
 
         imgEl.replaceWith(svg);
 
-        // City dot positions (SVG viewBox 980×981)
-        var cityDotCoords = {
-          'hai-phong': { cx: 462.818, cy: 229.352 },
-          'nghe-an': { cx: 428.541, cy: 251.448 },
-          'tp-hcm': { cx: 521.286, cy: 806.690 },
-          'dong-nai': { cx: 564.776, cy: 789.622 },
-          'tay-ninh': { cx: 603.876, cy: 743.123 }
-        };
-
-        // Inject 2 ripple rings per city dot
+        var tagEls = {};
         var dotRippleRings = {};
-        Object.keys(cityDotCoords).forEach(function (locId) {
-          var coords = cityDotCoords[locId];
-          var group = [];
-          svg.querySelectorAll('circle').forEach(function (c) {
-            var ccx = parseFloat(c.getAttribute('cx') || '0');
-            var ccy = parseFloat(c.getAttribute('cy') || '0');
-            if (Math.abs(ccx - coords.cx) < 1 && Math.abs(ccy - coords.cy) < 1) {
-              group.push(c);
-            }
-          });
-          if (!group.length) return;
-          group.sort(function (a, b) {
-            return parseFloat(a.getAttribute('r')) - parseFloat(b.getAttribute('r'));
-          });
-          var baseR = parseFloat(group[0].getAttribute('r')) || 9;
-          var anchor = group[group.length - 1];
 
+        PROVINCES.forEach(function (p) {
+          // --- Dot: halo mờ + chấm trắng, kích thước bằng nhau cho mọi tỉnh ---
+          var halo = document.createElementNS(SVG_NS, 'circle');
+          halo.setAttribute('cx', p.dot.x);
+          halo.setAttribute('cy', p.dot.y);
+          halo.setAttribute('r', DOT_R);
+          halo.setAttribute('fill', '#8BCBFF');
+          halo.setAttribute('opacity', '0.15');
+          svg.appendChild(halo);
+
+          var dot = document.createElementNS(SVG_NS, 'circle');
+          dot.setAttribute('cx', p.dot.x);
+          dot.setAttribute('cy', p.dot.y);
+          dot.setAttribute('r', DOT_R);
+          dot.setAttribute('fill', 'white');
+          svg.appendChild(dot);
+
+          // --- Ripple: 2 vòng lan toả quanh dot, chỉ hiện khi active ---
           var rings = [];
           [false, true].forEach(function (delayed) {
-            var ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            ring.setAttribute('cx', coords.cx);
-            ring.setAttribute('cy', coords.cy);
-            ring.setAttribute('r', baseR);
+            var ring = document.createElementNS(SVG_NS, 'circle');
+            ring.setAttribute('cx', p.dot.x);
+            ring.setAttribute('cy', p.dot.y);
+            ring.setAttribute('r', DOT_R);
             ring.setAttribute('fill', 'none');
             ring.setAttribute('stroke', '#8BCBFF');
             ring.setAttribute('stroke-width', '1.5');
-            ring.setAttribute('data-loc-ripple', locId);
+            ring.setAttribute('data-loc-ripple', p.id);
             if (delayed) ring.setAttribute('data-ripple-delay', '1');
-            anchor.parentNode.insertBefore(ring, anchor);
+            svg.insertBefore(ring, dot);
             rings.push(ring);
           });
-          dotRippleRings[locId] = rings;
+          dotRippleRings[p.id] = rings;
+
+          // --- Connector: gấp khúc 2 đoạn (ngang rồi CHÉO — không vuông góc),
+          // giống style tỉnh gốc: đoạn 1 ngang từ box, đoạn 2 chéo tới dot.
+          var elbowX = p.box.x + (p.dot.x - p.box.x) * 0.5;
+          var elbowY = p.box.y;
+          var pts = p.box.x + ',' + p.box.y + ' ' + elbowX + ',' + elbowY + ' ' + p.dot.x + ',' + p.dot.y;
+          var line = document.createElementNS(SVG_NS, 'polyline');
+          line.setAttribute('points', pts);
+          line.setAttribute('class', 'p-location__tag-line');
+          svg.appendChild(line);
+
+          // --- Nhãn HTML (đều size, đè lên bản đồ) ---
+          var el = document.createElement('button');
+          el.type = 'button';
+          el.className = 'p-location__tag';
+          el.textContent = p.name;
+          el.dataset.loc = p.id;
+          el.style.left = (p.box.x / VB_W * 100) + '%';
+          el.style.top = (p.box.y / VB_H * 100) + '%';
+          wrap.appendChild(el);
+          tagEls[p.id] = el;
+
+          el.addEventListener('click', function () {
+            if (window.innerWidth > 1024) {
+              setActiveLabel(p.id);
+              _updateLocPanel(p.id);
+            } else {
+              _openLocPopup(p.id);
+            }
+          });
         });
 
         function setActiveLabel(locKey) {
-          svg.querySelectorAll('path[data-loc-bg]').forEach(function (p) {
-            p.classList.toggle('is-loc-active', p.dataset.locBg === locKey);
+          Object.keys(tagEls).forEach(function (id) {
+            tagEls[id].classList.toggle('is-active', id === locKey);
           });
           Object.keys(dotRippleRings).forEach(function (id) {
             dotRippleRings[id].forEach(function (ring) {
@@ -263,27 +355,6 @@
             });
           });
         }
-
-        // Transparent clickable overlay rects positioned over each city label box
-        cityBoxes.forEach(function (box) {
-          var rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-          rect.setAttribute('x', box.x);
-          rect.setAttribute('y', box.y);
-          rect.setAttribute('width', box.w);
-          rect.setAttribute('height', box.h);
-          rect.setAttribute('rx', '6');
-          rect.dataset.loc = box.id;
-          svg.appendChild(rect);
-
-          rect.addEventListener('click', function () {
-            if (window.innerWidth > 1024) {
-              setActiveLabel(box.id);
-              _updateLocPanel(box.id);
-            } else {
-              _openLocPopup(box.id);
-            }
-          });
-        });
 
         // HẢI PHÒNG active by default — desktop only
         if (window.innerWidth > 1024) {
@@ -293,8 +364,8 @@
         // Khi resize: đồng bộ active state với breakpoint
         window.addEventListener('resize', function () {
           if (window.innerWidth <= 1024) {
-            svg.querySelectorAll('path[data-loc-bg]').forEach(function (p) {
-              p.classList.remove('is-loc-active');
+            Object.keys(tagEls).forEach(function (id) {
+              tagEls[id].classList.remove('is-active');
             });
             if (hpBlueOuter) hpBlueOuter.style.display = 'none';
             if (hpBlueMid) hpBlueMid.style.display = 'none';
@@ -304,7 +375,7 @@
               });
             });
           } else {
-            var hasActive = svg.querySelector('path[data-loc-bg].is-loc-active');
+            var hasActive = Object.keys(tagEls).some(function (id) { return tagEls[id].classList.contains('is-active'); });
             if (!hasActive) setActiveLabel('hai-phong');
           }
         });

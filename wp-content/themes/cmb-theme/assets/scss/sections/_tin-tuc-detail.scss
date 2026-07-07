@@ -244,6 +244,16 @@
 }
 
 
+// ======= PDF VIEWER (embedded from post content) =======
+.p-news-detail__pdf-viewer {
+  margin-top: rem(32);
+
+  & + .p-news-detail__pdf-viewer {
+    margin-top: rem(20);
+  }
+}
+
+
 // ======= EVENT GALLERY =======
 .p-news-detail__gallery {
   margin-top: rem(40);

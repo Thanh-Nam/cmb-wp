@@ -22,7 +22,7 @@ $featured_q = new WP_Query([
 $noi_bo_q = new WP_Query([
     'post_type'      => 'post',
     'posts_per_page' => 3,
-    'category_name'  => 'noi-bo',
+    'category_name'  => 'tin-tuc-noi-bo',
     'orderby'        => 'date',
     'order'          => 'DESC',
 ]);
@@ -31,7 +31,7 @@ $noi_bo_q = new WP_Query([
 $chuyen_nganh_q = new WP_Query([
     'post_type'      => 'post',
     'posts_per_page' => 3,
-    'category_name'  => 'chuyen-nganh',
+    'category_name'  => 'tin-tuc-chuyen-nganh',
     'orderby'        => 'date',
     'order'          => 'DESC',
 ]);
