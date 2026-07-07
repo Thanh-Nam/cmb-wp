@@ -278,15 +278,29 @@
   aspect-ratio: 4 / 3;
   cursor: pointer;
 
-  img {
+  img,
+  video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform $transition-slow;
   }
 
-  &:hover img { transform: scale(1.06); }
+  &[data-type="video"] {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: rem(44);
+      height: rem(44);
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='18' viewBox='0 0 16 18'%3E%3Cpath fill='%23fff' d='M0 0L16 9L0 18Z'/%3E%3C/svg%3E") no-repeat center / rem(16) rem(18);
+      pointer-events: none;
+    }
+  }
 }
 
 
@@ -365,6 +379,19 @@
   gap: rem(24);
   position: sticky;
   top: calc(#{$header-topbar-height} + #{$header-height-desktop} + #{rem(24)});
+
+  // Bù admin bar khi đăng nhập WordPress (khớp offset của .l-header.is-fixed)
+  .admin-bar & {
+    top: calc(#{$header-topbar-height} + #{$header-height-desktop} + #{rem(24)} + 32px);
+
+    @media (max-width: 782px) {
+      top: calc(#{$header-topbar-height} + #{$header-height-desktop} + #{rem(24)} + 46px);
+    }
+
+    @media (max-width: 600px) {
+      top: calc(#{$header-topbar-height} + #{$header-height-desktop} + #{rem(24)});
+    }
+  }
 
   @include sp {
     position: static;

@@ -119,11 +119,18 @@ while (have_posts()) : the_post();
             <div class="p-news-detail__gallery">
               <h2 class="p-news-detail__gallery-title">HÌNH ẢNH SỰ KIỆN</h2>
               <div class="p-news-detail__gallery-grid" id="event-gallery">
-                <?php foreach ($gallery as $i => $img) : ?>
-                <figure data-lightbox-index="<?php echo $i; ?>" tabindex="0">
+                <?php foreach ($gallery as $i => $img) :
+                  $is_video = strpos($img['mime_type'] ?? '', 'video') === 0;
+                ?>
+                <figure data-lightbox-index="<?php echo $i; ?>"
+                  data-type="<?php echo $is_video ? 'video' : 'image'; ?>" tabindex="0">
+                  <?php if ($is_video) : ?>
+                  <video src="<?php echo esc_url($img['url']); ?>" muted playsinline preload="metadata"></video>
+                  <?php else : ?>
                   <img src="<?php echo $img['url']; ?>"
                     alt="<?php echo esc_attr($img['alt'] ?: get_the_title()); ?>"
                     loading="lazy" />
+                  <?php endif; ?>
                 </figure>
                 <?php endforeach; ?>
               </div>
