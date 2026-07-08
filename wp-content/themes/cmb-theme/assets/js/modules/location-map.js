@@ -132,14 +132,14 @@
     if (_popupImgEl) _popupImgEl.alt = data.imgAlt;
     _locPopup.classList.add('is-open');
     _locPopup.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    window.CMB.lockScroll();
   }
 
   function _closeLocPopup() {
     if (!_locPopup) return;
     _locPopup.classList.remove('is-open');
     _locPopup.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    window.CMB.unlockScroll();
   }
 
   // ============================================

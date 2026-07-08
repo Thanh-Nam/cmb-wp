@@ -27,12 +27,12 @@
 
     modal.setAttribute('aria-label', title);
     modal.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
+    window.CMB.lockScroll();
   }
 
   function closeModal() {
     modal.classList.remove('is-open');
-    document.body.style.overflow = '';
+    window.CMB.unlockScroll();
   }
 
   document.querySelectorAll('.js-software-card').forEach(function (card) {

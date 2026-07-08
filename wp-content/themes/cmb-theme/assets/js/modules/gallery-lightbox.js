@@ -83,14 +83,14 @@
   function open(index) {
     show(index);
     lb.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
+    window.CMB.lockScroll();
     lb.querySelector('.lb-close').focus();
   }
 
   function close() {
     videoEl.pause();
     lb.classList.remove('is-open');
-    document.body.style.overflow = '';
+    window.CMB.unlockScroll();
   }
 
   figures.forEach(function (fig, i) {
