@@ -254,9 +254,9 @@
         // 5. Dữ liệu 17 tỉnh — toạ độ viewBox 980×981, đúng vị trí địa lý thực tế.
         // dot = chấm trên bản đồ; box = tâm nhãn tên tỉnh.
         var PROVINCES = [
-          { id: 'quang-ninh', name: 'QUẢNG NINH', dot: { x: 493.7, y: 182.7 }, box: { x: 550, y: 80 } },
-          { id: 'hai-phong', name: 'HẢI PHÒNG', dot: { x: 462.8, y: 229.4 }, box: { x: 660, y: 183 } },
-          { id: 'thanh-hoa', name: 'THANH HÓA', dot: { x: 428.5, y: 251.4 }, box: { x: 288, y: 222 } },
+          { id: 'quang-ninh', name: 'QUẢNG NINH', dot: { x: 540, y: 160 }, box: { x: 550, y: 80 } },
+          { id: 'hai-phong', name: 'HẢI PHÒNG', dot: { x: 493.7, y: 182.7 }, box: { x: 660, y: 183 } },
+          { id: 'thanh-hoa', name: 'THANH HÓA', dot: { x: 390, y: 300 }, box: { x: 288, y: 222 } },
           { id: 'nghe-an', name: 'NGHỆ AN', dot: { x: 455, y: 350 }, box: { x: 255, y: 320 } },
           { id: 'quang-tri', name: 'QUẢNG TRỊ', dot: { x: 555, y: 460 }, box: { x: 390, y: 465 } },
           { id: 'da-nang', name: 'ĐÀ NẴNG', dot: { x: 607.5, y: 517.9 }, box: { x: 790, y: 500 } },
