@@ -57,14 +57,14 @@ $tech_specs    = get_field('project_tech_specs');
           <h2 class="p-project-section__title">HÌNH ẢNH DỰ ÁN</h2>
           <div class="p-project-gallery" id="project-gallery">
             <?php foreach ($gallery as $i => $img) : ?>
-            <figure class="p-project-gallery__item" data-lightbox-index="<?php echo $i; ?>">
+            <figure class="p-project-gallery__item<?php echo $i >= 5 ? ' is-hidden-extra' : ''; ?>" data-lightbox-index="<?php echo $i; ?>">
               <img src="<?php echo $img['url']; ?>"
                    alt="<?php echo $img['alt']; ?>"
                    class="p-project-gallery__img" loading="lazy" />
             </figure>
             <?php endforeach; ?>
           </div>
-          <?php if (count($gallery) > 4) : ?>
+          <?php if (count($gallery) > 5) : ?>
           <div class="p-project-gallery__footer">
             <a href="#" class="p-project-gallery__all" id="btn-all-photos">
               Xem tất cả hình ảnh

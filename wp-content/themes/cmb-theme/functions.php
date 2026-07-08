@@ -90,8 +90,9 @@ function cmb_enqueue_assets() {
     $ver = wp_get_theme()->get( 'Version' );
     $uri = get_template_directory_uri();
 
-    // CSS — luôn load
-    wp_enqueue_style( 'cmb-main', $uri . '/assets/css/main.css', [], $ver );
+    // CSS — luôn load (dùng filemtime để bust cache khi file thay đổi)
+    $main_css = get_template_directory() . '/assets/css/main.css';
+    wp_enqueue_style( 'cmb-main', $uri . '/assets/css/main.css', [], file_exists( $main_css ) ? filemtime( $main_css ) : $ver );
 
     // Google Fonts: dùng local nếu có (assets/css/fonts.css), fallback CDN
     $local_fonts = get_template_directory() . '/assets/css/fonts.css';
@@ -165,6 +166,9 @@ function cmb_enqueue_assets() {
     if ( is_post_type_archive( 'du-an' ) || is_singular( 'du-an' ) ) {
         wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'], $ver, true );
         wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'], $ver, true );
+    }
+    if ( is_singular( 'du-an' ) ) {
+        wp_enqueue_script( 'cmb-project-gallery', $uri . '/assets/js/modules/project-gallery.js', ['cmb-global'], $ver, true );
     }
     if ( is_post_type_archive( 'du-an' ) ) {
         wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );

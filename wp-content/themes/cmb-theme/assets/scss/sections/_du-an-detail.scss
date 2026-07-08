@@ -413,6 +413,10 @@
     &:hover .p-project-gallery__img {
       transform: scale(1.04);
     }
+
+    &.is-hidden-extra {
+      display: none;
+    }
   }
 
   &__img {

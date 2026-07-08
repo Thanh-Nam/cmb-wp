@@ -20,6 +20,11 @@ while (have_posts()) : the_post();
   preg_match_all('/href=["\']([^"\']+\.pdf)["\']/i', $content_html, $pdf_matches);
   $content_pdfs = !empty($pdf_matches[1]) ? array_unique($pdf_matches[1]) : [];
 
+  // Remove the original <a> links to those PDFs from the content — the embedded viewer replaces them
+  if ($content_pdfs) {
+    $content_html = preg_replace('/<a\s+[^>]*href=["\']([^"\']+\.pdf)["\'][^>]*>.*?<\/a>/is', '', $content_html);
+  }
+
   // News archive URL
   $news_url = get_option('page_for_posts')
     ? get_permalink(get_option('page_for_posts'))

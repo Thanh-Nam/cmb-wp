@@ -6131,37 +6131,57 @@ body.search-overlay-open {
   transform: scale(1.03);
 }
 .p-projects-featured__nav {
-  position: absolute;
-  bottom: 2rem;
-  left: 2rem;
   display: flex;
-  gap: 0.8rem;
-  z-index: 2;
+  gap: 2rem;
+  margin-left: auto;
 }
 .p-projects-featured__nav-btn {
-  display: inline-flex;
+  width: 3.2rem;
+  height: 3.2rem;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 3.6rem;
-  height: 3.6rem;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
+  background: transparent;
   border: none;
   cursor: pointer;
-  color: #002036;
-  transition: background 0.15s ease, color 0.15s ease;
-  backdrop-filter: blur(4px);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
 }
-.p-projects-featured__nav-btn svg {
+.p-projects-featured__nav-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #257AD6 0%, #76C7F7 100%);
+  transition: transform 0.4s ease;
+}
+.p-projects-featured__nav-btn .p-projects-featured__nav-arrow {
+  filter: brightness(0) invert(1);
+  position: relative;
+  z-index: 1;
+}
+.p-projects-featured__nav-btn:not(:disabled):hover::before {
+  transform: rotate(180deg);
+}
+.p-projects-featured__nav-btn:disabled {
+  cursor: not-allowed;
+}
+.p-projects-featured__nav-btn:disabled::before {
+  background: #DCDCDC;
+}
+.p-projects-featured__nav-btn:disabled .p-projects-featured__nav-arrow {
+  filter: none;
+}
+.p-projects-featured__nav-arrow {
+  width: 2.2rem;
+  height: auto;
+  display: block;
+  transform: rotate(-45deg);
   flex-shrink: 0;
 }
-.p-projects-featured__nav-btn:hover {
-  background: #0379CC;
-  color: #FFFFFF;
-}
-.p-projects-featured__nav-btn:focus-visible {
-  outline: 2px solid #0379CC;
-  outline-offset: 2px;
+.p-projects-featured__nav-arrow--flip {
+  transform: rotate(-45deg) scaleX(-1);
 }
 .p-projects-featured__content {
   display: flex;
@@ -6418,7 +6438,7 @@ body.search-overlay-open {
 }
 .p-projects-list__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2.4rem;
 }
 .p-projects-list__grid.is-row-view {
@@ -11005,6 +11025,9 @@ li:last-child .p-lab-detail__related-item {
 }
 .p-project-gallery__item:hover .p-project-gallery__img {
   transform: scale(1.04);
+}
+.p-project-gallery__item.is-hidden-extra {
+  display: none;
 }
 .p-project-gallery__img {
   width: 100%;

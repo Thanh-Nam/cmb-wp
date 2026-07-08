@@ -319,40 +319,66 @@
   }
 
   &__nav {
-    position: absolute;
-    bottom: rem(20);
-    left: rem(20);
     display: flex;
-    gap: rem(8);
-    z-index: 2;
+    gap: 2rem;
+    margin-left: auto;
   }
 
   &__nav-btn {
-    display: inline-flex;
+    width: 3.2rem;
+    height: 3.2rem;
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: rem(36);
-    height: rem(36);
-    border-radius: 50%;
-    background: rgba($color-white, 0.9);
+    background: transparent;
     border: none;
     cursor: pointer;
-    color: $color-cmb-navy;
-    transition: background $transition-fast, color $transition-fast;
-    backdrop-filter: blur(4px);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
 
-    svg {
-      flex-shrink: 0;
+    // Gradient background dùng pseudo-element để animate rotation
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #257AD6 0%, #76C7F7 100%);
+      transition: transform 0.4s ease;
     }
 
-    &:hover {
-      background: $color-primary;
-      color: $color-white;
+    .p-projects-featured__nav-arrow {
+      filter: brightness(0) invert(1);
+      position: relative; // nổi lên trên ::before
+      z-index: 1;
     }
 
-    &:focus-visible {
-      outline: 2px solid $color-primary;
-      outline-offset: 2px;
+    &:not(:disabled):hover::before {
+      transform: rotate(180deg);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      &::before {
+        background: #DCDCDC;
+      }
+
+      .p-projects-featured__nav-arrow {
+        filter: none;
+      }
+    }
+  }
+
+  &__nav-arrow {
+    width: 2.2rem;
+    height: auto;
+    display: block;
+    transform: rotate(-45deg); // counter-rotate: giữ mũi tên nằm ngang
+    flex-shrink: 0;
+
+    &--flip {
+      transform: rotate(-45deg) scaleX(-1); // lật sang phải cho nút next
     }
   }
 
@@ -658,7 +684,7 @@
   // ------ Grid ------
   &__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: rem(24);
 
     // Row view toggle (horizontal cards)

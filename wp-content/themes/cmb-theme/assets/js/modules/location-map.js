@@ -259,14 +259,14 @@
           { id: 'thanh-hoa', name: 'THANH HÓA', dot: { x: 428.5, y: 251.4 }, box: { x: 288, y: 222 } },
           { id: 'nghe-an', name: 'NGHỆ AN', dot: { x: 455, y: 350 }, box: { x: 255, y: 320 } },
           { id: 'quang-tri', name: 'QUẢNG TRỊ', dot: { x: 555, y: 460 }, box: { x: 390, y: 465 } },
-          { id: 'da-nang', name: 'ĐÀ NẴNG', dot: { x: 607.5, y: 517.9 }, box: { x: 790, y: 455 } },
+          { id: 'da-nang', name: 'ĐÀ NẴNG', dot: { x: 607.5, y: 517.9 }, box: { x: 790, y: 500 } },
           { id: 'quang-ngai', name: 'QUẢNG NGÃI', dot: { x: 600, y: 554.3 }, box: { x: 400, y: 565 } },
           { id: 'khanh-hoa', name: 'KHÁNH HÒA', dot: { x: 643.9, y: 683.3 }, box: { x: 790, y: 595 } },
           { id: 'ninh-thuan', name: 'NINH THUẬN', dot: { x: 650, y: 745 }, box: { x: 830, y: 660 } },
           { id: 'binh-thuan', name: 'BÌNH THUẬN', dot: { x: 595, y: 780 }, box: { x: 790, y: 720 } },
           { id: 'dong-nai', name: 'ĐỒNG NAI', dot: { x: 564.8, y: 789.6 }, box: { x: 280, y: 630 } },
           { id: 'ba-ria-vung-tau', name: 'BÀ RỊA - VŨNG TÀU', dot: { x: 570, y: 815 }, box: { x: 800, y: 780 } },
-          { id: 'tay-ninh', name: 'TÂY NINH', dot: { x: 410, y: 775 }, box: { x: 300, y: 690 } },
+          { id: 'tay-ninh', name: 'TÂY NINH', dot: { x: 470, y: 770 }, box: { x: 300, y: 690 } },
           { id: 'tp-hcm', name: 'TP. HỒ CHÍ MINH', dot: { x: 521.3, y: 806.7 }, box: { x: 260, y: 758 } },
           { id: 'tien-giang', name: 'TIỀN GIANG', dot: { x: 445, y: 825 }, box: { x: 250, y: 820 } },
           { id: 'ben-tre', name: 'BẾN TRE', dot: { x: 500, y: 850 }, box: { x: 620, y: 895 } },
@@ -315,14 +315,19 @@
           dotRippleRings[p.id] = rings;
 
           // --- Connector: gấp khúc 2 đoạn (ngang rồi CHÉO — không vuông góc),
-          // giống style tỉnh gốc: đoạn 1 ngang từ box, đoạn 2 chéo tới dot.
+          // giống style tỉnh gốc: đoạn 1 ngang từ box, đoạn 2 chéo tới dot —
+          // dừng lại đúng mép chấm tròn (không đâm xuyên vào tâm) cho gọn.
           var elbowX = p.box.x + (p.dot.x - p.box.x) * 0.5;
           var elbowY = p.box.y;
-          var pts = p.box.x + ',' + p.box.y + ' ' + elbowX + ',' + elbowY + ' ' + p.dot.x + ',' + p.dot.y;
+          var dx = p.dot.x - elbowX, dy = p.dot.y - elbowY;
+          var dist = Math.sqrt(dx * dx + dy * dy) || 1;
+          var endX = p.dot.x - (dx / dist) * DOT_R;
+          var endY = p.dot.y - (dy / dist) * DOT_R;
+          var pts = p.box.x + ',' + p.box.y + ' ' + elbowX + ',' + elbowY + ' ' + endX + ',' + endY;
           var line = document.createElementNS(SVG_NS, 'polyline');
           line.setAttribute('points', pts);
           line.setAttribute('class', 'p-location__tag-line');
-          svg.appendChild(line);
+          svg.insertBefore(line, halo);
 
           // --- Nhãn HTML (đều size, đè lên bản đồ) ---
           var el = document.createElement('button');
