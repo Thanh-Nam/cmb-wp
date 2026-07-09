@@ -806,6 +806,62 @@ add_filter( 'wp_check_filetype_and_ext', function( $data, $file, $filename, $mim
     return $data;
 }, 10, 4 );
 
+// Read intrinsic width/height from an SVG file's width/height or viewBox attributes
+function cmb_get_svg_dimensions( $svg_path ) {
+    if ( ! file_exists( $svg_path ) ) {
+        return false;
+    }
+    $svg = @simplexml_load_file( $svg_path );
+    if ( ! $svg ) {
+        return false;
+    }
+    $attrs  = $svg->attributes();
+    $width  = isset( $attrs->width )  ? (float) $attrs->width  : 0;
+    $height = isset( $attrs->height ) ? (float) $attrs->height : 0;
+
+    if ( ( ! $width || ! $height ) && isset( $attrs->viewBox ) ) {
+        $viewbox = preg_split( '/[\s,]+/', trim( (string) $attrs->viewBox ) );
+        if ( count( $viewbox ) === 4 ) {
+            $width  = $width  ?: (float) $viewbox[2];
+            $height = $height ?: (float) $viewbox[3];
+        }
+    }
+
+    if ( ! $width || ! $height ) {
+        return false;
+    }
+    return [ 'width' => (int) round( $width ), 'height' => (int) round( $height ) ];
+}
+
+// WordPress can't generate real metadata for SVGs (no image editor support) —
+// without width/height in the attachment metadata, image_downsize() bails out
+// and the admin Featured Image box / media grid render the tiny broken-image icon.
+add_filter( 'wp_generate_attachment_metadata', function( $metadata, $attachment_id ) {
+    $file = get_attached_file( $attachment_id );
+    if ( $file && preg_match( '/\.svgz?$/i', $file ) ) {
+        $dims = cmb_get_svg_dimensions( $file );
+        if ( $dims ) {
+            $metadata['width']  = $dims['width'];
+            $metadata['height'] = $dims['height'];
+        }
+    }
+    return $metadata;
+}, 10, 2 );
+
+// Make image_downsize() (used by the Featured Image box, media library grid, etc.)
+// return the SVG itself with correct dimensions instead of failing.
+add_filter( 'image_downsize', function( $downsize, $attachment_id, $size ) {
+    $file = get_attached_file( $attachment_id );
+    if ( ! $file || ! preg_match( '/\.svgz?$/i', $file ) ) {
+        return $downsize;
+    }
+    $dims = cmb_get_svg_dimensions( $file );
+    if ( ! $dims ) {
+        return $downsize;
+    }
+    return [ wp_get_attachment_url( $attachment_id ), $dims['width'], $dims['height'], false ];
+}, 10, 3 );
+
 // ============================================================
 // ADMIN: Đổi nhãn "Bài viết" → "Tin tức & Sự kiện"
 // ============================================================
