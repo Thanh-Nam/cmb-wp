@@ -269,8 +269,8 @@
           { id: 'tay-ninh', name: 'TÂY NINH', dot: { x: 470, y: 770 }, box: { x: 300, y: 690 } },
           { id: 'tp-hcm', name: 'TP. HỒ CHÍ MINH', dot: { x: 521.3, y: 806.7 }, box: { x: 260, y: 758 } },
           { id: 'tien-giang', name: 'TIỀN GIANG', dot: { x: 445, y: 825 }, box: { x: 250, y: 820 } },
-          { id: 'ben-tre', name: 'BẾN TRE', dot: { x: 500, y: 850 }, box: { x: 620, y: 895 } },
-          { id: 'can-tho', name: 'CẦN THƠ', dot: { x: 486.1, y: 860.8 }, box: { x: 470, y: 955 } }
+          { id: 'ben-tre', name: 'BẾN TRE', dot: { x: 545, y: 828 }, box: { x: 620, y: 895 } },
+          { id: 'can-tho', name: 'CẦN THƠ', dot: { x: 452, y: 878 }, box: { x: 470, y: 955 } }
         ];
 
         var DOT_R = 9;

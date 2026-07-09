@@ -36,11 +36,13 @@ $chuyen_nganh_q = new WP_Query([
     'order'          => 'DESC',
 ]);
 
-// ── 4. All news — initial render (5/page)
+// ── 4. All news — initial render (matches Settings → Reading "Blog pages show at most",
+//      so this custom query's max_num_pages agrees with WP core's main-query page count
+//      used for 404 validation on `paged`)
 $paged = get_query_var('paged') ?: 1;
 $all_q = new WP_Query([
     'post_type'      => 'post',
-    'posts_per_page' => 5,
+    'posts_per_page' => get_option('posts_per_page'),
     'paged'          => $paged,
     'orderby'        => 'date',
     'order'          => 'DESC',

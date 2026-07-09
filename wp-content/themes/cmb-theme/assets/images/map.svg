@@ -684,13 +684,25 @@
 <circle opacity="0.1" cx="486.104" cy="860.756" r="4.83105" fill="#8BCBFF"/>
 <circle cx="486.104" cy="860.756" r="4.83105" fill="white"/>
 <g opacity="0.9" filter="url(#filter2_d_57023_32)">
-<path d="M442.623 190.548C641.797 206.587 810.356 686.755 567.773 786.79" stroke="url(#paint326_linear_57023_32)" stroke-width="1.56602" stroke-dasharray="8.35 4.18" shape-rendering="crispEdges"/>
-</g>
-<g opacity="0.9" filter="url(#filter3_d_57023_32)">
-<path d="M443.125 190.237C618.686 267.264 708.217 606.883 604.181 740.929" stroke="url(#paint327_linear_57023_32)" stroke-width="1.56602" stroke-dasharray="8.35 4.18" shape-rendering="crispEdges"/>
+<path d="M442.623 190.548C641.797 206.587 810.356 686.755 564.776 789.622" stroke="url(#paint326_linear_57023_32)" stroke-width="1.56602" stroke-dasharray="8.35 4.18" shape-rendering="crispEdges"/>
 </g>
 <g opacity="0.9" filter="url(#filter4_d_57023_32)">
-<path d="M442.623 188.737C608.181 285.27 633.189 695.914 521.154 804.952" stroke="url(#paint328_linear_57023_32)" stroke-width="1.56602" stroke-dasharray="8.35 4.18" shape-rendering="crispEdges"/>
+<path d="M442.623 188.737C608.181 285.27 633.189 695.914 521.286 806.69" stroke="url(#paint328_linear_57023_32)" stroke-width="1.56602" stroke-dasharray="8.35 4.18" shape-rendering="crispEdges"/>
+</g>
+<g opacity="0.9" filter="url(#loc-fan-shadow)">
+<path d="M443 190C589.97 292.32 582.51 676.68 470 770" stroke="url(#loc-grad-tayninh)" stroke-width="1.56602" stroke-dasharray="8.35 4.18" shape-rendering="crispEdges"/>
+</g>
+<g opacity="0.9" filter="url(#loc-fan-shadow)">
+<path d="M443 190C480 140 515 120 540 160" stroke="white" stroke-width="1.56602" stroke-dasharray="8.35 4.18" shape-rendering="crispEdges"/>
+</g>
+<g opacity="0.9" filter="url(#loc-fan-shadow)">
+<path d="M443 190C460 165 480 160 493.7 182.7" stroke="white" stroke-width="1.56602" stroke-dasharray="8.35 4.18" shape-rendering="crispEdges"/>
+</g>
+<g opacity="0.9" filter="url(#loc-fan-shadow)">
+<path d="M443 190C405.88 182.78 350.43 233.97 390 300" stroke="white" stroke-width="1.56602" stroke-dasharray="8.35 4.18" shape-rendering="crispEdges"/>
+</g>
+<g opacity="0.9" filter="url(#loc-fan-shadow)">
+<path d="M443 190C396.01 206.19 366.61 300.87 455 350" stroke="white" stroke-width="1.56602" stroke-dasharray="8.35 4.18" shape-rendering="crispEdges"/>
 </g>
 <path d="M362.875 774.304H452.371L515.322 805.4" stroke="#EDF8FF" stroke-width="1.51688"/>
 <path d="M717.695 758.785H628.199L565.249 789.881" stroke="#EDF8FF" stroke-width="1.51688"/>
@@ -804,7 +816,7 @@
 <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_57023_32"/>
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_57023_32" result="shape"/>
 </filter>
-<filter id="filter3_d_57023_32" x="440.812" y="188.519" width="210.455" height="555.891" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter3_d_57023_32" x="440.812" y="188.519" width="245" height="555.891" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="1.00035"/>
@@ -2171,6 +2183,13 @@
 <stop offset="1" stop-color="#76C7F7"/>
 </linearGradient>
 <linearGradient id="paint328_linear_57023_32" x1="210.522" y1="647.948" x2="692.434" y2="264.162" gradientUnits="userSpaceOnUse">
+<stop stop-color="#257AD6"/>
+<stop offset="1" stop-color="#76C7F7"/>
+</linearGradient>
+<filter id="loc-fan-shadow" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+<feDropShadow dx="0" dy="1.00035" stdDeviation="1.00035" flood-color="#ffffff" flood-opacity="0.12"/>
+</filter>
+<linearGradient id="loc-grad-tayninh" x1="470" y1="770" x2="443" y2="190" gradientUnits="userSpaceOnUse">
 <stop stop-color="#257AD6"/>
 <stop offset="1" stop-color="#76C7F7"/>
 </linearGradient>

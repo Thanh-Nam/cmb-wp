@@ -314,7 +314,7 @@ function cmb_filter_news_handler() {
 
     $args = [
         'post_type'      => 'post',
-        'posts_per_page' => 5,
+        'posts_per_page' => get_option( 'posts_per_page' ),
         'paged'          => $paged,
     ];
 
@@ -408,6 +408,27 @@ function cmb_search_all_post_types( $query ) {
     }
 }
 add_action( 'pre_get_posts', 'cmb_search_all_post_types' );
+
+// ============================================================
+// CPT ARCHIVES — align main query's posts_per_page with the
+// hardcoded value each archive template's own listing query uses
+// (template-parts/du-an/archive-list.php, archive-phong-thi-nghiem.php).
+// Without this, WP core's 404 check on `paged` uses the main query's
+// max_num_pages (based on Settings → Reading), which can disagree
+// with the template's own pagination links — same bug as the
+// tin-tuc archive had.
+// ============================================================
+function cmb_cpt_archive_posts_per_page( $query ) {
+    if ( ! $query->is_main_query() || is_admin() ) {
+        return;
+    }
+    if ( $query->is_post_type_archive( 'du-an' ) ) {
+        $query->set( 'posts_per_page', 6 );
+    } elseif ( $query->is_post_type_archive( 'phong-thi-nghiem' ) ) {
+        $query->set( 'posts_per_page', 6 );
+    }
+}
+add_action( 'pre_get_posts', 'cmb_cpt_archive_posts_per_page' );
 
 // ============================================================
 // HELPER: get ACF field with fallback
