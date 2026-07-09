@@ -67,7 +67,7 @@
   position: relative;
   overflow: hidden;
   padding: rem(80) 0;
-  background: $color-bg url('../images/bg-location.webp') center center / cover no-repeat;
+  background: $color-bg url('../images/bg-location.png') center center / cover no-repeat;
 
   @include md {
     padding: rem(60) 0;

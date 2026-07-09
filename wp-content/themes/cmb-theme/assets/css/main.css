@@ -3549,7 +3549,7 @@ body.is-loaded .p-page-hero__subtitle {
   position: relative;
   overflow: hidden;
   padding: 8rem 0;
-  background: #FFFFFF url("../images/bg-location.webp") center center/cover no-repeat;
+  background: #FFFFFF url("../images/bg-location.png") center center/cover no-repeat;
 }
 @media (max-width: 1023px) {
   .p-location {
