@@ -192,6 +192,7 @@
 
   // ------ Slider dự án (Swiper) — 1 tỉnh/thành có thể có nhiều dự án ------
   &__slider {
+    position: relative;
     overflow: hidden;
 
     .swiper-wrapper {
@@ -205,10 +206,12 @@
     height: auto;
   }
 
-  // Nằm ngay dưới link "Xem dự án" (link ở trong slide, nav ở dưới slider)
+  // Đè lên góc trên-phải của khung slider, ngang hàng với dòng "Dự án:" (đầu slide)
   &__slider-nav {
-    display: flex;
-    margin-top: rem(12);
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
 
     &.is-hidden {
       display: none;
@@ -251,6 +254,7 @@
   // ------ Detail list ------
   &__details {
     margin: 0 0 rem(20);
+    padding-right: rem(80); // chỗ cho 2 nút mũi tên đè ở góc trên-phải
   }
 
   &__detail-row {

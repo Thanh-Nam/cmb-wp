@@ -135,8 +135,8 @@
 
   // Khởi tạo/refresh Swiper cho slider dự án (dùng chung cho panel desktop + popup mobile)
   // Link "Xem dự án" nằm NGAY TRONG từng slide (mỗi dự án có link riêng của nó).
-  // Nút mũi tên (điều hướng) là UI cố định, đặt đè lên góc dưới-phải bằng CSS
-  // để nằm cùng dòng với link — không cần đồng bộ qua JS.
+  // Nút mũi tên (điều hướng) nằm NGAY TRONG khung slider, đè lên góc trên-phải
+  // để luôn ngang hàng với dòng "Dự án:" (dòng đầu của slide) — không cần JS đồng bộ.
   function _renderProjectSlider(containerEl, wrapperEl, existingSwiper, projects) {
     if (existingSwiper) {
       existingSwiper.destroy(true, true);
@@ -144,7 +144,7 @@
     wrapperEl.innerHTML = projects.map(_slideHtml).join('');
 
     var multi = projects.length > 1;
-    var navEl = containerEl.parentNode.querySelector('.p-location__slider-nav');
+    var navEl = containerEl.querySelector('.p-location__slider-nav');
     if (navEl) navEl.classList.toggle('is-hidden', !multi);
 
     if (!window.Swiper) return null;
@@ -155,8 +155,8 @@
       speed: 450,
       allowTouchMove: multi,
       navigation: multi ? {
-        nextEl: containerEl.parentNode.querySelector('.p-location__slider-next'),
-        prevEl: containerEl.parentNode.querySelector('.p-location__slider-prev'),
+        nextEl: containerEl.querySelector('.p-location__slider-next'),
+        prevEl: containerEl.querySelector('.p-location__slider-prev'),
       } : false,
     });
   }
