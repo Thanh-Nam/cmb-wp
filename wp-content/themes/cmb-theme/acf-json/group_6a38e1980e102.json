@@ -51,13 +51,6 @@
                 "operator": "==",
                 "value": "phong-thi-nghiem"
             }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "quan-he-co-dong"
-            }
         ]
     ],
     "menu_order": 0,

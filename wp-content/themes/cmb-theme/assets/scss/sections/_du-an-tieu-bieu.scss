@@ -284,6 +284,21 @@
     margin: 0;
   }
 
+  // ------ Swiper: equalize slide height (Swiper doesn't do this by default
+  // without autoHeight — each slide otherwise sizes to its own content,
+  // so shorter/longer descriptions produce visibly different card heights) ------
+  &__swiper {
+    .swiper-wrapper {
+      align-items: stretch;
+    }
+
+    .swiper-slide {
+      height: auto;
+      align-self: stretch;
+      padding: 0 rem(20);
+    }
+  }
+
   // ------ Body: image left + content right ------
   &__body {
     position: relative;
@@ -295,6 +310,7 @@
     border-radius: rem(16);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.09);
     overflow: hidden;
+    height: 100%;
   }
 
   // ------ Image side ------
@@ -800,12 +816,13 @@
   overflow: hidden;
   border: 1px solid $color-border;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "image"
     "body"
     "footer";
+  min-width: 0;
   transition: box-shadow $transition-normal, transform $transition-normal;
 
   &:hover {
@@ -823,11 +840,14 @@
     position: relative;
     overflow: hidden;
     aspect-ratio: 16 / 10;
+    min-width: 0;
   }
 
   &__img {
     width: 100%;
     height: 100%;
+    min-width: 0;
+    max-width: 100%;
     object-fit: cover;
     display: block;
     transition: transform $transition-slow;

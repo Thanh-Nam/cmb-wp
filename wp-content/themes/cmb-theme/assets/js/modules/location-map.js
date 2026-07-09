@@ -5,9 +5,12 @@
  * khi #location-map-wrap vào viewport.
  *
  * Global vars trong cùng module scope:
- * _locPanel, _locCityEl, _locProjectEl, _locDescEl, _locLinkEl, _locImgEl
- * _locPopup, _popupCityEl, _popupProjectEl, _popupDescEl, _popupImgEl
+ * _locPanel, _locCityEl, _locSliderWrapper, _locSwiper
+ * _locPopup, _popupCityEl, _popupSliderWrapper, _popupSwiper
  * _themeUri, _locationData
+ *
+ * Mỗi tỉnh/thành có thể có NHIỀU dự án (data.projects — mảng), hiển thị
+ * dạng slide (Swiper) trong panel desktop và popup mobile.
  *
  * Nhãn tỉnh trong map.svg là chữ đã vector hoá (path), không thể chèn
  * text mới theo đúng kiểu cũ. Vì vậy: Hải Phòng / TP. Hồ Chí Minh / Đồng Nai
@@ -21,73 +24,140 @@
 (function () {
 
   // Panel element references (assigned by initLocationMap, used by SVG click handlers)
-  var _locPanel, _locCityEl, _locProjectEl, _locDescEl, _locLinkEl, _locImgEl;
-  var _locPopup, _popupCityEl, _popupProjectEl, _popupDescEl, _popupImgEl;
+  var _locPanel, _locCityEl, _locSliderWrapper, _locSwiper;
+  var _locPopup, _popupCityEl, _popupSliderWrapper, _popupSwiper;
 
   var _themeUri = (window.CMB_Theme && window.CMB_Theme.uri) ? window.CMB_Theme.uri.replace(/\/$/, '') : '';
   var _placeholderImg = _themeUri + '/assets/images/demo-du-an.png';
 
+  function _proj(project, desc, link, imgSrc, imgAlt) {
+    return { project: project, desc: desc, link: link || '#', imgSrc: imgSrc, imgAlt: imgAlt };
+  }
+
   var _locationData = {
     'nghe-an': {
       city: 'NGHỆ AN',
-      project: 'Cảng tổng hợp Đông Hồi, Quỳnh Lưu',
-      desc: 'Tư vấn lập dự án đầu tư và thiết kế cơ sở Cảng tổng hợp Đông Hồi tại huyện Quỳnh Lưu, Nghệ An, công suất 5 triệu tấn/năm.',
-      link: '#',
-      imgSrc: _themeUri + '/assets/images/cang-tong-hop-dong-hoi.png',
-      imgAlt: 'Cảng tổng hợp Đông Hồi, Nghệ An'
+      projects: [_proj(
+        'Cảng tổng hợp Đông Hồi, Quỳnh Lưu',
+        'Tư vấn lập dự án đầu tư và thiết kế cơ sở Cảng tổng hợp Đông Hồi tại huyện Quỳnh Lưu, Nghệ An, công suất 5 triệu tấn/năm.',
+        '#', _themeUri + '/assets/images/cang-tong-hop-dong-hoi.png', 'Cảng tổng hợp Đông Hồi, Nghệ An'
+      )]
     },
     'hai-phong': {
       city: 'HẢI PHÒNG',
-      project: 'Cảng Đình Vũ',
-      desc: 'Diện tích 73,56ha; chiều dài bến 1.610,6m, tiếp nhận tàu 20.000 – 50.000 DW T; công suất 15 triệu tấn/năm',
-      link: '#',
-      imgSrc: _themeUri + '/assets/images/cang-dinh-vu.png',
-      imgAlt: 'Cảng Đình Vũ'
+      projects: [_proj(
+        'Cảng Đình Vũ',
+        'Diện tích 73,56ha; chiều dài bến 1.610,6m, tiếp nhận tàu 20.000 – 50.000 DW T; công suất 15 triệu tấn/năm',
+        '#', _themeUri + '/assets/images/cang-dinh-vu.png', 'Cảng Đình Vũ'
+      )]
     },
     'tay-ninh': {
       city: 'TÂY NINH',
-      project: 'Trung tâm Logistics, cảng Cạn cảng tổng hợp Tây Ninh',
-      desc: 'Khu Cảng cạn 48,94 ha; Khu Trung tâm Logistics 159,70 ha; Khu Cảng tổng hợp 50,58 ha, đầu tư cơ sở hạ tầng san nền, đường giao thông, hạ tầng kỹ thuật, cảng thủy nội địa đồng bộ',
-      link: '#',
-      imgSrc: _themeUri + '/assets/images/cang-can-tay-ninh.jpg',
-      imgAlt: 'Thị xã Trảng Bàng, tỉnh Tây Ninh'
+      projects: [_proj(
+        'Trung tâm Logistics, cảng Cạn cảng tổng hợp Tây Ninh',
+        'Khu Cảng cạn 48,94 ha; Khu Trung tâm Logistics 159,70 ha; Khu Cảng tổng hợp 50,58 ha, đầu tư cơ sở hạ tầng san nền, đường giao thông, hạ tầng kỹ thuật, cảng thủy nội địa đồng bộ',
+        '#', _themeUri + '/assets/images/cang-can-tay-ninh.jpg', 'Thị xã Trảng Bàng, tỉnh Tây Ninh'
+      )]
     },
     'tp-hcm': {
       city: 'TP. HỒ CHÍ MINH',
-      project: 'Cảng Contaner Cát Lái',
-      desc: 'Diện tích 80ha; chiều dài bến 1.462m, tiếp nhận tảu Container đến 45.000DWT; công suất 2,5 triệu TEU/năm',
-      link: '#',
-      imgSrc: _themeUri + '/assets/images/cang-cat-lai.jpg',
-      imgAlt: 'Cảng Contaner Cát Lái, TP. Hồ Chí Minh'
+      projects: [_proj(
+        'Cảng Contaner Cát Lái',
+        'Diện tích 80ha; chiều dài bến 1.462m, tiếp nhận tảu Container đến 45.000DWT; công suất 2,5 triệu TEU/năm',
+        '#', _themeUri + '/assets/images/cang-cat-lai.jpg', 'Cảng Contaner Cát Lái, TP. Hồ Chí Minh'
+      )]
     },
     'dong-nai': {
       city: 'ĐỒNG NAI',
-      project: 'ICD Tân Cảng Long Bình',
-      desc: 'Tổng diện tích 235 ha, diện tích bãi container 15,6ha, diện tích kho 52,4ha',
-      link: '#',
-      imgSrc: _themeUri + '/assets/images/tan-cang-long-binh.jpg',
-      imgAlt: 'Thành phố Biên Hòa, tỉnh Đồng Nai'
+      projects: [_proj(
+        'ICD Tân Cảng Long Bình',
+        'Tổng diện tích 235 ha, diện tích bãi container 15,6ha, diện tích kho 52,4ha',
+        '#', _themeUri + '/assets/images/tan-cang-long-binh.jpg', 'Thành phố Biên Hòa, tỉnh Đồng Nai'
+      )]
     },
-    'quang-ninh': { city: 'QUẢNG NINH', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Quảng Ninh' },
-    'thanh-hoa': { city: 'THANH HÓA', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Thanh Hóa' },
-    'quang-tri': { city: 'QUẢNG TRỊ', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Quảng Trị' },
-    'da-nang': { city: 'ĐÀ NẴNG', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Đà Nẵng' },
-    'quang-ngai': { city: 'QUẢNG NGÃI', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Quảng Ngãi' },
-    'khanh-hoa': { city: 'KHÁNH HÒA', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Khánh Hòa' },
-    'ninh-thuan': { city: 'NINH THUẬN', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Ninh Thuận' },
-    'binh-thuan': { city: 'BÌNH THUẬN', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Bình Thuận' },
-    'ba-ria-vung-tau': { city: 'BÀ RỊA - VŨNG TÀU', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Bà Rịa - Vũng Tàu' },
-    'tien-giang': { city: 'TIỀN GIANG', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Tiền Giang' },
-    'ben-tre': { city: 'BẾN TRE', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Bến Tre' },
-    'can-tho': { city: 'CẦN THƠ', project: 'Đang cập nhật', desc: 'Thông tin dự án đang được cập nhật.', link: '#', imgSrc: _placeholderImg, imgAlt: 'Cần Thơ' }
+    'quang-ninh': { city: 'QUẢNG NINH', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Quảng Ninh')] },
+    'thanh-hoa': { city: 'THANH HÓA', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Thanh Hóa')] },
+    'quang-tri': { city: 'QUẢNG TRỊ', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Quảng Trị')] },
+    'da-nang': { city: 'ĐÀ NẴNG', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Đà Nẵng')] },
+    'quang-ngai': { city: 'QUẢNG NGÃI', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Quảng Ngãi')] },
+    'khanh-hoa': { city: 'KHÁNH HÒA', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Khánh Hòa')] },
+    'ninh-thuan': { city: 'NINH THUẬN', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Ninh Thuận')] },
+    'binh-thuan': { city: 'BÌNH THUẬN', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Bình Thuận')] },
+    'ba-ria-vung-tau': { city: 'BÀ RỊA - VŨNG TÀU', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Bà Rịa - Vũng Tàu')] },
+    'tien-giang': { city: 'TIỀN GIANG', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Tiền Giang')] },
+    'ben-tre': { city: 'BẾN TRE', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Bến Tre')] },
+    'can-tho': { city: 'CẦN THƠ', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Cần Thơ')] }
   };
 
   // Override location data từ ACF Options (wp_localize_script → window.CMB_LocationData)
+  // Mỗi tỉnh có thể có nhiều dự án — nếu ACF có dữ liệu thì thay thế toàn bộ mảng projects mặc định.
+  // Tên tỉnh/thành (city) không lấy từ ACF — cố định sẵn, trùng với nhãn trên bản đồ.
   if (window.CMB_LocationData) {
     Object.keys(window.CMB_LocationData).forEach(function (key) {
-      if (_locationData[key]) {
-        Object.assign(_locationData[key], window.CMB_LocationData[key]);
-      }
+      var override = window.CMB_LocationData[key];
+      if (!override) return;
+      if (!_locationData[key]) return; // tỉnh không có trong danh sách cố định thì bỏ qua
+      if (override.projects && override.projects.length) _locationData[key].projects = override.projects;
+    });
+  }
+
+  function _escapeHtml(str) {
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function _slideHtml(p) {
+    var img = p.imgSrc || _placeholderImg;
+    return (
+      '<div class="swiper-slide p-location__slide">' +
+        '<div class="p-location__details">' +
+          '<div class="p-location__detail-row">' +
+            '<span class="p-location__detail-label">Dự án:</span>' +
+            '<p class="p-location__detail-text">' + _escapeHtml(p.project) + '</p>' +
+          '</div>' +
+          '<div class="p-location__detail-row">' +
+            '<span class="p-location__detail-label">Mô tả:</span>' +
+            '<p class="p-location__detail-text">' + _escapeHtml(p.desc) + '</p>' +
+          '</div>' +
+        '</div>' +
+        '<div class="p-location__img-wrap">' +
+          '<img src="' + _escapeHtml(img) + '" alt="' + _escapeHtml(p.imgAlt) + '" class="p-location__img" loading="lazy" />' +
+        '</div>' +
+        '<a href="' + _escapeHtml(p.link || '#') + '" class="p-location__link" title="Xem chi tiết dự án">' +
+          'Xem dự án' +
+          '<svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+            '<path d="M1 6H15M10 1L15 6L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />' +
+          '</svg>' +
+        '</a>' +
+      '</div>'
+    );
+  }
+
+  // Khởi tạo/refresh Swiper cho slider dự án (dùng chung cho panel desktop + popup mobile)
+  // Link "Xem dự án" nằm NGAY TRONG từng slide (mỗi dự án có link riêng của nó).
+  // Nút mũi tên (điều hướng) là UI cố định, đặt đè lên góc dưới-phải bằng CSS
+  // để nằm cùng dòng với link — không cần đồng bộ qua JS.
+  function _renderProjectSlider(containerEl, wrapperEl, existingSwiper, projects) {
+    if (existingSwiper) {
+      existingSwiper.destroy(true, true);
+    }
+    wrapperEl.innerHTML = projects.map(_slideHtml).join('');
+
+    var multi = projects.length > 1;
+    var navEl = containerEl.parentNode.querySelector('.p-location__slider-nav');
+    if (navEl) navEl.classList.toggle('is-hidden', !multi);
+
+    if (!window.Swiper) return null;
+
+    return new Swiper(containerEl, {
+      slidesPerView: 1,
+      spaceBetween: 0,
+      speed: 450,
+      allowTouchMove: multi,
+      navigation: multi ? {
+        nextEl: containerEl.parentNode.querySelector('.p-location__slider-next'),
+        prevEl: containerEl.parentNode.querySelector('.p-location__slider-prev'),
+      } : false,
     });
   }
 
@@ -99,37 +169,29 @@
     _locPanel.style.opacity = '0';
     _locPanel.style.transform = 'translateY(6px)';
 
-    var imgReady = !data.imgSrc, timerDone = false;
-
-    function tryShow() {
-      if (!imgReady || !timerDone) return;
+    setTimeout(function () {
       if (_locCityEl) _locCityEl.textContent = data.city;
-      if (_locProjectEl) _locProjectEl.textContent = data.project;
-      if (_locDescEl) _locDescEl.textContent = data.desc;
-      if (_locLinkEl) _locLinkEl.href = data.link;
-      if (_locImgEl && data.imgSrc) _locImgEl.src = data.imgSrc;
-      if (_locImgEl) _locImgEl.alt = data.imgAlt;
+      _locSwiper = _renderProjectSlider(
+        document.getElementById('location-slider'),
+        _locSliderWrapper,
+        _locSwiper,
+        data.projects || []
+      );
       _locPanel.style.opacity = '1';
       _locPanel.style.transform = 'translateY(0)';
-    }
-
-    setTimeout(function () { timerDone = true; tryShow(); }, 180);
-
-    if (data.imgSrc) {
-      var preload = new Image();
-      preload.onload = preload.onerror = function () { imgReady = true; tryShow(); };
-      preload.src = data.imgSrc;
-    }
+    }, 180);
   }
 
   function _openLocPopup(locKey) {
     var data = _locationData[locKey];
     if (!data || !_locPopup) return;
     if (_popupCityEl) _popupCityEl.textContent = data.city;
-    if (_popupProjectEl) _popupProjectEl.textContent = data.project;
-    if (_popupDescEl) _popupDescEl.textContent = data.desc;
-    if (_popupImgEl && data.imgSrc) _popupImgEl.src = data.imgSrc;
-    if (_popupImgEl) _popupImgEl.alt = data.imgAlt;
+    _popupSwiper = _renderProjectSlider(
+      document.getElementById('popup-slider'),
+      _popupSliderWrapper,
+      _popupSwiper,
+      data.projects || []
+    );
     _locPopup.classList.add('is-open');
     _locPopup.setAttribute('aria-hidden', 'false');
     window.CMB.lockScroll();
@@ -395,27 +457,24 @@
   (function initLocationMap() {
     _locPanel = document.getElementById('location-panel');
     _locCityEl = document.getElementById('location-city-name');
-    _locProjectEl = document.getElementById('location-project');
-    _locDescEl = document.getElementById('location-desc');
-    _locLinkEl = document.getElementById('location-link');
-    _locImgEl = document.getElementById('location-img');
+    _locSliderWrapper = document.getElementById('location-slider-wrapper');
 
     // Fill panel with default city data immediately (no animation)
     var def = _locationData['hai-phong'];
     if (def) {
       if (_locCityEl) _locCityEl.textContent = def.city;
-      if (_locProjectEl) _locProjectEl.textContent = def.project;
-      if (_locDescEl) _locDescEl.textContent = def.desc;
-      if (_locImgEl && def.imgSrc) _locImgEl.src = def.imgSrc;
-      if (_locImgEl) _locImgEl.alt = def.imgAlt;
+      _locSwiper = _renderProjectSlider(
+        document.getElementById('location-slider'),
+        _locSliderWrapper,
+        null,
+        def.projects || []
+      );
     }
 
     // Mobile popup
     _locPopup = document.getElementById('location-popup');
     _popupCityEl = document.getElementById('popup-city-name');
-    _popupProjectEl = document.getElementById('popup-project');
-    _popupDescEl = document.getElementById('popup-desc');
-    _popupImgEl = document.getElementById('popup-img');
+    _popupSliderWrapper = document.getElementById('popup-slider-wrapper');
 
     var closeBtn = document.getElementById('location-popup-close');
     if (closeBtn) closeBtn.addEventListener('click', _closeLocPopup);

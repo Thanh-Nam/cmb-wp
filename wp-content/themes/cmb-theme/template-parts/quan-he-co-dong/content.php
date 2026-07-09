@@ -61,15 +61,16 @@ if (empty($ir_terms)) : ?>
         $grouped = [];
         while ($term_q->have_posts()) {
             $term_q->the_post();
-            $raw  = get_field('document_updated', false, false);
-            $ts   = $raw ? strtotime((string) $raw) : get_the_time('U');
-            $year = date('Y', $ts);
-            $pdf  = get_field('document_pdf');
+            $raw    = get_field('document_updated', false, false);
+            $ts     = $raw ? strtotime((string) $raw) : get_the_time('U');
+            $year   = date('Y', $ts);
+            $docs   = get_field('documents');
+            $doc0   = (is_array($docs) && !empty($docs[0]['file']['url'])) ? $docs[0] : null;
             $grouped[$year][] = [
                 'title'     => get_the_title(),
                 'permalink' => get_permalink(),
                 'date_md'   => date('d/m', $ts),
-                'pdf_url'   => ($pdf && !empty($pdf['url'])) ? $pdf['url'] : '',
+                'pdf_url'   => $doc0 ? $doc0['file']['url'] : '',
             ];
         }
         wp_reset_postdata();
@@ -95,15 +96,15 @@ if (empty($ir_terms)) : ?>
         $feat_data = [];
         while ($feat_q->have_posts()) {
             $feat_q->the_post();
-            $feat_pdf  = get_field('document_pdf');
-            $feat_url  = ($feat_pdf && !empty($feat_pdf['url'])) ? $feat_pdf['url'] : '';
+            $feat_docs = get_field('documents');
+            $feat_doc0 = (is_array($feat_docs) && !empty($feat_docs[0]['file']['url'])) ? $feat_docs[0] : null;
             $thumb_id  = get_post_thumbnail_id();
             $thumb_src = $thumb_id ? wp_get_attachment_image_src($thumb_id, 'thumbnail') : false;
             $feat_data[] = [
                 'title'     => get_the_title(),
                 'permalink' => get_permalink(),
-                'pdf_url'   => $feat_url,
-                'size'      => get_field('document_size') ?: '',
+                'pdf_url'   => $feat_doc0 ? $feat_doc0['file']['url'] : '',
+                'size'      => $feat_doc0 ? ($feat_doc0['size'] ?: '') : '',
                 'thumb_src' => $thumb_src ? $thumb_src[0] : '',
                 'thumb_alt' => $thumb_id ? (get_post_meta($thumb_id, '_wp_attachment_image_alt', true) ?: get_the_title()) : '',
             ];

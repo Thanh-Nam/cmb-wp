@@ -2,6 +2,8 @@
 /**
  * Template: Single — Quan hệ cổ đông chi tiết
  * Post type: quan-he-co-dong
+ * Một bài viết có thể đính kèm NHIỀU file PDF (repeater "documents") —
+ * mỗi file hiển thị 1 khung xem riêng, kèm nút "Tải xuống" của riêng nó.
  */
 get_header();
 
@@ -9,10 +11,25 @@ get_header();
 $updated_raw  = get_field('document_updated', false, false);
 $updated_ts   = $updated_raw ? strtotime((string) $updated_raw) : 0;
 $updated_full = $updated_ts ? date('d/m/Y H:i', $updated_ts) : '';
-$doc_pages    = get_field('document_pages');
-$doc_size     = get_field('document_size');
-$doc_pdf      = get_field('document_pdf');
-$pdf_url      = ($doc_pdf && !empty($doc_pdf['url'])) ? $doc_pdf['url'] : '';
+
+$documents = get_field('documents');
+$documents = is_array($documents) ? $documents : [];
+
+// Chuẩn hoá dữ liệu từng tài liệu để dùng trong template
+$docs = [];
+foreach ($documents as $i => $row) {
+    $file = $row['file'] ?? null;
+    $url  = ($file && !empty($file['url'])) ? $file['url'] : '';
+    if (!$url) continue; // bỏ qua dòng chưa có file
+    $docs[] = [
+        'index' => $i + 1,
+        'title' => $row['title'] ?: ('Tài liệu ' . ($i + 1)),
+        'url'   => $url,
+        'pages' => $row['pages'] ?? '',
+        'size'  => $row['size'] ?? '',
+    ];
+}
+$doc_count = count($docs);
 
 // Related docs (same taxonomy, exclude current)
 $rel_terms    = get_the_terms(get_the_ID(), 'quan-he-co-dong-category');
@@ -82,7 +99,7 @@ $related_q    = new WP_Query([
               <?php echo $updated_full; ?>
             </span>
             <?php endif; ?>
-            <?php if ($doc_pages) : ?>
+            <?php if ($doc_count) : ?>
             <span class="p-lab-detail__meta-sep" aria-hidden="true"></span>
             <span class="p-lab-detail__meta-item">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -90,32 +107,10 @@ $related_q    = new WP_Query([
                 <path d="M9 2V5H12" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
                 <path d="M5 7H9M5 9H8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
               </svg>
-              <?php echo $doc_pages; ?> trang
-            </span>
-            <?php endif; ?>
-            <?php if ($doc_size) : ?>
-            <span class="p-lab-detail__meta-sep" aria-hidden="true"></span>
-            <span class="p-lab-detail__meta-item">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/>
-                <path d="M4.5 7C4.5 5.62 5.62 4.5 7 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-              </svg>
-              <?php echo $doc_size; ?>
+              <?php echo $doc_count; ?> tài liệu
             </span>
             <?php endif; ?>
           </div>
-
-          <?php if ($pdf_url) : ?>
-          <div class="p-lab-detail__actions">
-            <a href="<?php echo $pdf_url; ?>" class="p-lab-detail__btn p-lab-detail__btn--primary" download title="Tải xuống PDF">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M7 1V9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M2 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-              Tải xuống PDF
-            </a>
-          </div>
-          <?php endif; ?>
 
         </div>
         <!-- ---- /Header ---- -->
@@ -124,34 +119,68 @@ $related_q    = new WP_Query([
         <div class="p-lab-detail__layout">
           <div class="p-lab-detail__main">
 
-            <!-- ---- PDF Viewer ---- -->
-            <div class="p-lab-detail__viewer" id="pdf-viewer-wrap">
-              <?php if ($pdf_url) : ?>
-              <iframe
-                id="pdf-iframe"
-                src="<?php echo $pdf_url; ?>"
-                title="<?php the_title_attribute(); ?>"
-                allowfullscreen
-                loading="lazy"
-                aria-label="Xem tài liệu PDF">
-              </iframe>
-              <div class="p-lab-detail__viewer-fallback" id="pdf-fallback" aria-live="polite">
-                <svg width="48" height="60" viewBox="0 0 48 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 4H30L44 18V56H6V4Z" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M30 4V18H44" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M14 28H34M14 34H28M14 40H22" stroke="#0379CC" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-                <p>Trình duyệt của bạn không hỗ trợ xem PDF trực tiếp.</p>
-                <a href="<?php echo $pdf_url; ?>" download>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <?php if ($docs) : ?>
+            <?php foreach ($docs as $doc) : ?>
+            <!-- ---- Tài liệu PDF #<?php echo $doc['index']; ?> ---- -->
+            <div class="p-lab-detail__doc-block" id="<?php echo esc_attr('doc-' . $doc['index']); ?>">
+
+              <div class="p-lab-detail__doc-block-header">
+                <h3 class="p-lab-detail__doc-block-title"><?php echo esc_html($doc['title']); ?></h3>
+                <a href="<?php echo esc_url($doc['url']); ?>" class="p-lab-detail__btn p-lab-detail__btn--primary" download title="Tải xuống PDF">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M7 1V9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M2 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                   </svg>
-                  Tải xuống để xem
+                  Tải xuống PDF
                 </a>
               </div>
-              <?php else : ?>
-              <div class="p-lab-detail__viewer-fallback">
+
+              <?php if ($doc['pages'] || $doc['size']) : ?>
+              <div class="p-lab-detail__doc-block-meta">
+                <?php if ($doc['pages']) : ?>
+                <span class="p-lab-detail__meta-item"><?php echo esc_html($doc['pages']); ?> trang</span>
+                <?php endif; ?>
+                <?php if ($doc['pages'] && $doc['size']) : ?>
+                <span class="p-lab-detail__meta-sep" aria-hidden="true"></span>
+                <?php endif; ?>
+                <?php if ($doc['size']) : ?>
+                <span class="p-lab-detail__meta-item"><?php echo esc_html($doc['size']); ?></span>
+                <?php endif; ?>
+              </div>
+              <?php endif; ?>
+
+              <div class="p-lab-detail__viewer">
+                <iframe
+                  id="<?php echo esc_attr('pdf-iframe-' . $doc['index']); ?>"
+                  src="<?php echo esc_url($doc['url']); ?>"
+                  title="<?php echo esc_attr($doc['title']); ?>"
+                  allowfullscreen
+                  loading="lazy"
+                  aria-label="Xem tài liệu PDF">
+                </iframe>
+                <div class="p-lab-detail__viewer-fallback" id="<?php echo esc_attr('pdf-fallback-' . $doc['index']); ?>" aria-live="polite">
+                  <svg width="48" height="60" viewBox="0 0 48 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 4H30L44 18V56H6V4Z" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M30 4V18H44" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M14 28H34M14 34H28M14 40H22" stroke="#0379CC" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  <p>Trình duyệt của bạn không hỗ trợ xem PDF trực tiếp.</p>
+                  <a href="<?php echo esc_url($doc['url']); ?>" download>
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path d="M7 1V9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M2 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    Tải xuống để xem
+                  </a>
+                </div>
+              </div>
+
+            </div>
+            <!-- ---- /Tài liệu PDF #<?php echo $doc['index']; ?> ---- -->
+            <?php endforeach; ?>
+            <?php else : ?>
+            <div class="p-lab-detail__viewer">
+              <div class="p-lab-detail__viewer-fallback" style="display:flex;">
                 <svg width="48" height="60" viewBox="0 0 48 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6 4H30L44 18V56H6V4Z" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
                   <path d="M30 4V18H44" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
@@ -159,14 +188,40 @@ $related_q    = new WP_Query([
                 </svg>
                 <p>Tài liệu chưa được tải lên.</p>
               </div>
-              <?php endif; ?>
             </div>
-            <!-- ---- /PDF Viewer ---- -->
+            <?php endif; ?>
 
           </div><!-- /.p-lab-detail__main -->
 
 
           <aside class="p-lab-detail__sidebar">
+
+            <!-- DANH SÁCH TÀI LIỆU -->
+            <?php if ($doc_count > 1) : ?>
+            <div class="p-lab-detail__doc-info" data-reveal="fade-left">
+              <h3 class="p-lab-detail__sidebar-title">DANH SÁCH TÀI LIỆU</h3>
+              <ul class="p-lab-detail__info-list">
+                <?php foreach ($docs as $doc) : ?>
+                <li class="p-lab-detail__info-row">
+                  <span class="p-lab-detail__info-icon">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                      <path d="M4 2H11L15 6V16H4V2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+                      <path d="M11 2V6H15" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span class="p-lab-detail__info-text">
+                    <a class="p-lab-detail__info-value" href="<?php echo esc_attr('#doc-' . $doc['index']); ?>"><?php echo esc_html($doc['title']); ?></a>
+                    <?php if ($doc['pages'] || $doc['size']) : ?>
+                    <span class="p-lab-detail__info-label">
+                      <?php echo esc_html(trim($doc['pages'] ? ($doc['pages'] . ' trang') : '') . ($doc['pages'] && $doc['size'] ? ' · ' : '') . esc_html($doc['size'])); ?>
+                    </span>
+                    <?php endif; ?>
+                  </span>
+                </li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+            <?php endif; ?>
 
             <!-- THÔNG TIN TÀI LIỆU -->
             <div class="p-lab-detail__doc-info" data-reveal="fade-left">
@@ -186,7 +241,7 @@ $related_q    = new WP_Query([
                   </span>
                 </li>
 
-                <?php if ($doc_pages) : ?>
+                <?php if ($doc_count) : ?>
                 <li class="p-lab-detail__info-row">
                   <span class="p-lab-detail__info-icon">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
@@ -196,23 +251,8 @@ $related_q    = new WP_Query([
                     </svg>
                   </span>
                   <span class="p-lab-detail__info-text">
-                    <span class="p-lab-detail__info-label">Số trang</span>
-                    <span class="p-lab-detail__info-value"><?php echo $doc_pages; ?> trang</span>
-                  </span>
-                </li>
-                <?php endif; ?>
-
-                <?php if ($doc_size) : ?>
-                <li class="p-lab-detail__info-row">
-                  <span class="p-lab-detail__info-icon">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                      <path d="M9 3V9L12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                      <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.4"/>
-                    </svg>
-                  </span>
-                  <span class="p-lab-detail__info-text">
-                    <span class="p-lab-detail__info-label">Dung lượng</span>
-                    <span class="p-lab-detail__info-value"><?php echo $doc_size; ?></span>
+                    <span class="p-lab-detail__info-label">Số tài liệu</span>
+                    <span class="p-lab-detail__info-value"><?php echo $doc_count; ?></span>
                   </span>
                 </li>
                 <?php endif; ?>

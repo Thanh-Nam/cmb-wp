@@ -117,7 +117,7 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
         wp_enqueue_script( 'cmb-hero-slider',    $uri . '/assets/js/modules/hero-slider.js',    ['swiper', 'cmb-global'], $ver, true );
         wp_enqueue_script( 'cmb-history',        $uri . '/assets/js/modules/history.js',        ['cmb-global'],           $ver, true );
-        wp_enqueue_script( 'cmb-location-map',   $uri . '/assets/js/modules/location-map.js',   ['cmb-global'],           $ver, true );
+        wp_enqueue_script( 'cmb-location-map',   $uri . '/assets/js/modules/location-map.js',   ['swiper', 'cmb-global'], $ver, true );
         wp_enqueue_script( 'cmb-field-swiper',   $uri . '/assets/js/modules/field-swiper.js',   ['swiper', 'cmb-global'], $ver, true );
         wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'],           $ver, true );
         wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'],           $ver, true );
@@ -233,36 +233,41 @@ function cmb_enqueue_assets() {
             if ( empty( $group ) ) continue;
             $entry = [];
 
-            // city (đa ngôn ngữ)
-            $city = ( $lang === 'en' && ! empty( $group['city_en'] ) ) ? $group['city_en'] : ( $group['city'] ?? '' );
-            if ( $city ) $entry['city'] = $city;
+            // danh sách dự án — một tỉnh/thành có thể có nhiều dự án (slide)
+            // (tên tỉnh/thành không lấy từ ACF — đã cố định sẵn trong location-map.js, trùng với nhãn trên bản đồ)
+            $projects = [];
+            $rows = $group['projects'] ?? [];
+            if ( is_array( $rows ) ) {
+                foreach ( $rows as $row ) {
+                    $p = [];
 
-            // project (đa ngôn ngữ)
-            $project = ( $lang === 'en' && ! empty( $group['project_en'] ) ) ? $group['project_en'] : ( $group['project'] ?? '' );
-            if ( $project ) $entry['project'] = $project;
+                    $project = ( $lang === 'en' && ! empty( $row['project_en'] ) ) ? $row['project_en'] : ( $row['project'] ?? '' );
+                    if ( $project ) $p['project'] = $project;
 
-            // desc (đa ngôn ngữ)
-            $desc = ( $lang === 'en' && ! empty( $group['desc_en'] ) ) ? $group['desc_en'] : ( $group['desc'] ?? '' );
-            if ( $desc ) $entry['desc'] = wp_strip_all_tags( $desc );
+                    $desc = ( $lang === 'en' && ! empty( $row['desc_en'] ) ) ? $row['desc_en'] : ( $row['desc'] ?? '' );
+                    if ( $desc ) $p['desc'] = wp_strip_all_tags( $desc );
 
-            // link (không cần dịch)
-            if ( !empty( $group['link'] ) ) $entry['link'] = $group['link'];
+                    if ( !empty( $row['link'] ) ) $p['link'] = $row['link'];
 
-            // img (không cần dịch)
-            if ( !empty( $group['img'] ) ) {
-                $img = $group['img'];
-                if ( is_array( $img ) ) {
-                    $entry['imgSrc'] = $img['url'] ?? '';
-                    $entry['imgAlt'] = $img['alt'] ?? '';
-                } elseif ( is_numeric( $img ) ) {
-                    $src = wp_get_attachment_image_src( (int) $img, 'large' );
-                    $entry['imgSrc'] = $src ? $src[0] : '';
-                    $entry['imgAlt'] = get_post_meta( (int) $img, '_wp_attachment_image_alt', true ) ?: '';
-                } else {
-                    $entry['imgSrc'] = $img;
-                    $entry['imgAlt'] = '';
+                    if ( !empty( $row['img'] ) ) {
+                        $img = $row['img'];
+                        if ( is_array( $img ) ) {
+                            $p['imgSrc'] = $img['url'] ?? '';
+                            $p['imgAlt'] = $img['alt'] ?? '';
+                        } elseif ( is_numeric( $img ) ) {
+                            $src = wp_get_attachment_image_src( (int) $img, 'large' );
+                            $p['imgSrc'] = $src ? $src[0] : '';
+                            $p['imgAlt'] = get_post_meta( (int) $img, '_wp_attachment_image_alt', true ) ?: '';
+                        } else {
+                            $p['imgSrc'] = $img;
+                            $p['imgAlt'] = '';
+                        }
+                    }
+
+                    if ( !empty( $p ) ) $projects[] = $p;
                 }
             }
+            if ( !empty( $projects ) ) $entry['projects'] = $projects;
 
             if ( !empty( $entry ) ) {
                 $location_data[ $key ] = $entry;
@@ -1042,24 +1047,12 @@ add_filter( 'the_content', function( $content ) {
 
 // ============================================================
 // Tự động cập nhật số trang & dung lượng khi lưu file PDF
-// Áp dụng cho: phong-thi-nghiem, quan-he-co-dong
+// Áp dụng cho: phong-thi-nghiem (1 file), quan-he-co-dong (nhiều file — repeater "documents")
 // ============================================================
-add_action( 'acf/save_post', function( $post_id ) {
-    $post_type = get_post_type( $post_id );
-    if ( ! in_array( $post_type, [ 'phong-thi-nghiem', 'quan-he-co-dong' ], true ) ) {
-        return;
-    }
-
-    $pdf_field = get_field( 'document_pdf', $post_id );
-    if ( empty( $pdf_field['id'] ) ) {
-        return;
-    }
-
-    $attachment_id = (int) $pdf_field['id'];
-    $file_path     = get_attached_file( $attachment_id );
-
+function cmb_pdf_meta_from_attachment( $attachment_id ) {
+    $file_path = get_attached_file( (int) $attachment_id );
     if ( ! $file_path || ! file_exists( $file_path ) ) {
-        return;
+        return null;
     }
 
     // Dung lượng
@@ -1067,7 +1060,6 @@ add_action( 'acf/save_post', function( $post_id ) {
     $formatted = $bytes >= 1048576
         ? round( $bytes / 1048576, 1 ) . ' MB'
         : round( $bytes / 1024 ) . ' KB';
-    update_field( 'document_size', $formatted, $post_id );
 
     // Số trang — đọc cấu trúc PDF, tìm /Type /Page (không phải /Pages)
     $content    = file_get_contents( $file_path );
@@ -1076,7 +1068,45 @@ add_action( 'acf/save_post', function( $post_id ) {
         preg_match_all( '/\/Type\s*\/Page[^s]/i', $content, $matches );
         $page_count = count( $matches[0] );
     }
-    if ( $page_count > 0 ) {
-        update_field( 'document_pages', $page_count, $post_id );
+
+    return [ 'size' => $formatted, 'pages' => $page_count ];
+}
+
+add_action( 'acf/save_post', function( $post_id ) {
+    $post_type = get_post_type( $post_id );
+    if ( ! in_array( $post_type, [ 'phong-thi-nghiem', 'quan-he-co-dong' ], true ) ) {
+        return;
+    }
+
+    if ( $post_type === 'quan-he-co-dong' ) {
+        // Nhiều PDF — tính số trang/dung lượng riêng cho từng dòng trong repeater "documents"
+        $rows = get_field( 'documents', $post_id );
+        if ( empty( $rows ) || ! is_array( $rows ) ) {
+            return;
+        }
+        foreach ( $rows as $i => $row ) {
+            if ( empty( $row['file']['id'] ) ) continue;
+            $meta = cmb_pdf_meta_from_attachment( $row['file']['id'] );
+            if ( ! $meta ) continue;
+            update_sub_field( [ 'documents', $i + 1, 'size' ], $meta['size'], $post_id );
+            if ( $meta['pages'] > 0 ) {
+                update_sub_field( [ 'documents', $i + 1, 'pages' ], $meta['pages'], $post_id );
+            }
+        }
+        return;
+    }
+
+    // phong-thi-nghiem: 1 file duy nhất (hành vi cũ)
+    $pdf_field = get_field( 'document_pdf', $post_id );
+    if ( empty( $pdf_field['id'] ) ) {
+        return;
+    }
+    $meta = cmb_pdf_meta_from_attachment( $pdf_field['id'] );
+    if ( ! $meta ) {
+        return;
+    }
+    update_field( 'document_size', $meta['size'], $post_id );
+    if ( $meta['pages'] > 0 ) {
+        update_field( 'document_pages', $meta['pages'], $post_id );
     }
 }, 20 );

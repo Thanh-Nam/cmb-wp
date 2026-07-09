@@ -1,0 +1,156 @@
+{
+    "key": "group_qhcd_multi_pdf0001",
+    "title": "Danh sách tài liệu PDF",
+    "fields": [
+        {
+            "key": "field_qhcd0doc0updated",
+            "label": "Ngày cập nhật",
+            "name": "document_updated",
+            "aria-label": "",
+            "type": "date_time_picker",
+            "instructions": "Ngày cập nhật chung của bài viết (hiển thị ở phần thông tin tài liệu).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y g:i a",
+            "return_format": "d\/m\/Y g:i a",
+            "first_day": 1,
+            "allow_in_bindings": 0,
+            "default_to_current_date": 0
+        },
+        {
+            "key": "field_qhcd0doc0repeat",
+            "label": "Danh sách tài liệu PDF",
+            "name": "documents",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Một bài viết có thể đính kèm nhiều file PDF — mỗi file sẽ hiển thị 1 khung xem riêng.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_qhcd0doc0title",
+            "button_label": "Thêm tài liệu PDF",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_qhcd0doc0title",
+                    "label": "Tên tài liệu",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Ví dụ: 142 CBTT Báo cáo TC năm 2025",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_qhcd0doc0file",
+                    "label": "File PDF",
+                    "name": "file",
+                    "aria-label": "",
+                    "type": "file",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min_size": "",
+                    "max_size": "",
+                    "mime_types": "pdf",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_qhcd0doc0pages",
+                    "label": "Số trang",
+                    "name": "pages",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "Tự động tính khi lưu file PDF — có thể sửa lại nếu cần.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "min": "",
+                    "max": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "step": ""
+                },
+                {
+                    "key": "field_qhcd0doc0size",
+                    "label": "Dung lượng",
+                    "name": "size",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Tự động tính khi lưu file PDF — có thể sửa lại nếu cần.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "quan-he-co-dong"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1751385600
+}

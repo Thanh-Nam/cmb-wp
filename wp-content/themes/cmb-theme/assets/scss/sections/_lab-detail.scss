@@ -299,7 +299,55 @@
 }
 
 
-// ======= 3. PDF VIEWER =======
+// ======= 3. DOC BLOCKS (nhiều PDF trên 1 bài viết) =======
+.p-lab-detail__doc-block {
+  margin-bottom: rem(48);
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.p-lab-detail__doc-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(16);
+  flex-wrap: wrap;
+  margin-bottom: rem(10);
+}
+
+.p-lab-detail__doc-block-title {
+  font-family: $font-primary;
+  font-size: rem(18);
+  font-weight: $font-weight-bold;
+  color: $color-cmb-navy;
+  line-height: 1.35;
+  margin: 0;
+
+  @include sp {
+    font-size: rem(16);
+  }
+}
+
+.p-lab-detail__doc-block-meta {
+  display: flex;
+  align-items: center;
+  gap: rem(10);
+  font-family: $font-secondary;
+  font-size: rem(13);
+  color: $color-text-muted;
+  margin-bottom: rem(14);
+
+  .p-lab-detail__meta-sep {
+    width: rem(4);
+    height: rem(4);
+    border-radius: 50%;
+    background: $color-border;
+    flex-shrink: 0;
+  }
+}
+
+
+// ======= 4. PDF VIEWER =======
 .p-lab-detail__viewer {
   width: 100%;
   border: 1px solid $color-border;
