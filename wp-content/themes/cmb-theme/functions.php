@@ -504,6 +504,10 @@ function cmb_invalidate_cpt_cache( $post_id, $post ) {
             delete_transient( 'cmb_thiet_bi_grouped' );
             break;
 
+        case 'phan-mem':
+            delete_transient( 'cmb_phan_mem_grouped' );
+            break;
+
         case 'quan-he-co-dong':
             $terms = get_the_terms( $post_id, 'quan-he-co-dong-category' );
             if ( $terms && ! is_wp_error( $terms ) ) {
@@ -520,6 +524,19 @@ function cmb_invalidate_cpt_cache( $post_id, $post ) {
     }
 }
 add_action( 'save_post',   'cmb_invalidate_cpt_cache', 10, 2 );
+
+// In wp-admin, taxonomy checkboxes are saved via wp_set_object_terms() AFTER
+// wp_update_post() runs — i.e. AFTER 'save_post' already fired. So a category
+// change made while editing a post can be invisible to the cache-clear above.
+// set_object_terms fires at the moment terms are actually attached, so it's
+// the reliable place to invalidate the grouped-by-category caches.
+add_action( 'set_object_terms', function( $post_id, $terms, $tt_ids, $taxonomy ) {
+    if ( $taxonomy === 'phan-mem-category' ) {
+        delete_transient( 'cmb_phan_mem_grouped' );
+    } elseif ( $taxonomy === 'thiet-bi-category' ) {
+        delete_transient( 'cmb_thiet_bi_grouped' );
+    }
+}, 10, 4 );
 add_action( 'delete_post', function( $post_id ) {
     $post = get_post( $post_id );
     if ( $post ) cmb_invalidate_cpt_cache( $post_id, $post );

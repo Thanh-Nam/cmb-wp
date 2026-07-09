@@ -61,6 +61,47 @@ if ($cached === false) {
             ];
         }
     }
+
+    // Posts with no phan-mem-category assigned would otherwise be silently
+    // dropped by the per-term queries above — show them under a fallback group.
+    $uncategorized_q = new WP_Query([
+        'post_type'      => 'phan-mem',
+        'posts_per_page' => -1,
+        'orderby'        => 'menu_order title',
+        'order'          => 'ASC',
+        'tax_query'      => [[
+            'taxonomy' => 'phan-mem-category',
+            'operator' => 'NOT EXISTS',
+        ]],
+    ]);
+
+    if ($uncategorized_q->have_posts()) {
+        $items = [];
+        while ($uncategorized_q->have_posts()) {
+            $uncategorized_q->the_post();
+            $gallery     = get_field('software_gallery');
+            $image_urls  = $gallery ? array_column($gallery, 'url') : [];
+            $thumb_id    = get_post_thumbnail_id();
+            $thumb_src   = $thumb_id ? wp_get_attachment_image_src($thumb_id, 'medium') : false;
+
+            $items[] = [
+                'id'          => get_the_ID(),
+                'title'       => get_the_title(),
+                'title_attr'  => esc_attr(get_the_title()),
+                'thumb_src'   => $thumb_src ? $thumb_src[0] : '',
+                'thumb_alt'   => $thumb_src ? get_post_meta($thumb_id, '_wp_attachment_image_alt', true) : '',
+                'images_json' => wp_json_encode($image_urls),
+                'content'     => wp_strip_all_tags(get_the_content()),
+            ];
+        }
+        wp_reset_postdata();
+
+        $cached[] = [
+            'name'  => 'Khác',
+            'items' => $items,
+        ];
+    }
+
     set_transient('cmb_phan_mem_grouped', $cached, 6 * HOUR_IN_SECONDS);
 }
 
