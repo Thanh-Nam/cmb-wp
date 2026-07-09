@@ -31,13 +31,14 @@ $slide_count = $featured_q->post_count;
       <h2 class="p-projects-featured__section-title">DỰ ÁN NỔI BẬT</h2>
       <?php if ($slide_count > 1) : ?>
       <nav class="p-projects-featured__nav" aria-label="Điều hướng dự án nổi bật">
-        <button class="p-projects-featured__nav-btn p-projects-featured__nav-btn--prev" type="button" aria-label="Dự án trước">
-          <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/arrow-history.svg"
-               alt="" role="presentation" class="p-projects-featured__nav-arrow" loading="lazy" />
+        <button class="p-projects-featured__nav-btn p-projects-featured__nav-btn--prev" id="projects-featured-nav-prev" aria-label="Dự án trước"
+          type="button" disabled>
+          <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/arrow-history.svg" alt="" role="presentation" class="p-projects-featured__nav-arrow" loading="lazy" />
         </button>
-        <button class="p-projects-featured__nav-btn p-projects-featured__nav-btn--next" type="button" aria-label="Dự án tiếp theo">
-          <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/arrow-history.svg"
-               alt="" role="presentation" class="p-projects-featured__nav-arrow p-projects-featured__nav-arrow--flip" loading="lazy" />
+        <button class="p-projects-featured__nav-btn p-projects-featured__nav-btn--next" id="projects-featured-nav-next" aria-label="Dự án tiếp theo"
+          type="button">
+          <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/arrow-history.svg" alt="" role="presentation"
+            class="p-projects-featured__nav-arrow p-projects-featured__nav-arrow--flip" loading="lazy" />
         </button>
       </nav>
       <?php endif; ?>

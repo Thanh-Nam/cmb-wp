@@ -30,31 +30,27 @@ $theme = get_template_directory_uri();
             <h3 class="p-location__city-name" id="location-city-name">HẢI PHÒNG</h3>
           </div>
 
-          <div class="p-location__details">
-            <div class="p-location__detail-row">
-              <span class="p-location__detail-label">Dự án:</span>
-              <p class="p-location__detail-text" id="location-project">Bến số 1,2 Cảng cửa ngõ Quốc tế Hải Phòng</p>
+          <!-- Slider dự án — 1 tỉnh/thành có thể có nhiều dự án, mỗi dự án là 1 slide -->
+          <div class="p-location__slider swiper" id="location-slider">
+            <div class="swiper-wrapper" id="location-slider-wrapper">
+              <!-- Slides được render bằng JS từ dữ liệu ACF (xem location-map.js) -->
             </div>
-            <div class="p-location__detail-row">
-              <span class="p-location__detail-label">Mô tả:</span>
-              <p class="p-location__detail-text" id="location-desc">Diện tích 45ha; chiều dài bến 750m; tiếp nhận
-                tàu Container đến 100.000DWT đầy tải, 160.000DWT giảm tải; công suất 1,1 triệu TEU/năm.</p>
+
+            <div class="p-location__slider-nav">
+              <div class="p-location__slider-arrows">
+                <button type="button" class="p-location__slider-prev" aria-label="Dự án trước">
+                  <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M7 1L1 7L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <button type="button" class="p-location__slider-next" aria-label="Dự án tiếp theo">
+                  <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
-
-          <div class="p-location__img-wrap">
-            <img src="<?php echo $theme; ?>/assets/images/hero_port.jpg" alt="Bến số 1,2 Cảng cửa ngõ Quốc tế Hải Phòng"
-              class="p-location__img" id="location-img" loading="lazy" />
-          </div>
-
-          <a href="#" class="p-location__link" id="location-link" title="Xem chi tiết dự án">
-            Xem dự án
-            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true">
-              <path d="M1 6H15M10 1L15 6L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-          </a>
 
         </div>
         <!-- /panel -->
@@ -97,18 +93,27 @@ $theme = get_template_directory_uri();
         <span class="p-location__city-line" aria-hidden="true"></span>
         <h3 class="p-location__popup-city-name" id="popup-city-name"></h3>
       </div>
-      <div class="p-location__details">
-        <div class="p-location__detail-row">
-          <span class="p-location__detail-label">Dự án:</span>
-          <p class="p-location__detail-text" id="popup-project"></p>
+
+      <!-- Slider dự án — bản mobile của panel bên trái -->
+      <div class="p-location__slider swiper" id="popup-slider">
+        <div class="swiper-wrapper" id="popup-slider-wrapper">
+          <!-- Slides được render bằng JS -->
         </div>
-        <div class="p-location__detail-row">
-          <span class="p-location__detail-label">Mô tả:</span>
-          <p class="p-location__detail-text" id="popup-desc"></p>
+
+        <div class="p-location__slider-nav">
+          <div class="p-location__slider-arrows">
+            <button type="button" class="p-location__slider-prev" aria-label="Dự án trước">
+              <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M7 1L1 7L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <button type="button" class="p-location__slider-next" aria-label="Dự án tiếp theo">
+              <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="p-location__img-wrap">
-        <img src="<?php echo $theme; ?>/assets/images/demo-du-an.png" alt="" class="p-location__img" id="popup-img" loading="lazy" />
       </div>
     </div>
   </div>

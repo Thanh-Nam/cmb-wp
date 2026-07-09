@@ -14,6 +14,32 @@ window.CMB = window.CMB || { version: '1.0.0' };
 // ============================================
 // LAZY INIT HELPER
 // ============================================
+// ============================================
+// SCROLL LOCK HELPER (dùng chung cho mọi popup/modal)
+// Đếm số popup đang mở (refcount) để tránh 1 popup đóng lại mở khóa cuộn
+// trong khi popup khác vẫn đang mở. Vẫn dùng overflow:hidden (mặc định trình
+// duyệt) để khóa cuộn — không nhảy layout nhờ scrollbar-gutter: stable trên
+// <html>, và chỗ trống thay thế thanh cuộn được tô màu trùng lớp phủ (xem
+// html.is-scroll-locked trong _reset.scss).
+// ============================================
+(function initScrollLock() {
+  var lockCount = 0;
+
+  window.CMB.lockScroll = function() {
+    lockCount++;
+    document.documentElement.classList.add('is-scroll-locked');
+    document.body.classList.add('is-scroll-locked');
+  };
+
+  window.CMB.unlockScroll = function() {
+    lockCount = Math.max(0, lockCount - 1);
+    if (lockCount === 0) {
+      document.documentElement.classList.remove('is-scroll-locked');
+      document.body.classList.remove('is-scroll-locked');
+    }
+  };
+})();
+
 window.CMB_lazyInit = function(selector, initFn, rootMargin) {
   var el = document.querySelector(selector);
   if (!el) return;
@@ -94,7 +120,7 @@ window.CMB_lazyInit = function(selector, initFn, rootMargin) {
       overlay.classList.add('is-open');
       overlay.removeAttribute('aria-hidden');
     }
-    document.body.style.overflow = 'hidden';
+    window.CMB.lockScroll();
   };
 
   const closeNav = () => {
@@ -105,7 +131,7 @@ window.CMB_lazyInit = function(selector, initFn, rootMargin) {
       overlay.classList.remove('is-open');
       overlay.setAttribute('aria-hidden', 'true');
     }
-    document.body.style.overflow = '';
+    window.CMB.unlockScroll();
     document.querySelectorAll('.l-nav__item.has-dropdown').forEach((item) => {
       item.classList.remove('is-open');
       const dd = item.querySelector('.l-nav__dropdown');
@@ -368,14 +394,14 @@ window.CMB_lazyInit = function(selector, initFn, rootMargin) {
   function openSearch() {
     overlay.classList.add('is-open');
     overlay.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('search-overlay-open');
+    window.CMB.lockScroll();
     if (input) { setTimeout(function () { input.focus(); }, 50); }
   }
 
   function closeSearch() {
     overlay.classList.remove('is-open');
     overlay.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('search-overlay-open');
+    window.CMB.unlockScroll();
   }
 
   searchBtns.forEach(function (btn) {

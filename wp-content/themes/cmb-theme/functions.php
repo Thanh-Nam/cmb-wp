@@ -90,8 +90,9 @@ function cmb_enqueue_assets() {
     $ver = wp_get_theme()->get( 'Version' );
     $uri = get_template_directory_uri();
 
-    // CSS — luôn load
-    wp_enqueue_style( 'cmb-main', $uri . '/assets/css/main.css', [], $ver );
+    // CSS — luôn load (dùng filemtime để bust cache khi file thay đổi)
+    $main_css = get_template_directory() . '/assets/css/main.css';
+    wp_enqueue_style( 'cmb-main', $uri . '/assets/css/main.css', [], file_exists( $main_css ) ? filemtime( $main_css ) : $ver );
 
     // Google Fonts: dùng local nếu có (assets/css/fonts.css), fallback CDN
     $local_fonts = get_template_directory() . '/assets/css/fonts.css';
@@ -116,7 +117,7 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
         wp_enqueue_script( 'cmb-hero-slider',    $uri . '/assets/js/modules/hero-slider.js',    ['swiper', 'cmb-global'], $ver, true );
         wp_enqueue_script( 'cmb-history',        $uri . '/assets/js/modules/history.js',        ['cmb-global'],           $ver, true );
-        wp_enqueue_script( 'cmb-location-map',   $uri . '/assets/js/modules/location-map.js',   ['cmb-global'],           $ver, true );
+        wp_enqueue_script( 'cmb-location-map',   $uri . '/assets/js/modules/location-map.js',   ['swiper', 'cmb-global'], $ver, true );
         wp_enqueue_script( 'cmb-field-swiper',   $uri . '/assets/js/modules/field-swiper.js',   ['swiper', 'cmb-global'], $ver, true );
         wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'],           $ver, true );
         wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'],           $ver, true );
@@ -166,6 +167,9 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'], $ver, true );
         wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'], $ver, true );
     }
+    if ( is_singular( 'du-an' ) ) {
+        wp_enqueue_script( 'cmb-project-gallery', $uri . '/assets/js/modules/project-gallery.js', ['cmb-global'], $ver, true );
+    }
     if ( is_post_type_archive( 'du-an' ) ) {
         wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );
         wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
@@ -205,11 +209,23 @@ function cmb_enqueue_assets() {
 
         // Location map data override từ ACF Options
         $loc_map = [
-            'hai-phong' => 'location_hai_phong',
-            'nghe-an'   => 'location_nghe_an',
-            'tay-ninh'  => 'location_tay_ninh',
-            'tp-hcm'    => 'location_tp_hcm',
-            'dong-nai'  => 'location_dong_nai',
+            'hai-phong'       => 'location_hai_phong',
+            'quang-ninh'      => 'location_quang_ninh',
+            'thanh-hoa'       => 'location_thanh_hoa',
+            'nghe-an'         => 'location_nghe_an',
+            'quang-tri'       => 'location_quang_tri',
+            'da-nang'         => 'location_da_nang',
+            'quang-ngai'      => 'location_quang_ngai',
+            'khanh-hoa'       => 'location_khanh_hoa',
+            'ninh-thuan'      => 'location_ninh_thuan',
+            'binh-thuan'      => 'location_binh_thuan',
+            'dong-nai'        => 'location_dong_nai',
+            'ba-ria-vung-tau' => 'location_ba_ria_vung_tau',
+            'tay-ninh'        => 'location_tay_ninh',
+            'tp-hcm'          => 'location_tp_hcm',
+            'tien-giang'      => 'location_tien_giang',
+            'ben-tre'         => 'location_ben_tre',
+            'can-tho'         => 'location_can_tho',
         ];
         $location_data = [];
         foreach ( $loc_map as $key => $field_key ) {
@@ -217,36 +233,41 @@ function cmb_enqueue_assets() {
             if ( empty( $group ) ) continue;
             $entry = [];
 
-            // city (đa ngôn ngữ)
-            $city = ( $lang === 'en' && ! empty( $group['city_en'] ) ) ? $group['city_en'] : ( $group['city'] ?? '' );
-            if ( $city ) $entry['city'] = $city;
+            // danh sách dự án — một tỉnh/thành có thể có nhiều dự án (slide)
+            // (tên tỉnh/thành không lấy từ ACF — đã cố định sẵn trong location-map.js, trùng với nhãn trên bản đồ)
+            $projects = [];
+            $rows = $group['projects'] ?? [];
+            if ( is_array( $rows ) ) {
+                foreach ( $rows as $row ) {
+                    $p = [];
 
-            // project (đa ngôn ngữ)
-            $project = ( $lang === 'en' && ! empty( $group['project_en'] ) ) ? $group['project_en'] : ( $group['project'] ?? '' );
-            if ( $project ) $entry['project'] = $project;
+                    $project = ( $lang === 'en' && ! empty( $row['project_en'] ) ) ? $row['project_en'] : ( $row['project'] ?? '' );
+                    if ( $project ) $p['project'] = $project;
 
-            // desc (đa ngôn ngữ)
-            $desc = ( $lang === 'en' && ! empty( $group['desc_en'] ) ) ? $group['desc_en'] : ( $group['desc'] ?? '' );
-            if ( $desc ) $entry['desc'] = wp_strip_all_tags( $desc );
+                    $desc = ( $lang === 'en' && ! empty( $row['desc_en'] ) ) ? $row['desc_en'] : ( $row['desc'] ?? '' );
+                    if ( $desc ) $p['desc'] = wp_strip_all_tags( $desc );
 
-            // link (không cần dịch)
-            if ( !empty( $group['link'] ) ) $entry['link'] = $group['link'];
+                    if ( !empty( $row['link'] ) ) $p['link'] = $row['link'];
 
-            // img (không cần dịch)
-            if ( !empty( $group['img'] ) ) {
-                $img = $group['img'];
-                if ( is_array( $img ) ) {
-                    $entry['imgSrc'] = $img['url'] ?? '';
-                    $entry['imgAlt'] = $img['alt'] ?? '';
-                } elseif ( is_numeric( $img ) ) {
-                    $src = wp_get_attachment_image_src( (int) $img, 'large' );
-                    $entry['imgSrc'] = $src ? $src[0] : '';
-                    $entry['imgAlt'] = get_post_meta( (int) $img, '_wp_attachment_image_alt', true ) ?: '';
-                } else {
-                    $entry['imgSrc'] = $img;
-                    $entry['imgAlt'] = '';
+                    if ( !empty( $row['img'] ) ) {
+                        $img = $row['img'];
+                        if ( is_array( $img ) ) {
+                            $p['imgSrc'] = $img['url'] ?? '';
+                            $p['imgAlt'] = $img['alt'] ?? '';
+                        } elseif ( is_numeric( $img ) ) {
+                            $src = wp_get_attachment_image_src( (int) $img, 'large' );
+                            $p['imgSrc'] = $src ? $src[0] : '';
+                            $p['imgAlt'] = get_post_meta( (int) $img, '_wp_attachment_image_alt', true ) ?: '';
+                        } else {
+                            $p['imgSrc'] = $img;
+                            $p['imgAlt'] = '';
+                        }
+                    }
+
+                    if ( !empty( $p ) ) $projects[] = $p;
                 }
             }
+            if ( !empty( $projects ) ) $entry['projects'] = $projects;
 
             if ( !empty( $entry ) ) {
                 $location_data[ $key ] = $entry;
@@ -298,7 +319,7 @@ function cmb_filter_news_handler() {
 
     $args = [
         'post_type'      => 'post',
-        'posts_per_page' => 5,
+        'posts_per_page' => get_option( 'posts_per_page' ),
         'paged'          => $paged,
     ];
 
@@ -394,6 +415,27 @@ function cmb_search_all_post_types( $query ) {
 add_action( 'pre_get_posts', 'cmb_search_all_post_types' );
 
 // ============================================================
+// CPT ARCHIVES — align main query's posts_per_page with the
+// hardcoded value each archive template's own listing query uses
+// (template-parts/du-an/archive-list.php, archive-phong-thi-nghiem.php).
+// Without this, WP core's 404 check on `paged` uses the main query's
+// max_num_pages (based on Settings → Reading), which can disagree
+// with the template's own pagination links — same bug as the
+// tin-tuc archive had.
+// ============================================================
+function cmb_cpt_archive_posts_per_page( $query ) {
+    if ( ! $query->is_main_query() || is_admin() ) {
+        return;
+    }
+    if ( $query->is_post_type_archive( 'du-an' ) ) {
+        $query->set( 'posts_per_page', 6 );
+    } elseif ( $query->is_post_type_archive( 'phong-thi-nghiem' ) ) {
+        $query->set( 'posts_per_page', 6 );
+    }
+}
+add_action( 'pre_get_posts', 'cmb_cpt_archive_posts_per_page' );
+
+// ============================================================
 // HELPER: get ACF field with fallback
 // ============================================================
 function cmb_field( $key, $fallback = '', $post_id = false ) {
@@ -467,6 +509,10 @@ function cmb_invalidate_cpt_cache( $post_id, $post ) {
             delete_transient( 'cmb_thiet_bi_grouped' );
             break;
 
+        case 'phan-mem':
+            delete_transient( 'cmb_phan_mem_grouped' );
+            break;
+
         case 'quan-he-co-dong':
             $terms = get_the_terms( $post_id, 'quan-he-co-dong-category' );
             if ( $terms && ! is_wp_error( $terms ) ) {
@@ -483,6 +529,19 @@ function cmb_invalidate_cpt_cache( $post_id, $post ) {
     }
 }
 add_action( 'save_post',   'cmb_invalidate_cpt_cache', 10, 2 );
+
+// In wp-admin, taxonomy checkboxes are saved via wp_set_object_terms() AFTER
+// wp_update_post() runs — i.e. AFTER 'save_post' already fired. So a category
+// change made while editing a post can be invisible to the cache-clear above.
+// set_object_terms fires at the moment terms are actually attached, so it's
+// the reliable place to invalidate the grouped-by-category caches.
+add_action( 'set_object_terms', function( $post_id, $terms, $tt_ids, $taxonomy ) {
+    if ( $taxonomy === 'phan-mem-category' ) {
+        delete_transient( 'cmb_phan_mem_grouped' );
+    } elseif ( $taxonomy === 'thiet-bi-category' ) {
+        delete_transient( 'cmb_thiet_bi_grouped' );
+    }
+}, 10, 4 );
 add_action( 'delete_post', function( $post_id ) {
     $post = get_post( $post_id );
     if ( $post ) cmb_invalidate_cpt_cache( $post_id, $post );
@@ -810,6 +869,62 @@ add_filter( 'wp_check_filetype_and_ext', function( $data, $file, $filename, $mim
     return $data;
 }, 10, 4 );
 
+// Read intrinsic width/height from an SVG file's width/height or viewBox attributes
+function cmb_get_svg_dimensions( $svg_path ) {
+    if ( ! file_exists( $svg_path ) ) {
+        return false;
+    }
+    $svg = @simplexml_load_file( $svg_path );
+    if ( ! $svg ) {
+        return false;
+    }
+    $attrs  = $svg->attributes();
+    $width  = isset( $attrs->width )  ? (float) $attrs->width  : 0;
+    $height = isset( $attrs->height ) ? (float) $attrs->height : 0;
+
+    if ( ( ! $width || ! $height ) && isset( $attrs->viewBox ) ) {
+        $viewbox = preg_split( '/[\s,]+/', trim( (string) $attrs->viewBox ) );
+        if ( count( $viewbox ) === 4 ) {
+            $width  = $width  ?: (float) $viewbox[2];
+            $height = $height ?: (float) $viewbox[3];
+        }
+    }
+
+    if ( ! $width || ! $height ) {
+        return false;
+    }
+    return [ 'width' => (int) round( $width ), 'height' => (int) round( $height ) ];
+}
+
+// WordPress can't generate real metadata for SVGs (no image editor support) —
+// without width/height in the attachment metadata, image_downsize() bails out
+// and the admin Featured Image box / media grid render the tiny broken-image icon.
+add_filter( 'wp_generate_attachment_metadata', function( $metadata, $attachment_id ) {
+    $file = get_attached_file( $attachment_id );
+    if ( $file && preg_match( '/\.svgz?$/i', $file ) ) {
+        $dims = cmb_get_svg_dimensions( $file );
+        if ( $dims ) {
+            $metadata['width']  = $dims['width'];
+            $metadata['height'] = $dims['height'];
+        }
+    }
+    return $metadata;
+}, 10, 2 );
+
+// Make image_downsize() (used by the Featured Image box, media library grid, etc.)
+// return the SVG itself with correct dimensions instead of failing.
+add_filter( 'image_downsize', function( $downsize, $attachment_id, $size ) {
+    $file = get_attached_file( $attachment_id );
+    if ( ! $file || ! preg_match( '/\.svgz?$/i', $file ) ) {
+        return $downsize;
+    }
+    $dims = cmb_get_svg_dimensions( $file );
+    if ( ! $dims ) {
+        return $downsize;
+    }
+    return [ wp_get_attachment_url( $attachment_id ), $dims['width'], $dims['height'], false ];
+}, 10, 3 );
+
 // ============================================================
 // ADMIN: Đổi nhãn "Bài viết" → "Tin tức & Sự kiện"
 // ============================================================
@@ -956,25 +1071,30 @@ add_filter( 'menu_order', function( $menu_order ) {
 
 
 // ============================================================
-// Tự động cập nhật số trang & dung lượng khi lưu file PDF
-// Áp dụng cho: phong-thi-nghiem, quan-he-co-dong
+// MIXED CONTENT FIX: khi site chạy HTTPS, ép các URL cùng domain
+// (iframe/img/a/embed...) trong nội dung bài viết về https — tránh
+// bị browser chặn nếu nội dung được nhập/dán với link http:// cứng
+// (ví dụ nhúng PDF qua iframe trỏ http://domain/...).
 // ============================================================
-add_action( 'acf/save_post', function( $post_id ) {
-    $post_type = get_post_type( $post_id );
-    if ( ! in_array( $post_type, [ 'phong-thi-nghiem', 'quan-he-co-dong' ], true ) ) {
-        return;
+add_filter( 'the_content', function( $content ) {
+    if ( ! is_ssl() ) {
+        return $content;
     }
-
-    $pdf_field = get_field( 'document_pdf', $post_id );
-    if ( empty( $pdf_field['id'] ) ) {
-        return;
+    $host = wp_parse_url( home_url(), PHP_URL_HOST );
+    if ( $host ) {
+        $content = str_ireplace( 'http://' . $host, 'https://' . $host, $content );
     }
+    return $content;
+}, 20 );
 
-    $attachment_id = (int) $pdf_field['id'];
-    $file_path     = get_attached_file( $attachment_id );
-
+// ============================================================
+// Tự động cập nhật số trang & dung lượng khi lưu file PDF
+// Áp dụng cho: phong-thi-nghiem (1 file), quan-he-co-dong (nhiều file — repeater "documents")
+// ============================================================
+function cmb_pdf_meta_from_attachment( $attachment_id ) {
+    $file_path = get_attached_file( (int) $attachment_id );
     if ( ! $file_path || ! file_exists( $file_path ) ) {
-        return;
+        return null;
     }
 
     // Dung lượng
@@ -982,7 +1102,6 @@ add_action( 'acf/save_post', function( $post_id ) {
     $formatted = $bytes >= 1048576
         ? round( $bytes / 1048576, 1 ) . ' MB'
         : round( $bytes / 1024 ) . ' KB';
-    update_field( 'document_size', $formatted, $post_id );
 
     // Số trang — đọc cấu trúc PDF, tìm /Type /Page (không phải /Pages)
     $content    = file_get_contents( $file_path );
@@ -991,7 +1110,45 @@ add_action( 'acf/save_post', function( $post_id ) {
         preg_match_all( '/\/Type\s*\/Page[^s]/i', $content, $matches );
         $page_count = count( $matches[0] );
     }
-    if ( $page_count > 0 ) {
-        update_field( 'document_pages', $page_count, $post_id );
+
+    return [ 'size' => $formatted, 'pages' => $page_count ];
+}
+
+add_action( 'acf/save_post', function( $post_id ) {
+    $post_type = get_post_type( $post_id );
+    if ( ! in_array( $post_type, [ 'phong-thi-nghiem', 'quan-he-co-dong' ], true ) ) {
+        return;
+    }
+
+    if ( $post_type === 'quan-he-co-dong' ) {
+        // Nhiều PDF — tính số trang/dung lượng riêng cho từng dòng trong repeater "documents"
+        $rows = get_field( 'documents', $post_id );
+        if ( empty( $rows ) || ! is_array( $rows ) ) {
+            return;
+        }
+        foreach ( $rows as $i => $row ) {
+            if ( empty( $row['file']['id'] ) ) continue;
+            $meta = cmb_pdf_meta_from_attachment( $row['file']['id'] );
+            if ( ! $meta ) continue;
+            update_sub_field( [ 'documents', $i + 1, 'size' ], $meta['size'], $post_id );
+            if ( $meta['pages'] > 0 ) {
+                update_sub_field( [ 'documents', $i + 1, 'pages' ], $meta['pages'], $post_id );
+            }
+        }
+        return;
+    }
+
+    // phong-thi-nghiem: 1 file duy nhất (hành vi cũ)
+    $pdf_field = get_field( 'document_pdf', $post_id );
+    if ( empty( $pdf_field['id'] ) ) {
+        return;
+    }
+    $meta = cmb_pdf_meta_from_attachment( $pdf_field['id'] );
+    if ( ! $meta ) {
+        return;
+    }
+    update_field( 'document_size', $meta['size'], $post_id );
+    if ( $meta['pages'] > 0 ) {
+        update_field( 'document_pages', $meta['pages'], $post_id );
     }
 }, 20 );

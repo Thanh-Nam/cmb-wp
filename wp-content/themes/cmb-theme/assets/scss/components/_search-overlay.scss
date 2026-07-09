@@ -4,10 +4,6 @@
 // ============================================
 @use '../abstracts' as *;
 
-body.search-overlay-open {
-  overflow: hidden;
-}
-
 .l-search-overlay {
   position: fixed;
   inset: 0;
@@ -33,11 +29,13 @@ body.search-overlay-open {
   }
 }
 
-// Full-screen dark backdrop
+// Full-screen dark backdrop — blur nền phía sau thay vì phủ màu phẳng thô
 .l-search-overlay__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 15, 30, 0.82);
+  background: rgba(0, 15, 30, 0.55);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
   cursor: pointer;
 }
 

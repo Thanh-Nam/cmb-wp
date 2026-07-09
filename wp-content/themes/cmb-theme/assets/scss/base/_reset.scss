@@ -18,6 +18,18 @@ html {
   font-size: 62.5%; // 1rem = 10px (62.5% of 16px browser default)
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  // Chừa sẵn chỗ cho thanh cuộn dọc mặc định của trình duyệt, kể cả khi
+  // không cần cuộn — để khi popup khóa cuộn, trang không bị nhảy layout.
+  scrollbar-gutter: stable;
+
+  // Khi có popup/modal đang mở (xem CMB.lockScroll trong global.js), tô màu
+  // phần chỗ trống thay thế thanh cuộn trùng màu lớp phủ (overlay) của popup,
+  // thay vì để trắng trơ. Dùng màu đặc (không alpha) vì chỗ này không nằm
+  // trên ảnh nền nào để "xuyên thấu" — nếu để rgba sẽ bị pha loãng ra nhạt
+  // trên nền trắng của trang thay vì tối như overlay thật.
+  &.is-scroll-locked {
+    background-color: rgb(30, 55, 78);
+  }
 }
 
 // --- BODY ---
@@ -31,6 +43,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+
+  // Class dùng chung để khóa cuộn khi mở popup/modal (xem CMB.lockScroll trong global.js)
+  &.is-scroll-locked {
+    overflow: hidden;
+  }
 }
 
 // --- HEADINGS ---

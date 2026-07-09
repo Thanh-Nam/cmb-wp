@@ -18,7 +18,7 @@
     '#gallery-lb{display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;background:rgba(0,0,0,.88)}',
     '#gallery-lb.is-open{display:flex}',
     '#gallery-lb .lb-img-wrap{max-width:90vw;max-height:90vh;display:flex;align-items:center;justify-content:center}',
-    '#gallery-lb .lb-img-wrap img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:4px}',
+    '#gallery-lb .lb-img-wrap img,#gallery-lb .lb-img-wrap video{max-width:100%;max-height:90vh;object-fit:contain;border-radius:4px}',
     '#gallery-lb .lb-close,#gallery-lb .lb-prev,#gallery-lb .lb-next{position:fixed;background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;font-size:1.5rem;line-height:1;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;transition:background .2s}',
     '#gallery-lb .lb-close:hover,#gallery-lb .lb-prev:hover,#gallery-lb .lb-next:hover{background:rgba(255,255,255,.3)}',
     '#gallery-lb .lb-close{top:1rem;right:1rem}',
@@ -37,7 +37,10 @@
   lb.setAttribute('aria-modal', 'true');
   lb.setAttribute('aria-label', 'Xem ảnh sự kiện');
   lb.innerHTML = [
-    '<div class="lb-img-wrap"><img class="lb-img" src="" alt="" /></div>',
+    '<div class="lb-img-wrap">',
+    '<img class="lb-img" src="" alt="" />',
+    '<video class="lb-video" controls playsinline></video>',
+    '</div>',
     '<button class="lb-close" aria-label="Đóng">&#215;</button>',
     '<button class="lb-prev"  aria-label="Ảnh trước">&#8249;</button>',
     '<button class="lb-next"  aria-label="Ảnh tiếp">&#8250;</button>',
@@ -46,6 +49,7 @@
   document.body.appendChild(lb);
 
   var imgEl = lb.querySelector('.lb-img');
+  var videoEl = lb.querySelector('.lb-video');
   var counter = lb.querySelector('.lb-counter');
   var prevBtn = lb.querySelector('.lb-prev');
   var nextBtn = lb.querySelector('.lb-next');
@@ -53,8 +57,24 @@
 
   function show(index) {
     cur = index;
-    var figImg = figures[cur] ? figures[cur].querySelector('img') : null;
-    if (figImg) { imgEl.src = figImg.src; imgEl.alt = figImg.alt; }
+    videoEl.pause();
+    videoEl.removeAttribute('src');
+    videoEl.style.display = 'none';
+    imgEl.style.display = 'none';
+
+    var fig = figures[cur];
+    var isVideo = fig && fig.dataset.type === 'video';
+
+    if (isVideo) {
+      var figVideo = fig.querySelector('video');
+      videoEl.src = figVideo ? figVideo.src : '';
+      videoEl.style.display = '';
+    } else {
+      var figImg = fig ? fig.querySelector('img') : null;
+      if (figImg) { imgEl.src = figImg.src; imgEl.alt = figImg.alt; }
+      imgEl.style.display = '';
+    }
+
     counter.textContent = (cur + 1) + ' / ' + figures.length;
     prevBtn.disabled = cur === 0;
     nextBtn.disabled = cur === figures.length - 1;
@@ -63,13 +83,14 @@
   function open(index) {
     show(index);
     lb.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
+    window.CMB.lockScroll();
     lb.querySelector('.lb-close').focus();
   }
 
   function close() {
+    videoEl.pause();
     lb.classList.remove('is-open');
-    document.body.style.overflow = '';
+    window.CMB.unlockScroll();
   }
 
   figures.forEach(function (fig, i) {

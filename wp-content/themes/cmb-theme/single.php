@@ -15,6 +15,16 @@ while (have_posts()) : the_post();
   $gallery       = function_exists('get_field') ? get_field('event_gallery') : [];
   $share_url     = urlencode(get_permalink());
 
+  // Detect PDF links inside the post content to render an embedded viewer
+  $content_html = apply_filters('the_content', get_the_content());
+  preg_match_all('/href=["\']([^"\']+\.pdf)["\']/i', $content_html, $pdf_matches);
+  $content_pdfs = !empty($pdf_matches[1]) ? array_unique($pdf_matches[1]) : [];
+
+  // Remove the original <a> links to those PDFs from the content — the embedded viewer replaces them
+  if ($content_pdfs) {
+    $content_html = preg_replace('/<a\s+[^>]*href=["\']([^"\']+\.pdf)["\'][^>]*>.*?<\/a>/is', '', $content_html);
+  }
+
   // News archive URL
   $news_url = get_option('page_for_posts')
     ? get_permalink(get_option('page_for_posts'))
@@ -110,8 +120,39 @@ while (have_posts()) : the_post();
 
             <!-- Body -->
             <div class="p-news-detail__body">
-              <?php the_content(); ?>
+              <?php echo $content_html; ?>
             </div>
+
+
+            <!-- PDF viewer(s) from post content -->
+            <?php foreach ($content_pdfs as $i => $pdf_url) : ?>
+            <div class="p-news-detail__pdf-viewer">
+              <div class="p-lab-detail__viewer" id="content-pdf-viewer-<?php echo (int) $i; ?>">
+                <iframe
+                  src="<?php echo esc_url($pdf_url); ?>"
+                  title="Tài liệu PDF đính kèm"
+                  allowfullscreen
+                  loading="lazy"
+                  aria-label="Xem tài liệu PDF">
+                </iframe>
+                <div class="p-lab-detail__viewer-fallback" aria-live="polite">
+                  <svg width="48" height="60" viewBox="0 0 48 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 4H30L44 18V56H6V4Z" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M30 4V18H44" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M14 28H34M14 34H28M14 40H22" stroke="#0379CC" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  <p>Trình duyệt của bạn không hỗ trợ xem PDF trực tiếp.</p>
+                  <a href="<?php echo esc_url($pdf_url); ?>" download>
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path d="M7 1V9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M2 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    Tải xuống để xem
+                  </a>
+                </div>
+              </div>
+            </div>
+            <?php endforeach; ?>
 
 
             <!-- Event gallery -->
@@ -119,11 +160,18 @@ while (have_posts()) : the_post();
             <div class="p-news-detail__gallery">
               <h2 class="p-news-detail__gallery-title">HÌNH ẢNH SỰ KIỆN</h2>
               <div class="p-news-detail__gallery-grid" id="event-gallery">
-                <?php foreach ($gallery as $i => $img) : ?>
-                <figure data-lightbox-index="<?php echo $i; ?>" tabindex="0">
+                <?php foreach ($gallery as $i => $img) :
+                  $is_video = strpos($img['mime_type'] ?? '', 'video') === 0;
+                ?>
+                <figure data-lightbox-index="<?php echo $i; ?>"
+                  data-type="<?php echo $is_video ? 'video' : 'image'; ?>" tabindex="0">
+                  <?php if ($is_video) : ?>
+                  <video src="<?php echo esc_url($img['url']); ?>" muted playsinline preload="metadata"></video>
+                  <?php else : ?>
                   <img src="<?php echo $img['url']; ?>"
                     alt="<?php echo esc_attr($img['alt'] ?: get_the_title()); ?>"
                     loading="lazy" />
+                  <?php endif; ?>
                 </figure>
                 <?php endforeach; ?>
               </div>

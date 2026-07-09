@@ -134,13 +134,13 @@
 
   &__inner {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(var(--infobar-cols, 5), 1fr);
     background: $color-white;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
     border-radius: rem(20);
 
-    @include mq(1200px) { grid-template-columns: repeat(3, 1fr); }
-    @include sp { grid-template-columns: 1fr 1fr; }
+    @include mq(1200px) { grid-template-columns: repeat(min(var(--infobar-cols, 5), 3), 1fr); }
+    @include sp { grid-template-columns: repeat(min(var(--infobar-cols, 5), 2), 1fr); }
   }
 
   &__item {
@@ -412,6 +412,10 @@
 
     &:hover .p-project-gallery__img {
       transform: scale(1.04);
+    }
+
+    &.is-hidden-extra {
+      display: none;
     }
   }
 

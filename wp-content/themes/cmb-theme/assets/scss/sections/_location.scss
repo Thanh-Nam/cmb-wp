@@ -67,7 +67,7 @@
   position: relative;
   overflow: hidden;
   padding: rem(80) 0;
-  background: $color-bg url('../images/bg-location.webp') center center / cover no-repeat;
+  background: $color-bg url('../images/bg-location.png') center center / cover no-repeat;
 
   @include md {
     padding: rem(60) 0;
@@ -190,9 +190,71 @@
     margin: 0;
   }
 
+  // ------ Slider dự án (Swiper) — 1 tỉnh/thành có thể có nhiều dự án ------
+  &__slider {
+    position: relative;
+    overflow: hidden;
+
+    .swiper-wrapper {
+      align-items: stretch;
+    }
+  }
+
+  &__slide {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  // Đè lên góc trên-phải của khung slider, ngang hàng với dòng "Dự án:" (đầu slide)
+  &__slider-nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+
+    &.is-hidden {
+      display: none;
+    }
+  }
+
+  &__slider-arrows {
+    display: flex;
+    align-items: center;
+    gap: rem(8);
+  }
+
+  &__slider-prev,
+  &__slider-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(32);
+    height: rem(32);
+    border: 1px solid rgba($color-primary, 0.3);
+    background: $color-white;
+    color: $color-primary;
+    border-radius: $radius-full;
+    cursor: pointer;
+    transition: background $transition-fast, color $transition-fast, border-color $transition-fast;
+
+    &:hover {
+      background: $color-primary;
+      color: $color-white;
+      border-color: $color-primary;
+    }
+
+    &.swiper-button-disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
   // ------ Detail list ------
   &__details {
     margin: 0 0 rem(20);
+    padding-right: rem(80); // chỗ cho 2 nút mũi tên đè ở góc trên-phải
   }
 
   &__detail-row {
@@ -501,6 +563,54 @@
     letter-spacing: 0.04em;
     line-height: 1.25;
     margin: 0;
+  }
+
+  // ============================================
+  // HTML/CSS city tags — nhãn tên tỉnh dùng chung cho TẤT CẢ 17 tỉnh (đều size)
+  // vì tên tỉnh trong map.svg đã vector hoá thành path, không chèn text mới
+  // theo đúng kiểu cũ được. Định vị bằng % toạ độ viewBox, xem location-map.js
+  // ============================================
+  &__tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(92px, 17.5cqw, 172px);
+    height: clamp(26px, 4cqw, 38px);
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: $font-primary;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.02em;
+    color: $color-primary;
+    background: $color-white;
+    border: none;
+    border-radius: clamp(4px, 0.6cqw, 6px);
+    padding: 0 clamp(4px, 0.6cqw, 8px);
+    font-size: clamp(9px, 1.35cqw, 14px);
+    cursor: pointer;
+    filter: drop-shadow(0 2px 6px rgba($color-primary, 0.18)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.07));
+    transition: filter 0.2s ease;
+
+    &:hover {
+      filter: drop-shadow(0 0 5px rgba($color-primary, 0.5)) drop-shadow(0 0 14px rgba($color-primary, 0.3));
+    }
+
+    &.is-active {
+      filter: drop-shadow(0 0 5px rgba($color-primary, 0.75)) drop-shadow(0 0 14px rgba($color-primary, 0.45)) drop-shadow(0 0 26px rgba($color-primary, 0.22));
+    }
+  }
+
+  &__map-svg {
+    .p-location__tag-line {
+      fill: none;
+      stroke: $color-white;
+      stroke-width: 1.4;
+      filter: drop-shadow(0 0 1.2px rgba($color-primary, 0.6));
+      pointer-events: none;
+    }
   }
 
   // ============================================

@@ -18,9 +18,9 @@ if ($is_featured) {
 
 $badge_class = 'p-news-all__item-badge' . ($cat_slug ? ' p-news-all__item-badge--' . $cat_slug : '');
 ?>
-<article class="p-news-all__item" data-category="<?php echo $cat_slug; ?>" data-reveal="fade-up">
+<a href="<?php the_permalink(); ?>" class="p-news-all__item" data-category="<?php echo $cat_slug; ?>" data-reveal="fade-up" title="<?php the_title_attribute(); ?>">
 
-  <a href="<?php the_permalink(); ?>" class="p-news-all__item-img-wrap" tabindex="-1" aria-hidden="true">
+  <span class="p-news-all__item-img-wrap" aria-hidden="true">
     <?php if (has_post_thumbnail()) :
       the_post_thumbnail('medium', ['class' => 'p-news-all__item-img', 'loading' => 'lazy']);
     else : ?>
@@ -28,10 +28,10 @@ $badge_class = 'p-news-all__item-badge' . ($cat_slug ? ' p-news-all__item-badge-
         alt="<?php the_title_attribute(); ?>"
         class="p-news-all__item-img" loading="lazy" />
     <?php endif; ?>
-  </a>
+  </span>
 
-  <div class="p-news-all__item-body">
-    <div class="p-news-all__item-meta">
+  <span class="p-news-all__item-body">
+    <span class="p-news-all__item-meta">
       <time class="p-news-all__item-date"
         datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">
         <?php echo get_the_date('d/m/Y'); ?>
@@ -39,12 +39,10 @@ $badge_class = 'p-news-all__item-badge' . ($cat_slug ? ' p-news-all__item-badge-
       <?php if ($cat_label) : ?>
       <span class="<?php echo $badge_class; ?>"><?php echo $cat_label; ?></span>
       <?php endif; ?>
-    </div>
-    <h3 class="p-news-all__item-title">
-      <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-    </h3>
-    <p class="p-news-all__item-excerpt"><?php echo esc_html(wp_trim_words(get_the_excerpt(), 25)); ?></p>
-  </div>
+    </span>
+    <span class="p-news-all__item-title"><?php the_title(); ?></span>
+    <span class="p-news-all__item-excerpt"><?php echo esc_html(wp_trim_words(get_the_excerpt(), 25)); ?></span>
+  </span>
 
   <span class="p-news-all__item-arrow" aria-hidden="true">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -52,4 +50,4 @@ $badge_class = 'p-news-all__item-badge' . ($cat_slug ? ' p-news-all__item-badge-
     </svg>
   </span>
 
-</article>
+</a>
