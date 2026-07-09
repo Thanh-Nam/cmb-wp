@@ -1007,6 +1007,23 @@ add_filter( 'menu_order', function( $menu_order ) {
 
 
 // ============================================================
+// MIXED CONTENT FIX: khi site chạy HTTPS, ép các URL cùng domain
+// (iframe/img/a/embed...) trong nội dung bài viết về https — tránh
+// bị browser chặn nếu nội dung được nhập/dán với link http:// cứng
+// (ví dụ nhúng PDF qua iframe trỏ http://domain/...).
+// ============================================================
+add_filter( 'the_content', function( $content ) {
+    if ( ! is_ssl() ) {
+        return $content;
+    }
+    $host = wp_parse_url( home_url(), PHP_URL_HOST );
+    if ( $host ) {
+        $content = str_ireplace( 'http://' . $host, 'https://' . $host, $content );
+    }
+    return $content;
+}, 20 );
+
+// ============================================================
 // Tự động cập nhật số trang & dung lượng khi lưu file PDF
 // Áp dụng cho: phong-thi-nghiem, quan-he-co-dong
 // ============================================================
