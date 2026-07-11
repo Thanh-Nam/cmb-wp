@@ -5,14 +5,14 @@
  */
 $acf_stats = function_exists('get_field') ? get_field('archive_du_an_stats', 'option') : [];
 $stats = $acf_stats ?: [
-  ['number' => '300+', 'label' => 'Dự án đã thực hiện'],
-  ['number' => '15+',  'label' => 'Tỉnh thành hoạt động'],
-  ['number' => '20+',  'label' => 'Năm kinh nghiệm'],
-  ['number' => '100%', 'label' => 'Cam kết chất lượng'],
+  ['number' => '300+', 'label' => cmb_txt( 'Dự án đã thực hiện', 'Projects completed' )],
+  ['number' => '15+',  'label' => cmb_txt( 'Tỉnh thành hoạt động', 'Provinces served' )],
+  ['number' => '20+',  'label' => cmb_txt( 'Năm kinh nghiệm', 'Years of experience' )],
+  ['number' => '100%', 'label' => cmb_txt( 'Cam kết chất lượng', 'Quality commitment' )],
 ];
 ?>
 <!-- ======= STATS BAR ======= -->
-<div class="p-projects-stats" id="projects-stats" aria-label="Thống kê dự án">
+<div class="p-projects-stats" id="projects-stats" aria-label="<?php echo esc_attr( cmb_txt( 'Thống kê dự án', 'Project statistics' ) ); ?>">
   <div class="l-container">
     <div class="p-projects-stats__inner">
       <?php foreach ($stats as $i => $stat) : ?>

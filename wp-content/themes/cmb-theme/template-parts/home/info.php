@@ -9,7 +9,7 @@ $info_content = cmb_get_option( 'info_content' );
 $info_items   = get_field( 'info_item', 'option' );
 ?>
 <!-- ======= INFO ======= -->
-<section class="p-info" id="info" aria-label="Giới thiệu chung">
+<section class="p-info" id="info" aria-label="<?php echo esc_attr( cmb_txt( 'Giới thiệu chung', 'General Introduction' ) ); ?>">
 
   <!-- Background: cùng cấp container, absolute full-width, không bị giới hạn bởi container -->
   <div class="p-info__bg" aria-hidden="true"></div>
@@ -30,7 +30,7 @@ $info_items   = get_field( 'info_item', 'option' );
             <p class="p-info__desc"><?php echo $info_content; ?></p>
           <?php endif; ?>
           <a href="<?php echo esc_url( get_permalink( get_page_by_path( 'gioi-thieu' ) ) ?: '#' ); ?>" class="p-info__btn" id="btn-info-more">
-            <span>Xem Tất Cả</span>
+            <span><?php echo cmb_txt( 'Xem Tất Cả', 'View All' ); ?></span>
             <span class="p-info__btn-arrow" aria-hidden="true">
               <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 5H13M9 1L13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"

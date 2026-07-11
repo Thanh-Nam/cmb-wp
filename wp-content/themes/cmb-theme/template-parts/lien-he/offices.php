@@ -7,19 +7,19 @@ $offices = function_exists('get_field') ? get_field('offices', 'option') : [];
 if (empty($offices)) {
     $offices = [
         [
-            'office_name'    => 'Văn phòng Hà Nội',
+            'office_name'    => cmb_txt('Văn phòng Hà Nội', 'Hanoi Office'),
             'office_address' => 'Tầng 11, Tòa nhà CMB, 512 Tôn Thất Thuyết, Cầu Giấy, Hà Nội',
             'office_phone'   => '(84) 24 3786 6291',
             'office_map_src' => 'https://maps.google.com/maps?q=512+Ton+That+Thuyet,+Cau+Giay,+Ha+Noi,+Viet+Nam&output=embed&hl=vi',
         ],
         [
-            'office_name'    => 'VP Hải Phòng',
+            'office_name'    => cmb_txt('VP Hải Phòng', 'Hai Phong Office'),
             'office_address' => 'Số 12 Lô 22 Lê Hồng Phong, Ngô Quyền, Hải Phòng',
             'office_phone'   => '(84) 225 3 768 629',
             'office_map_src' => 'https://maps.google.com/maps?q=Le+Hong+Phong,+Ngo+Quyen,+Hai+Phong,+Viet+Nam&output=embed&hl=vi',
         ],
         [
-            'office_name'    => 'VP TP HCM',
+            'office_name'    => cmb_txt('VP TP HCM', 'Ho Chi Minh City Office'),
             'office_address' => 'Tầng 6, Tòa nhà Sailing, 111A Pasteur, Quận 1, TP.HCM',
             'office_phone'   => '(84) 28 6287 4840',
             'office_map_src' => 'https://maps.google.com/maps?q=111A+Pasteur,+Quan+1,+Ho+Chi+Minh+City,+Viet+Nam&output=embed&hl=vi',
@@ -29,13 +29,13 @@ if (empty($offices)) {
 $first_map_src = !empty($offices[0]['office_map_src']) ? $offices[0]['office_map_src'] : '';
 ?>
 <!-- ======= OFFICES + MAP ======= -->
-<section class="p-lh-map" id="van-phong" aria-label="Văn phòng và chi nhánh CMB">
+<section class="p-lh-map" id="van-phong" aria-label="<?php echo esc_attr(cmb_txt('Văn phòng và chi nhánh CMB', 'CMB Offices and Branches')); ?>">
   <div class="l-container">
     <div class="p-lh-map__wrapper">
 
       <!-- Sidebar: Offices -->
       <div class="p-lh-map__sidebar" data-reveal="fade-right">
-        <h2 class="p-lh-map__sidebar-title">VĂN PHÒNG / CHI NHÁNH</h2>
+        <h2 class="p-lh-map__sidebar-title"><?php echo cmb_txt('VĂN PHÒNG / CHI NHÁNH', 'OFFICES / BRANCHES'); ?></h2>
 
         <ul class="p-lh-offices" role="list">
           <?php foreach ($offices as $i => $office) :
@@ -80,11 +80,11 @@ $first_map_src = !empty($offices[0]['office_map_src']) ? $offices[0]['office_map
       <div class="p-lh-map__embed" id="google-map">
         <iframe
           src="<?php echo $first_map_src; ?>"
-          title="Bản đồ vị trí văn phòng CMB"
+          title="<?php echo esc_attr(cmb_txt('Bản đồ vị trí văn phòng CMB', 'Map of CMB Office Locations')); ?>"
           allowfullscreen
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          aria-label="Bản đồ Google Maps vị trí CMB">
+          aria-label="<?php echo esc_attr(cmb_txt('Bản đồ Google Maps vị trí CMB', 'Google Maps – CMB Location')); ?>">
         </iframe>
       </div>
 

@@ -5,11 +5,11 @@
  */
 
 // Section header from Options Page
-$field_subtitle    = cmb_get_option( 'homefield_subtitle' ) ?: 'Khám Phá';
+$field_subtitle    = cmb_get_option( 'homefield_subtitle' ) ?: cmb_txt( 'Khám Phá', 'Explore' );
 $field_title_raw   = cmb_get_option( 'homefield_title' ) ?: '';
 $field_title_lines = $field_title_raw
     ? array_values( array_filter( array_map( 'trim', explode( "\n", $field_title_raw ) ) ) )
-    : [ 'Lĩnh Vực', 'Hoạt Động' ];
+    : [ cmb_txt( 'Lĩnh Vực', 'Fields of' ), cmb_txt( 'Hoạt Động', 'Operation' ) ];
 $field_content     = cmb_get_option( 'homefield_content' );
 
 // Slides from linh-vuc CPT
@@ -21,7 +21,7 @@ $field_q = new WP_Query( [
 ] );
 ?>
 <!-- ======= FIELDS OF OPERATION ======= -->
-<section class="p-field" id="field" aria-label="Lĩnh vực hoạt động">
+<section class="p-field" id="field" aria-label="<?php echo esc_attr( cmb_txt( 'Lĩnh vực hoạt động', 'Fields of Operation' ) ); ?>">
   <div class="l-container">
     <div class="p-field__inner">
 
@@ -75,8 +75,8 @@ $field_q = new WP_Query( [
                   <p class="p-field__card-desc"><?php echo $slide_excerpt; ?></p>
                   <?php endif; ?>
                   <a href="<?php the_permalink(); ?>" class="p-field__card-link"
-                    title="Xem thêm về <?php the_title_attribute(); ?>">
-                    Khám phá thêm
+                    title="<?php echo esc_attr( sprintf( cmb_txt( 'Xem thêm về %s', 'Learn more about %s' ), get_the_title() ) ); ?>">
+                    <?php echo cmb_txt( 'Khám phá thêm', 'Discover more' ); ?>
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                       <path d="M1 6H15M10 1L15 6L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
@@ -88,7 +88,7 @@ $field_q = new WP_Query( [
 
           </div>
           <!-- Pagination -->
-          <div class="swiper-pagination p-field__pagination" aria-label="Chọn lĩnh vực hoạt động"></div>
+          <div class="swiper-pagination p-field__pagination" aria-label="<?php echo esc_attr( cmb_txt( 'Chọn lĩnh vực hoạt động', 'Select field of operation' ) ); ?>"></div>
         </div>
       </div>
 

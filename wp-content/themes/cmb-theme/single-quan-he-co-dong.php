@@ -23,7 +23,7 @@ foreach ($documents as $i => $row) {
     if (!$url) continue; // bỏ qua dòng chưa có file
     $docs[] = [
         'index' => $i + 1,
-        'title' => $row['title'] ?: ('Tài liệu ' . ($i + 1)),
+        'title' => $row['title'] ?: (cmb_txt('Tài liệu', 'Document') . ' ' . ($i + 1)),
         'url'   => $url,
         'pages' => $row['pages'] ?? '',
         'size'  => $row['size'] ?? '',
@@ -51,11 +51,11 @@ $related_q    = new WP_Query([
   <main class="site-main" id="main-content">
 
     <!-- ======= PAGE HERO ======= -->
-    <section class="p-page-hero" id="ir-detail-hero" aria-label="Quan hệ cổ đông CMB">
+    <section class="p-page-hero" id="ir-detail-hero" aria-label="<?php echo esc_attr(cmb_txt('Quan hệ cổ đông CMB', 'CMB Investor Relations')); ?>">
 
       <div class="p-page-hero__image-side">
         <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero_port.jpg"
-          alt="Quan hệ cổ đông Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải"
+          alt="<?php echo esc_attr(cmb_txt('Quan hệ cổ đông Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải', 'Investor Relations of CMB Marine Construction Consulting JSC')); ?>"
           class="p-page-hero__image"
           loading="eager" />
       </div>
@@ -63,16 +63,16 @@ $related_q    = new WP_Query([
       <div class="p-page-hero__fade" aria-hidden="true"></div>
 
       <div class="l-container">
-        <nav class="p-page-hero__breadcrumb" aria-label="Đường dẫn">
-          <a href="<?php echo esc_url(home_url('/')); ?>">Trang chủ</a>
+        <nav class="p-page-hero__breadcrumb" aria-label="<?php echo esc_attr(cmb_txt('Đường dẫn', 'Breadcrumb')); ?>">
+          <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo cmb_txt('Trang chủ', 'Home'); ?></a>
           <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
-          <a href="<?php echo esc_url(get_post_type_archive_link('quan-he-co-dong')); ?>">Quan hệ cổ đông</a>
+          <a href="<?php echo esc_url(get_post_type_archive_link('quan-he-co-dong')); ?>"><?php echo cmb_txt('Quan hệ cổ đông', 'Investor Relations'); ?></a>
           <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
-          <span class="p-page-hero__breadcrumb-current" aria-current="page">Xem tài liệu</span>
+          <span class="p-page-hero__breadcrumb-current" aria-current="page"><?php echo cmb_txt('Xem tài liệu', 'View Document'); ?></span>
         </nav>
 
         <div class="p-page-hero__content">
-          <h1 class="p-page-hero__title">QUAN HỆ CỔ ĐÔNG</h1>
+          <h1 class="p-page-hero__title"><?php echo cmb_txt('QUAN HỆ CỔ ĐÔNG', 'INVESTOR RELATIONS'); ?></h1>
         </div>
       </div>
 
@@ -107,7 +107,7 @@ $related_q    = new WP_Query([
                 <path d="M9 2V5H12" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
                 <path d="M5 7H9M5 9H8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
               </svg>
-              <?php echo $doc_count; ?> tài liệu
+              <?php echo $doc_count; ?> <?php echo cmb_txt('tài liệu', 'documents'); ?>
             </span>
             <?php endif; ?>
           </div>
@@ -126,19 +126,19 @@ $related_q    = new WP_Query([
 
               <div class="p-lab-detail__doc-block-header">
                 <h3 class="p-lab-detail__doc-block-title"><?php echo esc_html($doc['title']); ?></h3>
-                <a href="<?php echo esc_url($doc['url']); ?>" class="p-lab-detail__btn p-lab-detail__btn--primary" download title="Tải xuống PDF">
+                <a href="<?php echo esc_url($doc['url']); ?>" class="p-lab-detail__btn p-lab-detail__btn--primary" download title="<?php echo esc_attr(cmb_txt('Tải xuống PDF', 'Download PDF')); ?>">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M7 1V9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M2 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                   </svg>
-                  Tải xuống PDF
+                  <?php echo cmb_txt('Tải xuống PDF', 'Download PDF'); ?>
                 </a>
               </div>
 
               <?php if ($doc['pages'] || $doc['size']) : ?>
               <div class="p-lab-detail__doc-block-meta">
                 <?php if ($doc['pages']) : ?>
-                <span class="p-lab-detail__meta-item"><?php echo esc_html($doc['pages']); ?> trang</span>
+                <span class="p-lab-detail__meta-item"><?php echo esc_html($doc['pages']); ?> <?php echo cmb_txt('trang', 'pages'); ?></span>
                 <?php endif; ?>
                 <?php if ($doc['pages'] && $doc['size']) : ?>
                 <span class="p-lab-detail__meta-sep" aria-hidden="true"></span>
@@ -156,7 +156,7 @@ $related_q    = new WP_Query([
                   title="<?php echo esc_attr($doc['title']); ?>"
                   allowfullscreen
                   loading="lazy"
-                  aria-label="Xem tài liệu PDF">
+                  aria-label="<?php echo esc_attr(cmb_txt('Xem tài liệu PDF', 'View PDF document')); ?>">
                 </iframe>
                 <div class="p-lab-detail__viewer-fallback" id="<?php echo esc_attr('pdf-fallback-' . $doc['index']); ?>" aria-live="polite">
                   <svg width="48" height="60" viewBox="0 0 48 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -164,13 +164,13 @@ $related_q    = new WP_Query([
                     <path d="M30 4V18H44" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
                     <path d="M14 28H34M14 34H28M14 40H22" stroke="#0379CC" stroke-width="1.5" stroke-linecap="round"/>
                   </svg>
-                  <p>Trình duyệt của bạn không hỗ trợ xem PDF trực tiếp.</p>
+                  <p><?php echo cmb_txt('Trình duyệt của bạn không hỗ trợ xem PDF trực tiếp.', 'Your browser does not support viewing PDF files directly.'); ?></p>
                   <a href="<?php echo esc_url($doc['url']); ?>" download>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                       <path d="M7 1V9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       <path d="M2 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>
-                    Tải xuống để xem
+                    <?php echo cmb_txt('Tải xuống để xem', 'Download to view'); ?>
                   </a>
                 </div>
               </div>
@@ -186,7 +186,7 @@ $related_q    = new WP_Query([
                   <path d="M30 4V18H44" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
                   <path d="M14 28H34M14 34H28M14 40H22" stroke="#0379CC" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
-                <p>Tài liệu chưa được tải lên.</p>
+                <p><?php echo cmb_txt('Tài liệu chưa được tải lên.', 'No document has been uploaded yet.'); ?></p>
               </div>
             </div>
             <?php endif; ?>
@@ -199,7 +199,7 @@ $related_q    = new WP_Query([
             <!-- DANH SÁCH TÀI LIỆU -->
             <?php if ($doc_count > 1) : ?>
             <div class="p-lab-detail__doc-info" data-reveal="fade-left">
-              <h3 class="p-lab-detail__sidebar-title">DANH SÁCH TÀI LIỆU</h3>
+              <h3 class="p-lab-detail__sidebar-title"><?php echo cmb_txt('DANH SÁCH TÀI LIỆU', 'DOCUMENT LIST'); ?></h3>
               <ul class="p-lab-detail__info-list">
                 <?php foreach ($docs as $doc) : ?>
                 <li class="p-lab-detail__info-row">
@@ -213,7 +213,7 @@ $related_q    = new WP_Query([
                     <a class="p-lab-detail__info-value" href="<?php echo esc_attr('#doc-' . $doc['index']); ?>"><?php echo esc_html($doc['title']); ?></a>
                     <?php if ($doc['pages'] || $doc['size']) : ?>
                     <span class="p-lab-detail__info-label">
-                      <?php echo esc_html(trim($doc['pages'] ? ($doc['pages'] . ' trang') : '') . ($doc['pages'] && $doc['size'] ? ' · ' : '') . esc_html($doc['size'])); ?>
+                      <?php echo esc_html(trim($doc['pages'] ? ($doc['pages'] . ' ' . cmb_txt('trang', 'pages')) : '') . ($doc['pages'] && $doc['size'] ? ' · ' : '') . esc_html($doc['size'])); ?>
                     </span>
                     <?php endif; ?>
                   </span>
@@ -225,7 +225,7 @@ $related_q    = new WP_Query([
 
             <!-- THÔNG TIN TÀI LIỆU -->
             <div class="p-lab-detail__doc-info" data-reveal="fade-left">
-              <h3 class="p-lab-detail__sidebar-title">THÔNG TIN TÀI LIỆU</h3>
+              <h3 class="p-lab-detail__sidebar-title"><?php echo cmb_txt('THÔNG TIN TÀI LIỆU', 'DOCUMENT INFORMATION'); ?></h3>
               <ul class="p-lab-detail__info-list">
 
                 <li class="p-lab-detail__info-row">
@@ -236,7 +236,7 @@ $related_q    = new WP_Query([
                     </svg>
                   </span>
                   <span class="p-lab-detail__info-text">
-                    <span class="p-lab-detail__info-label">Định dạng</span>
+                    <span class="p-lab-detail__info-label"><?php echo cmb_txt('Định dạng', 'Format'); ?></span>
                     <span class="p-lab-detail__info-value">PDF</span>
                   </span>
                 </li>
@@ -251,7 +251,7 @@ $related_q    = new WP_Query([
                     </svg>
                   </span>
                   <span class="p-lab-detail__info-text">
-                    <span class="p-lab-detail__info-label">Số tài liệu</span>
+                    <span class="p-lab-detail__info-label"><?php echo cmb_txt('Số tài liệu', 'Number of Documents'); ?></span>
                     <span class="p-lab-detail__info-value"><?php echo $doc_count; ?></span>
                   </span>
                 </li>
@@ -267,7 +267,7 @@ $related_q    = new WP_Query([
                     </svg>
                   </span>
                   <span class="p-lab-detail__info-text">
-                    <span class="p-lab-detail__info-label">Cập nhật</span>
+                    <span class="p-lab-detail__info-label"><?php echo cmb_txt('Cập nhật', 'Updated'); ?></span>
                     <span class="p-lab-detail__info-value"><?php echo $updated_full; ?></span>
                   </span>
                 </li>
@@ -279,7 +279,7 @@ $related_q    = new WP_Query([
             <!-- TÀI LIỆU LIÊN QUAN -->
             <?php if ($related_q->have_posts()) : ?>
             <div class="p-lab-detail__related" data-reveal="fade-left">
-              <h3 class="p-lab-detail__sidebar-title">TÀI LIỆU LIÊN QUAN</h3>
+              <h3 class="p-lab-detail__sidebar-title"><?php echo cmb_txt('TÀI LIỆU LIÊN QUAN', 'RELATED DOCUMENTS'); ?></h3>
               <ul class="p-lab-detail__related-list">
                 <?php while ($related_q->have_posts()) : $related_q->the_post(); ?>
                 <li>

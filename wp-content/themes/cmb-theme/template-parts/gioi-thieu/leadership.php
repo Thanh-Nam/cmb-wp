@@ -8,7 +8,7 @@ $leadership_subtitle = cmb_get_option( 'about_leadership_subtitle' );
 $leadership_list     = get_field('about_leadership_list', 'option');
 ?>
 <!-- ======= LEADERSHIP ======= -->
-<section class="p-leadership" id="leadership" aria-label="Ban lãnh đạo CMB">
+<section class="p-leadership" id="leadership" aria-label="<?php echo esc_attr( cmb_txt( 'Ban lãnh đạo CMB', 'CMB Leadership' ) ); ?>">
 
   <div class="p-leadership__bg" aria-hidden="true">
     <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/bg-bld.png"
@@ -20,7 +20,7 @@ $leadership_list     = get_field('about_leadership_list', 'option');
     <div class="p-leadership__header" data-reveal="fade-up">
       <div class="p-leadership__title-wrap">
         <span class="p-leadership__title-line" aria-hidden="true"></span>
-        <h2 class="p-leadership__title"><?php echo esc_html($leadership_title ?: 'BAN LÃNH ĐẠO'); ?></h2>
+        <h2 class="p-leadership__title"><?php echo esc_html($leadership_title ?: cmb_txt( 'BAN LÃNH ĐẠO', 'LEADERSHIP' )); ?></h2>
         <span class="p-leadership__title-line" aria-hidden="true"></span>
       </div>
       <?php if ($leadership_subtitle) : ?>

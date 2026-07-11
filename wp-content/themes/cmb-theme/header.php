@@ -87,18 +87,18 @@
           $acf_logo_field = get_field( 'logo', 'option' );
           $acf_logo_url   = is_array( $acf_logo_field ) ? ( $acf_logo_field['url'] ?? '' ) : $acf_logo_field;
           ?>
-          <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="l-logo" id="site-logo" title="CMB - Trang chủ">
+          <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="l-logo" id="site-logo" title="<?php echo esc_attr( cmb_txt( 'CMB - Trang chủ', 'CMB - Home' ) ); ?>">
             <?php if ( $acf_logo_url ) : ?>
             <img src="<?php echo $acf_logo_url; ?>"
-              alt="Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải" class="l-logo__image" />
+              alt="<?php echo esc_attr( cmb_txt( 'Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải', 'CMB Logo - Marine Construction Consulting Joint Stock Company' ) ); ?>" class="l-logo__image" />
             <?php elseif ( has_custom_logo() ) :
                 the_custom_logo();
             else : ?>
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Company Logo.svg"
-              alt="Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải" class="l-logo__image" />
+              alt="<?php echo esc_attr( cmb_txt( 'Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải', 'CMB Logo - Marine Construction Consulting Joint Stock Company' ) ); ?>" class="l-logo__image" />
             <div class="l-logo__text-wrap">
-              <span class="l-logo__company">CÔNG TY CỔ PHẦN TƯ VẤN</span>
-              <span class="l-logo__slogan">XÂY DỰNG CÔNG TRÌNH HÀNG HẢI</span>
+              <span class="l-logo__company"><?php echo cmb_txt( 'CÔNG TY CỔ PHẦN TƯ VẤN', 'MARINE CONSTRUCTION' ); ?></span>
+              <span class="l-logo__slogan"><?php echo cmb_txt( 'XÂY DỰNG CÔNG TRÌNH HÀNG HẢI', 'CONSULTING JOINT STOCK COMPANY' ); ?></span>
             </div>
             <?php endif; ?>
           </a>
@@ -114,9 +114,9 @@
             $hdr_eoffice    = get_field( 'header_eoffice_url', 'option' ) ?: '#';
             $hdr_eoffice_v1mc = get_field( 'header_eoffice_v1mc_url', 'option' ) ?: '#';
             ?>
-            <ul class="l-header__topbar-list" role="list" aria-label="Thông tin liên hệ và ngôn ngữ">
+            <ul class="l-header__topbar-list" role="list" aria-label="<?php echo esc_attr( cmb_txt( 'Thông tin liên hệ và ngôn ngữ', 'Contact information and language' ) ); ?>">
               <li class="l-header__topbar-item" id="topbar-item-email">
-                <a href="mailto:<?php echo $hdr_email; ?>" class="l-header__topbar-link" id="topbar-email" aria-label="Gửi email tới <?php echo $hdr_email; ?>">
+                <a href="mailto:<?php echo $hdr_email; ?>" class="l-header__topbar-link" id="topbar-email" aria-label="<?php echo esc_attr( sprintf( cmb_txt( 'Gửi email tới %s', 'Send email to %s' ), $hdr_email ) ); ?>">
                   <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Email Icon.svg" alt="" role="presentation" class="l-header__topbar-icon" />
                   <span><?php echo $hdr_email; ?></span>
                 </a>
@@ -142,7 +142,7 @@
                 $alt_langs = array_filter( $pll_langs, fn( $l ) => ! $l['current_lang'] );
                 ?>
                 <div class="l-header__lang-wrap" id="lang-wrap">
-                  <button class="l-header__lang-btn" id="topbar-lang-btn" aria-expanded="false" aria-haspopup="listbox" aria-label="Chuyển đổi ngôn ngữ">
+                  <button class="l-header__lang-btn" id="topbar-lang-btn" aria-expanded="false" aria-haspopup="listbox" aria-label="<?php echo esc_attr( cmb_txt( 'Chuyển đổi ngôn ngữ', 'Switch language' ) ); ?>">
                     <?php if ( $cur_flag ) : ?>
                       <span class="l-header__lang-flag"><?php echo $cur_flag; ?></span>
                     <?php else : ?>
@@ -154,7 +154,7 @@
                     </svg>
                   </button>
                   <?php if ( $alt_langs ) : ?>
-                  <ul class="l-header__lang-dropdown" role="listbox" aria-label="Chọn ngôn ngữ">
+                  <ul class="l-header__lang-dropdown" role="listbox" aria-label="<?php echo esc_attr( cmb_txt( 'Chọn ngôn ngữ', 'Choose language' ) ); ?>">
                     <?php foreach ( $alt_langs as $lang ) : ?>
                     <li role="option">
                       <a href="<?php echo $lang['url']; ?>" class="l-header__lang-option" hreflang="<?php echo $lang['slug']; ?>">
@@ -174,7 +174,7 @@
 
           <!-- Nav -->
           <div class="l-header__main" id="header-main">
-            <nav class="l-nav" id="site-nav" aria-label="Menu chính">
+            <nav class="l-nav" id="site-nav" aria-label="<?php echo esc_attr( cmb_txt( 'Menu chính', 'Main menu' ) ); ?>">
               <?php
               wp_nav_menu( [
                   'theme_location' => 'primary',
@@ -186,9 +186,9 @@
               ?>
 
               <!-- Mobile info -->
-              <div class="l-nav__mobile-info" id="nav-mobile-info" aria-label="Thông tin liên hệ">
+              <div class="l-nav__mobile-info" id="nav-mobile-info" aria-label="<?php echo esc_attr( cmb_txt( 'Thông tin liên hệ', 'Contact information' ) ); ?>">
                 <div class="l-header__lang-wrap l-header__lang-wrap--mobile" id="lang-wrap-mobile">
-                  <button class="l-header__lang-btn l-nav__mobile-info-item" id="topbar-lang-btn-mobile" aria-expanded="false" aria-haspopup="listbox" aria-label="Chuyển đổi ngôn ngữ">
+                  <button class="l-header__lang-btn l-nav__mobile-info-item" id="topbar-lang-btn-mobile" aria-expanded="false" aria-haspopup="listbox" aria-label="<?php echo esc_attr( cmb_txt( 'Chuyển đổi ngôn ngữ', 'Switch language' ) ); ?>">
                     <?php if ( $cur_flag ) : ?>
                       <span class="l-header__lang-flag"><?php echo $cur_flag; ?></span>
                     <?php else : ?>
@@ -214,7 +214,7 @@
                   </ul>
                   <?php endif; ?>
                 </div>
-                <a href="mailto:<?php echo $hdr_email; ?>" class="l-nav__mobile-info-item" aria-label="Email CMB">
+                <a href="mailto:<?php echo $hdr_email; ?>" class="l-nav__mobile-info-item" aria-label="<?php echo esc_attr( cmb_txt( 'Email CMB', 'CMB Email' ) ); ?>">
                   <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Email Icon.svg" alt="" role="presentation" />
                   <?php echo $hdr_email; ?>
                 </a>
@@ -232,18 +232,18 @@
             <div class="l-nav-overlay" id="nav-overlay" aria-hidden="true"></div>
 
             <!-- Search (desktop) -->
-            <button class="l-header__search-btn" id="header-search-btn" aria-label="Tìm kiếm">
+            <button class="l-header__search-btn" id="header-search-btn" aria-label="<?php echo esc_attr( cmb_txt( 'Tìm kiếm', 'Search' ) ); ?>">
               <img src="<?php echo get_template_directory_uri(); ?>/assets/images/search-24px.svg" alt="" role="presentation" />
             </button>
 
             <!-- Mobile actions -->
             <div class="l-header__mobile-actions">
-              <button class="l-header__search-btn" id="header-search-btn-mobile" aria-label="Tìm kiếm">
+              <button class="l-header__search-btn" id="header-search-btn-mobile" aria-label="<?php echo esc_attr( cmb_txt( 'Tìm kiếm', 'Search' ) ); ?>">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M14.9714 14.9714L19 19M17 11C17 14.3137 14.3137 17 11 17C7.68629 17 5 14.3137 5 11C5 7.68629 7.68629 5 11 5C14.3137 5 17 7.68629 17 11Z" stroke="#ED202E" />
                 </svg>
               </button>
-              <button class="l-hamburger" id="hamburger-btn" aria-label="Mở menu" aria-expanded="false" aria-controls="site-nav">
+              <button class="l-hamburger" id="hamburger-btn" aria-label="<?php echo esc_attr( cmb_txt( 'Mở menu', 'Open menu' ) ); ?>" aria-expanded="false" aria-controls="site-nav">
                 <span></span><span></span><span></span>
               </button>
             </div>
@@ -256,10 +256,10 @@
   <!-- ======= /HEADER ======= -->
 
   <!-- ======= SEARCH OVERLAY ======= -->
-  <div class="l-search-overlay" id="search-overlay" aria-hidden="true" role="search" aria-label="Tìm kiếm">
+  <div class="l-search-overlay" id="search-overlay" aria-hidden="true" role="search" aria-label="<?php echo esc_attr( cmb_txt( 'Tìm kiếm', 'Search' ) ); ?>">
     <div class="l-search-overlay__backdrop" id="search-overlay-backdrop" aria-hidden="true"></div>
 
-    <button class="l-search-overlay__close" id="search-overlay-close" type="button" aria-label="Đóng tìm kiếm">
+    <button class="l-search-overlay__close" id="search-overlay-close" type="button" aria-label="<?php echo esc_attr( cmb_txt( 'Đóng tìm kiếm', 'Close search' ) ); ?>">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
@@ -269,8 +269,8 @@
       <div class="l-search-overlay__box">
         <form class="l-search-overlay__form" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
           <input class="l-search-overlay__input" type="search" name="s" id="search-overlay-input"
-            placeholder="Nhập từ khóa tìm kiếm..." autocomplete="off" aria-label="Từ khóa tìm kiếm" />
-          <button class="l-search-overlay__submit" type="submit" aria-label="Tìm kiếm">
+            placeholder="<?php echo esc_attr( cmb_txt( 'Nhập từ khóa tìm kiếm...', 'Enter search keyword...' ) ); ?>" autocomplete="off" aria-label="<?php echo esc_attr( cmb_txt( 'Từ khóa tìm kiếm', 'Search keyword' ) ); ?>" />
+          <button class="l-search-overlay__submit" type="submit" aria-label="<?php echo esc_attr( cmb_txt( 'Tìm kiếm', 'Search' ) ); ?>">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M14.9714 14.9714L19 19M17 11C17 14.3137 14.3137 17 11 17C7.68629 17 5 14.3137 5 11C5 7.68629 7.68629 5 11 5C14.3137 5 17 7.68629 17 11Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
             </svg>
@@ -287,23 +287,23 @@
 // Fallback nav khi chưa set menu trong WP Admin
 function cmb_fallback_nav() { ?>
   <ul class="l-nav__list" role="list">
-    <li class="l-nav__item"><a href="<?php echo home_url('/'); ?>" class="l-nav__link">Trang chủ</a></li>
-    <li class="l-nav__item"><a href="<?php echo home_url('/gioi-thieu'); ?>" class="l-nav__link">Giới thiệu</a></li>
+    <li class="l-nav__item"><a href="<?php echo home_url('/'); ?>" class="l-nav__link"><?php echo cmb_txt( 'Trang chủ', 'Home' ); ?></a></li>
+    <li class="l-nav__item"><a href="<?php echo home_url('/gioi-thieu'); ?>" class="l-nav__link"><?php echo cmb_txt( 'Giới thiệu', 'About' ); ?></a></li>
     <li class="l-nav__item has-dropdown">
-      <span class="l-nav__link">Năng lực
+      <span class="l-nav__link"><?php echo cmb_txt( 'Năng lực', 'Capabilities' ); ?>
         <svg class="l-nav__dropdown-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
           <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </span>
       <ul class="l-nav__dropdown">
-        <li><a href="<?php echo home_url('/du-an'); ?>">Dự án tiêu biểu</a></li>
-        <li><a href="<?php echo home_url('/thiet-bi'); ?>">Thiết bị</a></li>
-        <li><a href="<?php echo home_url('/phong-thi-nghiem'); ?>">Phòng thí nghiệm</a></li>
-        <li><a href="<?php echo home_url('/quan-he-co-dong'); ?>">Quan hệ cổ đông</a></li>
+        <li><a href="<?php echo home_url('/du-an'); ?>"><?php echo cmb_txt( 'Dự án tiêu biểu', 'Featured Projects' ); ?></a></li>
+        <li><a href="<?php echo home_url('/thiet-bi'); ?>"><?php echo cmb_txt( 'Thiết bị', 'Equipment' ); ?></a></li>
+        <li><a href="<?php echo home_url('/phong-thi-nghiem'); ?>"><?php echo cmb_txt( 'Phòng thí nghiệm', 'Laboratory' ); ?></a></li>
+        <li><a href="<?php echo home_url('/quan-he-co-dong'); ?>"><?php echo cmb_txt( 'Quan hệ cổ đông', 'Shareholder Relations' ); ?></a></li>
       </ul>
     </li>
-    <li class="l-nav__item"><a href="<?php echo home_url('/tin-tuc'); ?>" class="l-nav__link">Tin tức</a></li>
-    <li class="l-nav__item"><a href="https://cmb-recruitment.vercel.app/" target="_blank" class="l-nav__link">Tuyển dụng</a></li>
-    <li class="l-nav__item"><a href="<?php echo home_url('/lien-he'); ?>" class="l-nav__link">Liên hệ</a></li>
+    <li class="l-nav__item"><a href="<?php echo home_url('/tin-tuc'); ?>" class="l-nav__link"><?php echo cmb_txt( 'Tin tức', 'News' ); ?></a></li>
+    <li class="l-nav__item"><a href="https://cmb-recruitment.vercel.app/" target="_blank" class="l-nav__link"><?php echo cmb_txt( 'Tuyển dụng', 'Careers' ); ?></a></li>
+    <li class="l-nav__item"><a href="<?php echo home_url('/lien-he'); ?>" class="l-nav__link"><?php echo cmb_txt( 'Liên hệ', 'Contact' ); ?></a></li>
   </ul>
 <?php }

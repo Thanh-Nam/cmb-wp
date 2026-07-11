@@ -48,6 +48,37 @@
             "ui": 0,
             "ui_on_text": "",
             "ui_off_text": ""
+        },
+        {
+            "key": "field_6a38ccf993e5b",
+            "label": "Thứ tự trong mục Dự án nổi bật",
+            "name": "project_featured_order",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Số nhỏ hơn hiển thị trước. Chỉ áp dụng thứ tự trong các khu vực \"Dự án nổi bật\" (trang chủ và trang danh sách dự án) — không ảnh hưởng thứ tự ở danh sách dự án đầy đủ. Để trống sẽ hiển thị sau cùng.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6a38ccf993e5a",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": "",
+            "allow_in_bindings": 0
         }
     ],
     "location": [

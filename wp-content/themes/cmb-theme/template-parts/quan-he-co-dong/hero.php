@@ -4,11 +4,11 @@
  * Section: Page Hero — Quan hệ cổ đông
  */
 $hero_img = get_field('banner_qhcd_img', 'option');
-$title    = cmb_get_option('banner_qhcd_title') ?: 'QUAN HỆ CỔ ĐÔNG';
-$subtitle = cmb_get_option('banner_qhcd_desc') ?: 'Minh bạch thông tin, bảo vệ quyền lợi cổ đông<br>và cam kết phát triển bền vững cùng nhà đầu tư.';
+$title    = cmb_get_option('banner_qhcd_title') ?: cmb_txt('QUAN HỆ CỔ ĐÔNG', 'SHAREHOLDER RELATIONS');
+$subtitle = cmb_get_option('banner_qhcd_desc') ?: cmb_txt('Minh bạch thông tin, bảo vệ quyền lợi cổ đông<br>và cam kết phát triển bền vững cùng nhà đầu tư.', 'Transparent information, protection of shareholder rights,<br>and a commitment to sustainable growth with our investors.');
 ?>
 <!-- ======= PAGE HERO ======= -->
-<section class="p-page-hero" id="ir-hero" aria-label="Quan hệ cổ đông CMB">
+<section class="p-page-hero" id="ir-hero" aria-label="<?php echo esc_attr(cmb_txt('Quan hệ cổ đông CMB', 'CMB Shareholder Relations')); ?>">
 
   <div class="p-page-hero__image-side">
     <?php if ($hero_img) : ?>
@@ -17,7 +17,7 @@ $subtitle = cmb_get_option('banner_qhcd_desc') ?: 'Minh bạch thông tin, bảo
          class="p-page-hero__image" loading="eager" />
     <?php else : ?>
     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero_port.jpg"
-         alt="Quan hệ cổ đông Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải"
+         alt="<?php echo esc_attr(cmb_txt('Quan hệ cổ đông Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải', 'Shareholder Relations – Maritime Construction Consultant Joint Stock Company')); ?>"
          class="p-page-hero__image" loading="eager" />
     <?php endif; ?>
   </div>
@@ -25,10 +25,10 @@ $subtitle = cmb_get_option('banner_qhcd_desc') ?: 'Minh bạch thông tin, bảo
   <div class="p-page-hero__fade" aria-hidden="true"></div>
 
   <div class="l-container">
-    <nav class="p-page-hero__breadcrumb" aria-label="Đường dẫn">
-      <a href="<?php echo esc_url(home_url('/')); ?>">Trang chủ</a>
+    <nav class="p-page-hero__breadcrumb" aria-label="<?php echo esc_attr(cmb_txt('Đường dẫn', 'Breadcrumb')); ?>">
+      <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo cmb_txt('Trang chủ', 'Home'); ?></a>
       <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
-      <span class="p-page-hero__breadcrumb-current" aria-current="page">Quan hệ cổ đông</span>
+      <span class="p-page-hero__breadcrumb-current" aria-current="page"><?php echo cmb_txt('Quan hệ cổ đông', 'Shareholder Relations'); ?></span>
     </nav>
     <div class="p-page-hero__content">
       <h1 class="p-page-hero__title"><?php echo wp_kses_post($title); ?></h1>

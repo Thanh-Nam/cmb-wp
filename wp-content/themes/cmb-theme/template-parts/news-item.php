@@ -12,7 +12,7 @@ $cat_label = $term ? strtoupper($term->name) : '';
 
 $is_featured = function_exists('get_field') ? get_field('is_featured') : false;
 if ($is_featured) {
-    $cat_label = 'TIN NỔI BẬT';
+    $cat_label = cmb_txt( 'TIN NỔI BẬT', 'FEATURED' );
     $cat_slug  = 'noi-bat';
 }
 

@@ -183,7 +183,8 @@ function cmb_enqueue_assets() {
 
     // CMB_Theme và CMB_Ajax — luôn cần cho global
     wp_localize_script( 'cmb-global', 'CMB_Theme', [
-        'uri' => $uri,
+        'uri'  => $uri,
+        'lang' => function_exists( 'pll_current_language' ) ? pll_current_language() : 'vi',
     ] );
     wp_localize_script( 'cmb-global', 'CMB_Ajax', [
         'url' => admin_url( 'admin-ajax.php' ),
@@ -349,7 +350,7 @@ function cmb_filter_news_handler() {
         wp_reset_postdata();
     } else {
         wp_reset_postdata();
-        echo '<p style="padding:2rem 0;text-align:center;color:#888;">Không tìm thấy bài viết nào.</p>';
+        echo '<p style="padding:2rem 0;text-align:center;color:#888;">' . esc_html( cmb_txt( 'Không tìm thấy bài viết nào.', 'No posts found.' ) ) . '</p>';
     }
     $html = ob_get_clean();
 
@@ -369,7 +370,7 @@ function cmb_build_ajax_pagination( $current, $total ) {
     $end   = min( $total, $current + 2 );
 
     if ( $current > 1 ) {
-        $html .= '<button class="p-news-all__page-btn" data-paged="' . ( $current - 1 ) . '" aria-label="Trang trước">&laquo;</button>';
+        $html .= '<button class="p-news-all__page-btn" data-paged="' . ( $current - 1 ) . '" aria-label="' . esc_attr( cmb_txt( 'Trang trước', 'Previous page' ) ) . '">&laquo;</button>';
     }
 
     if ( $start > 1 ) {
@@ -392,7 +393,7 @@ function cmb_build_ajax_pagination( $current, $total ) {
     }
 
     if ( $current < $total ) {
-        $html .= '<button class="p-news-all__page-btn" data-paged="' . ( $current + 1 ) . '" aria-label="Trang tiếp">&raquo;</button>';
+        $html .= '<button class="p-news-all__page-btn" data-paged="' . ( $current + 1 ) . '" aria-label="' . esc_attr( cmb_txt( 'Trang tiếp', 'Next page' ) ) . '">&raquo;</button>';
     }
 
     return $html;
@@ -474,6 +475,14 @@ function cmb_arr( $arr, $key ) {
         if ( ! empty( $arr[ $key . '_en' ] ) ) return $arr[ $key . '_en' ];
     }
     return $arr[ $key ] ?? '';
+}
+
+// Static UI chrome string (aria-labels, button labels, headings not backed by ACF)
+function cmb_txt( $vi, $en ) {
+    if ( function_exists( 'pll_current_language' ) && pll_current_language() === 'en' ) {
+        return $en;
+    }
+    return $vi;
 }
 
 // ============================================================
@@ -952,17 +961,17 @@ add_filter('redirect_canonical', function ( $redirect_url, $requested_url ) {
     return $redirect_url;
 }, 10, 2 );
 
-// CF7 — đổi messages sang tiếng Việt (filter này override cả form đã có sẵn)
+// CF7 — đổi messages theo ngôn ngữ hiện tại (filter này override cả form đã có sẵn)
 add_filter('wpcf7_display_message', function($message, $status) {
     $vi = [
-        'mail_sent_ok'      => 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.',
-        'mail_sent_ng'      => 'Đã xảy ra lỗi khi gửi mail. Vui lòng thử lại sau.',
-        'validation_errors' => 'Vui lòng kiểm tra lại thông tin đã nhập.',
-        'spam'              => 'Có lỗi xảy ra. Vui lòng thử lại.',
-        'accept_terms'      => 'Bạn cần đồng ý với Chính sách bảo mật để tiếp tục.',
-        'invalid_required'  => 'Vui lòng điền thông tin bắt buộc này.',
-        'invalid_email'     => 'Địa chỉ email không hợp lệ.',
-        'invalid_tel'       => 'Số điện thoại không hợp lệ.',
+        'mail_sent_ok'      => cmb_txt( 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.', 'Thank you for contacting us! We will respond as soon as possible.' ),
+        'mail_sent_ng'      => cmb_txt( 'Đã xảy ra lỗi khi gửi mail. Vui lòng thử lại sau.', 'An error occurred while sending the email. Please try again later.' ),
+        'validation_errors' => cmb_txt( 'Vui lòng kiểm tra lại thông tin đã nhập.', 'Please check the information you entered.' ),
+        'spam'              => cmb_txt( 'Có lỗi xảy ra. Vui lòng thử lại.', 'An error occurred. Please try again.' ),
+        'accept_terms'      => cmb_txt( 'Bạn cần đồng ý với Chính sách bảo mật để tiếp tục.', 'You must agree to the Privacy Policy to continue.' ),
+        'invalid_required'  => cmb_txt( 'Vui lòng điền thông tin bắt buộc này.', 'Please fill in this required field.' ),
+        'invalid_email'     => cmb_txt( 'Địa chỉ email không hợp lệ.', 'Invalid email address.' ),
+        'invalid_tel'       => cmb_txt( 'Số điện thoại không hợp lệ.', 'Invalid phone number.' ),
     ];
     return $vi[$status] ?? $message;
 }, 10, 2);

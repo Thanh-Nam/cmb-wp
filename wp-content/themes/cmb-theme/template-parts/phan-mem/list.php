@@ -97,7 +97,7 @@ if ($cached === false) {
         wp_reset_postdata();
 
         $cached[] = [
-            'name'  => 'Khác',
+            'name'  => cmb_txt('Khác', 'Other'),
             'items' => $items,
         ];
     }
@@ -109,11 +109,11 @@ $default_thumb = get_template_directory_uri() . '/assets/images/equip-total-stat
 ?>
 
 <!-- ======= HỆ THỐNG PHẦN MỀM ======= -->
-<section class="p-software-list" id="software-list" aria-label="Hệ thống phần mềm">
+<section class="p-software-list" id="software-list" aria-label="<?php echo esc_attr(cmb_txt('Hệ thống phần mềm', 'Software System')); ?>">
   <div class="l-container">
 
     <div class="p-software-list__heading" data-reveal="fade-up">
-      <h2 class="p-software-list__section-title">HỆ THỐNG PHẦN MỀM</h2>
+      <h2 class="p-software-list__section-title"><?php echo cmb_txt('HỆ THỐNG PHẦN MỀM', 'SOFTWARE SYSTEM'); ?></h2>
     </div>
 
     <?php if (!empty($cached)) : ?>
@@ -153,7 +153,7 @@ $default_thumb = get_template_directory_uri() . '/assets/images/equip-total-stat
 
     <?php endforeach; ?>
     <?php else : ?>
-    <p style="padding:2rem 0;text-align:center;color:#888;">Chưa có phần mềm nào.</p>
+    <p style="padding:2rem 0;text-align:center;color:#888;"><?php echo cmb_txt('Chưa có phần mềm nào.', 'No software available yet.'); ?></p>
     <?php endif; ?>
 
   </div>
@@ -165,7 +165,7 @@ $default_thumb = get_template_directory_uri() . '/assets/images/equip-total-stat
 <div class="p-software-modal" id="software-modal" role="dialog" aria-modal="true" aria-labelledby="sw-modal-title">
   <div class="p-software-modal__overlay" id="sw-modal-overlay"></div>
   <div class="p-software-modal__box">
-    <button class="p-software-modal__close" id="sw-modal-close" aria-label="Đóng">
+    <button class="p-software-modal__close" id="sw-modal-close" aria-label="<?php echo esc_attr(cmb_txt('Đóng', 'Close')); ?>">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>

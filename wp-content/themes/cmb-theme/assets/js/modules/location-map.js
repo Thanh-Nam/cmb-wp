@@ -28,65 +28,89 @@
   var _locPopup, _popupCityEl, _popupSliderWrapper, _popupSwiper;
 
   var _themeUri = (window.CMB_Theme && window.CMB_Theme.uri) ? window.CMB_Theme.uri.replace(/\/$/, '') : '';
+  var _lang = (window.CMB_Theme && window.CMB_Theme.lang) ? window.CMB_Theme.lang : 'vi';
   var _placeholderImg = _themeUri + '/assets/images/demo-du-an.png';
 
-  function _proj(project, desc, link, imgSrc, imgAlt) {
-    return { project: project, desc: desc, link: link || '#', imgSrc: imgSrc, imgAlt: imgAlt };
+  function _t(vi, en) {
+    return _lang === 'en' ? en : vi;
+  }
+
+  // vi/en đi theo cặp: project, desc, imgAlt đều có bản EN riêng
+  function _proj(project, projectEn, desc, descEn, link, imgSrc, imgAlt, imgAltEn) {
+    return {
+      project: _t(project, projectEn),
+      desc: _t(desc, descEn),
+      link: link || '#',
+      imgSrc: imgSrc,
+      imgAlt: _t(imgAlt, imgAltEn)
+    };
+  }
+
+  var _updating = _t('Đang cập nhật', 'Updating');
+  var _updatingDesc = _t('Thông tin dự án đang được cập nhật.', 'Project information is being updated.');
+
+  function _placeholderProj(cityVi, cityEn) {
+    return _proj(_updating, _updating, _updatingDesc, _updatingDesc, '#', _placeholderImg, cityVi, cityEn);
   }
 
   var _locationData = {
     'nghe-an': {
-      city: 'NGHỆ AN',
+      city: _t('NGHỆ AN', 'NGHE AN'),
       projects: [_proj(
-        'Cảng tổng hợp Đông Hồi, Quỳnh Lưu',
+        'Cảng tổng hợp Đông Hồi, Quỳnh Lưu', 'Dong Hoi General Port, Quynh Luu',
         'Tư vấn lập dự án đầu tư và thiết kế cơ sở Cảng tổng hợp Đông Hồi tại huyện Quỳnh Lưu, Nghệ An, công suất 5 triệu tấn/năm.',
-        '#', _themeUri + '/assets/images/cang-tong-hop-dong-hoi.png', 'Cảng tổng hợp Đông Hồi, Nghệ An'
+        'Consulting on investment project preparation and basic design for Dong Hoi General Port in Quynh Luu district, Nghe An, with a capacity of 5 million tons/year.',
+        '#', _themeUri + '/assets/images/cang-tong-hop-dong-hoi.png', 'Cảng tổng hợp Đông Hồi, Nghệ An', 'Dong Hoi General Port, Nghe An'
       )]
     },
     'hai-phong': {
-      city: 'HẢI PHÒNG',
+      city: _t('HẢI PHÒNG', 'HAI PHONG'),
       projects: [_proj(
-        'Cảng Đình Vũ',
+        'Cảng Đình Vũ', 'Dinh Vu Port',
         'Diện tích 73,56ha; chiều dài bến 1.610,6m, tiếp nhận tàu 20.000 – 50.000 DW T; công suất 15 triệu tấn/năm',
-        '#', _themeUri + '/assets/images/cang-dinh-vu.png', 'Cảng Đình Vũ'
+        'Area of 73.56ha; wharf length of 1,610.6m, accommodating vessels of 20,000 – 50,000 DWT; capacity of 15 million tons/year',
+        '#', _themeUri + '/assets/images/cang-dinh-vu.png', 'Cảng Đình Vũ', 'Dinh Vu Port'
       )]
     },
     'tay-ninh': {
-      city: 'TÂY NINH',
+      city: _t('TÂY NINH', 'TAY NINH'),
       projects: [_proj(
-        'Trung tâm Logistics, cảng Cạn cảng tổng hợp Tây Ninh',
+        'Trung tâm Logistics, cảng Cạn cảng tổng hợp Tây Ninh', 'Tay Ninh Logistics Center, Dry Port and General Port',
         'Khu Cảng cạn 48,94 ha; Khu Trung tâm Logistics 159,70 ha; Khu Cảng tổng hợp 50,58 ha, đầu tư cơ sở hạ tầng san nền, đường giao thông, hạ tầng kỹ thuật, cảng thủy nội địa đồng bộ',
-        '#', _themeUri + '/assets/images/cang-can-tay-ninh.jpg', 'Thị xã Trảng Bàng, tỉnh Tây Ninh'
+        'Dry Port Zone of 48.94 ha; Logistics Center Zone of 159.70 ha; General Port Zone of 50.58 ha, investing in synchronized ground leveling, roads, technical infrastructure, and inland waterway port infrastructure',
+        '#', _themeUri + '/assets/images/cang-can-tay-ninh.jpg', 'Thị xã Trảng Bàng, tỉnh Tây Ninh', 'Trang Bang Town, Tay Ninh Province'
       )]
     },
     'tp-hcm': {
-      city: 'TP. HỒ CHÍ MINH',
+      city: _t('TP. HỒ CHÍ MINH', 'HO CHI MINH CITY'),
       projects: [_proj(
-        'Cảng Contaner Cát Lái',
+        'Cảng Contaner Cát Lái', 'Cat Lai Container Port',
         'Diện tích 80ha; chiều dài bến 1.462m, tiếp nhận tảu Container đến 45.000DWT; công suất 2,5 triệu TEU/năm',
-        '#', _themeUri + '/assets/images/cang-cat-lai.jpg', 'Cảng Contaner Cát Lái, TP. Hồ Chí Minh'
+        'Area of 80ha; wharf length of 1,462m, accommodating container vessels up to 45,000DWT; capacity of 2.5 million TEU/year',
+        '#', _themeUri + '/assets/images/cang-cat-lai.jpg', 'Cảng Contaner Cát Lái, TP. Hồ Chí Minh', 'Cat Lai Container Port, Ho Chi Minh City'
       )]
     },
     'dong-nai': {
-      city: 'ĐỒNG NAI',
+      city: _t('ĐỒNG NAI', 'DONG NAI'),
       projects: [_proj(
-        'ICD Tân Cảng Long Bình',
+        'ICD Tân Cảng Long Bình', 'ICD Tan Cang Long Binh',
         'Tổng diện tích 235 ha, diện tích bãi container 15,6ha, diện tích kho 52,4ha',
-        '#', _themeUri + '/assets/images/tan-cang-long-binh.jpg', 'Thành phố Biên Hòa, tỉnh Đồng Nai'
+        'Total area of 235 ha, container yard area of 15.6ha, warehouse area of 52.4ha',
+        '#', _themeUri + '/assets/images/tan-cang-long-binh.jpg', 'Thành phố Biên Hòa, tỉnh Đồng Nai', 'Bien Hoa City, Dong Nai Province'
       )]
     },
-    'quang-ninh': { city: 'QUẢNG NINH', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Quảng Ninh')] },
-    'thanh-hoa': { city: 'THANH HÓA', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Thanh Hóa')] },
-    'quang-tri': { city: 'QUẢNG TRỊ', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Quảng Trị')] },
-    'da-nang': { city: 'ĐÀ NẴNG', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Đà Nẵng')] },
-    'quang-ngai': { city: 'QUẢNG NGÃI', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Quảng Ngãi')] },
-    'khanh-hoa': { city: 'KHÁNH HÒA', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Khánh Hòa')] },
-    'ninh-thuan': { city: 'NINH THUẬN', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Ninh Thuận')] },
-    'binh-thuan': { city: 'BÌNH THUẬN', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Bình Thuận')] },
-    'ba-ria-vung-tau': { city: 'BÀ RỊA - VŨNG TÀU', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Bà Rịa - Vũng Tàu')] },
-    'tien-giang': { city: 'TIỀN GIANG', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Tiền Giang')] },
-    'ben-tre': { city: 'BẾN TRE', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Bến Tre')] },
-    'can-tho': { city: 'CẦN THƠ', projects: [_proj('Đang cập nhật', 'Thông tin dự án đang được cập nhật.', '#', _placeholderImg, 'Cần Thơ')] }
+    'quang-ninh': { city: _t('QUẢNG NINH', 'QUANG NINH'), projects: [_placeholderProj('Quảng Ninh', 'Quang Ninh')] },
+    'thanh-hoa': { city: _t('THANH HÓA', 'THANH HOA'), projects: [_placeholderProj('Thanh Hóa', 'Thanh Hoa')] },
+    'quang-tri': { city: _t('QUẢNG TRỊ', 'QUANG TRI'), projects: [_placeholderProj('Quảng Trị', 'Quang Tri')] },
+    'da-nang': { city: _t('ĐÀ NẴNG', 'DA NANG'), projects: [_placeholderProj('Đà Nẵng', 'Da Nang')] },
+    'quang-ngai': { city: _t('QUẢNG NGÃI', 'QUANG NGAI'), projects: [_placeholderProj('Quảng Ngãi', 'Quang Ngai')] },
+    'khanh-hoa': { city: _t('KHÁNH HÒA', 'KHANH HOA'), projects: [_placeholderProj('Khánh Hòa', 'Khanh Hoa')] },
+    'ninh-thuan': { city: _t('NINH THUẬN', 'NINH THUAN'), projects: [_placeholderProj('Ninh Thuận', 'Ninh Thuan')] },
+    'binh-thuan': { city: _t('BÌNH THUẬN', 'BINH THUAN'), projects: [_placeholderProj('Bình Thuận', 'Binh Thuan')] },
+    'ba-ria-vung-tau': { city: _t('BÀ RỊA - VŨNG TÀU', 'BA RIA - VUNG TAU'), projects: [_placeholderProj('Bà Rịa - Vũng Tàu', 'Ba Ria - Vung Tau')] },
+    'tien-giang': { city: _t('TIỀN GIANG', 'TIEN GIANG'), projects: [_placeholderProj('Tiền Giang', 'Tien Giang')] },
+    'ben-tre': { city: _t('BẾN TRE', 'BEN TRE'), projects: [_placeholderProj('Bến Tre', 'Ben Tre')] },
+    'can-tho': { city: _t('CẦN THƠ', 'CAN THO'), projects: [_placeholderProj('Cần Thơ', 'Can Tho')] }
   };
 
   // Override location data từ ACF Options (wp_localize_script → window.CMB_LocationData)
@@ -112,19 +136,19 @@
       '<div class="swiper-slide p-location__slide">' +
         '<div class="p-location__details">' +
           '<div class="p-location__detail-row">' +
-            '<span class="p-location__detail-label">Dự án:</span>' +
+            '<span class="p-location__detail-label">' + _escapeHtml(_t('Dự án:', 'Project:')) + '</span>' +
             '<p class="p-location__detail-text">' + _escapeHtml(p.project) + '</p>' +
           '</div>' +
           '<div class="p-location__detail-row">' +
-            '<span class="p-location__detail-label">Mô tả:</span>' +
+            '<span class="p-location__detail-label">' + _escapeHtml(_t('Mô tả:', 'Description:')) + '</span>' +
             '<p class="p-location__detail-text">' + _escapeHtml(p.desc) + '</p>' +
           '</div>' +
         '</div>' +
         '<div class="p-location__img-wrap">' +
           '<img src="' + _escapeHtml(img) + '" alt="' + _escapeHtml(p.imgAlt) + '" class="p-location__img" loading="lazy" />' +
         '</div>' +
-        '<a href="' + _escapeHtml(p.link || '#') + '" class="p-location__link" title="Xem chi tiết dự án">' +
-          'Xem dự án' +
+        '<a href="' + _escapeHtml(p.link || '#') + '" class="p-location__link" title="' + _escapeHtml(_t('Xem chi tiết dự án', 'View project details')) + '">' +
+          _escapeHtml(_t('Xem dự án', 'View project')) +
           '<svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
             '<path d="M1 6H15M10 1L15 6L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />' +
           '</svg>' +
@@ -316,23 +340,23 @@
         // 5. Dữ liệu 17 tỉnh — toạ độ viewBox 980×981, đúng vị trí địa lý thực tế.
         // dot = chấm trên bản đồ; box = tâm nhãn tên tỉnh.
         var PROVINCES = [
-          { id: 'quang-ninh', name: 'QUẢNG NINH', dot: { x: 540, y: 160 }, box: { x: 550, y: 80 } },
-          { id: 'hai-phong', name: 'HẢI PHÒNG', dot: { x: 493.7, y: 182.7 }, box: { x: 660, y: 183 } },
-          { id: 'thanh-hoa', name: 'THANH HÓA', dot: { x: 390, y: 300 }, box: { x: 288, y: 222 } },
-          { id: 'nghe-an', name: 'NGHỆ AN', dot: { x: 455, y: 350 }, box: { x: 255, y: 320 } },
-          { id: 'quang-tri', name: 'QUẢNG TRỊ', dot: { x: 555, y: 460 }, box: { x: 390, y: 465 } },
-          { id: 'da-nang', name: 'ĐÀ NẴNG', dot: { x: 607.5, y: 517.9 }, box: { x: 790, y: 500 } },
-          { id: 'quang-ngai', name: 'QUẢNG NGÃI', dot: { x: 600, y: 554.3 }, box: { x: 400, y: 565 } },
-          { id: 'khanh-hoa', name: 'KHÁNH HÒA', dot: { x: 643.9, y: 683.3 }, box: { x: 790, y: 595 } },
-          { id: 'ninh-thuan', name: 'NINH THUẬN', dot: { x: 650, y: 745 }, box: { x: 830, y: 660 } },
-          { id: 'binh-thuan', name: 'BÌNH THUẬN', dot: { x: 595, y: 780 }, box: { x: 790, y: 720 } },
-          { id: 'dong-nai', name: 'ĐỒNG NAI', dot: { x: 564.8, y: 789.6 }, box: { x: 280, y: 630 } },
-          { id: 'ba-ria-vung-tau', name: 'BÀ RỊA - VŨNG TÀU', dot: { x: 570, y: 815 }, box: { x: 800, y: 780 } },
-          { id: 'tay-ninh', name: 'TÂY NINH', dot: { x: 470, y: 770 }, box: { x: 300, y: 690 } },
-          { id: 'tp-hcm', name: 'TP. HỒ CHÍ MINH', dot: { x: 521.3, y: 806.7 }, box: { x: 260, y: 758 } },
-          { id: 'tien-giang', name: 'TIỀN GIANG', dot: { x: 445, y: 825 }, box: { x: 250, y: 820 } },
-          { id: 'ben-tre', name: 'BẾN TRE', dot: { x: 545, y: 828 }, box: { x: 620, y: 895 } },
-          { id: 'can-tho', name: 'CẦN THƠ', dot: { x: 452, y: 878 }, box: { x: 470, y: 955 } }
+          { id: 'quang-ninh', name: _t('QUẢNG NINH', 'QUANG NINH'), dot: { x: 540, y: 160 }, box: { x: 550, y: 80 } },
+          { id: 'hai-phong', name: _t('HẢI PHÒNG', 'HAI PHONG'), dot: { x: 493.7, y: 182.7 }, box: { x: 660, y: 183 } },
+          { id: 'thanh-hoa', name: _t('THANH HÓA', 'THANH HOA'), dot: { x: 390, y: 300 }, box: { x: 288, y: 222 } },
+          { id: 'nghe-an', name: _t('NGHỆ AN', 'NGHE AN'), dot: { x: 455, y: 350 }, box: { x: 255, y: 320 } },
+          { id: 'quang-tri', name: _t('QUẢNG TRỊ', 'QUANG TRI'), dot: { x: 555, y: 460 }, box: { x: 390, y: 465 } },
+          { id: 'da-nang', name: _t('ĐÀ NẴNG', 'DA NANG'), dot: { x: 607.5, y: 517.9 }, box: { x: 790, y: 500 } },
+          { id: 'quang-ngai', name: _t('QUẢNG NGÃI', 'QUANG NGAI'), dot: { x: 600, y: 554.3 }, box: { x: 400, y: 565 } },
+          { id: 'khanh-hoa', name: _t('KHÁNH HÒA', 'KHANH HOA'), dot: { x: 643.9, y: 683.3 }, box: { x: 790, y: 595 } },
+          { id: 'ninh-thuan', name: _t('NINH THUẬN', 'NINH THUAN'), dot: { x: 650, y: 745 }, box: { x: 830, y: 660 } },
+          { id: 'binh-thuan', name: _t('BÌNH THUẬN', 'BINH THUAN'), dot: { x: 595, y: 780 }, box: { x: 790, y: 720 } },
+          { id: 'dong-nai', name: _t('ĐỒNG NAI', 'DONG NAI'), dot: { x: 564.8, y: 789.6 }, box: { x: 280, y: 630 } },
+          { id: 'ba-ria-vung-tau', name: _t('BÀ RỊA - VŨNG TÀU', 'BA RIA - VUNG TAU'), dot: { x: 570, y: 815 }, box: { x: 800, y: 780 } },
+          { id: 'tay-ninh', name: _t('TÂY NINH', 'TAY NINH'), dot: { x: 470, y: 770 }, box: { x: 300, y: 690 } },
+          { id: 'tp-hcm', name: _t('TP. HỒ CHÍ MINH', 'HO CHI MINH CITY'), dot: { x: 521.3, y: 806.7 }, box: { x: 260, y: 758 } },
+          { id: 'tien-giang', name: _t('TIỀN GIANG', 'TIEN GIANG'), dot: { x: 445, y: 825 }, box: { x: 250, y: 820 } },
+          { id: 'ben-tre', name: _t('BẾN TRE', 'BEN TRE'), dot: { x: 545, y: 828 }, box: { x: 620, y: 895 } },
+          { id: 'can-tho', name: _t('CẦN THƠ', 'CAN THO'), dot: { x: 452, y: 878 }, box: { x: 470, y: 955 } }
         ];
 
         var DOT_R = 9;

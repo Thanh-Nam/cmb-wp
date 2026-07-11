@@ -20,7 +20,7 @@ if (have_rows('about_stat_list', 'option')) {
 
 ?>
 <!-- ======= STATS ======= -->
-<section class="p-stats" id="stats" aria-label="Những con số ấn tượng">
+<section class="p-stats" id="stats" aria-label="<?php echo esc_attr( cmb_txt( 'Những con số ấn tượng', 'Impressive Numbers' ) ); ?>">
   <div class="l-container">
     <div class="p-stats__inner">
 

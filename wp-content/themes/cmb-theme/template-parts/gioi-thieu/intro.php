@@ -10,7 +10,7 @@ $title   = cmb_get_option( 'about_banner_title' );
 $content = cmb_get_option( 'about_banner_content' );
 ?>
 <!-- ======= CMB INTRO ======= -->
-<section class="p-cmb-intro" id="cmb-intro" aria-label="Hơn nửa thế kỷ đồng hành">
+<section class="p-cmb-intro" id="cmb-intro" aria-label="<?php echo esc_attr( cmb_txt( 'Hơn nửa thế kỷ đồng hành', 'Over Half a Century of Partnership' ) ); ?>">
 
   <div class="p-cmb-intro__bg" aria-hidden="true">
     <img src="<?php echo esc_url($bg['url'] ?? get_template_directory_uri() . '/assets/images/hero_port.jpg'); ?>"

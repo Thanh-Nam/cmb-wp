@@ -6,12 +6,12 @@
 $project_cats = get_terms(['taxonomy' => 'du-an-category', 'hide_empty' => false]);
 ?>
 <!-- ======= FILTER TABS ======= -->
-<div class="p-projects-filter" id="projects-filter" role="navigation" aria-label="Lọc dự án theo lĩnh vực">
+<div class="p-projects-filter" id="projects-filter" role="navigation" aria-label="<?php echo esc_attr( cmb_txt( 'Lọc dự án theo lĩnh vực', 'Filter projects by sector' ) ); ?>">
   <div class="l-container">
     <div class="p-projects-filter__inner">
-      <div class="p-projects-filter__tabs" role="tablist" aria-label="Lĩnh vực dự án">
+      <div class="p-projects-filter__tabs" role="tablist" aria-label="<?php echo esc_attr( cmb_txt( 'Lĩnh vực dự án', 'Project sectors' ) ); ?>">
         <button class="p-projects-filter__tab is-active" role="tab" aria-selected="true"
-                data-filter="all" id="filter-tab-all">Tất cả</button>
+                data-filter="all" id="filter-tab-all"><?php echo cmb_txt( 'Tất cả', 'All' ); ?></button>
         <?php if ($project_cats && !is_wp_error($project_cats)) : ?>
         <?php foreach ($project_cats as $cat) : ?>
         <button class="p-projects-filter__tab" role="tab" aria-selected="false"

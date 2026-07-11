@@ -5,7 +5,7 @@
  */
 ?>
 <!-- ======= CORE VALUES ======= -->
-<section class="p-values" id="values" aria-label="Giá trị cốt lõi CMB">
+<section class="p-values" id="values" aria-label="<?php echo esc_attr( cmb_txt( 'Giá trị cốt lõi CMB', 'CMB Core Values' ) ); ?>">
   <div class="l-container">
     <div class="p-values__frame" data-reveal="fade-up">
 
@@ -42,7 +42,7 @@
       </svg>
 
       <div class="p-values__title-bar">
-        <h2 class="p-values__title"><?php echo esc_html( cmb_get_option( 'about_value_title' ) ?: 'GIÁ TRỊ CỐT LÕI' ); ?></h2>
+        <h2 class="p-values__title"><?php echo esc_html( cmb_get_option( 'about_value_title' ) ?: cmb_txt( 'GIÁ TRỊ CỐT LÕI', 'CORE VALUES' ) ); ?></h2>
       </div>
 
       <div class="p-values__grid">

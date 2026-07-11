@@ -29,14 +29,14 @@ $hp_featured_id = 0;
 $arrow_svg = '<svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 5H13M9 1L13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 ?>
 <!-- ======= NEWS ======= -->
-<section class="p-news" id="news" aria-label="Tin tức">
+<section class="p-news" id="news" aria-label="<?php echo esc_attr( cmb_txt( 'Tin tức', 'News' ) ); ?>">
 
   <div class="l-container">
 
     <!-- Header -->
     <div class="p-news__header" data-reveal="fade-up">
-      <span class="c-section-label">Sự Kiện</span>
-      <h2 class="c-section-title p-news__title">Tin Tức</h2>
+      <span class="c-section-label"><?php echo cmb_txt( 'Sự Kiện', 'Events' ); ?></span>
+      <h2 class="c-section-title p-news__title"><?php echo cmb_txt( 'Tin Tức', 'News' ); ?></h2>
     </div>
 
     <!-- Featured article -->
@@ -89,8 +89,8 @@ $arrow_svg = '<svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns=
           <?php echo esc_html( wp_trim_words( get_the_excerpt(), 30 ) ); ?>
         </p>
 
-        <a href="<?php the_permalink(); ?>" class="p-news__link" title="Xem chi tiết: <?php the_title_attribute(); ?>">
-          Xem Chi Tiết <?php echo $arrow_svg; ?>
+        <a href="<?php the_permalink(); ?>" class="p-news__link" title="<?php echo esc_attr( sprintf( cmb_txt( 'Xem chi tiết: %s', 'View details: %s' ), get_the_title() ) ); ?>">
+          <?php echo cmb_txt( 'Xem Chi Tiết', 'View Details' ); ?> <?php echo $arrow_svg; ?>
         </a>
 
       </div>

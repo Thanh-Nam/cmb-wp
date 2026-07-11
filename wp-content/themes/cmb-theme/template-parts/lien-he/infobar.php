@@ -8,8 +8,8 @@ $phones_raw    = function_exists('get_field') ? get_field('company_phone',      
 $emails_raw    = function_exists('get_field') ? get_field('company_email',         'option') : '';
 $working_hours = function_exists('get_field') ? get_field('company_working_hours', 'option') : '';
 
-if (!$address)       $address       = "Tầng 11, Tòa nhà CMB, 512 Tôn Thất Thuyết,\nCầu Giấy, Hà Nội, Việt Nam";
-if (!$working_hours) $working_hours = "Thứ 2 – Thứ 6\n08:00 – 17:30";
+if (!$address)       $address       = cmb_txt("Tầng 11, Tòa nhà CMB, 512 Tôn Thất Thuyết,\nCầu Giấy, Hà Nội, Việt Nam", "Floor 11, CMB Building, 512 Ton That Thuyet,\nCau Giay, Hanoi, Vietnam");
+if (!$working_hours) $working_hours = cmb_txt("Thứ 2 – Thứ 6\n08:00 – 17:30", "Monday – Friday\n8:00 AM – 5:30 PM");
 
 $phones = $phones_raw
     ? array_values(array_filter(array_map('trim', explode("\n", $phones_raw))))
@@ -31,7 +31,7 @@ $emails = $emails_raw
           </svg>
         </span>
         <div class="p-lh-infobar__text">
-          <span class="p-lh-infobar__label">Địa chỉ</span>
+          <span class="p-lh-infobar__label"><?php echo cmb_txt('Địa chỉ', 'Address'); ?></span>
           <span class="p-lh-infobar__value"><?php echo $address; ?></span>
         </div>
       </div>
@@ -45,7 +45,7 @@ $emails = $emails_raw
           </svg>
         </span>
         <div class="p-lh-infobar__text">
-          <span class="p-lh-infobar__label">Điện thoại</span>
+          <span class="p-lh-infobar__label"><?php echo cmb_txt('Điện thoại', 'Phone'); ?></span>
           <span class="p-lh-infobar__value">
             <?php foreach ($phones as $phone) : ?>
             <a href="tel:+<?php echo esc_attr(preg_replace('/[^0-9]/', '', $phone)); ?>"><?php echo $phone; ?></a>
@@ -83,7 +83,7 @@ $emails = $emails_raw
           </svg>
         </span>
         <div class="p-lh-infobar__text">
-          <span class="p-lh-infobar__label">Giờ làm việc</span>
+          <span class="p-lh-infobar__label"><?php echo cmb_txt('Giờ làm việc', 'Working Hours'); ?></span>
           <span class="p-lh-infobar__value"><?php echo $working_hours; ?></span>
         </div>
       </div>

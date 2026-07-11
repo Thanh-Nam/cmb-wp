@@ -19,15 +19,28 @@ if ( ! $projects_q->have_posts() ) {
     wp_reset_postdata();
     return;
 }
+
+// Sắp xếp riêng theo "Thứ tự trong mục Dự án nổi bật" (project_featured_order)
+// — chỉ áp dụng cho khu vực nổi bật này, không ảnh hưởng danh sách dự án đầy đủ.
+usort( $projects_q->posts, function ( $a, $b ) {
+    $order_a = get_field( 'project_featured_order', $a->ID );
+    $order_b = get_field( 'project_featured_order', $b->ID );
+    $order_a = ( $order_a === '' || $order_a === null ) ? PHP_INT_MAX : (int) $order_a;
+    $order_b = ( $order_b === '' || $order_b === null ) ? PHP_INT_MAX : (int) $order_b;
+    if ( $order_a === $order_b ) {
+        return strtotime( $b->post_date ) <=> strtotime( $a->post_date );
+    }
+    return $order_a <=> $order_b;
+} );
 ?>
 <!-- ======= PROJECT ======= -->
-<section class="p-project" id="project" aria-label="Dự án tiêu biểu">
+<section class="p-project" id="project" aria-label="<?php echo esc_attr( cmb_txt( 'Dự án tiêu biểu', 'Featured Projects' ) ); ?>">
   <div class="l-container">
 
     <!-- Header -->
     <div class="p-project__header" data-reveal="fade-up">
-      <span class="c-section-label c-section-label--center">Nổi Bật</span>
-      <h2 class="c-section-title p-project__title">Dự Án Tiêu Biểu</h2>
+      <span class="c-section-label c-section-label--center"><?php echo cmb_txt( 'Nổi Bật', 'Featured' ); ?></span>
+      <h2 class="c-section-title p-project__title"><?php echo cmb_txt( 'Dự Án Tiêu Biểu', 'Featured Projects' ); ?></h2>
     </div>
 
     <!-- Filter tabs — chỉ lấy category có trong các dự án nổi bật -->
@@ -47,9 +60,9 @@ if ( ! $projects_q->have_posts() ) {
     }
     ?>
     <div class="p-project__filter-wrap" data-reveal="fade-up" data-reveal-delay="2">
-      <nav class="p-project__filter" role="tablist" aria-label="Lọc dự án theo danh mục">
+      <nav class="p-project__filter" role="tablist" aria-label="<?php echo esc_attr( cmb_txt( 'Lọc dự án theo danh mục', 'Filter projects by category' ) ); ?>">
         <button class="p-project__tab is-active" role="tab" aria-selected="true" data-filter="all" id="tab-all">
-          <span>Tất Cả</span>
+          <span><?php echo cmb_txt( 'Tất Cả', 'All' ); ?></span>
         </button>
         <?php foreach ($project_cats as $cat) : ?>
         <button class="p-project__tab" role="tab" aria-selected="false"
@@ -101,15 +114,15 @@ if ( ! $projects_q->have_posts() ) {
             <h3 class="p-project__card-title"><?php the_title(); ?></h3>
             <div class="p-project__card-extra">
               <?php if ($is_feat && ($p_owner || $p_loc || $p_svc)) : ?>
-              <ul class="p-project__card-info" aria-label="Thông tin dự án">
-                <?php if ($p_owner) : ?><li>Chủ đầu tư: <?php echo $p_owner; ?></li><?php endif; ?>
-                <?php if ($p_loc) : ?><li>Địa điểm/vị trí: <?php echo $p_loc; ?></li><?php endif; ?>
-                <?php if ($p_svc) : ?><li>Dịch vụ tư vấn chính: <?php echo $p_svc; ?></li><?php endif; ?>
+              <ul class="p-project__card-info" aria-label="<?php echo esc_attr( cmb_txt( 'Thông tin dự án', 'Project information' ) ); ?>">
+                <?php if ($p_owner) : ?><li><?php echo cmb_txt( 'Chủ đầu tư', 'Investor' ); ?>: <?php echo $p_owner; ?></li><?php endif; ?>
+                <?php if ($p_loc) : ?><li><?php echo cmb_txt( 'Địa điểm/vị trí', 'Location' ); ?>: <?php echo $p_loc; ?></li><?php endif; ?>
+                <?php if ($p_svc) : ?><li><?php echo cmb_txt( 'Dịch vụ tư vấn chính', 'Main consulting services' ); ?>: <?php echo $p_svc; ?></li><?php endif; ?>
               </ul>
               <?php endif; ?>
               <a href="<?php the_permalink(); ?>" class="p-project__card-btn"
-                 title="Xem chi tiết <?php the_title_attribute(); ?>">
-                Chi Tiết
+                 title="<?php echo esc_attr( sprintf( cmb_txt( 'Xem chi tiết %s', 'View details %s' ), get_the_title() ) ); ?>">
+                <?php echo cmb_txt( 'Chi Tiết', 'Details' ); ?>
                 <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
                   <path d="M1 5H13M9 1L13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>

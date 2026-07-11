@@ -12,17 +12,20 @@
   // HISTORY MILESTONES: Sliding window navigation
   // ============================================
   (function initHistoryMilestones() {
+    var _lang = (window.CMB_Theme && window.CMB_Theme.lang) ? window.CMB_Theme.lang : 'vi';
+    function _t(vi, en) { return _lang === 'en' ? en : vi; }
+
     var MILESTONES = (window.CMB_History && window.CMB_History.length)
       ? window.CMB_History
       : [
-        { year: '1966', desc: 'Thành lập Đội khảo sát thiết kế (tiền thân của Công ty).' },
-        { year: '1977', desc: 'Chuyển đổi mô hình thành Công ty Khảo sát Thiết kế Đường biển.' },
-        { year: '1995', desc: 'Đổi tên thành Công ty tư vấn xây dựng công trình Hàng hải.' },
-        { year: '1999', desc: 'Lập Quy hoạch tổng thể phát triển hệ thống cảng biển Việt Nam đến năm 2010 — Quy hoạch cảng biển đầu tiên của Việt Nam.' },
-        { year: '2004', desc: 'Cổ phần hóa, hoạt động theo mô hình công ty cổ phần.' },
-        { year: '2011', desc: 'Được trao tặng Huân chương Độc lập Hạng Ba.' },
-        { year: '2021', desc: 'Lập Quy hoạch tổng thể phát triển hệ thống cảng biển Việt Nam thời kỳ 2021-2030, tầm nhìn đến năm 2050. Kỷ niệm 55 năm thành lập và được tặng Huân chương Độc lập Hạng Nhì.' },
-        { year: '2023', desc: 'Lập Quy hoạch chi tiết nhóm cảng biển, bến cảng, cầu cảng, bến phao, khu nước, vùng nước thời kỳ 2021-2030, tầm nhìn đến năm 2050. Lập Quy hoạch phát triển hệ thống cảng cạn thời kỳ 2021-2030, tầm nhìn đến năm 2050.' },
+        { year: '1966', desc: _t('Thành lập Đội khảo sát thiết kế (tiền thân của Công ty).', 'Established the Survey and Design Team (predecessor of the Company).') },
+        { year: '1977', desc: _t('Chuyển đổi mô hình thành Công ty Khảo sát Thiết kế Đường biển.', 'Transformed into the Maritime Survey and Design Company.') },
+        { year: '1995', desc: _t('Đổi tên thành Công ty tư vấn xây dựng công trình Hàng hải.', 'Renamed to Marine Construction Consulting Company.') },
+        { year: '1999', desc: _t('Lập Quy hoạch tổng thể phát triển hệ thống cảng biển Việt Nam đến năm 2010 — Quy hoạch cảng biển đầu tiên của Việt Nam.', 'Developed the Master Plan for Vietnam\'s Seaport System Development to 2010 — Vietnam\'s first seaport master plan.') },
+        { year: '2004', desc: _t('Cổ phần hóa, hoạt động theo mô hình công ty cổ phần.', 'Equitized and began operating as a joint stock company.') },
+        { year: '2011', desc: _t('Được trao tặng Huân chương Độc lập Hạng Ba.', 'Awarded the Third-Class Independence Medal.') },
+        { year: '2021', desc: _t('Lập Quy hoạch tổng thể phát triển hệ thống cảng biển Việt Nam thời kỳ 2021-2030, tầm nhìn đến năm 2050. Kỷ niệm 55 năm thành lập và được tặng Huân chương Độc lập Hạng Nhì.', 'Developed the Master Plan for Vietnam\'s Seaport System Development for 2021-2030, with a vision to 2050. Celebrated the Company\'s 55th anniversary and was awarded the Second-Class Independence Medal.') },
+        { year: '2023', desc: _t('Lập Quy hoạch chi tiết nhóm cảng biển, bến cảng, cầu cảng, bến phao, khu nước, vùng nước thời kỳ 2021-2030, tầm nhìn đến năm 2050. Lập Quy hoạch phát triển hệ thống cảng cạn thời kỳ 2021-2030, tầm nhìn đến năm 2050.', 'Developed the Detailed Plan for seaport groups, ports, wharves, buoy berths, water areas and waters for 2021-2030, with a vision to 2050. Developed the Master Plan for the Dry Port System Development for 2021-2030, with a vision to 2050.') },
       ];
 
     var slots = Array.from(document.querySelectorAll('.p-history__item'));

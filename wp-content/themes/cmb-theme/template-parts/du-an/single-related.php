@@ -23,10 +23,10 @@ if (!$related->have_posts()) {
 }
 ?>
 <!-- ======= RELATED PROJECTS ======= -->
-<section class="p-related-projects" id="related-projects" aria-label="Dự án liên quan">
+<section class="p-related-projects" id="related-projects" aria-label="<?php echo esc_attr( cmb_txt( 'Dự án liên quan', 'Related Projects' ) ); ?>">
   <div class="l-container">
 
-    <h2 class="p-related-projects__title">DỰ ÁN LIÊN QUAN</h2>
+    <h2 class="p-related-projects__title"><?php echo cmb_txt( 'DỰ ÁN LIÊN QUAN', 'RELATED PROJECTS' ); ?></h2>
 
     <div class="p-related-projects__grid" id="related-projects-grid">
       <div class="p-related-projects__cards">
@@ -53,7 +53,7 @@ if (!$related->have_posts()) {
 
       <div class="p-related-projects__all-wrap">
         <a href="<?php echo esc_url(get_post_type_archive_link('du-an')); ?>" class="p-related-projects__all" id="btn-all-projects">
-          Xem tất cả dự án
+          <?php echo cmb_txt( 'Xem tất cả dự án', 'View all projects' ); ?>
           <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
             <path d="M1 6H15M10 1L15 6L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>

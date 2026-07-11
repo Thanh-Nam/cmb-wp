@@ -17,15 +17,15 @@ $projects_q = new WP_Query([
 ]);
 ?>
 <!-- ======= DANH SÁCH DỰ ÁN ======= -->
-<section class="p-projects-list" id="projects-list" aria-label="Danh sách dự án tiêu biểu">
+<section class="p-projects-list" id="projects-list" aria-label="<?php echo esc_attr( cmb_txt( 'Danh sách dự án tiêu biểu', 'List of featured projects' ) ); ?>">
   <div class="l-container">
 
     <div class="p-projects-list__header" data-reveal="fade-up">
-      <h2 class="p-projects-list__section-title">DANH SÁCH DỰ ÁN</h2>
+      <h2 class="p-projects-list__section-title"><?php echo cmb_txt( 'DANH SÁCH DỰ ÁN', 'PROJECT LIST' ); ?></h2>
 
-      <div class="p-projects-list__view-toggle" role="group" aria-label="Chế độ hiển thị">
+      <div class="p-projects-list__view-toggle" role="group" aria-label="<?php echo esc_attr( cmb_txt( 'Chế độ hiển thị', 'Display mode' ) ); ?>">
         <button class="p-projects-list__view-btn is-active" id="view-grid-btn"
-                aria-label="Xem dạng lưới" aria-pressed="true" title="Lưới 3 cột">
+                aria-label="<?php echo esc_attr( cmb_txt( 'Xem dạng lưới', 'Grid view' ) ); ?>" aria-pressed="true" title="<?php echo esc_attr( cmb_txt( 'Lưới 3 cột', '3-column grid' ) ); ?>">
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor" />
             <rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor" />
@@ -34,7 +34,7 @@ $projects_q = new WP_Query([
           </svg>
         </button>
         <button class="p-projects-list__view-btn" id="view-list-btn"
-                aria-label="Xem dạng danh sách" aria-pressed="false" title="Danh sách">
+                aria-label="<?php echo esc_attr( cmb_txt( 'Xem dạng danh sách', 'List view' ) ); ?>" aria-pressed="false" title="<?php echo esc_attr( cmb_txt( 'Danh sách', 'List' ) ); ?>">
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <rect x="1" y="2" width="14" height="3" rx="1" fill="currentColor" />
             <rect x="1" y="7" width="14" height="3" rx="1" fill="currentColor" />
@@ -76,7 +76,7 @@ $projects_q = new WP_Query([
 
         <div class="p-projects-card__body">
           <h3 class="p-projects-card__name">
-            <a href="<?php the_permalink(); ?>" title="Xem chi tiết <?php the_title_attribute(); ?>">
+            <a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( cmb_txt( 'Xem chi tiết ', 'View details ' ) . get_the_title() ); ?>">
               <?php the_title(); ?>
             </a>
           </h3>
@@ -96,8 +96,8 @@ $projects_q = new WP_Query([
         </div>
 
         <div class="p-projects-card__footer">
-          <a href="<?php the_permalink(); ?>" class="p-projects-card__cta" title="Xem chi tiết">
-            Xem chi tiết
+          <a href="<?php the_permalink(); ?>" class="p-projects-card__cta" title="<?php echo esc_attr( cmb_txt( 'Xem chi tiết', 'View details' ) ); ?>">
+            <?php echo cmb_txt( 'Xem chi tiết', 'View details' ); ?>
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
               <path d="M1 5H13M9 1L13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
@@ -107,7 +107,7 @@ $projects_q = new WP_Query([
       </article>
       <?php endwhile; wp_reset_postdata(); ?>
       <?php else : ?>
-      <p class="p-projects-list__empty">Chưa có dự án nào.</p>
+      <p class="p-projects-list__empty"><?php echo cmb_txt( 'Chưa có dự án nào.', 'No projects available yet.' ); ?></p>
       <?php endif; ?>
     </div>
 
@@ -122,7 +122,7 @@ $projects_q = new WP_Query([
         'next_text' => '&raquo;',
     ]);
     ?>
-    <nav class="p-projects-list__pagination" aria-label="Phân trang dự án">
+    <nav class="p-projects-list__pagination" aria-label="<?php echo esc_attr( cmb_txt( 'Phân trang dự án', 'Project pagination' ) ); ?>">
       <?php foreach ($pagination as $link) :
         $link = str_replace('class="page-numbers current"', 'class="p-projects-list__page-btn is-active" aria-current="page"', $link);
         $link = str_replace('class="page-numbers dots"',    'class="p-projects-list__page-btn p-projects-list__page-btn--dots"', $link);

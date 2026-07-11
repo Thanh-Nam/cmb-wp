@@ -13,11 +13,11 @@ $ir_terms = get_terms([
 if (is_wp_error($ir_terms)) $ir_terms = [];
 
 if (empty($ir_terms)) : ?>
-<div class="l-container" style="padding:4rem 0;text-align:center;color:#888;">Chưa có tài liệu nào.</div>
+<div class="l-container" style="padding:4rem 0;text-align:center;color:#888;"><?php echo cmb_txt('Chưa có tài liệu nào.', 'No documents available yet.'); ?></div>
 <?php return; endif; ?>
 
 <!-- ======= TAB NAVIGATION ======= -->
-<nav class="p-ir-tabs" id="ir-tabs" aria-label="Danh mục quan hệ cổ đông">
+<nav class="p-ir-tabs" id="ir-tabs" aria-label="<?php echo esc_attr(cmb_txt('Danh mục quan hệ cổ đông', 'Shareholder Relations Categories')); ?>">
   <div class="l-container">
     <ul class="p-ir-tabs__list" role="tablist">
       <?php foreach ($ir_terms as $i => $term) : ?>
@@ -143,7 +143,7 @@ if (empty($ir_terms)) : ?>
                   <span class="p-ir-timeline__date"><?php echo $post_data['date_md']; ?></span>
                   <a href="<?php echo $post_data['permalink']; ?>" class="p-ir-timeline__title"><?php echo $post_data['title']; ?></a>
                   <?php if ($post_data['pdf_url']) : ?>
-                  <a href="<?php echo $post_data['pdf_url']; ?>" class="p-ir-timeline__action" aria-label="Tải PDF" download>
+                  <a href="<?php echo $post_data['pdf_url']; ?>" class="p-ir-timeline__action" aria-label="<?php echo esc_attr(cmb_txt('Tải PDF', 'Download PDF')); ?>" download>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                       <path d="M8 2V10M8 10L5 7M8 10L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                       <path d="M2 13H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
@@ -158,16 +158,16 @@ if (empty($ir_terms)) : ?>
             </div>
             <?php $first_year = false; endforeach;
             else : ?>
-            <p style="color:#888;padding:1rem 0;">Chưa có tài liệu.</p>
+            <p style="color:#888;padding:1rem 0;"><?php echo cmb_txt('Chưa có tài liệu.', 'No documents available.'); ?></p>
             <?php endif; ?>
           </div>
           <!-- /TIMELINE -->
 
 
           <!-- TÀI LIỆU NỔI BẬT -->
-          <aside class="p-ir-featured" aria-label="Tài liệu nổi bật" data-reveal="fade-left">
+          <aside class="p-ir-featured" aria-label="<?php echo esc_attr(cmb_txt('Tài liệu nổi bật', 'Featured Documents')); ?>" data-reveal="fade-left">
             <div class="p-ir-featured__heading">
-              <h2 class="p-ir-featured__title">Tài liệu nổi bật</h2>
+              <h2 class="p-ir-featured__title"><?php echo cmb_txt('Tài liệu nổi bật', 'Featured Documents'); ?></h2>
             </div>
             <?php if (!empty($feat_data)) : ?>
             <ul class="p-ir-featured__list" role="list">
@@ -195,17 +195,17 @@ if (empty($ir_terms)) : ?>
                         <rect x="1" y="0.5" width="10" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
                         <path d="M3.5 4H8.5M3.5 6.5H6.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
                       </svg>
-                      <span><?php echo $doc['size'] ? $doc['size'] : 'Xem chi tiết'; ?></span>
+                      <span><?php echo $doc['size'] ? $doc['size'] : cmb_txt('Xem chi tiết', 'View details'); ?></span>
                     </div>
                   </div>
                 </a>
                 <?php if ($doc['pdf_url']) : ?>
-                <a href="<?php echo $doc['pdf_url']; ?>" class="p-ir-feat-doc__download" aria-label="Tải PDF" download>
+                <a href="<?php echo $doc['pdf_url']; ?>" class="p-ir-feat-doc__download" aria-label="<?php echo esc_attr(cmb_txt('Tải PDF', 'Download PDF')); ?>" download>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                     <path d="M8 2V10M8 10L5 7M8 10L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M2 13H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
                   </svg>
-                  Tải PDF
+                  <?php echo cmb_txt('Tải PDF', 'Download PDF'); ?>
                 </a>
                 <?php endif; ?>
               </li>

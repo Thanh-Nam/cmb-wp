@@ -67,10 +67,10 @@ while (have_posts()) : the_post();
       <div class="p-page-hero__fade" aria-hidden="true"></div>
 
       <div class="l-container">
-        <nav class="p-page-hero__breadcrumb" aria-label="Đường dẫn">
-          <a href="<?php echo esc_url(home_url('/')); ?>">Trang chủ</a>
+        <nav class="p-page-hero__breadcrumb" aria-label="<?php echo esc_attr( cmb_txt( 'Đường dẫn', 'Breadcrumb' ) ); ?>">
+          <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo cmb_txt( 'Trang chủ', 'Home' ); ?></a>
           <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
-          <a href="<?php echo $news_url; ?>">Tin tức</a>
+          <a href="<?php echo $news_url; ?>"><?php echo cmb_txt( 'Tin tức', 'News' ); ?></a>
           <?php if ($post_cat) : ?>
           <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
           <a href="<?php echo esc_url(get_category_link($post_cat->term_id)); ?>">
@@ -96,7 +96,7 @@ while (have_posts()) : the_post();
         <div class="p-news-detail__layout">
 
           <!-- ---- ARTICLE CONTENT ---- -->
-          <article class="p-news-detail__article" id="article-content" aria-label="Nội dung bài viết">
+          <article class="p-news-detail__article" id="article-content" aria-label="<?php echo esc_attr( cmb_txt( 'Nội dung bài viết', 'Article content' ) ); ?>">
 
             <!-- Featured image -->
             <?php if (has_post_thumbnail()) : ?>
@@ -113,8 +113,8 @@ while (have_posts()) : the_post();
                 <path d="M4 1V3M10 1V3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
               </svg>
               <time datetime="<?php echo $pub_datetime; ?>">
-                Đăng lúc <strong><?php echo $pub_time; ?></strong>
-                ngày <strong><?php echo $pub_date_str; ?></strong>
+                <?php echo cmb_txt( 'Đăng lúc', 'Posted at' ); ?> <strong><?php echo $pub_time; ?></strong>
+                <?php echo cmb_txt( 'ngày', 'on' ); ?> <strong><?php echo $pub_date_str; ?></strong>
               </time>
             </div>
 
@@ -130,10 +130,10 @@ while (have_posts()) : the_post();
               <div class="p-lab-detail__viewer" id="content-pdf-viewer-<?php echo (int) $i; ?>">
                 <iframe
                   src="<?php echo esc_url($pdf_url); ?>"
-                  title="Tài liệu PDF đính kèm"
+                  title="<?php echo esc_attr( cmb_txt( 'Tài liệu PDF đính kèm', 'Attached PDF document' ) ); ?>"
                   allowfullscreen
                   loading="lazy"
-                  aria-label="Xem tài liệu PDF">
+                  aria-label="<?php echo esc_attr( cmb_txt( 'Xem tài liệu PDF', 'View PDF document' ) ); ?>">
                 </iframe>
                 <div class="p-lab-detail__viewer-fallback" aria-live="polite">
                   <svg width="48" height="60" viewBox="0 0 48 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -141,13 +141,13 @@ while (have_posts()) : the_post();
                     <path d="M30 4V18H44" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
                     <path d="M14 28H34M14 34H28M14 40H22" stroke="#0379CC" stroke-width="1.5" stroke-linecap="round"/>
                   </svg>
-                  <p>Trình duyệt của bạn không hỗ trợ xem PDF trực tiếp.</p>
+                  <p><?php echo cmb_txt( 'Trình duyệt của bạn không hỗ trợ xem PDF trực tiếp.', 'Your browser does not support viewing PDF directly.' ); ?></p>
                   <a href="<?php echo esc_url($pdf_url); ?>" download>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                       <path d="M7 1V9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       <path d="M2 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>
-                    Tải xuống để xem
+                    <?php echo cmb_txt( 'Tải xuống để xem', 'Download to view' ); ?>
                   </a>
                 </div>
               </div>
@@ -158,7 +158,7 @@ while (have_posts()) : the_post();
             <!-- Event gallery -->
             <?php if (!empty($gallery)) : ?>
             <div class="p-news-detail__gallery">
-              <h2 class="p-news-detail__gallery-title">HÌNH ẢNH SỰ KIỆN</h2>
+              <h2 class="p-news-detail__gallery-title"><?php echo cmb_txt( 'HÌNH ẢNH SỰ KIỆN', 'EVENT IMAGES' ); ?></h2>
               <div class="p-news-detail__gallery-grid" id="event-gallery">
                 <?php foreach ($gallery as $i => $img) :
                   $is_video = strpos($img['mime_type'] ?? '', 'video') === 0;
@@ -181,7 +181,7 @@ while (have_posts()) : the_post();
 
             <!-- POST NAVIGATION -->
             <?php if ($prev_post || $next_post) : ?>
-            <nav class="p-news-detail__postnav" aria-label="Điều hướng giữa các bài viết">
+            <nav class="p-news-detail__postnav" aria-label="<?php echo esc_attr( cmb_txt( 'Điều hướng giữa các bài viết', 'Navigate between articles' ) ); ?>">
 
               <?php if ($prev_post) : ?>
               <a href="<?php echo esc_url(get_permalink($prev_post)); ?>"
@@ -190,7 +190,7 @@ while (have_posts()) : the_post();
                   <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true">
                     <path d="M11 5H1M5 1L1 5L5 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
-                  Bài viết trước
+                  <?php echo cmb_txt( 'Bài viết trước', 'Previous article' ); ?>
                 </span>
                 <span class="p-news-detail__postnav-title">
                   <?php echo esc_html(get_the_title($prev_post)); ?>
@@ -202,7 +202,7 @@ while (have_posts()) : the_post();
               <a href="<?php echo esc_url(get_permalink($next_post)); ?>"
                 class="p-news-detail__postnav-item p-news-detail__postnav-next">
                 <span class="p-news-detail__postnav-label">
-                  Bài viết tiếp theo
+                  <?php echo cmb_txt( 'Bài viết tiếp theo', 'Next article' ); ?>
                   <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true">
                     <path d="M1 5H11M7 1L11 5L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
@@ -222,12 +222,12 @@ while (have_posts()) : the_post();
 
 
           <!-- ---- SIDEBAR ---- -->
-          <aside class="p-news-detail__sidebar" id="news-detail-sidebar" aria-label="Thông tin liên quan">
+          <aside class="p-news-detail__sidebar" id="news-detail-sidebar" aria-label="<?php echo esc_attr( cmb_txt( 'Thông tin liên quan', 'Related information' ) ); ?>">
 
             <!-- TIN LIÊN QUAN -->
             <?php if ($related_q->have_posts()) : ?>
             <div class="p-news-detail__sidebar-widget" id="related-news-widget">
-              <h3 class="p-news-detail__sidebar-title">TIN LIÊN QUAN</h3>
+              <h3 class="p-news-detail__sidebar-title"><?php echo cmb_txt( 'TIN LIÊN QUAN', 'RELATED NEWS' ); ?></h3>
               <ul class="p-news-detail__related-news-list">
                 <?php while ($related_q->have_posts()) : $related_q->the_post(); ?>
                 <li>
@@ -251,7 +251,7 @@ while (have_posts()) : the_post();
                 <?php endwhile; wp_reset_postdata(); ?>
               </ul>
               <a href="<?php echo $news_url; ?>" class="p-news-detail__sidebar-cta" id="btn-all-news">
-                Xem tất cả tin tức
+                <?php echo cmb_txt( 'Xem tất cả tin tức', 'View all news' ); ?>
                 <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
                   <path d="M1 5H13M9 1L13 5L9 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -262,13 +262,13 @@ while (have_posts()) : the_post();
 
             <!-- CHIA SẺ -->
             <div class="p-news-detail__share-bar" id="share-widget">
-              <span class="p-news-detail__share-label">Chia sẻ:</span>
+              <span class="p-news-detail__share-label"><?php echo cmb_txt( 'Chia sẻ:', 'Share:' ); ?></span>
               <div class="p-news-detail__share-icons">
 
                 <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>"
                   class="p-news-detail__share-btn"
                   target="_blank" rel="noopener noreferrer"
-                  aria-label="Chia sẻ lên Facebook">
+                  aria-label="<?php echo esc_attr( cmb_txt( 'Chia sẻ lên Facebook', 'Share on Facebook' ) ); ?>">
                   <svg width="9" height="17" viewBox="0 0 9 17" fill="none" aria-hidden="true">
                     <path d="M6 9.5H8.5L9.5 6.5H6V4.5C6 3.5 6.5 3 7.5 3H9.5V0C9.17 0 7.84 0 6.84 0C4.33 0 3 1.5 3 4V6.5H0.5V9.5H3V17H6V9.5Z" fill="currentColor"/>
                   </svg>
@@ -277,7 +277,7 @@ while (have_posts()) : the_post();
                 <a href="https://zalo.me/share?url=<?php echo $share_url; ?>"
                   class="p-news-detail__share-btn"
                   target="_blank" rel="noopener noreferrer"
-                  aria-label="Chia sẻ lên Zalo">
+                  aria-label="<?php echo esc_attr( cmb_txt( 'Chia sẻ lên Zalo', 'Share on Zalo' ) ); ?>">
                   <svg width="18" height="18" viewBox="0 0 40 40" fill="currentColor" aria-hidden="true">
                     <path d="M20 2C10.059 2 2 10.059 2 20s8.059 18 18 18 18-8.059 18-18S29.941 2 20 2zm-4.5 25.5H13v-11h2.5v11zm-1.25-12.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm14.25 12.5h-2.4l-4.6-7v7H19v-11h2.5l4.5 6.9V16.5H28.5v11z"/>
                   </svg>
@@ -286,7 +286,7 @@ while (have_posts()) : the_post();
                 <a href="https://www.instagram.com/"
                   class="p-news-detail__share-btn"
                   target="_blank" rel="noopener noreferrer"
-                  aria-label="Chia sẻ lên Instagram">
+                  aria-label="<?php echo esc_attr( cmb_txt( 'Chia sẻ lên Instagram', 'Share on Instagram' ) ); ?>">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.6"/>
                     <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.6"/>

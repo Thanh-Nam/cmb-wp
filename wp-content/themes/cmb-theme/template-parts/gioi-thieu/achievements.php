@@ -9,11 +9,11 @@ $ach_row3 = get_field('about_achievements_row-3', 'option');
 
 ?>
 <!-- ======= ACHIEVEMENTS ======= -->
-<section class="p-achievements" id="achievements" aria-label="Thành tựu đạt được của CMB">
+<section class="p-achievements" id="achievements" aria-label="<?php echo esc_attr( cmb_txt( 'Thành tựu đạt được của CMB', 'CMB Achievements' ) ); ?>">
   <div class="l-container">
 
     <div class="p-achievements__header" data-reveal="fade-up">
-      <h2 class="c-section-title c-section-title--white">THÀNH TỰU</h2>
+      <h2 class="c-section-title c-section-title--white"><?php echo cmb_txt( 'THÀNH TỰU', 'ACHIEVEMENTS' ); ?></h2>
     </div>
 
     <!-- Hàng 1: 2 huy chương lớn -->

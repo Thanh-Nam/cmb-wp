@@ -7,7 +7,7 @@ $vision  = get_field('about_vision',  'option');
 $mission = get_field('about_mission', 'option');
 ?>
 <!-- ======= VISION ======= -->
-<section class="p-vision" id="vision" aria-label="Tầm nhìn và sứ mệnh CMB">
+<section class="p-vision" id="vision" aria-label="<?php echo esc_attr( cmb_txt( 'Tầm nhìn và sứ mệnh CMB', 'Vision and Mission of CMB' ) ); ?>">
   <div class="l-container">
     <div class="p-vision__card" data-reveal="fade-up">
 
@@ -18,14 +18,14 @@ $mission = get_field('about_mission', 'option');
           <div class="p-vision__overlay"></div>
         </div>
         <div class="p-vision__left-content">
-          <h2 class="p-vision__left-title"><?php echo esc_html( cmb_arr( $vision, 'title' ) ?: 'TẦM NHÌN' ); ?></h2>
+          <h2 class="p-vision__left-title"><?php echo esc_html( cmb_arr( $vision, 'title' ) ?: cmb_txt( 'TẦM NHÌN', 'VISION' ) ); ?></h2>
           <div class="p-vision__left-text"><?php echo wp_kses_post( cmb_arr( $vision, 'content' ) ); ?></div>
         </div>
       </div>
 
       <div class="p-vision__half p-vision__half--right">
         <div class="p-vision__right-content">
-          <h2 class="p-vision__right-title"><?php echo esc_html( cmb_arr( $mission, 'about_mission_title' ) ?: 'SỨ MỆNH' ); ?></h2>
+          <h2 class="p-vision__right-title"><?php echo esc_html( cmb_arr( $mission, 'about_mission_title' ) ?: cmb_txt( 'SỨ MỆNH', 'MISSION' ) ); ?></h2>
           <ul class="p-vision__list" role="list">
 
             <?php if (!empty($mission['mission_list'])) : foreach ($mission['mission_list'] as $item) : ?>

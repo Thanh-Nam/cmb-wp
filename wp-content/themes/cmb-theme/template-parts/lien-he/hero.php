@@ -4,11 +4,11 @@
  * Section: Page Hero — Liên hệ
  */
 $hero_img = get_field('banner_lien_he_img', 'option');
-$title    = cmb_get_option('banner_lien_he_title') ?: 'LIÊN HỆ';
-$subtitle = cmb_get_option('banner_lien_he_desc') ?: 'Kết nối cùng CMB<br>Kiến tạo những công trình hàng hải bền vững';
+$title    = cmb_get_option('banner_lien_he_title') ?: cmb_txt('LIÊN HỆ', 'CONTACT');
+$subtitle = cmb_get_option('banner_lien_he_desc') ?: cmb_txt('Kết nối cùng CMB<br>Kiến tạo những công trình hàng hải bền vững', 'Connect with CMB<br>Building sustainable maritime works');
 ?>
 <!-- ======= PAGE HERO ======= -->
-<section class="p-page-hero" id="lien-he-hero" aria-label="Liên hệ CMB">
+<section class="p-page-hero" id="lien-he-hero" aria-label="<?php echo esc_attr(cmb_txt('Liên hệ CMB', 'Contact CMB')); ?>">
 
   <div class="p-page-hero__image-side">
     <?php if ($hero_img) : ?>
@@ -17,7 +17,7 @@ $subtitle = cmb_get_option('banner_lien_he_desc') ?: 'Kết nối cùng CMB<br>K
          class="p-page-hero__image" loading="eager" />
     <?php else : ?>
     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero_port.jpg"
-         alt="Cảng biển Việt Nam – CMB"
+         alt="<?php echo esc_attr(cmb_txt('Cảng biển Việt Nam – CMB', 'Vietnam Seaport – CMB')); ?>"
          class="p-page-hero__image" loading="eager" />
     <?php endif; ?>
   </div>
@@ -25,10 +25,10 @@ $subtitle = cmb_get_option('banner_lien_he_desc') ?: 'Kết nối cùng CMB<br>K
   <div class="p-page-hero__fade" aria-hidden="true"></div>
 
   <div class="l-container">
-    <nav class="p-page-hero__breadcrumb" aria-label="Đường dẫn">
-      <a href="<?php echo esc_url(home_url('/')); ?>">Trang chủ</a>
+    <nav class="p-page-hero__breadcrumb" aria-label="<?php echo esc_attr(cmb_txt('Đường dẫn', 'Breadcrumb')); ?>">
+      <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo cmb_txt('Trang chủ', 'Home'); ?></a>
       <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
-      <span class="p-page-hero__breadcrumb-current" aria-current="page">Liên hệ</span>
+      <span class="p-page-hero__breadcrumb-current" aria-current="page"><?php echo cmb_txt('Liên hệ', 'Contact'); ?></span>
     </nav>
     <div class="p-page-hero__content">
       <h1 class="p-page-hero__title"><?php echo wp_kses_post($title); ?></h1>

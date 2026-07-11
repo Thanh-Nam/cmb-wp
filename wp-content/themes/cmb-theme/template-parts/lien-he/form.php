@@ -27,10 +27,10 @@ $privacy_url = function_exists('get_privacy_policy_url') && get_privacy_policy_u
       <!-- Left: Image -->
       <div class="p-lh-body__image" data-reveal="fade-right">
         <?php if (has_post_thumbnail()) :
-          the_post_thumbnail('large', ['class' => 'p-lh-body__img', 'alt' => 'Liên hệ CMB', 'loading' => 'lazy']);
+          the_post_thumbnail('large', ['class' => 'p-lh-body__img', 'alt' => cmb_txt('Liên hệ CMB', 'Contact CMB'), 'loading' => 'lazy']);
         else : ?>
           <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero_port.jpg"
-               alt="Tàu hàng tại cảng biển Việt Nam"
+               alt="<?php echo esc_attr(cmb_txt('Tàu hàng tại cảng biển Việt Nam', 'Cargo ship at a Vietnamese seaport')); ?>"
                class="p-lh-body__img"
                loading="lazy" />
         <?php endif; ?>
@@ -38,7 +38,7 @@ $privacy_url = function_exists('get_privacy_policy_url') && get_privacy_policy_u
 
       <!-- Right: Form -->
       <div class="p-lh-body__form-wrap" data-reveal="fade-left">
-        <h2 id="form-title" class="p-lh-body__form-title">GỬI THÔNG TIN LIÊN HỆ</h2>
+        <h2 id="form-title" class="p-lh-body__form-title"><?php echo cmb_txt('GỬI THÔNG TIN LIÊN HỆ', 'SEND US A MESSAGE'); ?></h2>
 
           <div class="p-lh-cf7-wrap"><?php the_content(); ?></div>
         

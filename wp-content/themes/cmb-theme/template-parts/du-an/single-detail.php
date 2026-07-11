@@ -16,7 +16,7 @@ $tech_specs    = get_field('project_tech_specs');
       <article class="p-project-detail__body" id="project-body">
 
         <div class="p-project-section" id="section-intro">
-          <h2 class="p-project-section__title">GIỚI THIỆU DỰ ÁN</h2>
+          <h2 class="p-project-section__title"><?php echo cmb_txt( 'GIỚI THIỆU DỰ ÁN', 'PROJECT INTRODUCTION' ); ?></h2>
           <div class="p-project-section__content">
             <?php the_content(); ?>
           </div>
@@ -24,7 +24,7 @@ $tech_specs    = get_field('project_tech_specs');
 
         <?php if ($services_list) : ?>
         <div class="p-project-section" id="section-services">
-          <h2 class="p-project-section__title">DỊCH VỤ CMB ĐẢM NHẬN</h2>
+          <h2 class="p-project-section__title"><?php echo cmb_txt( 'DỊCH VỤ CMB ĐẢM NHẬN', 'CMB SERVICES PROVIDED' ); ?></h2>
           <div class="p-project-services" id="project-services-grid">
             <?php foreach ($services_list as $i => $service) :
               if (empty($service['name'])) continue;
@@ -54,7 +54,7 @@ $tech_specs    = get_field('project_tech_specs');
 
         <?php if ($gallery) : ?>
         <div class="p-project-section" id="section-gallery">
-          <h2 class="p-project-section__title">HÌNH ẢNH DỰ ÁN</h2>
+          <h2 class="p-project-section__title"><?php echo cmb_txt( 'HÌNH ẢNH DỰ ÁN', 'PROJECT IMAGES' ); ?></h2>
           <div class="p-project-gallery" id="project-gallery">
             <?php foreach ($gallery as $i => $img) : ?>
             <figure class="p-project-gallery__item<?php echo $i >= 5 ? ' is-hidden-extra' : ''; ?>" data-lightbox-index="<?php echo $i; ?>">
@@ -67,7 +67,7 @@ $tech_specs    = get_field('project_tech_specs');
           <?php if (count($gallery) > 5) : ?>
           <div class="p-project-gallery__footer">
             <a href="#" class="p-project-gallery__all" id="btn-all-photos">
-              Xem tất cả hình ảnh
+              <?php echo cmb_txt( 'Xem tất cả hình ảnh', 'View all images' ); ?>
               <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
                 <path d="M1 6H15M10 1L15 6L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
@@ -83,7 +83,7 @@ $tech_specs    = get_field('project_tech_specs');
       <aside class="p-project-detail__sidebar" id="project-sidebar">
         <?php if ($tech_specs) : ?>
         <div class="p-project-info-card" id="project-info-card">
-          <h2 class="p-project-info-card__title">THÔNG TIN DỰ ÁN</h2>
+          <h2 class="p-project-info-card__title"><?php echo cmb_txt( 'THÔNG TIN DỰ ÁN', 'PROJECT INFORMATION' ); ?></h2>
           <ul class="p-project-info-card__list" role="list">
             <?php foreach ($tech_specs as $spec) :
               if (empty($spec['label'])) continue;

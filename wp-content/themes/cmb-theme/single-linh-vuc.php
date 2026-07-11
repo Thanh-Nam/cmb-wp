@@ -33,11 +33,11 @@ $next_post = get_next_post( false, '', 'post_type' );
       <div class="p-page-hero__fade" aria-hidden="true"></div>
 
       <div class="l-container">
-        <nav class="p-page-hero__breadcrumb" aria-label="Đường dẫn">
-          <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Trang chủ</a>
+        <nav class="p-page-hero__breadcrumb" aria-label="<?php echo esc_attr( cmb_txt( 'Đường dẫn', 'Breadcrumb' ) ); ?>">
+          <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo cmb_txt( 'Trang chủ', 'Home' ); ?></a>
           <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
           <span class="p-page-hero__breadcrumb-sep" aria-hidden="true"></span>
-          <a href="<?php echo esc_url( home_url( '/#field' ) ); ?>">Lĩnh vực hoạt động</a>
+          <a href="<?php echo esc_url( home_url( '/#field' ) ); ?>"><?php echo cmb_txt( 'Lĩnh vực hoạt động', 'Fields of Activity' ); ?></a>
           <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
           <span class="p-page-hero__breadcrumb-current" aria-current="page"><?php the_title(); ?></span>
         </nav>
@@ -55,7 +55,7 @@ $next_post = get_next_post( false, '', 'post_type' );
     <div class="p-news-detail" id="linh-vuc-detail-content">
       <div class="l-container">
 
-        <article class="p-news-detail__article p-news-detail__article--full" id="article-content" aria-label="Nội dung">
+        <article class="p-news-detail__article p-news-detail__article--full" id="article-content" aria-label="<?php echo esc_attr( cmb_txt( 'Nội dung', 'Content' ) ); ?>">
 
           <div class="p-news-detail__meta">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -64,8 +64,8 @@ $next_post = get_next_post( false, '', 'post_type' );
               <path d="M4 1V3M10 1V3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
             </svg>
             <time datetime="<?php echo $pub_datetime; ?>">
-              Đăng lúc <strong><?php echo $pub_time; ?></strong>
-              ngày <strong><?php echo $pub_date_str; ?></strong>
+              <?php echo cmb_txt( 'Đăng lúc', 'Posted at' ); ?> <strong><?php echo $pub_time; ?></strong>
+              <?php echo cmb_txt( 'ngày', 'on' ); ?> <strong><?php echo $pub_date_str; ?></strong>
             </time>
           </div>
 
@@ -75,7 +75,7 @@ $next_post = get_next_post( false, '', 'post_type' );
 
           <!-- POST NAVIGATION -->
           <?php if ( $prev_post || $next_post ) : ?>
-          <nav class="p-news-detail__postnav" aria-label="Điều hướng giữa các lĩnh vực">
+          <nav class="p-news-detail__postnav" aria-label="<?php echo esc_attr( cmb_txt( 'Điều hướng giữa các lĩnh vực', 'Navigation between fields of activity' ) ); ?>">
 
             <?php if ( $prev_post ) : ?>
             <a href="<?php echo esc_url( get_permalink( $prev_post ) ); ?>"
@@ -84,7 +84,7 @@ $next_post = get_next_post( false, '', 'post_type' );
                 <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true">
                   <path d="M11 5H1M5 1L1 5L5 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Lĩnh vực trước
+                <?php echo cmb_txt( 'Lĩnh vực trước', 'Previous Field' ); ?>
               </span>
               <span class="p-news-detail__postnav-title">
                 <?php echo esc_html( get_the_title( $prev_post ) ); ?>
@@ -96,7 +96,7 @@ $next_post = get_next_post( false, '', 'post_type' );
             <a href="<?php echo esc_url( get_permalink( $next_post ) ); ?>"
               class="p-news-detail__postnav-item p-news-detail__postnav-next">
               <span class="p-news-detail__postnav-label">
-                Lĩnh vực tiếp theo
+                <?php echo cmb_txt( 'Lĩnh vực tiếp theo', 'Next Field' ); ?>
                 <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true">
                   <path d="M1 5H11M7 1L11 5L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>

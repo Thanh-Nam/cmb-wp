@@ -97,7 +97,7 @@ if ($cached === false) {
         wp_reset_postdata();
 
         $cached[] = [
-            'name'  => 'Khác',
+            'name'  => cmb_txt('Khác', 'Other'),
             'items' => $items,
         ];
     }
@@ -109,11 +109,11 @@ $default_thumb = get_template_directory_uri() . '/assets/images/equip-total-stat
 ?>
 
 <!-- ======= HỆ THỐNG THIẾT BỊ ======= -->
-<section class="p-equipment-list" id="equipment-list" aria-label="Hệ thống thiết bị khảo sát">
+<section class="p-equipment-list" id="equipment-list" aria-label="<?php echo esc_attr(cmb_txt('Hệ thống thiết bị khảo sát', 'Survey Equipment System')); ?>">
   <div class="l-container">
 
     <div class="p-equipment-list__heading" data-reveal="fade-up">
-      <h2 class="p-equipment-list__section-title">HỆ THỐNG THIẾT BỊ</h2>
+      <h2 class="p-equipment-list__section-title"><?php echo cmb_txt('HỆ THỐNG THIẾT BỊ', 'EQUIPMENT SYSTEM'); ?></h2>
     </div>
 
     <?php if (!empty($cached)) : ?>
@@ -153,7 +153,7 @@ $default_thumb = get_template_directory_uri() . '/assets/images/equip-total-stat
 
     <?php endforeach; ?>
     <?php else : ?>
-    <p style="padding:2rem 0;text-align:center;color:#888;">Chưa có thiết bị nào.</p>
+    <p style="padding:2rem 0;text-align:center;color:#888;"><?php echo cmb_txt('Chưa có thiết bị nào.', 'No equipment available yet.'); ?></p>
     <?php endif; ?>
 
   </div>
@@ -165,7 +165,7 @@ $default_thumb = get_template_directory_uri() . '/assets/images/equip-total-stat
 <div class="p-equipment-modal" id="equipment-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="p-equipment-modal__overlay" id="modal-overlay"></div>
   <div class="p-equipment-modal__box">
-    <button class="p-equipment-modal__close" id="modal-close" aria-label="Đóng">
+    <button class="p-equipment-modal__close" id="modal-close" aria-label="<?php echo esc_attr(cmb_txt('Đóng', 'Close')); ?>">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>

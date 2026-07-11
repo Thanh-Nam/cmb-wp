@@ -6,6 +6,9 @@
 'use strict';
 
 (function initGalleryLightbox() {
+  var _lang = (window.CMB_Theme && window.CMB_Theme.lang) ? window.CMB_Theme.lang : 'vi';
+  function _t(vi, en) { return _lang === 'en' ? en : vi; }
+
   var gallery = document.getElementById('event-gallery');
   if (!gallery) return;
 
@@ -35,15 +38,15 @@
   lb.id = 'gallery-lb';
   lb.setAttribute('role', 'dialog');
   lb.setAttribute('aria-modal', 'true');
-  lb.setAttribute('aria-label', 'Xem ảnh sự kiện');
+  lb.setAttribute('aria-label', _t('Xem ảnh sự kiện', 'View event photos'));
   lb.innerHTML = [
     '<div class="lb-img-wrap">',
     '<img class="lb-img" src="" alt="" />',
     '<video class="lb-video" controls playsinline></video>',
     '</div>',
-    '<button class="lb-close" aria-label="Đóng">&#215;</button>',
-    '<button class="lb-prev"  aria-label="Ảnh trước">&#8249;</button>',
-    '<button class="lb-next"  aria-label="Ảnh tiếp">&#8250;</button>',
+    '<button class="lb-close" aria-label="' + _t('Đóng', 'Close') + '">&#215;</button>',
+    '<button class="lb-prev"  aria-label="' + _t('Ảnh trước', 'Previous image') + '">&#8249;</button>',
+    '<button class="lb-next"  aria-label="' + _t('Ảnh tiếp', 'Next image') + '">&#8250;</button>',
     '<div class="lb-counter"></div>',
   ].join('');
   document.body.appendChild(lb);

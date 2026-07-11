@@ -9,7 +9,7 @@ $history_title    = cmb_get_option( 'history_title' );
 $history_items    = get_field( 'history_item', 'option' );
 ?>
 <!-- ======= HISTORY ======= -->
-<section class="p-history" id="history" aria-label="Lịch sử CMB">
+<section class="p-history" id="history" aria-label="<?php echo esc_attr( cmb_txt( 'Lịch sử CMB', 'CMB History' ) ); ?>">
 
   <!-- Background: phủ toàn section -->
   <div class="p-history__bg" aria-hidden="true">
@@ -29,12 +29,12 @@ $history_items    = get_field( 'history_item', 'option' );
   </div>
 
   <!-- Navigation arrows -->
-  <nav class="p-history__nav" aria-label="Điều hướng mốc lịch sử">
-    <button class="p-history__nav-btn p-history__nav-btn--prev" id="history-nav-prev" aria-label="Mốc trước"
+  <nav class="p-history__nav" aria-label="<?php echo esc_attr( cmb_txt( 'Điều hướng mốc lịch sử', 'Milestone navigation' ) ); ?>">
+    <button class="p-history__nav-btn p-history__nav-btn--prev" id="history-nav-prev" aria-label="<?php echo esc_attr( cmb_txt( 'Mốc trước', 'Previous milestone' ) ); ?>"
       type="button" disabled>
       <img src="<?php echo $theme; ?>/assets/images/arrow-history.svg" alt="" role="presentation" class="p-history__nav-arrow" loading="lazy" />
     </button>
-    <button class="p-history__nav-btn p-history__nav-btn--next" id="history-nav-next" aria-label="Mốc tiếp theo"
+    <button class="p-history__nav-btn p-history__nav-btn--next" id="history-nav-next" aria-label="<?php echo esc_attr( cmb_txt( 'Mốc tiếp theo', 'Next milestone' ) ); ?>"
       type="button">
       <img src="<?php echo $theme; ?>/assets/images/arrow-history.svg" alt="" role="presentation"
         class="p-history__nav-arrow p-history__nav-arrow--flip" loading="lazy" />
@@ -68,37 +68,36 @@ $history_items    = get_field( 'history_item', 'option' );
       <article class="p-history__item p-history__item--1966 is-active" id="milestone-1966" data-reveal="fade-up"
         data-reveal-delay="1">
         <h3 class="p-history__year">1966</h3>
-        <p class="p-history__desc">Thành lập Đội khảo sát thiết kế (tiền thân của Công ty).</p>
+        <p class="p-history__desc"><?php echo cmb_txt( 'Thành lập Đội khảo sát thiết kế (tiền thân của Công ty).', 'Established the Survey and Design Team (predecessor of the Company).' ); ?></p>
       </article>
 
       <article class="p-history__item p-history__item--1977" id="milestone-1977" data-reveal="fade-up"
         data-reveal-delay="2">
         <h3 class="p-history__year">1977</h3>
-        <p class="p-history__desc">Chuyển đổi mô hình thành Công ty Khảo sát Thiết kế Đường biển.</p>
+        <p class="p-history__desc"><?php echo cmb_txt( 'Chuyển đổi mô hình thành Công ty Khảo sát Thiết kế Đường biển.', 'Transformed into the Maritime Survey and Design Company.' ); ?></p>
       </article>
 
       <article class="p-history__item p-history__item--1995" id="milestone-1995" data-reveal="fade-up"
         data-reveal-delay="3">
         <h3 class="p-history__year">1995</h3>
-        <p class="p-history__desc">Đổi tên thành Công ty tư vấn xây dựng công trình Hàng hải</p>
+        <p class="p-history__desc"><?php echo cmb_txt( 'Đổi tên thành Công ty tư vấn xây dựng công trình Hàng hải', 'Renamed to Marine Construction Consulting Company' ); ?></p>
       </article>
 
       <article class="p-history__item p-history__item--1999" id="milestone-1999" data-reveal="fade-up"
         data-reveal-delay="4">
         <h3 class="p-history__year">1999</h3>
-        <p class="p-history__desc">Lập Quy hoạch tổng thể phát triển hệ thống cảng biển Việt Nam đến năm 2010 — Quy
-          hoạch cảng biển đầu tiên của Việt Nam</p>
+        <p class="p-history__desc"><?php echo cmb_txt( 'Lập Quy hoạch tổng thể phát triển hệ thống cảng biển Việt Nam đến năm 2010 — Quy hoạch cảng biển đầu tiên của Việt Nam', "Developed the Master Plan for Vietnam's Seaport System Development to 2010 — Vietnam's first seaport master plan" ); ?></p>
       </article>
 
       <article class="p-history__item p-history__item--2004" id="milestone-2004" data-reveal="fade-up"
         data-reveal-delay="5">
         <h3 class="p-history__year">2004</h3>
-        <p class="p-history__desc">Cổ phần hóa, hoạt động theo mô hình công ty cổ phần.</p>
+        <p class="p-history__desc"><?php echo cmb_txt( 'Cổ phần hóa, hoạt động theo mô hình công ty cổ phần.', 'Equitized and began operating as a joint stock company.' ); ?></p>
       </article>
 
       <article class="p-history__item p-history__item--2011" id="milestone-2011" data-reveal="fade-up">
         <h3 class="p-history__year">2011</h3>
-        <p class="p-history__desc">Được trao tặng Huân chương Độc lập Hạng Ba</p>
+        <p class="p-history__desc"><?php echo cmb_txt( 'Được trao tặng Huân chương Độc lập Hạng Ba', 'Awarded the Third-Class Independence Medal' ); ?></p>
       </article>
 
     </div>
@@ -125,7 +124,7 @@ $history_items    = get_field( 'history_item', 'option' );
   </div>
 
   <!-- Mobile timeline list: populated by JS -->
-  <ul class="p-history__mobile-list" id="history-mobile-list" role="list" aria-label="Lịch sử CMB"></ul>
+  <ul class="p-history__mobile-list" id="history-mobile-list" role="list" aria-label="<?php echo esc_attr( cmb_txt( 'Lịch sử CMB', 'CMB History' ) ); ?>"></ul>
 
 </section>
 <!-- ======= /HISTORY ======= -->

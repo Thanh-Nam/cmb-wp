@@ -6,11 +6,11 @@
 
 $post_type = get_post_type();
 $type_labels = [
-    'post'                => 'Tin tức',
-    'du-an'               => 'Dự án',
-    'thiet-bi'            => 'Thiết bị',
-    'phong-thi-nghiem'    => 'Phòng thí nghiệm',
-    'quan-he-co-dong'     => 'Quan hệ cổ đông',
+    'post'                => cmb_txt( 'Tin tức', 'News' ),
+    'du-an'               => cmb_txt( 'Dự án', 'Project' ),
+    'thiet-bi'            => cmb_txt( 'Thiết bị', 'Equipment' ),
+    'phong-thi-nghiem'    => cmb_txt( 'Phòng thí nghiệm', 'Laboratory' ),
+    'quan-he-co-dong'     => cmb_txt( 'Quan hệ cổ đông', 'Shareholder Relations' ),
 ];
 $type_label = isset( $type_labels[ $post_type ] ) ? $type_labels[ $post_type ] : ucfirst( $post_type );
 ?>

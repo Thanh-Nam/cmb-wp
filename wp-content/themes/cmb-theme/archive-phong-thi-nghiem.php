@@ -19,7 +19,7 @@ $lab_q  = new WP_Query([
     $ptl_subtitle = cmb_get_option('banner_ptl_desc');
     ?>
     <!-- ======= PAGE HERO ======= -->
-    <section class="p-page-hero" id="lab-hero" aria-label="Phòng thí nghiệm CMB">
+    <section class="p-page-hero" id="lab-hero" aria-label="<?php echo esc_attr( cmb_txt( 'Phòng thí nghiệm CMB', 'CMB Laboratory' ) ); ?>">
 
       <div class="p-page-hero__image-side">
         <?php if ($ptl_img) : ?>
@@ -28,7 +28,7 @@ $lab_q  = new WP_Query([
           class="p-page-hero__image" loading="eager" />
         <?php else : ?>
         <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero_port.jpg"
-          alt="Phòng thí nghiệm chuyên ngành xây dựng CMB"
+          alt="<?php echo esc_attr( cmb_txt( 'Phòng thí nghiệm chuyên ngành xây dựng CMB', 'CMB specialized construction testing laboratory' ) ); ?>"
           class="p-page-hero__image" loading="eager" />
         <?php endif; ?>
       </div>
@@ -37,10 +37,10 @@ $lab_q  = new WP_Query([
 
       <div class="l-container">
 
-        <nav class="p-page-hero__breadcrumb" aria-label="Đường dẫn">
-          <a href="<?php echo esc_url(home_url('/')); ?>">Trang chủ</a>
+        <nav class="p-page-hero__breadcrumb" aria-label="<?php echo esc_attr( cmb_txt( 'Đường dẫn', 'Breadcrumb' ) ); ?>">
+          <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo cmb_txt( 'Trang chủ', 'Home' ); ?></a>
           <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
-          <span class="p-page-hero__breadcrumb-current" aria-current="page">Phòng thí nghiệm</span>
+          <span class="p-page-hero__breadcrumb-current" aria-current="page"><?php echo cmb_txt( 'Phòng thí nghiệm', 'Laboratory' ); ?></span>
         </nav>
 
         <div class="p-page-hero__content">
@@ -55,11 +55,11 @@ $lab_q  = new WP_Query([
 
 
     <!-- ======= DANH SÁCH BÁO CÁO ======= -->
-    <section class="p-lab-list" id="lab-list" aria-label="Báo cáo và năng lực phòng thí nghiệm">
+    <section class="p-lab-list" id="lab-list" aria-label="<?php echo esc_attr( cmb_txt( 'Báo cáo và năng lực phòng thí nghiệm', 'Laboratory reports and capabilities' ) ); ?>">
       <div class="l-container">
 
         <div class="p-lab-list__heading" data-reveal="fade-up">
-          <h2 class="p-lab-list__section-title">Báo cáo / Năng lực mới nhất</h2>
+          <h2 class="p-lab-list__section-title"><?php echo cmb_txt( 'Báo cáo / Năng lực mới nhất', 'Latest Reports / Capabilities' ); ?></h2>
         </div>
 
         <?php if ($lab_q->have_posts()) : ?>
@@ -107,13 +107,13 @@ $lab_q  = new WP_Query([
                 </a>
               </h3>
 
-              <p class="p-lab-item__meta" aria-label="Thông tin tài liệu">
+              <p class="p-lab-item__meta" aria-label="<?php echo esc_attr( cmb_txt( 'Thông tin tài liệu', 'Document information' ) ); ?>">
                 <?php if ($updated_label) : ?>
-                <span>Cập nhật: <?php echo $updated_label; ?></span>
+                <span><?php echo cmb_txt( 'Cập nhật:', 'Updated:' ); ?> <?php echo $updated_label; ?></span>
                 <?php endif; ?>
                 <?php if ($doc_pages) : ?>
                 <span class="p-lab-item__meta-sep" aria-hidden="true">|</span>
-                <span><?php echo $doc_pages; ?> trang</span>
+                <span><?php echo $doc_pages; ?> <?php echo cmb_txt( 'trang', 'pages' ); ?></span>
                 <?php endif; ?>
                 <?php if ($doc_size) : ?>
                 <span class="p-lab-item__meta-sep" aria-hidden="true">|</span>
@@ -122,16 +122,16 @@ $lab_q  = new WP_Query([
               </p>
 
               <div class="p-lab-item__actions">
-                <a href="<?php the_permalink(); ?>" class="p-lab-item__btn p-lab-item__btn--primary" title="Xem trực tuyến">
+                <a href="<?php the_permalink(); ?>" class="p-lab-item__btn p-lab-item__btn--primary" title="<?php echo esc_attr( cmb_txt( 'Xem trực tuyến', 'View online' ) ); ?>">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M8 3C4.5 3 1.5 8 1.5 8C1.5 8 4.5 13 8 13C11.5 13 14.5 8 14.5 8C14.5 8 11.5 3 8 3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
                     <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/>
                   </svg>
-                  Xem trực tuyến
+                  <?php echo cmb_txt( 'Xem trực tuyến', 'View online' ); ?>
                 </a>
                 <?php if ($pdf_url) : ?>
-                <a href="<?php echo $pdf_url; ?>" class="p-lab-item__btn p-lab-item__btn--outline" title="Tải PDF" download>
-                  Tải PDF
+                <a href="<?php echo $pdf_url; ?>" class="p-lab-item__btn p-lab-item__btn--outline" title="<?php echo esc_attr( cmb_txt( 'Tải PDF', 'Download PDF' ) ); ?>" download>
+                  <?php echo cmb_txt( 'Tải PDF', 'Download PDF' ); ?>
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M7 1V9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M2 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -158,7 +158,7 @@ $lab_q  = new WP_Query([
               'next_text' => '&#8250;',
           ]);
           if ($pagination) : ?>
-        <nav class="p-lab-pagination" aria-label="Phân trang tài liệu">
+        <nav class="p-lab-pagination" aria-label="<?php echo esc_attr( cmb_txt( 'Phân trang tài liệu', 'Document pagination' ) ); ?>">
           <?php foreach ($pagination as $link) :
             $link = str_replace('class="prev page-numbers"', 'class="p-lab-pagination__btn p-lab-pagination__btn--prev"', $link);
             $link = str_replace('class="next page-numbers"', 'class="p-lab-pagination__btn p-lab-pagination__btn--next"', $link);
@@ -172,7 +172,7 @@ $lab_q  = new WP_Query([
         endif; ?>
 
         <?php else : ?>
-        <p style="padding:2rem 0;text-align:center;color:#888;">Chưa có tài liệu nào.</p>
+        <p style="padding:2rem 0;text-align:center;color:#888;"><?php echo cmb_txt( 'Chưa có tài liệu nào.', 'No documents available yet.' ); ?></p>
         <?php endif; ?>
 
       </div>

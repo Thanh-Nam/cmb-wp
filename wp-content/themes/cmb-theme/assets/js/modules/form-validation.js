@@ -6,6 +6,9 @@
 'use strict';
 
 (function initFormValidation() {
+  var _lang = (window.CMB_Theme && window.CMB_Theme.lang) ? window.CMB_Theme.lang : 'vi';
+  function _t(vi, en) { return _lang === 'en' ? en : vi; }
+
   var forms = document.querySelectorAll('form[data-validate]');
 
   forms.forEach(function (form) {
@@ -19,7 +22,7 @@
         if (!field.value.trim()) {
           valid = false;
           field.classList.add('has-error');
-          if (errorEl) errorEl.textContent = 'Trường này là bắt buộc.';
+          if (errorEl) errorEl.textContent = _t('Trường này là bắt buộc.', 'This field is required.');
         } else {
           field.classList.remove('has-error');
           if (errorEl) errorEl.textContent = '';

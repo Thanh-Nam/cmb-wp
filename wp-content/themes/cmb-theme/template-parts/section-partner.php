@@ -6,16 +6,16 @@
  */
 $partner_logos = get_field('partner_list', 'option');
 ?>
-<section class="p-partner" id="partner" aria-label="Khách hàng - Đối tác">
+<section class="p-partner" id="partner" aria-label="<?php echo esc_attr( cmb_txt( 'Khách hàng - Đối tác', 'Clients - Partners' ) ); ?>">
 
   <div class="l-container">
     <div class="p-partner__header" data-reveal="fade-up">
-      <h2 class="c-section-title p-partner__title">KHÁCH HÀNG - ĐỐI TÁC</h2>
+      <h2 class="c-section-title p-partner__title"><?php echo cmb_txt( 'KHÁCH HÀNG - ĐỐI TÁC', 'CLIENTS - PARTNERS' ); ?></h2>
     </div>
   </div>
 
   <?php if ($partner_logos) : ?>
-  <div class="p-partner__rows" aria-label="Danh sách khách hàng và đối tác">
+  <div class="p-partner__rows" aria-label="<?php echo esc_attr( cmb_txt( 'Danh sách khách hàng và đối tác', 'List of clients and partners' ) ); ?>">
 
     <!-- DESKTOP: 1 hàng chạy rtl -->
     <div class="p-partner__track-wrap p-partner__track-wrap--desktop">

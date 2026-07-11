@@ -21,21 +21,34 @@ if (!$featured_q->have_posts()) {
     return;
 }
 
+// Sắp xếp riêng theo "Thứ tự trong mục Dự án nổi bật" (project_featured_order)
+// — chỉ áp dụng cho khu vực nổi bật này, không ảnh hưởng danh sách dự án đầy đủ.
+usort( $featured_q->posts, function ( $a, $b ) {
+    $order_a = get_field( 'project_featured_order', $a->ID );
+    $order_b = get_field( 'project_featured_order', $b->ID );
+    $order_a = ( $order_a === '' || $order_a === null ) ? PHP_INT_MAX : (int) $order_a;
+    $order_b = ( $order_b === '' || $order_b === null ) ? PHP_INT_MAX : (int) $order_b;
+    if ( $order_a === $order_b ) {
+        return strtotime( $b->post_date ) <=> strtotime( $a->post_date );
+    }
+    return $order_a <=> $order_b;
+} );
+
 $slide_count = $featured_q->post_count;
 ?>
 <!-- ======= DỰ ÁN NỔI BẬT ======= -->
-<section class="p-projects-featured" id="projects-featured" aria-label="Dự án nổi bật">
+<section class="p-projects-featured" id="projects-featured" aria-label="<?php echo esc_attr( cmb_txt( 'Dự án nổi bật', 'Featured projects' ) ); ?>">
   <div class="l-container">
 
     <div class="p-projects-featured__header" data-reveal="fade-up">
-      <h2 class="p-projects-featured__section-title">DỰ ÁN NỔI BẬT</h2>
+      <h2 class="p-projects-featured__section-title"><?php echo cmb_txt( 'DỰ ÁN NỔI BẬT', 'FEATURED PROJECTS' ); ?></h2>
       <?php if ($slide_count > 1) : ?>
-      <nav class="p-projects-featured__nav" aria-label="Điều hướng dự án nổi bật">
-        <button class="p-projects-featured__nav-btn p-projects-featured__nav-btn--prev" id="projects-featured-nav-prev" aria-label="Dự án trước"
+      <nav class="p-projects-featured__nav" aria-label="<?php echo esc_attr( cmb_txt( 'Điều hướng dự án nổi bật', 'Featured projects navigation' ) ); ?>">
+        <button class="p-projects-featured__nav-btn p-projects-featured__nav-btn--prev" id="projects-featured-nav-prev" aria-label="<?php echo esc_attr( cmb_txt( 'Dự án trước', 'Previous project' ) ); ?>"
           type="button" disabled>
           <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/arrow-history.svg" alt="" role="presentation" class="p-projects-featured__nav-arrow" loading="lazy" />
         </button>
-        <button class="p-projects-featured__nav-btn p-projects-featured__nav-btn--next" id="projects-featured-nav-next" aria-label="Dự án tiếp theo"
+        <button class="p-projects-featured__nav-btn p-projects-featured__nav-btn--next" id="projects-featured-nav-next" aria-label="<?php echo esc_attr( cmb_txt( 'Dự án tiếp theo', 'Next project' ) ); ?>"
           type="button">
           <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/arrow-history.svg" alt="" role="presentation"
             class="p-projects-featured__nav-arrow p-projects-featured__nav-arrow--flip" loading="lazy" />
@@ -106,8 +119,8 @@ $slide_count = $featured_q->post_count;
               <?php endif; ?>
 
               <a href="<?php the_permalink(); ?>" class="p-projects-featured__cta"
-                 title="Xem chi tiết <?php the_title_attribute(); ?>">
-                Xem chi tiết dự án
+                 title="<?php echo esc_attr( cmb_txt( 'Xem chi tiết ', 'View details ' ) . get_the_title() ); ?>">
+                <?php echo cmb_txt( 'Xem chi tiết dự án', 'View project details' ); ?>
                 <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
                   <path d="M1 6H15M10 1L15 6L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>

@@ -57,11 +57,11 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
 
     <?php
     $news_img      = get_field('banner_tin_tuc_img', 'option');
-    $news_title    = cmb_get_option('banner_tin_tuc_title') ?: 'TIN TỨC & SỰ KIỆN';
-    $news_subtitle = cmb_get_option('banner_tin_tuc_desc') ?: 'Cập nhật hoạt động, thông tin chuyên ngành<br>và các sự kiện nổi bật của CMB.';
+    $news_title    = cmb_get_option('banner_tin_tuc_title') ?: cmb_txt( 'TIN TỨC & SỰ KIỆN', 'NEWS & EVENTS' );
+    $news_subtitle = cmb_get_option('banner_tin_tuc_desc') ?: cmb_txt( 'Cập nhật hoạt động, thông tin chuyên ngành<br>và các sự kiện nổi bật của CMB.', 'Stay up to date with CMB\'s activities, industry news<br>and notable events.' );
     ?>
     <!-- ======= PAGE HERO ======= -->
-    <section class="p-page-hero" id="news-hero" aria-label="Tin tức & Sự kiện CMB">
+    <section class="p-page-hero" id="news-hero" aria-label="<?php echo esc_attr( cmb_txt( 'Tin tức & Sự kiện CMB', 'CMB News & Events' ) ); ?>">
 
       <div class="p-page-hero__image-side">
         <?php if ($news_img) : ?>
@@ -70,7 +70,7 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
           class="p-page-hero__image" loading="eager" />
         <?php else : ?>
         <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero_port.jpg"
-          alt="Cảng container hiện đại - CMB tư vấn xây dựng công trình hàng hải"
+          alt="<?php echo esc_attr( cmb_txt( 'Cảng container hiện đại - CMB tư vấn xây dựng công trình hàng hải', 'Modern container port - CMB marine construction consulting' ) ); ?>"
           class="p-page-hero__image" loading="eager" />
         <?php endif; ?>
       </div>
@@ -78,10 +78,10 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
       <div class="p-page-hero__fade" aria-hidden="true"></div>
 
       <div class="l-container">
-        <nav class="p-page-hero__breadcrumb" aria-label="Đường dẫn">
-          <a href="<?php echo esc_url(home_url('/')); ?>">Trang chủ</a>
+        <nav class="p-page-hero__breadcrumb" aria-label="<?php echo esc_attr( cmb_txt( 'Đường dẫn', 'Breadcrumb' ) ); ?>">
+          <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo cmb_txt( 'Trang chủ', 'Home' ); ?></a>
           <span class="p-page-hero__breadcrumb-sep" aria-hidden="true">›</span>
-          <span class="p-page-hero__breadcrumb-current" aria-current="page">Tin tức &amp; Sự kiện</span>
+          <span class="p-page-hero__breadcrumb-current" aria-current="page"><?php echo cmb_txt( 'Tin tức &amp; Sự kiện', 'News &amp; Events' ); ?></span>
         </nav>
 
         <div class="p-page-hero__content">
@@ -95,15 +95,15 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
 
 
     <!-- ======= FEATURED 3-COLUMN ======= -->
-    <section class="p-news-columns" id="news-columns" aria-label="Tin tức nổi bật">
+    <section class="p-news-columns" id="news-columns" aria-label="<?php echo esc_attr( cmb_txt( 'Tin tức nổi bật', 'Featured news' ) ); ?>">
       <div class="l-container">
         <div class="p-news-columns__grid">
 
           <!-- Left: TIN NỔI BẬT — Swiper slider -->
-          <div class="p-news-columns__featured-wrap" id="news-featured-card" aria-label="Tin nổi bật" data-reveal="fade-up">
+          <div class="p-news-columns__featured-wrap" id="news-featured-card" aria-label="<?php echo esc_attr( cmb_txt( 'Tin nổi bật', 'Featured news' ) ); ?>" data-reveal="fade-up">
 
             <div class="p-news-columns__col-header">
-              <h2 class="p-news-columns__col-title">TIN NỔI BẬT</h2>
+              <h2 class="p-news-columns__col-title"><?php echo cmb_txt( 'TIN NỔI BẬT', 'FEATURED NEWS' ); ?></h2>
             </div>
 
             <div class="p-news-columns__featured-card">
@@ -121,7 +121,7 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
                     <?php endif; ?>
                     <div class="p-news-columns__featured-overlay" aria-hidden="true"></div>
                     <div class="p-news-columns__featured-body">
-                      <p class="p-news-columns__featured-col-title">TIN NỔI BẬT</p>
+                      <p class="p-news-columns__featured-col-title"><?php echo cmb_txt( 'TIN NỔI BẬT', 'FEATURED NEWS' ); ?></p>
                       <time class="p-news-columns__featured-date"
                         datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">
                         <?php echo get_the_date('d/m/Y'); ?>
@@ -134,8 +134,8 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
                       </p>
                       <a href="<?php the_permalink(); ?>"
                         class="p-news-columns__featured-link"
-                        title="Xem chi tiết: <?php the_title_attribute(); ?>">
-                        XEM CHI TIẾT
+                        title="<?php echo esc_attr( cmb_txt( 'Xem chi tiết: ', 'View details: ' ) . get_the_title() ); ?>">
+                        <?php echo cmb_txt( 'XEM CHI TIẾT', 'VIEW DETAILS' ); ?>
                         <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
                           <path d="M1 5H13M9 1L13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -147,7 +147,7 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
                 <div class="swiper-pagination p-news-columns__featured-pagination"></div>
               </div>
               <?php else : wp_reset_postdata(); ?>
-              <p style="padding:2rem;color:#888;">Chưa có tin nổi bật.</p>
+              <p style="padding:2rem;color:#888;"><?php echo cmb_txt( 'Chưa có tin nổi bật.', 'No featured news available yet.' ); ?></p>
               <?php endif; ?>
             </div>
 
@@ -158,7 +158,7 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
           <!-- Center: TIN NỘI BỘ -->
           <div class="p-news-columns__col" id="news-col-noi-bo" data-reveal="fade-up">
             <div class="p-news-columns__col-header">
-              <h2 class="p-news-columns__col-title">TIN NỘI BỘ</h2>
+              <h2 class="p-news-columns__col-title"><?php echo cmb_txt( 'TIN NỘI BỘ', 'INTERNAL NEWS' ); ?></h2>
             </div>
 
             <?php if ($noi_bo_q->have_posts()) :
@@ -192,7 +192,7 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
           <!-- Right: TIN CHUYÊN NGÀNH -->
           <div class="p-news-columns__col p-news-columns__col--industry" id="news-col-chuyen-nganh" data-reveal="fade-up">
             <div class="p-news-columns__col-header">
-              <h2 class="p-news-columns__col-title">TIN CHUYÊN NGÀNH</h2>
+              <h2 class="p-news-columns__col-title"><?php echo cmb_txt( 'TIN CHUYÊN NGÀNH', 'INDUSTRY NEWS' ); ?></h2>
             </div>
 
             <?php if ($chuyen_nganh_q->have_posts()) :
@@ -235,19 +235,19 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
 
 
     <!-- ======= ALL NEWS ======= -->
-    <section class="p-news-all" id="news-all" aria-label="Tất cả tin tức">
+    <section class="p-news-all" id="news-all" aria-label="<?php echo esc_attr( cmb_txt( 'Tất cả tin tức', 'All news' ) ); ?>">
       <div class="l-container">
 
         <div class="p-news-all__header" data-reveal="fade-up">
-          <h2 class="p-news-all__title">TẤT CẢ TIN TỨC</h2>
+          <h2 class="p-news-all__title"><?php echo cmb_txt( 'TẤT CẢ TIN TỨC', 'ALL NEWS' ); ?></h2>
 
           <div class="p-news-all__filters"
             id="news-filters"
             data-nonce="<?php echo esc_attr(wp_create_nonce('cmb_news_filter')); ?>"
             data-ajax="<?php echo esc_url(admin_url('admin-ajax.php')); ?>">
 
-            <select class="p-news-all__select" id="filter-category" aria-label="Lọc theo chủ đề">
-              <option value="">Tất cả chủ đề</option>
+            <select class="p-news-all__select" id="filter-category" aria-label="<?php echo esc_attr( cmb_txt( 'Lọc theo chủ đề', 'Filter by topic' ) ); ?>">
+              <option value=""><?php echo cmb_txt( 'Tất cả chủ đề', 'All topics' ); ?></option>
               <?php foreach ($news_cats as $cat) : ?>
               <option value="<?php echo $cat->slug; ?>">
                 <?php echo $cat->name; ?>
@@ -255,10 +255,10 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
               <?php endforeach; ?>
             </select>
 
-            <select class="p-news-all__select" id="filter-sort" aria-label="Sắp xếp theo">
-              <option value="newest">Mới nhất</option>
-              <option value="oldest">Cũ nhất</option>
-              <option value="popular">Phổ biến</option>
+            <select class="p-news-all__select" id="filter-sort" aria-label="<?php echo esc_attr( cmb_txt( 'Sắp xếp theo', 'Sort by' ) ); ?>">
+              <option value="newest"><?php echo cmb_txt( 'Mới nhất', 'Newest' ); ?></option>
+              <option value="oldest"><?php echo cmb_txt( 'Cũ nhất', 'Oldest' ); ?></option>
+              <option value="popular"><?php echo cmb_txt( 'Phổ biến', 'Popular' ); ?></option>
             </select>
 
           </div>
@@ -271,12 +271,12 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
             endwhile;
             wp_reset_postdata();
           else : wp_reset_postdata(); ?>
-          <p style="padding:2rem 0;text-align:center;color:#888;">Chưa có tin tức nào.</p>
+          <p style="padding:2rem 0;text-align:center;color:#888;"><?php echo cmb_txt( 'Chưa có tin tức nào.', 'No news available yet.' ); ?></p>
           <?php endif; ?>
         </div>
 
         <!-- Pagination -->
-        <nav class="p-news-all__pagination" id="news-all-pagination" aria-label="Phân trang tin tức">
+        <nav class="p-news-all__pagination" id="news-all-pagination" aria-label="<?php echo esc_attr( cmb_txt( 'Phân trang tin tức', 'News pagination' ) ); ?>">
           <?php
           if ($all_q->max_num_pages > 1) {
               $links = paginate_links([
@@ -290,8 +290,8 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
               ]);
               if ($links) {
                   foreach ($links as $link) {
-                      $link = str_replace('class="prev page-numbers"',  'class="p-news-all__page-btn" aria-label="Trang trước"', $link);
-                      $link = str_replace('class="next page-numbers"',  'class="p-news-all__page-btn" aria-label="Trang tiếp"', $link);
+                      $link = str_replace('class="prev page-numbers"',  'class="p-news-all__page-btn" aria-label="' . esc_attr( cmb_txt( 'Trang trước', 'Previous page' ) ) . '"', $link);
+                      $link = str_replace('class="next page-numbers"',  'class="p-news-all__page-btn" aria-label="' . esc_attr( cmb_txt( 'Trang tiếp', 'Next page' ) ) . '"', $link);
                       $link = str_replace('class="page-numbers current"', 'class="p-news-all__page-btn is-active" aria-current="page"', $link);
                       $link = str_replace('class="page-numbers dots"',  'class="p-news-all__page-btn p-news-all__page-btn--dots"', $link);
                       $link = str_replace('class="page-numbers"',       'class="p-news-all__page-btn"', $link);
