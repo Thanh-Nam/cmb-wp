@@ -1,0 +1,101 @@
+{
+    "key": "group_6a3a3d4e5f6a",
+    "title": "Footer - Trang chủ",
+    "fields": [
+        {
+            "key": "field_6a3a3d4e5f6b",
+            "label": "Đường dây hỗ trợ",
+            "name": "footer_hotline",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Số điện thoại hiển thị ở footer (VD: +099-035 7398 3465). Để trống sẽ ẩn dòng này.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "+084 xxx xxx xxx",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a3a3d4e5f6c",
+            "label": "Facebook URL",
+            "name": "footer_social_facebook",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "Để trống sẽ ẩn icon này.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "25", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "https://facebook.com/...",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_6a3a3d4e5f6d",
+            "label": "Twitter URL",
+            "name": "footer_social_twitter",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "Để trống sẽ ẩn icon này.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "25", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "https://twitter.com/...",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_6a3a3d4e5f6e",
+            "label": "LinkedIn URL",
+            "name": "footer_social_linkedin",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "Để trống sẽ ẩn icon này.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "25", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "https://linkedin.com/...",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_6a3a3d4e5f6f",
+            "label": "Instagram URL",
+            "name": "footer_social_instagram",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "Để trống sẽ ẩn icon này.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "25", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "https://instagram.com/...",
+            "allow_in_bindings": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "cau-hinh-tuyen-dung"
+            }
+        ]
+    ],
+    "menu_order": 2,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1783663921
+}
