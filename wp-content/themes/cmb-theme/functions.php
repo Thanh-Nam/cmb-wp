@@ -576,6 +576,9 @@ function cmb_is_allowed_cors_origin( $origin ) {
     if ( ! $host ) return false;
     $host = strtolower( $host );
 
+    // Môi trường dev local (Vite): luôn cho phép, không phụ thuộc cấu hình admin.
+    if ( $host === 'localhost' || $host === '127.0.0.1' ) return true;
+
     $configured = function_exists( 'get_field' ) ? get_field( 'cors_allowed_origins', 'option' ) : '';
     // Fallback khi admin chưa lưu trang "Cấu hình chung" lần nào (get_field không tự áp dụng default_value)
     if ( empty( $configured ) ) {
@@ -599,7 +602,8 @@ add_action( 'rest_api_init', function () {
         $origin = get_http_origin();
         if ( $origin && cmb_is_allowed_cors_origin( $origin ) ) {
             header( 'Access-Control-Allow-Origin: ' . esc_url_raw( $origin ) );
-            header( 'Access-Control-Allow-Methods: GET' );
+            header( 'Access-Control-Allow-Methods: GET, POST, OPTIONS' );
+            header( 'Access-Control-Allow-Headers: Content-Type, Authorization' );
             header( 'Vary: Origin' );
         }
         return $value;

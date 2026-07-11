@@ -7,17 +7,20 @@
             "label": "Địa điểm làm việc",
             "name": "dia_diem",
             "aria-label": "",
-            "type": "text",
+            "type": "select",
             "instructions": "",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": { "width": "50", "class": "", "id": "" },
+            "choices": {},
             "default_value": "",
-            "maxlength": "",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
             "allow_in_bindings": 1,
-            "placeholder": "VD: Hải Phòng",
-            "prepend": "",
-            "append": ""
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_39cf8ad25c98",
@@ -37,22 +40,17 @@
             "append": ""
         },
         {
-            "key": "field_421fa40ebb19",
-            "label": "Loại hình công việc",
-            "name": "loai_hinh",
+            "key": "field_d4e5f6a7b8c9",
+            "label": "Danh mục",
+            "name": "category",
             "aria-label": "",
             "type": "select",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": { "width": "33", "class": "", "id": "" },
-            "choices": {
-                "full-time": "Toàn thời gian",
-                "part-time": "Bán thời gian",
-                "internship": "Thực tập",
-                "remote": "Từ xa"
-            },
-            "default_value": "full-time",
+            "choices": {},
+            "default_value": "",
             "return_format": "value",
             "multiple": 0,
             "allow_null": 0,
@@ -62,8 +60,34 @@
             "placeholder": ""
         },
         {
+            "key": "field_421fa40ebb19",
+            "label": "Loại hình công việc",
+            "name": "loai_hinh",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Có thể chọn nhiều loại hình cùng lúc.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "33", "class": "", "id": "" },
+            "choices": {
+                "full-time": "Toàn thời gian",
+                "part-time": "Bán thời gian",
+                "contract": "Hợp đồng",
+                "internship": "Thực tập",
+                "remote": "Từ xa"
+            },
+            "default_value": [ "full-time" ],
+            "return_format": "value",
+            "multiple": 1,
+            "allow_null": 0,
+            "allow_in_bindings": 1,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
             "key": "field_162fe80ad8c7",
-            "label": "Số lượng cần tuyển",
+            "label": "Số lượng cần tuyển (người)",
             "name": "so_luong",
             "aria-label": "",
             "type": "number",
@@ -78,22 +102,96 @@
             "placeholder": "",
             "step": 1,
             "prepend": "",
-            "append": "người"
+            "append": ""
         },
         {
-            "key": "field_8bbce10338d1",
-            "label": "Mức lương",
-            "name": "muc_luong",
+            "key": "field_d2e3f4a5b6c7",
+            "label": "Tin nổi bật",
+            "name": "is_featured",
             "aria-label": "",
-            "type": "text",
-            "instructions": "Để trống hoặc ghi \"Thoả thuận\" nếu không công khai mức lương",
+            "type": "true_false",
+            "instructions": "Hiển thị trong danh sách tin tuyển dụng nổi bật",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "allow_in_bindings": 1
+        },
+        {
+            "key": "field_a4b5c6d7e8f9",
+            "label": "Mức lương",
+            "name": "salary_type",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": { "width": "34", "class": "", "id": "" },
-            "default_value": "Thoả thuận",
-            "maxlength": "",
+            "choices": {
+                "negotiable": "Thoả thuận",
+                "range": "Khoảng lương cụ thể"
+            },
+            "default_value": "negotiable",
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal",
+            "allow_in_bindings": 1
+        },
+        {
+            "key": "field_e4f5a6b7c8d9",
+            "label": "Lương tối thiểu (VND)",
+            "name": "salary_min",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_a4b5c6d7e8f9",
+                        "operator": "==",
+                        "value": "range"
+                    }
+                ]
+            ],
+            "wrapper": { "width": "33", "class": "", "id": "" },
+            "default_value": "",
+            "min": 0,
+            "max": "",
             "allow_in_bindings": 1,
-            "placeholder": "",
+            "placeholder": "VD: 10000000",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_f5a6b7c8d9e0",
+            "label": "Lương tối đa (VND)",
+            "name": "salary_max",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_a4b5c6d7e8f9",
+                        "operator": "==",
+                        "value": "range"
+                    }
+                ]
+            ],
+            "wrapper": { "width": "33", "class": "", "id": "" },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "allow_in_bindings": 1,
+            "placeholder": "VD: 15000000",
+            "step": "",
             "prepend": "",
             "append": ""
         },
@@ -106,11 +204,69 @@
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
-            "wrapper": { "width": "", "class": "", "id": "" },
+            "wrapper": { "width": "33", "class": "", "id": "" },
             "display_format": "d\/m\/Y",
-            "return_format": "d\/m\/Y",
+            "return_format": "Ymd",
             "first_day": 1,
             "allow_in_bindings": 1
+        },
+        {
+            "key": "field_a1b2c3d4e5f6",
+            "label": "Kinh nghiệm",
+            "name": "kinh_nghiem",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "33", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "VD: 2-3 năm",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_b2c3d4e5f6a7",
+            "label": "Học vấn",
+            "name": "hoc_van",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "33", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "VD: Đại học",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_c3d4e5f6a7b8",
+            "label": "Giới tính",
+            "name": "gioi_tinh",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "33", "class": "", "id": "" },
+            "choices": {
+                "any": "Không yêu cầu",
+                "male": "Nam",
+                "female": "Nữ"
+            },
+            "default_value": "any",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 1,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_1fedad7cd151",
@@ -145,34 +301,6 @@
             "media_upload": 0,
             "delay": 0,
             "allow_in_bindings": 1
-        },
-        {
-            "key": "field_ddaef37432fc",
-            "label": "Email nhận hồ sơ",
-            "name": "email_ung_tuyen",
-            "aria-label": "",
-            "type": "email",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": { "width": "50", "class": "", "id": "" },
-            "default_value": "",
-            "allow_in_bindings": 1,
-            "placeholder": ""
-        },
-        {
-            "key": "field_8d05ee9e7211",
-            "label": "Link ứng tuyển (nếu có form riêng)",
-            "name": "link_ung_tuyen",
-            "aria-label": "",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": { "width": "50", "class": "", "id": "" },
-            "default_value": "",
-            "allow_in_bindings": 1,
-            "placeholder": ""
         }
     ],
     "location": [
@@ -196,5 +324,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1782306992
+    "modified": 1783661394
 }

@@ -1,0 +1,53 @@
+{
+    "key": "group_6a3a2c3d4e5f",
+    "title": "Hình ảnh công ty - Trang chi tiết",
+    "fields": [
+        {
+            "key": "field_6a3a2c3d4e60",
+            "label": "Hình ảnh công ty",
+            "name": "hinh_anh_cong_ty",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "Hình ảnh văn phòng/công ty hiển thị ở trang chi tiết việc làm.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "return_format": "array",
+            "library": "all",
+            "min": 0,
+            "max": 0,
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "insert": "append",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "cau-hinh-tuyen-dung"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1783663921
+}

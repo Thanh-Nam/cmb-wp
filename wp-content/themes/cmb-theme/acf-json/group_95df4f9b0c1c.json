@@ -8,7 +8,7 @@
             "name": "cors_allowed_origins",
             "aria-label": "",
             "type": "textarea",
-            "instructions": "Mỗi domain 1 dòng, không kèm https://. Dùng *.vercel.app để cho phép mọi domain preview của Vercel (tiện khi domain demo còn thay đổi). Chỉ áp dụng cho các request đọc (GET) tới REST API.",
+            "instructions": "Mỗi domain 1 dòng, không kèm https://. Dùng *.vercel.app để cho phép mọi domain preview của Vercel (tiện khi domain demo còn thay đổi). localhost và 127.0.0.1 (mọi port) luôn được phép mặc định để chạy dev, không cần khai báo ở đây. Chỉ áp dụng cho các request đọc (GET) tới REST API.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": { "width": "", "class": "", "id": "" },
