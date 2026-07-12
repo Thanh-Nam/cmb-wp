@@ -8,7 +8,7 @@ $theme = get_template_directory_uri();
 // Kiểm tra có bài is_featured=1 không — nếu không thì ẩn toàn bộ section
 $hp_featured_q = new WP_Query([
     'post_type'      => 'post',
-    'posts_per_page' => 1,
+    'posts_per_page' => 20,
     'orderby'        => 'date',
     'order'          => 'DESC',
     'meta_query'     => [[
@@ -22,6 +22,21 @@ if ( ! $hp_featured_q->have_posts() ) {
     wp_reset_postdata();
     return;
 }
+
+// Sắp xếp riêng theo "Thứ tự trong mục Tin nổi bật" (featured_order), chỉ lấy 1 bài đầu tiên
+// để hiển thị ở khối nổi bật trang chủ — không ảnh hưởng danh sách tin tức đầy đủ.
+usort( $hp_featured_q->posts, function ( $a, $b ) {
+    $order_a = get_field( 'featured_order', $a->ID );
+    $order_b = get_field( 'featured_order', $b->ID );
+    $order_a = ( $order_a === '' || $order_a === null ) ? PHP_INT_MAX : (int) $order_a;
+    $order_b = ( $order_b === '' || $order_b === null ) ? PHP_INT_MAX : (int) $order_b;
+    if ( $order_a === $order_b ) {
+        return strtotime( $b->post_date ) <=> strtotime( $a->post_date );
+    }
+    return $order_a <=> $order_b;
+} );
+$hp_featured_q->posts     = array_slice( $hp_featured_q->posts, 0, 1 );
+$hp_featured_q->post_count = count( $hp_featured_q->posts );
 
 $hp_featured_id = 0;
 

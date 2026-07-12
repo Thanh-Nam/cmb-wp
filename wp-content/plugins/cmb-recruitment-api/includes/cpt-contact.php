@@ -19,6 +19,9 @@ add_action( 'init', function () {
 		'supports'        => [ 'title' ],
 		'capability_type' => 'post',
 		'menu_icon'       => 'dashicons-email-alt2',
+		// Liên hệ chỉ được tạo qua form liên hệ ở frontend — admin chỉ xem, không tạo tay.
+		'map_meta_cap'    => true,
+		'capabilities'    => [ 'create_posts' => 'do_not_allow' ],
 	] );
 } );
 

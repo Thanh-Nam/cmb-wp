@@ -79,6 +79,26 @@
             "prepend": "",
             "append": "",
             "allow_in_bindings": 0
+        },
+        {
+            "key": "field_6a38ccf993e5c",
+            "label": "Thời gian đăng bài",
+            "name": "project_publish_date",
+            "aria-label": "",
+            "type": "date_time_picker",
+            "instructions": "Để trống nếu dùng ngày đăng mặc định của WordPress",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y g:i a",
+            "return_format": "d\/m\/Y g:i a",
+            "first_day": 1,
+            "allow_in_bindings": 0,
+            "default_to_current_date": 0
         }
     ],
     "location": [

@@ -18,6 +18,19 @@ $featured_q = new WP_Query([
     ]],
 ]);
 
+// Sắp xếp riêng theo "Thứ tự trong mục Tin nổi bật" (featured_order)
+// — chỉ áp dụng cho khu vực nổi bật này, không ảnh hưởng danh sách tin tức đầy đủ.
+usort( $featured_q->posts, function ( $a, $b ) {
+    $order_a = get_field( 'featured_order', $a->ID );
+    $order_b = get_field( 'featured_order', $b->ID );
+    $order_a = ( $order_a === '' || $order_a === null ) ? PHP_INT_MAX : (int) $order_a;
+    $order_b = ( $order_b === '' || $order_b === null ) ? PHP_INT_MAX : (int) $order_b;
+    if ( $order_a === $order_b ) {
+        return strtotime( $b->post_date ) <=> strtotime( $a->post_date );
+    }
+    return $order_a <=> $order_b;
+} );
+
 // ── 2. Tin nội bộ (category slug: noi-bo)
 $noi_bo_q = new WP_Query([
     'post_type'      => 'post',

@@ -19,6 +19,9 @@ add_action( 'init', function () {
 		'supports'        => [ 'title' ],
 		'capability_type' => 'post',
 		'menu_icon'       => 'dashicons-media-document',
+		// Hồ sơ chỉ được tạo qua form ứng tuyển ở frontend — admin chỉ xem, không tạo tay.
+		'map_meta_cap'    => true,
+		'capabilities'    => [ 'create_posts' => 'do_not_allow' ],
 	] );
 } );
 

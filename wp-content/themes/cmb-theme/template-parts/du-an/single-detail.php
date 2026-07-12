@@ -6,6 +6,19 @@
 $services_list = get_field('project_services_list');
 $gallery       = get_field('project_gallery');
 $tech_specs    = get_field('project_tech_specs');
+
+// Thời gian đăng bài — có nhập ACF thì dùng, không thì lấy mặc định của WordPress
+$proj_custom_date = get_field('project_publish_date');
+if ($proj_custom_date) {
+    $proj_date_obj  = DateTime::createFromFormat('d/m/Y g:i a', $proj_custom_date);
+    $proj_datetime  = $proj_date_obj ? $proj_date_obj->format('Y-m-d\TH:i') : '';
+    $proj_time      = $proj_date_obj ? $proj_date_obj->format('H:i') : '';
+    $proj_date_str  = $proj_date_obj ? $proj_date_obj->format('d.m.Y') : $proj_custom_date;
+} else {
+    $proj_datetime  = get_the_date('Y-m-d\TH:i');
+    $proj_time      = get_the_date('H:i');
+    $proj_date_str  = get_the_date('d.m.Y');
+}
 ?>
 <!-- ======= PROJECT DETAIL CONTENT ======= -->
 <section class="p-project-detail" id="project-detail">
@@ -14,6 +27,19 @@ $tech_specs    = get_field('project_tech_specs');
 
       <!-- ARTICLE -->
       <article class="p-project-detail__body" id="project-body">
+
+        <!-- Published meta -->
+        <div class="p-project-detail__meta">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <rect x="1" y="2" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M1 5.5H13" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M4 1V3M10 1V3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          <time datetime="<?php echo esc_attr($proj_datetime); ?>">
+            <?php echo cmb_txt( 'Đăng lúc', 'Posted at' ); ?> <strong><?php echo esc_html($proj_time); ?></strong>
+            <?php echo cmb_txt( 'ngày', 'on' ); ?> <strong><?php echo esc_html($proj_date_str); ?></strong>
+          </time>
+        </div>
 
         <div class="p-project-section" id="section-intro">
           <h2 class="p-project-section__title"><?php echo cmb_txt( 'GIỚI THIỆU DỰ ÁN', 'PROJECT INTRODUCTION' ); ?></h2>

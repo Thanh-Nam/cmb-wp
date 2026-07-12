@@ -24,6 +24,37 @@
             "ui_off_text": ""
         },
         {
+            "key": "field_6a38eb09ef2bd",
+            "label": "Thứ tự trong mục Tin nổi bật",
+            "name": "featured_order",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Số nhỏ hơn hiển thị trước. Chỉ áp dụng thứ tự trong các khu vực \"Tin nổi bật\" (trang chủ và trang tin tức) — không ảnh hưởng thứ tự ở danh sách tin tức đầy đủ. Để trống sẽ hiển thị sau cùng.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6a38eb09ef2bc",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": "",
+            "allow_in_bindings": 0
+        },
+        {
             "key": "field_6a38ec10ef2be",
             "label": "Thời gian đăng bài",
             "name": "post_publish_date",
