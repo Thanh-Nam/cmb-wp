@@ -7993,7 +7993,10 @@ li:last-child .p-lab-detail__related-item {
 }
 .p-ir-tabs__list {
   display: flex;
+  align-items: center;
   justify-content: safe center;
+  gap: 1.2rem;
+  padding: 1.6rem 0;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -8011,25 +8014,27 @@ li:last-child .p-lab-detail__related-item {
   justify-content: center;
   gap: 0.8rem;
   width: 100%;
-  padding: 2rem 1.2rem;
+  padding: 1.4rem 2.4rem;
   font-family: "Montserrat", sans-serif;
   font-size: 1.3rem;
   font-weight: 600;
   color: #6B7280;
   background: transparent;
   border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
+  border-radius: 99.9rem;
   cursor: pointer;
   white-space: nowrap;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition: color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
 }
 .p-ir-tabs__link:hover {
   color: #0379CC;
+  background: #E6F2FC;
 }
 .p-ir-tabs__link.is-active {
-  color: #0379CC;
-  border-bottom-color: #0379CC;
+  color: #FFFFFF;
+  font-weight: 700;
+  background: #0379CC;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .p-ir-tabs__icon {
   display: flex;
@@ -8043,19 +8048,25 @@ li:last-child .p-lab-detail__related-item {
 .p-ir-tabs__icon svg {
   display: block;
 }
-.p-ir-tabs__link:hover .p-ir-tabs__icon, .p-ir-tabs__link.is-active .p-ir-tabs__icon {
+.p-ir-tabs__link:hover .p-ir-tabs__icon {
   color: #0379CC;
+}
+.p-ir-tabs__link.is-active .p-ir-tabs__icon {
+  color: #FFFFFF;
 }
 .p-ir-tabs__label {
   line-height: 1.2;
 }
 @media (max-width: 1023px) {
+  .p-ir-tabs__list {
+    gap: 1rem;
+  }
   .p-ir-tabs__item {
     flex-shrink: 0;
     flex: none;
   }
   .p-ir-tabs__link {
-    padding: 1.4rem 1.6rem;
+    padding: 1.2rem 1.8rem;
     font-size: 1.2rem;
   }
   .p-ir-tabs__icon {
@@ -8064,8 +8075,11 @@ li:last-child .p-lab-detail__related-item {
   }
 }
 @media (max-width: 767px) {
+  .p-ir-tabs__list {
+    gap: 0.8rem;
+  }
   .p-ir-tabs__link {
-    padding: 1.2rem 1.2rem;
+    padding: 1rem 1.4rem;
     font-size: 1.05rem;
     gap: 0.5rem;
   }
@@ -11005,26 +11019,6 @@ li:last-child .p-lab-detail__related-item {
   }
 }
 
-.p-project-detail__meta {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  font-family: "Roboto", sans-serif;
-  font-size: 1.35rem;
-  color: #6B7280;
-  padding-bottom: 2.4rem;
-  border-bottom: 1px solid #E5E7EB;
-}
-.p-project-detail__meta svg {
-  flex-shrink: 0;
-  color: #0379CC;
-  opacity: 0.7;
-}
-.p-project-detail__meta strong {
-  font-weight: 600;
-  color: #002036;
-}
-
 .p-project-section__title {
   font-family: "Montserrat", sans-serif;
   font-size: 1.7rem;
@@ -11573,5 +11567,3 @@ li:last-child .p-lab-detail__related-item {
   transition: transform 0.25s ease, color 0.25s ease;
   flex-shrink: 0;
 }
-
-/*# sourceMappingURL=main.css.map */

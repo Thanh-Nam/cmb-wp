@@ -12,7 +12,10 @@
 
   &__list {
     display: flex;
+    align-items: center;
     justify-content: safe center;
+    gap: rem(12);
+    padding: rem(16) 0;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -31,26 +34,28 @@
     justify-content: center;
     gap: rem(8);
     width: 100%;
-    padding: rem(20) rem(12);
+    padding: rem(14) rem(24);
     font-family: $font-primary;
     font-size: rem(13);
     font-weight: $font-weight-semibold;
     color: $color-text-muted;
     background: transparent;
     border: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
+    border-radius: rem(999);
     cursor: pointer;
     white-space: nowrap;
-    transition: color $transition-fast, border-color $transition-fast;
+    transition: color $transition-fast, background $transition-fast, box-shadow $transition-fast;
 
     &:hover {
       color: $color-primary;
+      background: $color-primary-light;
     }
 
     &.is-active {
-      color: $color-primary;
-      border-bottom-color: $color-primary;
+      color: $color-white;
+      font-weight: $font-weight-bold;
+      background: $color-primary;
+      box-shadow: $shadow-md;
     }
   }
 
@@ -66,9 +71,12 @@
     svg { display: block; }
   }
 
-  &__link:hover &__icon,
-  &__link.is-active &__icon {
+  &__link:hover &__icon {
     color: $color-primary;
+  }
+
+  &__link.is-active &__icon {
+    color: $color-white;
   }
 
   &__label {
@@ -76,10 +84,12 @@
   }
 
   @include md {
+    &__list { gap: rem(10); }
+
     &__item { flex-shrink: 0; flex: none; }
 
     &__link {
-      padding: rem(14) rem(16);
+      padding: rem(12) rem(18);
       font-size: rem(12);
     }
 
@@ -90,8 +100,10 @@
   }
 
   @include sp {
+    &__list { gap: rem(8); }
+
     &__link {
-      padding: rem(12) rem(12);
+      padding: rem(10) rem(14);
       font-size: rem(10.5);
       gap: rem(5);
     }
