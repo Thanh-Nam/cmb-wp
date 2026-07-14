@@ -1229,14 +1229,14 @@ hr {
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
-  margin-top: -13vw;
+  margin-top: -15vw;
   position: relative;
   z-index: 2;
   pointer-events: none;
 }
 @media (max-width: 1480px) {
   .l-footer {
-    margin-top: -27vw;
+    margin-top: -33vw;
   }
 }
 @media (max-width: 1023px) {
