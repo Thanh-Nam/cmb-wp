@@ -3729,6 +3729,20 @@ body.is-loaded .p-page-hero__subtitle {
   color: #292929;
   margin: 0;
 }
+.p-location__detail-text--title {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.p-location__detail-text--desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .p-location__img-wrap {
   position: relative;
   margin-bottom: 2rem;
@@ -8185,23 +8199,36 @@ li:last-child .p-lab-detail__related-item {
   margin-bottom: 0;
 }
 .p-ir-timeline__year {
+  position: relative;
   display: flex;
-  align-items: center;
-  gap: 1.2rem;
+  align-items: flex-end;
+  height: 5.6rem;
   margin-bottom: 0.6rem;
-  padding-bottom: 1.4rem;
+  overflow: hidden;
+}
+.p-ir-timeline__year-ghost {
+  position: absolute;
+  left: -0.6rem;
+  top: -1rem;
+  font-family: Georgia, "Iowan Old Style", Cambria, serif;
+  font-size: 7.6rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #002036;
+  opacity: 0.06;
+  pointer-events: none;
 }
 .p-ir-timeline__year-label {
+  position: relative;
   font-family: "Montserrat", sans-serif;
-  font-size: 2.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  color: #002036;
-  line-height: 1;
-}
-.p-ir-timeline__year-line {
-  flex: 1;
-  height: 1px;
-  background: #E5E7EB;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #015A99;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #E5E7EB;
 }
 .p-ir-timeline__items {
   position: relative;

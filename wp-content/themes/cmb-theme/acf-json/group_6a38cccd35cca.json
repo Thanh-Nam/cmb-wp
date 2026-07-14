@@ -73,6 +73,69 @@
             "first_day": 1,
             "allow_in_bindings": 0,
             "default_to_current_date": 0
+        },
+        {
+            "key": "field_6a38ccf9prjcty1",
+            "label": "Thành phố / Tỉnh",
+            "name": "project_city",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Chọn tỉnh/thành để dự án này hiển thị tại đúng vị trí trên bản đồ ở mục \"Vị trí dự án\" trang chủ.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "quang-ninh": "Quảng Ninh",
+                "hai-phong": "Hải Phòng",
+                "thanh-hoa": "Thanh Hóa",
+                "nghe-an": "Nghệ An",
+                "quang-tri": "Quảng Trị",
+                "da-nang": "Đà Nẵng",
+                "quang-ngai": "Quảng Ngãi",
+                "khanh-hoa": "Khánh Hòa",
+                "ninh-thuan": "Ninh Thuận",
+                "binh-thuan": "Bình Thuận",
+                "dong-nai": "Đồng Nai",
+                "ba-ria-vung-tau": "Bà Rịa - Vũng Tàu",
+                "tay-ninh": "Tây Ninh",
+                "tp-hcm": "TP. Hồ Chí Minh",
+                "tien-giang": "Tiền Giang",
+                "ben-tre": "Bến Tre",
+                "can-tho": "Cần Thơ"
+            },
+            "default_value": [],
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_6a38ccf9prjdsc1",
+            "label": "Mô tả ngắn (Vị trí dự án)",
+            "name": "project_short_desc",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Mô tả ngắn gọn, hiển thị trong slide ở mục \"Vị trí dự án\" trên trang chủ (khoảng 2 dòng).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
         }
     ],
     "location": [
@@ -96,5 +159,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1782306992
+    "modified": 1782393392
 }

@@ -208,72 +208,50 @@ function cmb_enqueue_assets() {
         }
         wp_localize_script( 'cmb-global', 'CMB_History', $milestones );
 
-        // Location map data override từ ACF Options
-        $loc_map = [
-            'hai-phong'       => 'location_hai_phong',
-            'quang-ninh'      => 'location_quang_ninh',
-            'thanh-hoa'       => 'location_thanh_hoa',
-            'nghe-an'         => 'location_nghe_an',
-            'quang-tri'       => 'location_quang_tri',
-            'da-nang'         => 'location_da_nang',
-            'quang-ngai'      => 'location_quang_ngai',
-            'khanh-hoa'       => 'location_khanh_hoa',
-            'ninh-thuan'      => 'location_ninh_thuan',
-            'binh-thuan'      => 'location_binh_thuan',
-            'dong-nai'        => 'location_dong_nai',
-            'ba-ria-vung-tau' => 'location_ba_ria_vung_tau',
-            'tay-ninh'        => 'location_tay_ninh',
-            'tp-hcm'          => 'location_tp_hcm',
-            'tien-giang'      => 'location_tien_giang',
-            'ben-tre'         => 'location_ben_tre',
-            'can-tho'         => 'location_can_tho',
+        // Location map data — lấy từ post type "du-an" (field project_city),
+        // thay cho ACF Options. Một tỉnh/thành có thể có nhiều dự án (slide).
+        $loc_provinces = [
+            'quang-ninh', 'hai-phong', 'thanh-hoa', 'nghe-an', 'quang-tri', 'da-nang',
+            'quang-ngai', 'khanh-hoa', 'ninh-thuan', 'binh-thuan', 'dong-nai',
+            'ba-ria-vung-tau', 'tay-ninh', 'tp-hcm', 'tien-giang', 'ben-tre', 'can-tho',
         ];
+        $loc_query = new WP_Query( [
+            'post_type'      => 'du-an',
+            'posts_per_page' => -1,
+            'orderby'        => 'menu_order date',
+            'order'          => 'ASC',
+            'meta_query'     => [[
+                'key'     => 'project_city',
+                'value'   => $loc_provinces,
+                'compare' => 'IN',
+            ]],
+        ] );
+
         $location_data = [];
-        foreach ( $loc_map as $key => $field_key ) {
-            $group = get_field( $field_key, 'option' );
-            if ( empty( $group ) ) continue;
-            $entry = [];
+        if ( $loc_query->have_posts() ) {
+            foreach ( $loc_query->posts as $loc_post ) {
+                $city = get_field( 'project_city', $loc_post->ID );
+                if ( empty( $city ) || ! in_array( $city, $loc_provinces, true ) ) continue;
 
-            // danh sách dự án — một tỉnh/thành có thể có nhiều dự án (slide)
-            // (tên tỉnh/thành không lấy từ ACF — đã cố định sẵn trong location-map.js, trùng với nhãn trên bản đồ)
-            $projects = [];
-            $rows = $group['projects'] ?? [];
-            if ( is_array( $rows ) ) {
-                foreach ( $rows as $row ) {
-                    $p = [];
+                $p = [
+                    'project' => get_the_title( $loc_post ),
+                    'link'    => get_permalink( $loc_post ),
+                ];
 
-                    $project = ( $lang === 'en' && ! empty( $row['project_en'] ) ) ? $row['project_en'] : ( $row['project'] ?? '' );
-                    if ( $project ) $p['project'] = $project;
+                $desc = get_field( 'project_short_desc', $loc_post->ID );
+                if ( $desc ) $p['desc'] = wp_strip_all_tags( $desc );
 
-                    $desc = ( $lang === 'en' && ! empty( $row['desc_en'] ) ) ? $row['desc_en'] : ( $row['desc'] ?? '' );
-                    if ( $desc ) $p['desc'] = wp_strip_all_tags( $desc );
-
-                    if ( !empty( $row['link'] ) ) $p['link'] = $row['link'];
-
-                    if ( !empty( $row['img'] ) ) {
-                        $img = $row['img'];
-                        if ( is_array( $img ) ) {
-                            $p['imgSrc'] = $img['url'] ?? '';
-                            $p['imgAlt'] = $img['alt'] ?? '';
-                        } elseif ( is_numeric( $img ) ) {
-                            $src = wp_get_attachment_image_src( (int) $img, 'large' );
-                            $p['imgSrc'] = $src ? $src[0] : '';
-                            $p['imgAlt'] = get_post_meta( (int) $img, '_wp_attachment_image_alt', true ) ?: '';
-                        } else {
-                            $p['imgSrc'] = $img;
-                            $p['imgAlt'] = '';
-                        }
-                    }
-
-                    if ( !empty( $p ) ) $projects[] = $p;
+                $img = get_the_post_thumbnail_url( $loc_post->ID, 'large' );
+                if ( $img ) {
+                    $p['imgSrc'] = $img;
+                    $p['imgAlt'] = get_the_title( $loc_post );
                 }
-            }
-            if ( !empty( $projects ) ) $entry['projects'] = $projects;
 
-            if ( !empty( $entry ) ) {
-                $location_data[ $key ] = $entry;
+                $location_data[ $city ]['projects'][] = $p;
             }
         }
+        wp_reset_postdata();
+
         if ( !empty( $location_data ) ) {
             wp_localize_script( 'cmb-global', 'CMB_LocationData', $location_data );
         }

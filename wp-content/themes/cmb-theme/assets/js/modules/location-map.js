@@ -54,51 +54,11 @@
   }
 
   var _locationData = {
-    'nghe-an': {
-      city: _t('NGHỆ AN', 'NGHE AN'),
-      projects: [_proj(
-        'Cảng tổng hợp Đông Hồi, Quỳnh Lưu', 'Dong Hoi General Port, Quynh Luu',
-        'Tư vấn lập dự án đầu tư và thiết kế cơ sở Cảng tổng hợp Đông Hồi tại huyện Quỳnh Lưu, Nghệ An, công suất 5 triệu tấn/năm.',
-        'Consulting on investment project preparation and basic design for Dong Hoi General Port in Quynh Luu district, Nghe An, with a capacity of 5 million tons/year.',
-        '#', _themeUri + '/assets/images/cang-tong-hop-dong-hoi.png', 'Cảng tổng hợp Đông Hồi, Nghệ An', 'Dong Hoi General Port, Nghe An'
-      )]
-    },
-    'hai-phong': {
-      city: _t('HẢI PHÒNG', 'HAI PHONG'),
-      projects: [_proj(
-        'Cảng Đình Vũ', 'Dinh Vu Port',
-        'Diện tích 73,56ha; chiều dài bến 1.610,6m, tiếp nhận tàu 20.000 – 50.000 DW T; công suất 15 triệu tấn/năm',
-        'Area of 73.56ha; wharf length of 1,610.6m, accommodating vessels of 20,000 – 50,000 DWT; capacity of 15 million tons/year',
-        '#', _themeUri + '/assets/images/cang-dinh-vu.png', 'Cảng Đình Vũ', 'Dinh Vu Port'
-      )]
-    },
-    'tay-ninh': {
-      city: _t('TÂY NINH', 'TAY NINH'),
-      projects: [_proj(
-        'Trung tâm Logistics, cảng Cạn cảng tổng hợp Tây Ninh', 'Tay Ninh Logistics Center, Dry Port and General Port',
-        'Khu Cảng cạn 48,94 ha; Khu Trung tâm Logistics 159,70 ha; Khu Cảng tổng hợp 50,58 ha, đầu tư cơ sở hạ tầng san nền, đường giao thông, hạ tầng kỹ thuật, cảng thủy nội địa đồng bộ',
-        'Dry Port Zone of 48.94 ha; Logistics Center Zone of 159.70 ha; General Port Zone of 50.58 ha, investing in synchronized ground leveling, roads, technical infrastructure, and inland waterway port infrastructure',
-        '#', _themeUri + '/assets/images/cang-can-tay-ninh.jpg', 'Thị xã Trảng Bàng, tỉnh Tây Ninh', 'Trang Bang Town, Tay Ninh Province'
-      )]
-    },
-    'tp-hcm': {
-      city: _t('TP. HỒ CHÍ MINH', 'HO CHI MINH CITY'),
-      projects: [_proj(
-        'Cảng Contaner Cát Lái', 'Cat Lai Container Port',
-        'Diện tích 80ha; chiều dài bến 1.462m, tiếp nhận tảu Container đến 45.000DWT; công suất 2,5 triệu TEU/năm',
-        'Area of 80ha; wharf length of 1,462m, accommodating container vessels up to 45,000DWT; capacity of 2.5 million TEU/year',
-        '#', _themeUri + '/assets/images/cang-cat-lai.jpg', 'Cảng Contaner Cát Lái, TP. Hồ Chí Minh', 'Cat Lai Container Port, Ho Chi Minh City'
-      )]
-    },
-    'dong-nai': {
-      city: _t('ĐỒNG NAI', 'DONG NAI'),
-      projects: [_proj(
-        'ICD Tân Cảng Long Bình', 'ICD Tan Cang Long Binh',
-        'Tổng diện tích 235 ha, diện tích bãi container 15,6ha, diện tích kho 52,4ha',
-        'Total area of 235 ha, container yard area of 15.6ha, warehouse area of 52.4ha',
-        '#', _themeUri + '/assets/images/tan-cang-long-binh.jpg', 'Thành phố Biên Hòa, tỉnh Đồng Nai', 'Bien Hoa City, Dong Nai Province'
-      )]
-    },
+    'nghe-an': { city: _t('NGHỆ AN', 'NGHE AN'), projects: [_placeholderProj('Nghệ An', 'Nghe An')] },
+    'hai-phong': { city: _t('HẢI PHÒNG', 'HAI PHONG'), projects: [_placeholderProj('Hải Phòng', 'Hai Phong')] },
+    'tay-ninh': { city: _t('TÂY NINH', 'TAY NINH'), projects: [_placeholderProj('Tây Ninh', 'Tay Ninh')] },
+    'tp-hcm': { city: _t('TP. HỒ CHÍ MINH', 'HO CHI MINH CITY'), projects: [_placeholderProj('TP. Hồ Chí Minh', 'Ho Chi Minh City')] },
+    'dong-nai': { city: _t('ĐỒNG NAI', 'DONG NAI'), projects: [_placeholderProj('Đồng Nai', 'Dong Nai')] },
     'quang-ninh': { city: _t('QUẢNG NINH', 'QUANG NINH'), projects: [_placeholderProj('Quảng Ninh', 'Quang Ninh')] },
     'thanh-hoa': { city: _t('THANH HÓA', 'THANH HOA'), projects: [_placeholderProj('Thanh Hóa', 'Thanh Hoa')] },
     'quang-tri': { city: _t('QUẢNG TRỊ', 'QUANG TRI'), projects: [_placeholderProj('Quảng Trị', 'Quang Tri')] },
@@ -137,11 +97,11 @@
         '<div class="p-location__details">' +
           '<div class="p-location__detail-row">' +
             '<span class="p-location__detail-label">' + _escapeHtml(_t('Dự án:', 'Project:')) + '</span>' +
-            '<p class="p-location__detail-text">' + _escapeHtml(p.project) + '</p>' +
+            '<p class="p-location__detail-text p-location__detail-text--title" title="' + _escapeHtml(p.project) + '">' + _escapeHtml(p.project) + '</p>' +
           '</div>' +
           '<div class="p-location__detail-row">' +
             '<span class="p-location__detail-label">' + _escapeHtml(_t('Mô tả:', 'Description:')) + '</span>' +
-            '<p class="p-location__detail-text">' + _escapeHtml(p.desc) + '</p>' +
+            '<p class="p-location__detail-text p-location__detail-text--desc" title="' + _escapeHtml(p.desc) + '">' + _escapeHtml(p.desc) + '</p>' +
           '</div>' +
         '</div>' +
         '<div class="p-location__img-wrap">' +

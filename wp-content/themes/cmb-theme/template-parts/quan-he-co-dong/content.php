@@ -131,8 +131,8 @@ if (empty($ir_terms)) : ?>
             ?>
             <div class="p-ir-timeline__group">
               <div class="p-ir-timeline__year">
+                <span class="p-ir-timeline__year-ghost" aria-hidden="true"><?php echo substr($year, -2); ?></span>
                 <span class="p-ir-timeline__year-label"><?php echo $year; ?></span>
-                <span class="p-ir-timeline__year-line" aria-hidden="true"></span>
               </div>
               <div class="p-ir-timeline__items">
                 <?php foreach ($posts as $post_data) :

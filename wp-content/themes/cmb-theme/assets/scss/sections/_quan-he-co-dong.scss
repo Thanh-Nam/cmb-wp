@@ -204,24 +204,37 @@
   }
 
   &__year {
+    position: relative;
     display: flex;
-    align-items: center;
-    gap: rem(12);
+    align-items: flex-end;
+    height: rem(56);
     margin-bottom: rem(6);
-    padding-bottom: rem(14);
+    overflow: hidden;
 
-    &-label {
-      font-family: $font-primary;
-      font-size: rem(22);
+    &-ghost {
+      position: absolute;
+      left: rem(-6);
+      top: rem(-10);
+      font-family: Georgia, "Iowan Old Style", Cambria, serif;
+      font-size: rem(76);
       font-weight: $font-weight-bold;
-      color: $color-cmb-navy;
       line-height: 1;
+      letter-spacing: -0.02em;
+      color: $color-cmb-navy;
+      opacity: 0.06;
+      pointer-events: none;
     }
 
-    &-line {
-      flex: 1;
-      height: 1px;
-      background: $color-border;
+    &-label {
+      position: relative;
+      font-family: $font-primary;
+      font-size: rem(13);
+      font-weight: $font-weight-bold;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: $color-primary-dark;
+      padding-bottom: rem(6);
+      border-bottom: 1px solid $color-border;
     }
   }
 
