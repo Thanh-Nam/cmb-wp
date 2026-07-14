@@ -31,6 +31,16 @@ function cmb_transform_gallery_image( $image ) {
 
 add_action( 'rest_api_init', function () {
 
+	register_rest_route( 'cmb/v1', '/hero-banner', [
+		'methods'             => 'GET',
+		'permission_callback' => '__return_true',
+		'callback'            => function () {
+			$image = function_exists( 'get_field' ) ? get_field( 'banner_hero', 'option' ) : null;
+			$url   = is_array( $image ) ? ( $image['url'] ?? null ) : null;
+			return new WP_REST_Response( [ 'imageUrl' => $url ?: null ], 200 );
+		},
+	] );
+
 	register_rest_route( 'cmb/v1', '/company-gallery', [
 		'methods'             => 'GET',
 		'permission_callback' => '__return_true',
