@@ -38,6 +38,46 @@
 }
 
 
+// ======= CONTENT (the_content) =======
+.p-lab-detail__content {
+  margin-bottom: rem(40);
+  font-family: $font-primary;
+  font-size: rem(16);
+  line-height: 1.7;
+  color: $color-text;
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  p, ul, ol, table, blockquote {
+    margin: 0 0 rem(16);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: $font-weight-bold;
+    color: $color-cmb-navy;
+    line-height: 1.35;
+    margin: rem(24) 0 rem(12);
+  }
+
+  ul, ol {
+    padding-left: rem(20);
+  }
+
+  a {
+    color: $color-primary;
+    text-decoration: underline;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: $radius-md;
+  }
+}
+
+
 // ======= SIDEBAR =======
 .p-lab-detail__sidebar {
   display: flex;

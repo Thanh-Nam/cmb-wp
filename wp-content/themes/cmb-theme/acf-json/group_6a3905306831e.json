@@ -3,26 +3,6 @@
     "title": "Liên hệ & Mạng xã hội",
     "fields": [
         {
-            "key": "field_6a390530517f4",
-            "label": "Email header",
-            "name": "header_email",
-            "aria-label": "",
-            "type": "email",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
             "key": "field_6a39055a517f5",
             "label": "URL E-Office CMB",
             "name": "header_eoffice_url",

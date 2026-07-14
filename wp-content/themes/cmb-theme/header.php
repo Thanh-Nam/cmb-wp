@@ -110,17 +110,10 @@
           <!-- Topbar -->
           <div class="l-header__topbar" id="header-topbar">
             <?php
-            $hdr_email      = get_field( 'header_email', 'option' ) ?: 'cmbhcm@cmbvn.com.vn';
             $hdr_eoffice    = get_field( 'header_eoffice_url', 'option' ) ?: '#';
             $hdr_eoffice_v1mc = get_field( 'header_eoffice_v1mc_url', 'option' ) ?: '#';
             ?>
             <ul class="l-header__topbar-list" role="list" aria-label="<?php echo esc_attr( cmb_txt( 'Thông tin liên hệ và ngôn ngữ', 'Contact information and language' ) ); ?>">
-              <li class="l-header__topbar-item" id="topbar-item-email">
-                <a href="mailto:<?php echo $hdr_email; ?>" class="l-header__topbar-link" id="topbar-email" aria-label="<?php echo esc_attr( sprintf( cmb_txt( 'Gửi email tới %s', 'Send email to %s' ), $hdr_email ) ); ?>">
-                  <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Email Icon.svg" alt="" role="presentation" class="l-header__topbar-icon" />
-                  <span><?php echo $hdr_email; ?></span>
-                </a>
-              </li>
               <li class="l-header__topbar-item" id="topbar-item-eoffice">
                 <a href="<?php echo $hdr_eoffice; ?>" class="l-header__topbar-link" id="topbar-eoffice" title="Truy cập E-Office CMB"<?php echo ( $hdr_eoffice !== '#' ) ? ' target="_blank" rel="noopener"' : ''; ?>>
                   <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Document Icon.svg" alt="" role="presentation" class="l-header__topbar-icon" />
@@ -214,10 +207,6 @@
                   </ul>
                   <?php endif; ?>
                 </div>
-                <a href="mailto:<?php echo $hdr_email; ?>" class="l-nav__mobile-info-item" aria-label="<?php echo esc_attr( cmb_txt( 'Email CMB', 'CMB Email' ) ); ?>">
-                  <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Email Icon.svg" alt="" role="presentation" />
-                  <?php echo $hdr_email; ?>
-                </a>
                 <a href="<?php echo $hdr_eoffice; ?>" class="l-nav__mobile-info-item" title="E-Office CMB"<?php echo ( $hdr_eoffice !== '#' ) ? ' target="_blank" rel="noopener"' : ''; ?>>
                   <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Document Icon.svg" alt="" role="presentation" />
                   E-Office CMB

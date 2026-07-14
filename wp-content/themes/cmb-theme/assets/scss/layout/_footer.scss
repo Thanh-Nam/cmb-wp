@@ -10,18 +10,18 @@ $footer-text: rgba($color-white, 0.72);
 $footer-border: rgba($color-white, 0.12);
 
 .l-footer {
-  background-image: url('../images/bg-footer.webp');
+  background-image: url('../images/bg-footer.png');
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
 
-  margin-top: -11vw;
+  margin-top: -13vw;
   position: relative;
   z-index: 2;
   pointer-events: none;
 
   @include mq(1480px) {
-    margin-top: -23vw;
+    margin-top: -27vw;
   }
 
   @include md {
@@ -37,7 +37,7 @@ $footer-border: rgba($color-white, 0.12);
       bottom: calc(100% - 1px);
       width: 100%;
       height: 25vw;
-      background-image: url('../images/bg-footer-sp.webp');
+      background-image: url('../images/bg-footer-sp.png');
       background-size: 100% 100%;
       background-repeat: no-repeat;
       pointer-events: none;

@@ -61,7 +61,6 @@ $slide_count = $featured_q->post_count;
       <div class="swiper-wrapper">
 
         <?php while ($featured_q->have_posts()) : $featured_q->the_post();
-          $f_img   = get_field('project_img');
           $f_terms = get_the_terms(get_the_ID(), 'du-an-category');
           $f_cat   = ($f_terms && !is_wp_error($f_terms)) ? $f_terms[0]->name : '';
           $f_loc   = get_field('project_location_detail');
@@ -75,11 +74,7 @@ $slide_count = $featured_q->post_count;
             <?php endif; ?>
 
             <div class="p-projects-featured__img-wrap" data-reveal="fade-right">
-              <?php if ($f_img) : ?>
-              <img src="<?php echo esc_url($f_img['url']); ?>"
-                   alt="<?php echo esc_attr($f_img['alt'] ?: get_the_title()); ?>"
-                   class="p-projects-featured__img" loading="eager" />
-              <?php elseif (has_post_thumbnail()) : ?>
+              <?php if (has_post_thumbnail()) : ?>
               <?php the_post_thumbnail('large', ['class' => 'p-projects-featured__img', 'loading' => 'eager']); ?>
               <?php endif; ?>
             </div>

@@ -1225,18 +1225,18 @@ hr {
 }
 
 .l-footer {
-  background-image: url("../images/bg-footer.webp");
+  background-image: url("../images/bg-footer.png");
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
-  margin-top: -11vw;
+  margin-top: -13vw;
   position: relative;
   z-index: 2;
   pointer-events: none;
 }
 @media (max-width: 1480px) {
   .l-footer {
-    margin-top: -23vw;
+    margin-top: -27vw;
   }
 }
 @media (max-width: 1023px) {
@@ -1253,7 +1253,7 @@ hr {
     bottom: calc(100% - 1px);
     width: 100%;
     height: 25vw;
-    background-image: url("../images/bg-footer-sp.webp");
+    background-image: url("../images/bg-footer-sp.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     pointer-events: none;
@@ -4615,7 +4615,8 @@ body.is-loaded .p-page-hero__subtitle {
   align-items: flex-start;
 }
 .p-news__item .p-news__meta {
-  gap: 0.6rem 4.8rem;
+  gap: 0.6rem 1.2rem;
+  justify-content: space-between;
 }
 .p-news__item .p-news__date {
   font-size: 1.6rem;
@@ -4665,7 +4666,7 @@ body.is-loaded .p-page-hero__subtitle {
 }
 .p-news__item-title {
   font-family: "Montserrat", sans-serif;
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1.35;
   color: #292929;
@@ -7626,6 +7627,38 @@ body.is-loaded .p-page-hero__subtitle {
   min-width: 0;
 }
 
+.p-lab-detail__content {
+  margin-bottom: 4rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.7;
+  color: #111827;
+}
+.p-lab-detail__content > *:last-child {
+  margin-bottom: 0;
+}
+.p-lab-detail__content p, .p-lab-detail__content ul, .p-lab-detail__content ol, .p-lab-detail__content table, .p-lab-detail__content blockquote {
+  margin: 0 0 1.6rem;
+}
+.p-lab-detail__content h1, .p-lab-detail__content h2, .p-lab-detail__content h3, .p-lab-detail__content h4, .p-lab-detail__content h5, .p-lab-detail__content h6 {
+  font-weight: 700;
+  color: #002036;
+  line-height: 1.35;
+  margin: 2.4rem 0 1.2rem;
+}
+.p-lab-detail__content ul, .p-lab-detail__content ol {
+  padding-left: 2rem;
+}
+.p-lab-detail__content a {
+  color: #0379CC;
+  text-decoration: underline;
+}
+.p-lab-detail__content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
 .p-lab-detail__sidebar {
   display: flex;
   flex-direction: column;
@@ -7989,56 +8022,74 @@ li:last-child .p-lab-detail__related-item {
 
 .p-ir-tabs {
   background: #FFFFFF;
-  border-bottom: 1px solid #E5E7EB;
+  padding: 3.2rem 0;
 }
 .p-ir-tabs__list {
   display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: stretch;
   justify-content: center;
-  justify-content: safe center;
-  gap: 1.2rem;
-  padding: 1.6rem 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.p-ir-tabs__list::-webkit-scrollbar {
-  display: none;
+  gap: 2.4rem 1.6rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 1.6rem;
+  padding: 2.4rem;
 }
 .p-ir-tabs__item {
-  flex-shrink: 0;
+  flex: none;
+  display: flex;
 }
 .p-ir-tabs__link {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
   width: 100%;
-  padding: 1.4rem 2.4rem;
+  padding: 1.6rem 2.4rem;
   font-family: "Montserrat", sans-serif;
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #6B7280;
-  background: transparent;
-  border: none;
-  border-radius: 99.9rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #111827;
+  background: #FFFFFF;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04), 0 1px 6px rgba(17, 24, 39, 0.06);
   cursor: pointer;
-  white-space: nowrap;
+  text-align: center;
   transition: color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
 }
-.p-ir-tabs__link:hover {
-  color: #0379CC;
-  background: #E6F2FC;
+.p-ir-tabs__link:hover, .p-ir-tabs__link.is-active {
+  color: #FFFFFF;
+  background: #0379CC;
+  border-color: #0379CC;
+  z-index: 1;
+}
+.p-ir-tabs__link:hover::before, .p-ir-tabs__link.is-active::before {
+  content: "";
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 2.6rem;
+  height: 2.6rem;
+  background: linear-gradient(135deg, transparent 50%, #FFFFFF 50%) right 0.6rem bottom 0.65rem/1.3rem 1.3rem no-repeat, linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.35) 50%) bottom right/2.6rem 2.6rem no-repeat;
+  pointer-events: none;
 }
 .p-ir-tabs__link.is-active {
-  color: #FFFFFF;
-  font-weight: 700;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(3, 121, 204, 0.28);
+}
+.p-ir-tabs__link.is-active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -1.4rem;
+  transform: translateX(-50%);
+  width: 2.8rem;
+  height: 0.4rem;
+  border-radius: 0.2rem;
   background: #0379CC;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .p-ir-tabs__icon {
   display: flex;
@@ -8052,26 +8103,20 @@ li:last-child .p-lab-detail__related-item {
 .p-ir-tabs__icon svg {
   display: block;
 }
-.p-ir-tabs__link:hover .p-ir-tabs__icon {
-  color: #0379CC;
-}
-.p-ir-tabs__link.is-active .p-ir-tabs__icon {
+.p-ir-tabs__link:hover .p-ir-tabs__icon, .p-ir-tabs__link.is-active .p-ir-tabs__icon {
   color: #FFFFFF;
 }
 .p-ir-tabs__label {
-  line-height: 1.2;
+  line-height: 1.3;
 }
 @media (max-width: 1023px) {
   .p-ir-tabs__list {
-    gap: 1rem;
-  }
-  .p-ir-tabs__item {
-    flex-shrink: 0;
-    flex: none;
+    gap: 1.8rem 1.2rem;
+    padding: 1.8rem;
   }
   .p-ir-tabs__link {
-    padding: 1.2rem 1.8rem;
-    font-size: 1.2rem;
+    padding: 1.4rem 1.8rem;
+    font-size: 1.3rem;
   }
   .p-ir-tabs__icon {
     width: 2rem;
@@ -8079,12 +8124,17 @@ li:last-child .p-lab-detail__related-item {
   }
 }
 @media (max-width: 767px) {
+  .p-ir-tabs {
+    padding: 2rem 0;
+  }
   .p-ir-tabs__list {
-    gap: 0.8rem;
+    gap: 1.6rem 1rem;
+    padding: 1.4rem;
+    border-radius: 1.2rem;
   }
   .p-ir-tabs__link {
-    padding: 1rem 1.4rem;
-    font-size: 1.05rem;
+    padding: 1.2rem 1.4rem;
+    font-size: 1.2rem;
     gap: 0.5rem;
   }
   .p-ir-tabs__icon {
@@ -11571,3 +11621,5 @@ li:last-child .p-lab-detail__related-item {
   transition: transform 0.25s ease, color 0.25s ease;
   flex-shrink: 0;
 }
+
+/*# sourceMappingURL=main.css.map */

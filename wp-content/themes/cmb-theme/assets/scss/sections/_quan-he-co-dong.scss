@@ -8,58 +8,84 @@
 // ======= 1. TAB NAVIGATION =======
 .p-ir-tabs {
   background: $color-white;
-  border-bottom: 1px solid $color-border;
+  padding: rem(32) 0;
 
   &__list {
     display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: stretch;
     justify-content: center;
-    justify-content: safe center;
-    gap: rem(12);
-    padding: rem(16) 0;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
-    &::-webkit-scrollbar { display: none; }
+    gap: rem(24) rem(16);
+    border: 1px solid $color-border;
+    border-radius: rem(16);
+    padding: rem(24);
   }
 
   &__item {
-    flex-shrink: 0;
+    flex: none;
+    display: flex;
   }
 
   &__link {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: rem(8);
     width: 100%;
-    padding: rem(14) rem(24);
+    padding: rem(16) rem(24);
     font-family: $font-primary;
-    font-size: rem(13);
-    font-weight: $font-weight-semibold;
-    color: $color-text-muted;
-    background: transparent;
-    border: none;
-    border-radius: rem(999);
+    font-size: rem(14);
+    font-weight: $font-weight-medium;
+    line-height: 1.4;
+    color: $color-text;
+    background: $color-white;
+    border: 1px solid transparent;
+    border-radius: rem(10);
+    box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04), 0 1px 6px rgba(17, 24, 39, 0.06);
     cursor: pointer;
-    white-space: nowrap;
+    text-align: center;
     transition: color $transition-fast, background $transition-fast, box-shadow $transition-fast;
 
-    &:hover {
-      color: $color-primary;
-      background: $color-primary-light;
+    &:hover,
+    &.is-active {
+      color: $color-white;
+      background: $color-primary;
+      border-color: $color-primary;
+      z-index: 1;
+
+      // Góc gấp dưới-phải: 2 tam giác lồng nhau (xanh đậm hơn to + trắng nhỏ, dính liền nền)
+      &::before {
+        content: '';
+        position: absolute;
+        right: -1px;
+        bottom: -1px;
+        width: rem(26);
+        height: rem(26);
+        background:
+          linear-gradient(135deg, transparent 50%, $color-white 50%) right rem(6) bottom rem(6.5) / rem(13) rem(13) no-repeat,
+          linear-gradient(135deg, transparent 50%, rgba($color-white, 0.35) 50%) bottom right / rem(26) rem(26) no-repeat;
+        pointer-events: none;
+      }
     }
 
     &.is-active {
-      color: $color-white;
-      font-weight: $font-weight-bold;
-      background: $color-primary;
-      box-shadow: $shadow-md;
+      font-weight: $font-weight-semibold;
+      box-shadow: 0 4px 10px rgba(3, 121, 204, 0.28);
+
+      // Gạch chân xanh, nằm ngoài box, căn giữa
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: rem(-14);
+        transform: translateX(-50%);
+        width: rem(28);
+        height: rem(4);
+        border-radius: rem(2);
+        background: $color-primary;
+      }
     }
   }
 
@@ -75,26 +101,24 @@
     svg { display: block; }
   }
 
-  &__link:hover &__icon {
-    color: $color-primary;
-  }
-
+  &__link:hover &__icon,
   &__link.is-active &__icon {
     color: $color-white;
   }
 
   &__label {
-    line-height: 1.2;
+    line-height: 1.3;
   }
 
   @include md {
-    &__list { gap: rem(10); }
-
-    &__item { flex-shrink: 0; flex: none; }
+    &__list {
+      gap: rem(18) rem(12);
+      padding: rem(18);
+    }
 
     &__link {
-      padding: rem(12) rem(18);
-      font-size: rem(12);
+      padding: rem(14) rem(18);
+      font-size: rem(13);
     }
 
     &__icon {
@@ -104,11 +128,17 @@
   }
 
   @include sp {
-    &__list { gap: rem(8); }
+    padding: rem(20) 0;
+
+    &__list {
+      gap: rem(16) rem(10);
+      padding: rem(14);
+      border-radius: rem(12);
+    }
 
     &__link {
-      padding: rem(10) rem(14);
-      font-size: rem(10.5);
+      padding: rem(12) rem(14);
+      font-size: rem(12);
       gap: rem(5);
     }
 

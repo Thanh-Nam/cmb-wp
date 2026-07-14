@@ -235,7 +235,8 @@
 
     // Override meta cho item nhỏ
     .p-news__meta {
-      gap: rem(6) rem(48);
+      gap: rem(6) rem(12);
+      justify-content: space-between;
     }
 
     .p-news__date {
@@ -297,7 +298,7 @@
 
   &__item-title {
     font-family: $font-primary;
-    font-size: rem(24);
+    font-size: rem(20);
     font-weight: $font-weight-bold;
     line-height: 1.35;
     color: #292929;

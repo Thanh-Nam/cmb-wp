@@ -119,6 +119,12 @@ $related_q    = new WP_Query([
         <div class="p-lab-detail__layout">
           <div class="p-lab-detail__main">
 
+            <?php if (trim(get_the_content())) : ?>
+            <div class="p-lab-detail__content">
+              <?php the_content(); ?>
+            </div>
+            <?php endif; ?>
+
             <?php if ($docs) : ?>
             <?php foreach ($docs as $doc) : ?>
             <!-- ---- Tài liệu PDF #<?php echo $doc['index']; ?> ---- -->

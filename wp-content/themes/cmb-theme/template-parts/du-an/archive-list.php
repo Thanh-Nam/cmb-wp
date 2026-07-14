@@ -48,7 +48,6 @@ $projects_q = new WP_Query([
       <?php if ($projects_q->have_posts()) : $ci = 0; ?>
       <?php while ($projects_q->have_posts()) : $projects_q->the_post(); $ci++; ?>
       <?php
-        $c_img   = get_field('project_img');
         $c_terms = get_the_terms(get_the_ID(), 'du-an-category');
         $c_slug  = ($c_terms && !is_wp_error($c_terms)) ? $c_terms[0]->slug : '';
         $c_name  = ($c_terms && !is_wp_error($c_terms)) ? $c_terms[0]->name : '';
@@ -60,11 +59,7 @@ $projects_q = new WP_Query([
                data-reveal="fade-up" data-reveal-delay="<?php echo ($ci % 3) + 1; ?>">
 
         <div class="p-projects-card__img-wrap">
-          <?php if ($c_img) : ?>
-          <img src="<?php echo $c_img['url']; ?>"
-               alt="<?php echo esc_attr($c_img['alt'] ?: get_the_title()); ?>"
-               class="p-projects-card__img" loading="lazy" />
-          <?php elseif (has_post_thumbnail()) : ?>
+          <?php if (has_post_thumbnail()) : ?>
           <?php the_post_thumbnail('medium_large', ['class' => 'p-projects-card__img', 'loading' => 'lazy']); ?>
           <?php endif; ?>
           <?php if ($c_name) : ?>
