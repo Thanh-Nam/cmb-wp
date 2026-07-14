@@ -231,7 +231,7 @@
     display: grid;
     grid-template-columns: rem(182) 1fr;
     gap: rem(12);
-    align-items: flex-start;
+    align-items: stretch;
 
     // Override meta cho item nhỏ
     .p-news__meta {
@@ -293,6 +293,7 @@
       font-weight: $font-weight-bold;
       line-height: 1.25;
       padding: rem(2) 0;
+      margin-top: auto;
     }
   }
 

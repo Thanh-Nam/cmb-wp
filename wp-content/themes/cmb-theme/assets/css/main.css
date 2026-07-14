@@ -4612,7 +4612,7 @@ body.is-loaded .p-page-hero__subtitle {
   display: grid;
   grid-template-columns: 18.2rem 1fr;
   gap: 1.2rem;
-  align-items: flex-start;
+  align-items: stretch;
 }
 .p-news__item .p-news__meta {
   gap: 0.6rem 1.2rem;
@@ -4663,6 +4663,7 @@ body.is-loaded .p-page-hero__subtitle {
   font-weight: 700;
   line-height: 1.25;
   padding: 0.2rem 0;
+  margin-top: auto;
 }
 .p-news__item-title {
   font-family: "Montserrat", sans-serif;
@@ -8049,7 +8050,7 @@ li:last-child .p-lab-detail__related-item {
   padding: 1.6rem 2.4rem;
   font-family: "Montserrat", sans-serif;
   font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.4;
   color: #111827;
   background: #FFFFFF;
@@ -8077,7 +8078,6 @@ li:last-child .p-lab-detail__related-item {
   pointer-events: none;
 }
 .p-ir-tabs__link.is-active {
-  font-weight: 600;
   box-shadow: 0 4px 10px rgba(3, 121, 204, 0.28);
 }
 .p-ir-tabs__link.is-active::after {

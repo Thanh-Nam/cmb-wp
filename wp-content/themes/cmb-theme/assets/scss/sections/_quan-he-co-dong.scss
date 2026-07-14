@@ -37,7 +37,7 @@
     padding: rem(16) rem(24);
     font-family: $font-primary;
     font-size: rem(14);
-    font-weight: $font-weight-medium;
+    font-weight: $font-weight-semibold;
     line-height: 1.4;
     color: $color-text;
     background: $color-white;
@@ -71,7 +71,6 @@
     }
 
     &.is-active {
-      font-weight: $font-weight-semibold;
       box-shadow: 0 4px 10px rgba(3, 121, 204, 0.28);
 
       // Gạch chân xanh, nằm ngoài box, căn giữa

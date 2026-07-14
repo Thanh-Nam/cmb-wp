@@ -54,10 +54,10 @@ function cmb_get_job_category_facets() {
 	], $terms );
 }
 
-function cmb_get_job_location_term( $post_id ) {
+// Một job có thể thuộc nhiều khu vực cùng lúc (dia_diem là ACF select multi-value).
+function cmb_get_job_location_terms( $post_id ) {
 	$terms = wp_get_post_terms( $post_id, 'tuyen-dung-location' );
-	if ( is_wp_error( $terms ) || empty( $terms ) ) return null;
-	return $terms[0];
+	return is_wp_error( $terms ) ? [] : $terms;
 }
 
 // Trường "loai_hinh" là ACF select multi-value — chuẩn hoá về mảng dù dữ liệu cũ còn lưu dạng chuỗi đơn (trước khi cho phép chọn nhiều).
@@ -87,15 +87,16 @@ function cmb_transform_job( $post ) {
 	$han_nop  = cmb_get_acf_or( $id, 'han_nop', null ); // ACF trả về "Ymd" (VD: 20260809)
 	$deadline = $han_nop ? substr( $han_nop, 0, 4 ) . '-' . substr( $han_nop, 4, 2 ) . '-' . substr( $han_nop, 6, 2 ) : null;
 
-	$category_term = cmb_get_job_category_term( $id );
-	$location_term  = cmb_get_job_location_term( $id );
+	$category_term  = cmb_get_job_category_term( $id );
+	$location_terms = cmb_get_job_location_terms( $id );
 
 	return [
 		'id'             => (string) $id,
 		'title'          => get_the_title( $id ),
 		'company'        => 'CMB',
-		'location'       => $location_term ? $location_term->slug : '',
-		'locationLabel'  => $location_term ? $location_term->name : '',
+		// Nhiều khu vực cách nhau bởi dấu phẩy (slug không dấu, label có dấu để hiển thị).
+		'location'       => implode( ',', wp_list_pluck( $location_terms, 'slug' ) ),
+		'locationLabel'  => implode( ', ', wp_list_pluck( $location_terms, 'name' ) ),
 		'description'    => apply_filters( 'the_content', $post->post_content ),
 		'postedAt'       => get_the_date( 'c', $id ),
 		'category'       => $category_term ? $category_term->slug : '',
