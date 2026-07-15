@@ -24,6 +24,13 @@
   &__item {
     flex: none;
     display: flex;
+    width: calc((100% - #{rem(48)}) / 4);
+  }
+
+  &__divider {
+    flex: 0 0 100%;
+    height: 1px;
+    background: $color-border;
   }
 
   &__link {
@@ -43,7 +50,7 @@
     background: $color-white;
     border: 1px solid transparent;
     border-radius: rem(10);
-    box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04), 0 1px 6px rgba(17, 24, 39, 0.06);
+    box-shadow: 0 5px 8px rgba(17, 24, 39, 0.04), 0 1px 6px rgba(17, 24, 39, 0.06);
     cursor: pointer;
     text-align: center;
     transition: color $transition-fast, background $transition-fast, box-shadow $transition-fast;
@@ -97,7 +104,9 @@
     color: $color-text-light;
     transition: color $transition-fast;
 
-    svg { display: block; }
+    svg {
+      display: block;
+    }
   }
 
   &__link:hover &__icon,
@@ -113,6 +122,10 @@
     &__list {
       gap: rem(18) rem(12);
       padding: rem(18);
+    }
+
+    &__item {
+      width: calc((100% - #{rem(36)}) / 4);
     }
 
     &__link {
@@ -133,6 +146,10 @@
       gap: rem(16) rem(10);
       padding: rem(14);
       border-radius: rem(12);
+    }
+
+    &__item {
+      width: calc((100% - #{rem(30)}) / 4);
     }
 
     &__link {
@@ -200,39 +217,44 @@
   &__group {
     margin-bottom: rem(40);
 
-    &:last-child { margin-bottom: 0; }
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   &__year {
     position: relative;
-    display: flex;
-    align-items: flex-end;
-    height: rem(56);
+    display: inline-flex;
+    align-items: center;
+    height: rem(64);
     margin-bottom: rem(6);
-    overflow: hidden;
 
     &-ghost {
       position: absolute;
       left: rem(-6);
-      top: rem(-10);
+      bottom: rem(-4);
       font-family: Georgia, "Iowan Old Style", Cambria, serif;
-      font-size: rem(76);
+      font-size: rem(110);
       font-weight: $font-weight-bold;
       line-height: 1;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
       color: $color-cmb-navy;
-      opacity: 0.06;
+      opacity: 0.08;
       pointer-events: none;
+      z-index: 0;
+      white-space: nowrap;
+      user-select: none;
     }
 
     &-label {
       position: relative;
+      z-index: 1;
       font-family: $font-primary;
-      font-size: rem(13);
+      font-size: rem(32);
       font-weight: $font-weight-bold;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      letter-spacing: 0.02em;
       color: $color-primary-dark;
+      line-height: 1;
       padding-bottom: rem(6);
       border-bottom: 1px solid $color-border;
     }
@@ -359,11 +381,25 @@
     transition: background $transition-fast, color $transition-fast;
     flex-shrink: 0;
 
-    svg { display: block; }
+    svg {
+      display: block;
+    }
 
     .p-ir-timeline__item:hover & {
       background: $color-primary-light;
       color: $color-primary;
+    }
+
+    &--disabled {
+      color: $color-text-light;
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+
+      .p-ir-timeline__item:hover & {
+        background: transparent;
+        color: $color-text-light;
+      }
     }
   }
 
@@ -429,6 +465,14 @@
     display: flex;
     flex-direction: column;
     gap: 0;
+
+    > li {
+      border-bottom: 1px solid $color-border;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
   }
 
   &__more {
@@ -443,21 +487,22 @@
     text-decoration: none;
     transition: gap $transition-fast;
 
-    &:hover { gap: rem(10); }
+    &:hover {
+      gap: rem(10);
+    }
   }
 }
 
 .p-ir-feat-doc {
   display: flex;
   gap: rem(14);
-  padding: rem(16) 0;
-  border-bottom: 1px solid $color-border;
+  padding: rem(16) 0 rem(8);
   text-decoration: none;
   transition: opacity $transition-fast;
 
-  &:last-child { border-bottom: none; }
-
-  &:hover { opacity: 0.8; }
+  &:hover {
+    opacity: 0.8;
+  }
 
   &__thumb {
     flex-shrink: 0;
@@ -510,6 +555,30 @@
     align-items: center;
     gap: rem(6);
 
-    svg { flex-shrink: 0; opacity: 0.5; }
+    svg {
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+  }
+}
+
+.p-ir-feat-doc__download {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(6);
+  padding: 0 0 rem(16);
+  font-family: $font-secondary;
+  font-size: rem(13);
+  font-weight: $font-weight-medium;
+  color: $color-primary;
+  text-decoration: none;
+  transition: gap $transition-fast;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    gap: rem(9);
   }
 }

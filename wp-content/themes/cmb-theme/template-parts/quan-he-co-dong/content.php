@@ -21,6 +21,9 @@ if (empty($ir_terms)) : ?>
   <div class="l-container">
     <ul class="p-ir-tabs__list" role="tablist">
       <?php foreach ($ir_terms as $i => $term) : ?>
+      <?php if ($i > 0 && $i % 4 === 0) : ?>
+      <li class="p-ir-tabs__divider" aria-hidden="true"></li>
+      <?php endif; ?>
       <li class="p-ir-tabs__item" role="presentation">
         <button class="p-ir-tabs__link<?php echo ($i === 0) ? ' is-active' : ''; ?>"
                 id="<?php echo esc_attr('tab-' . $term->slug); ?>"
@@ -150,7 +153,12 @@ if (empty($ir_terms)) : ?>
                     </svg>
                   </a>
                   <?php else : ?>
-                  <span></span>
+                  <span class="p-ir-timeline__action p-ir-timeline__action--disabled" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="M8 2V10M8 10L5 7M8 10L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M2 13H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
+                  </span>
                   <?php endif; ?>
                 </div>
                 <?php endforeach; ?>

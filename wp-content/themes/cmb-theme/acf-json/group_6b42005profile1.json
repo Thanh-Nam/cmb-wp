@@ -1,0 +1,154 @@
+{
+    "key": "group_6b42005profile1",
+    "title": "Hồ sơ năng lực",
+    "fields": [
+        {
+            "key": "field_6b4200500001",
+            "label": "Ảnh bìa (thẻ giới thiệu)",
+            "name": "profile_book_cover",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Ảnh nền hiển thị ở thẻ giới thiệu hồ sơ năng lực (ví dụ ảnh cảng biển, tàu...)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_6b4200500002",
+            "label": "Tiêu đề",
+            "name": "profile_book_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "HỔ SƠ NĂNG LỰC",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_6b4200500003",
+            "label": "Tiêu đề (EN)",
+            "name": "profile_book_title_en",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "COMPANY PROFILE",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_6b4200500004",
+            "label": "Mô tả ngắn",
+            "name": "profile_book_desc",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_6b4200500005",
+            "label": "Mô tả ngắn (EN)",
+            "name": "profile_book_desc_en",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_6b4200500007",
+            "label": "File PDF hồ sơ năng lực",
+            "name": "profile_book_pdf",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "Upload 1 file PDF duy nhất — hệ thống sẽ tự động tách từng trang và hiển thị dạng sách lật (không cần tách ảnh thủ công). File này cũng dùng cho nút Tải PDF.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "pdf"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "gioi-thieu"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1782306993
+}

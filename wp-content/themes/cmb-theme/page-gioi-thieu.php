@@ -12,6 +12,7 @@ get_header(); ?>
   get_template_part('template-parts/gioi-thieu/values');
   get_template_part('template-parts/gioi-thieu/leadership');
   get_template_part('template-parts/gioi-thieu/achievements');
+  get_template_part('template-parts/gioi-thieu/profile-book');
   get_template_part('template-parts/section-partner');
   ?>
 </main>

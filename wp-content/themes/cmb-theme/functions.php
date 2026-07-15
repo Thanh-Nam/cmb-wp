@@ -130,6 +130,7 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
         wp_enqueue_script( 'cmb-leadership',   $uri . '/assets/js/modules/leadership-swiper.js', ['swiper', 'cmb-global'], $ver, true );
         wp_enqueue_script( 'cmb-stat-counter', $uri . '/assets/js/modules/stat-counter.js',      ['cmb-global'],           $ver, true );
+        wp_enqueue_script( 'cmb-profile-book', $uri . '/assets/js/modules/profile-book.js',      ['cmb-global'],           $ver, true );
     }
 
     // Trang liên hệ
