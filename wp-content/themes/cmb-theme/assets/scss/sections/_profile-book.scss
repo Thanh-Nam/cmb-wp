@@ -22,6 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: rem(16);
     min-height: rem(20);
     margin-top: rem(20);
     opacity: 0;
@@ -240,6 +241,35 @@
     font-size: rem(13);
     color: $color-text-muted;
     letter-spacing: 0.04em;
+    min-width: rem(50);
+    text-align: center;
+  }
+
+  &__nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: rem(32);
+    height: rem(32);
+    padding: 0;
+    border: 1px solid $color-border;
+    border-radius: 50%;
+    background: $color-white;
+    color: $color-text;
+    cursor: pointer;
+    transition: background $transition-fast, border-color $transition-fast, opacity $transition-fast;
+
+    &:hover:not(:disabled) {
+      background: $color-bg-alt;
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
   }
 
   &__error {

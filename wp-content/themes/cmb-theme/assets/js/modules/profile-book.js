@@ -18,6 +18,8 @@
   var loadingEl = document.getElementById('profile-book-loading');
   var loadingText = document.getElementById('profile-book-loading-text');
   var errorEl = document.getElementById('profile-book-error');
+  var prevBtn = document.getElementById('profile-book-prev');
+  var nextBtn = document.getElementById('profile-book-next');
 
   if (!flipEl || !window.St || !window.St.PageFlip) return;
 
@@ -123,6 +125,21 @@
   function updatePager(currentIndex) {
     if (!pager || !totalPages) return;
     pager.textContent = (currentIndex + 1) + ' / ' + totalPages;
+    if (nextBtn) nextBtn.disabled = currentIndex >= totalPages - 1;
+  }
+
+  // Nút prev/next — dự phòng cho lúc kéo/chạm trực tiếp trên sách bất tiện (đặc biệt
+  // trên điện thoại, khung nhỏ). Bấm prev ở trang đầu tiên sẽ gấp sách lại (giống hành
+  // vi vuốt trái ở flipEl bên dưới), để nhất quán.
+  function goPrevPage() {
+    if (!pageFlip) return;
+    if (pageFlip.getCurrentPageIndex() <= 0) closeBook();
+    else pageFlip.flipPrev();
+  }
+
+  function goNextPage() {
+    if (!pageFlip) return;
+    pageFlip.flipNext();
   }
 
   // Chuẩn bị sẵn (tải pdf.js + render vài trang đầu) ngay khi trang web load xong,
@@ -261,6 +278,8 @@
   }
 
   coverBtn.addEventListener('click', openBook);
+  if (prevBtn) prevBtn.addEventListener('click', goPrevPage);
+  if (nextBtn) nextBtn.addEventListener('click', goNextPage);
 
   // Bấm/kéo về bên trái khi đang ở trang đầu tiên → gấp sách lại về bìa
   flipEl.addEventListener('click', function (e) {
