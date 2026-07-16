@@ -1,0 +1,143 @@
+{
+    "key": "group_6b43000video0001",
+    "title": "Video giới thiệu",
+    "fields": [
+        {
+            "key": "field_6b4300000001",
+            "label": "Tiêu đề",
+            "name": "video_intro_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "VIDEO GIỚI THIỆU",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_6b4300000002",
+            "label": "Tiêu đề (EN)",
+            "name": "video_intro_title_en",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "INTRODUCTION VIDEO",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_6b4300000003",
+            "label": "Nguồn video",
+            "name": "video_intro_source",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "Chọn cách lấy video: upload file lên trực tiếp, hoặc dán link YouTube/Vimeo để nhúng.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "upload": "Upload file (MP4)",
+                "embed": "Nhúng link (YouTube/Vimeo)"
+            },
+            "allow_null": 0,
+            "default_value": "upload",
+            "return_format": "value",
+            "layout": "horizontal",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_6b4300000004",
+            "label": "File video (MP4)",
+            "name": "video_intro_file",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "Nên nén dưới ~30-50MB để trang tải nhanh. Ảnh đại diện sẽ tự lấy khung hình đầu tiên của video.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6b4300000003",
+                        "operator": "==",
+                        "value": "upload"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4"
+        },
+        {
+            "key": "field_6b4300000005",
+            "label": "Link YouTube/Vimeo",
+            "name": "video_intro_embed_url",
+            "aria-label": "",
+            "type": "oembed",
+            "instructions": "Dán link video YouTube hoặc Vimeo.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6b4300000003",
+                        "operator": "==",
+                        "value": "embed"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "width": "",
+            "height": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "gioi-thieu"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1782306994
+}

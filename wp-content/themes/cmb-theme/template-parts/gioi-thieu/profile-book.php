@@ -10,75 +10,53 @@ $pb_fields = get_fields('option') ?: [];
 if (empty($pb_pdf['url'])) return;
 
 $pb_title = cmb_arr($pb_fields, 'profile_book_title') ?: cmb_txt('HỒ SƠ NĂNG LỰC', 'COMPANY PROFILE');
-$pb_desc  = cmb_arr($pb_fields, 'profile_book_desc');
 
-// Ảnh bìa: dùng ảnh đã chọn, hoặc thumbnail PDF do WordPress tự sinh (nếu server có Imagick+Ghostscript)
 $pb_cover_url = $pb_cover['url'] ?? '';
 $pb_cover_alt = $pb_cover['alt'] ?? '';
-if (!$pb_cover_url && !empty($pb_pdf['ID'])) {
-    $pdf_thumb = wp_get_attachment_image_src($pb_pdf['ID'], 'large');
-    if ($pdf_thumb) $pb_cover_url = $pdf_thumb[0];
-}
 ?>
 <!-- ======= PROFILE BOOK (HỒ SƠ NĂNG LỰC) ======= -->
 <section class="p-profile-book" id="profile-book" aria-label="<?php echo esc_attr(cmb_txt('Hồ sơ năng lực CMB', 'CMB Company Profile')); ?>">
   <div class="l-container">
     <div class="p-profile-book__header" data-reveal="fade-up">
-      <h2 class="c-section-title"><?php echo cmb_txt('HỒ SƠ NĂNG LỰC', 'COMPANY PROFILE'); ?></h2>
-      <?php if ($pb_desc) : ?>
-      <p class="p-profile-book__desc"><?php echo wp_kses_post($pb_desc); ?></p>
-      <?php endif; ?>
-      <a href="<?php echo esc_url($pb_pdf['url']); ?>" class="p-profile-book__download" download>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M8 2V10M8 10L5 7M8 10L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M2 13H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-        </svg>
-        <?php echo cmb_txt('Tải PDF', 'Download PDF'); ?>
-      </a>
+      <span class="c-section-label"><?php echo cmb_txt('HỒ SƠ NĂNG LỰC', 'COMPANY PROFILE'); ?></span>
     </div>
 
-    <div class="p-book"
-         id="profile-book-viewer"
-         data-pdf-url="<?php echo esc_attr($pb_pdf['url']); ?>"
-         data-cover-url="<?php echo esc_attr($pb_cover_url); ?>"
-         tabindex="0"
-         role="group"
-         aria-label="<?php echo esc_attr($pb_title); ?>"
-         data-reveal="fade-up" data-reveal-delay="1">
-      <button type="button" class="p-book__nav p-book__nav--prev" id="profile-book-prev" aria-label="<?php echo esc_attr(cmb_txt('Trang trước', 'Previous page')); ?>">
-        <svg width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M12 2L2 12L12 22" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="p-book-wrap" id="profile-book-wrap" data-reveal="fade-up" data-reveal-delay="1">
+      <button type="button" class="p-book-cover" id="profile-book-cover-btn" aria-label="<?php echo esc_attr(cmb_txt('Bấm để mở hồ sơ năng lực', 'Click to open the company profile')); ?>">
+        <?php if ($pb_cover_url) : ?>
+        <img src="<?php echo esc_url($pb_cover_url); ?>" alt="<?php echo esc_attr($pb_cover_alt ?: $pb_title); ?>" class="p-book-cover__img" loading="lazy" />
+        <?php endif; ?>
+        <div class="p-book-cover__overlay"></div>
+        <div class="p-book-cover__body">
+          <p class="p-book-cover__eyebrow"><?php echo cmb_txt('TẬN TÂM · CHUYÊN NGHIỆP · HIỆU QUẢ', 'DEDICATED · PROFESSIONAL · EFFICIENT'); ?></p>
+          <h3 class="p-book-cover__title"><?php echo esc_html($pb_title); ?></h3>
+          <span class="p-book-cover__hint">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M2 4.5C2 4.5 4.5 3 7 3C9 3 10 4 10 4V16.5C10 16.5 9 15.5 7 15.5C4.5 15.5 2 17 2 17V4.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M18 4.5C18 4.5 15.5 3 13 3C11 3 10 4 10 4V16.5C10 16.5 11 15.5 13 15.5C15.5 15.5 18 17 18 17V4.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+            </svg>
+            <?php echo cmb_txt('Bấm để mở', 'Click to open'); ?>
+          </span>
+        </div>
       </button>
 
-      <div class="p-book__stage">
-        <div class="p-book__slot p-book__slot--left">
-          <img class="p-book__img" id="profile-book-img-left" src="" alt="" />
-        </div>
-        <div class="p-book__slot p-book__slot--right">
-          <img class="p-book__img" id="profile-book-img-right" src="" alt="" />
-        </div>
-        <div class="p-book__leaf" id="profile-book-leaf">
-          <div class="p-book__face p-book__face--front">
-            <img class="p-book__img" id="profile-book-leaf-front" src="" alt="" />
+      <div class="p-book"
+           id="profile-book-viewer"
+           data-pdf-url="<?php echo esc_attr($pb_pdf['url']); ?>"
+           tabindex="0"
+           role="group"
+           aria-label="<?php echo esc_attr($pb_title); ?>">
+        <div class="p-book__stage">
+          <div class="p-book__flip" id="profile-book-flip"></div>
+          <div class="p-book__loading" id="profile-book-loading">
+            <span class="p-book__spinner"></span>
+            <span class="p-book__loading-text" id="profile-book-loading-text"></span>
           </div>
-          <div class="p-book__face p-book__face--back">
-            <img class="p-book__img" id="profile-book-leaf-back" src="" alt="" />
-          </div>
-        </div>
-        <div class="p-book__spine" aria-hidden="true"></div>
-        <div class="p-book__loading" id="profile-book-loading" aria-hidden="true">
-          <span class="p-book__spinner"></span>
-        </div>
-        <div class="p-book__intro" id="profile-book-intro" aria-hidden="true">
-          <img class="p-book__intro-img" id="profile-book-intro-img" src="" alt="" />
         </div>
       </div>
-
-      <button type="button" class="p-book__nav p-book__nav--next" id="profile-book-next" aria-label="<?php echo esc_attr(cmb_txt('Trang sau', 'Next page')); ?>">
-        <svg width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 2L12 12L2 22" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
     </div>
 
-    <div class="p-profile-book__footer">
+    <div class="p-profile-book__footer" id="profile-book-footer">
       <span class="p-book__pager" id="profile-book-pager"></span>
       <span class="p-book__error" id="profile-book-error" hidden><?php echo esc_html(cmb_txt('Không thể tải file PDF. Vui lòng thử lại.', 'Unable to load the PDF file. Please try again.')); ?></span>
     </div>

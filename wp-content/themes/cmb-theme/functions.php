@@ -130,7 +130,18 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
         wp_enqueue_script( 'cmb-leadership',   $uri . '/assets/js/modules/leadership-swiper.js', ['swiper', 'cmb-global'], $ver, true );
         wp_enqueue_script( 'cmb-stat-counter', $uri . '/assets/js/modules/stat-counter.js',      ['cmb-global'],           $ver, true );
-        wp_enqueue_script( 'cmb-profile-book', $uri . '/assets/js/modules/profile-book.js',      ['cmb-global'],           $ver, true );
+
+        // Video giới thiệu — custom player cho video upload (MP4)
+        wp_enqueue_script( 'cmb-video-intro', $uri . '/assets/js/modules/video-intro.js', ['cmb-global'], $ver, true );
+
+        // Đồng bộ chiều cao khung Hồ sơ năng lực khớp với video bên cạnh — phải chạy
+        // trước cmb-profile-book để khung có chiều cao đúng trước khi sách được dựng.
+        wp_enqueue_script( 'cmb-video-profile-sync', $uri . '/assets/js/modules/video-profile-sync.js', ['cmb-global', 'cmb-video-intro'], $ver, true );
+
+        // Hồ sơ năng lực — flipbook thật (kéo chuột/chạm để lật trang)
+        wp_enqueue_style( 'st-page-flip', $uri . '/assets/css/stPageFlip.css', [], '2.0.7' );
+        wp_enqueue_script( 'st-page-flip', $uri . '/assets/js/vendors/page-flip/page-flip.browser.js', [], '2.0.7', true );
+        wp_enqueue_script( 'cmb-profile-book', $uri . '/assets/js/modules/profile-book.js', ['cmb-global', 'st-page-flip', 'cmb-video-profile-sync'], $ver, true );
     }
 
     // Trang liên hệ

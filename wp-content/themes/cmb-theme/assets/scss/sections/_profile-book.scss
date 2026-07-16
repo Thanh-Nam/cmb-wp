@@ -1,6 +1,9 @@
 // ============================================
 // SECTIONS / P-PROFILE-BOOK
-// Trang Giới Thiệu — Hồ sơ năng lực (flipbook hiển thị trực tiếp trên trang)
+// Trang Giới Thiệu — Hồ sơ năng lực
+// Flipbook thật (StPageFlip) — kéo chuột/chạm để lật trang.
+// Cấu trúc DOM bên trong .p-book__flip do thư viện StPageFlip tự dựng
+// (xem assets/css/stPageFlip.css cho các class .stf__*).
 // ============================================
 @use '../abstracts' as *;
 
@@ -12,136 +15,85 @@
   @include sp { padding: rem(56) 0; }
 
   &__header {
-    text-align: center;
-    max-width: rem(680);
-    margin: 0 auto rem(36);
-  }
-
-  &__desc {
-    font-family: $font-secondary;
-    font-size: rem(16);
-    line-height: $line-height-loose;
-    color: $color-text-muted;
-    margin: rem(16) 0 0;
-  }
-
-  &__download {
-    @include btn-base;
-    margin-top: rem(24);
-    background: transparent;
-    color: $color-primary;
-    border-color: $color-primary;
-
-    &:hover {
-      background: $color-primary-light;
-    }
+    margin-bottom: rem(20);
   }
 
   &__footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: rem(20);
     margin-top: rem(20);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &.is-visible {
+      opacity: 1;
+    }
   }
 }
 
 // ============================================================
-// BOOK VIEWER (3D flip mềm trên desktop, crossfade trên mobile)
+// BÌA ĐÓNG — bấm vào để mở sách
 // ============================================================
-.p-book {
-  display: flex;
-  align-items: center;
-  gap: rem(20);
-  width: 100%;
+// Bìa đóng (portrait) và sách mở (landscape) có tỉ lệ khác nhau — đặt cả 2 chồng lên
+// nhau (absolute, canh giữa) trong 1 khung có kích thước cố định, để chuyển đổi giữa
+// 2 trạng thái không làm nội dung phía dưới trang bị đẩy/giật.
+// Desktop (nằm ngang cạnh video, >= 1024px): min-height là giá trị dự phòng, chiều
+// cao thật sự được đồng bộ khớp với video bằng JS (video-profile-sync.js), set
+// thẳng qua inline style nên sẽ override giá trị min-height này.
+//
+// Mobile/tablet (2 cột xếp chồng dọc, < 1024px): JS không set height (xem
+// isRowLayout() trong video-profile-sync.js), nên khung phải tự quyết định chiều
+// cao theo đúng chiều rộng thật của nó qua aspect-ratio — nếu dùng 1 con số cố định
+// (px) như trước, khung sẽ không khớp chiều rộng màn hình thật, khiến bìa sách
+// (cao 100% theo khung) bị co hẹp lại, để lại khoảng trắng 2 bên thay vì full width.
+.p-book-wrap {
+  position: relative;
   max-width: rem(1040);
-  aspect-ratio: 16 / 10;
   margin: 0 auto;
+  min-height: rem(520);
 
-  &:focus-visible {
-    outline: 3px solid rgba($color-primary, 0.4);
-    outline-offset: 6px;
-  }
-
-  @include sp {
-    gap: rem(8);
-  }
-
-  // Khớp với MOBILE_BP (900px) trong profile-book.js — dưới mốc này JS chuyển
-  // sang chế độ 1 trang/lượt nên tỉ lệ khung cũng đổi sang dạng đứng (portrait).
-  @include mq(899px) {
+  @include md {
+    width: 100%;
     aspect-ratio: 3 / 4;
+    min-height: 0;
+  }
+}
+
+.p-book-cover {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  // Cao theo đúng khung cha (inset:0 => auto = 100%), rộng suy ra theo tỉ lệ —
+  // để bìa luôn vừa khít bất kể .p-book-wrap cao bao nhiêu (cố định hay do JS set).
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: 3 / 4;
+  padding: 0;
+  border: 0;
+  border-radius: rem(16);
+  overflow: hidden;
+  cursor: pointer;
+  background: $color-cmb-navy;
+  box-shadow: $shadow-xl;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.45, 0.05, 0.35, 1), opacity 0.5s ease 0.15s;
+
+  &:hover .p-book-cover__img {
+    transform: scale(1.03);
   }
 
-  &__nav {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: rem(48);
-    height: rem(48);
-    border-radius: 50%;
-    background: $color-primary;
-    color: $color-white;
-    box-shadow: $shadow-md;
-    cursor: pointer;
-    transition: background $transition-fast, opacity $transition-fast, transform $transition-fast;
-
-    &:hover:not(:disabled) {
-      background: $color-primary-dark;
-      transform: translateY(-2px);
-    }
-
-    &:disabled {
-      opacity: 0.3;
-      cursor: default;
-      transform: none;
-    }
-
-    @include sp {
-      width: rem(36);
-      height: rem(36);
-    }
+  .p-book-wrap.is-opening & {
+    transform: rotateY(-100deg);
+    opacity: 0;
+    pointer-events: none;
   }
 
-  &__stage {
-    position: relative;
-    flex: 1;
-    display: flex;
-    height: 100%;
-    perspective: rem(2600);
-    cursor: pointer;
-    border-radius: rem(8);
-    box-shadow: $shadow-xl;
-  }
-
-  &__slot {
-    position: relative;
-    flex: 1 1 50%;
-    background: $color-white;
-    overflow: hidden;
-
-    &--left {
-      border-radius: rem(8) 0 0 rem(8);
-      box-shadow: inset -2px 0 8px rgba(#000, 0.08);
-    }
-
-    &--right {
-      border-radius: 0 rem(8) rem(8) 0;
-      box-shadow: inset 2px 0 8px rgba(#000, 0.08);
-    }
-
-    &.is-blank {
-      background: $color-bg-alt;
-    }
-  }
-
-  &__stage.is-single &__slot--left {
+  &[hidden] {
     display: none;
-  }
-
-  &__stage.is-single &__slot--right {
-    flex: 1 1 100%;
-    border-radius: rem(8);
   }
 
   &__img {
@@ -149,101 +101,101 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    background: $color-white;
-    transition: opacity 0.2s ease;
-
-    &.is-fading { opacity: 0; }
+    object-fit: cover;
+    transition: transform 0.4s ease;
   }
 
-  &__spine {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: rem(2);
-    margin-left: rem(-1);
-    background: linear-gradient(90deg, rgba(#000, 0.12), rgba(#000, 0.02));
-    z-index: 3;
-    pointer-events: none;
-  }
-
-  &__stage.is-single &__spine {
-    display: none;
-  }
-
-  // ======= LÁ SÁCH (LEAF) — hiệu ứng lật mềm =======
-  // Dùng animation (thay vì transition đơn thuần) để thêm độ "cong" nhẹ
-  // (scaleX co lại giữa chừng) + bóng đổ theo nếp gấp, giống trang giấy thật
-  // hơn là một mặt phẳng cứng xoay quanh trục.
-  &__leaf {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 50%;
-    height: 100%;
-    z-index: 4;
-    transform-style: preserve-3d;
-    transform-origin: left center;
-    visibility: hidden;
-    pointer-events: none;
-
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 3;
-      background: linear-gradient(90deg, rgba(#000, 0) 0%, rgba(#000, 0.35) 100%);
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    &.is-leaf-prev {
-      right: auto;
-      left: 0;
-      transform-origin: right center;
-
-      &::after {
-        background: linear-gradient(270deg, rgba(#000, 0) 0%, rgba(#000, 0.35) 100%);
-      }
-    }
-
-    &.is-flipping-next {
-      animation: p-book-flip-next 0.85s cubic-bezier(0.65, 0, 0.35, 1) both;
-
-      &::after {
-        animation: p-book-fold-shadow 0.85s ease both;
-      }
-    }
-
-    &.is-flipping-prev {
-      animation: p-book-flip-prev 0.85s cubic-bezier(0.65, 0, 0.35, 1) both;
-
-      &::after {
-        animation: p-book-fold-shadow 0.85s ease both;
-      }
-    }
-  }
-
-  &__face {
+  &__overlay {
     position: absolute;
     inset: 0;
-    backface-visibility: hidden;
-    background: $color-white;
-    box-shadow: $shadow-lg;
-    overflow: hidden;
+    background: linear-gradient(180deg, rgba($color-cmb-navy, 0.1) 0%, rgba($color-cmb-navy, 0.55) 55%, rgba($color-cmb-navy, 0.92) 100%);
+  }
 
-    &--front {
-      z-index: 2;
-    }
+  &__body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: rem(44) rem(36);
+    text-align: center;
+  }
 
-    &--back {
-      transform: rotateY(180deg);
-    }
+  &__eyebrow {
+    font-family: $font-secondary;
+    font-size: rem(13);
+    letter-spacing: 0.12em;
+    color: rgba($color-white, 0.75);
+    margin: 0 0 rem(14);
+  }
 
-    &.is-blank {
-      background: $color-bg-alt;
+  &__title {
+    font-family: $font-primary;
+    font-size: rem(36);
+    font-weight: $font-weight-bold;
+    line-height: 1.25;
+    color: $color-white;
+    text-transform: uppercase;
+    margin: 0 0 rem(24);
+
+    @include sp {
+      font-size: rem(26);
     }
+  }
+
+  &__hint {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(8);
+    font-family: $font-secondary;
+    font-size: rem(15);
+    font-weight: $font-weight-semibold;
+    color: $color-white;
+    background: rgba($color-white, 0.12);
+    border: 1px solid rgba($color-white, 0.35);
+    border-radius: $radius-full;
+    padding: rem(10) rem(20);
+  }
+}
+
+// ============================================================
+// BOOK VIEWER
+// ============================================================
+.p-book {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  max-width: rem(1040);
+  opacity: 0;
+  // pointer-events:none khi ẩn — nếu không, sách (dù trong suốt) vẫn nằm trên bìa
+  // trong thứ tự DOM và sẽ chặn mất click vào nút "Bấm để mở".
+  pointer-events: none;
+  transition: opacity 0.4s ease 0.25s;
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &__stage {
+    position: relative;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    // Kích thước tạm trong lúc StPageFlip chưa khởi tạo (để spinner có chỗ hiển thị)
+    min-height: rem(460);
+
+    @include sp {
+      min-height: rem(380);
+    }
+  }
+
+  &__flip {
+    // Kích thước thực do StPageFlip set inline (size: 'stretch' + min/max).
+    // Đổ bóng khung ngoài cho cuốn sách, thư viện tự vẽ bóng lật bên trong.
+    filter: drop-shadow(0 20px 40px rgba(#000, 0.18));
   }
 
   &__loading {
@@ -251,9 +203,11 @@
     inset: 0;
     z-index: 6;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba($color-white, 0.5);
+    gap: rem(12);
+    background: rgba($color-white, 0.85);
     opacity: 0;
     visibility: hidden;
     transition: opacity $transition-fast;
@@ -275,35 +229,10 @@
     animation: p-book-spin 0.8s linear infinite;
   }
 
-  // Bìa đóng — hiệu ứng mở sách khi cuộn tới / bắt đầu tải xong
-  &__intro {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    background: $color-cmb-navy;
-    box-shadow: $shadow-lg;
-    overflow: hidden;
-    border-radius: rem(8);
-    transform-origin: left center;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    transition: transform 0.9s cubic-bezier(0.45, 0.05, 0.35, 1);
-
-    &.is-opening {
-      transform: rotateY(-180deg);
-    }
-
-    &.is-hidden {
-      display: none;
-    }
-  }
-
-  &__intro-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  &__loading-text {
+    font-family: $font-secondary;
+    font-size: rem(13);
+    color: $color-text-muted;
   }
 
   &__pager {
@@ -322,26 +251,4 @@
 
 @keyframes p-book-spin {
   to { transform: rotate(360deg); }
-}
-
-// Lật tới: 0deg → hơi "vọt" qua bản lề giữa chừng (scaleX co lại mô phỏng giấy
-// cong) → dừng mềm ở -180deg thay vì xoay đều tuyến tính cứng nhắc.
-@keyframes p-book-flip-next {
-  0%   { transform: rotateY(0deg) scaleX(1); }
-  45%  { transform: rotateY(-86deg) scaleX(0.9); }
-  55%  { transform: rotateY(-94deg) scaleX(0.9); }
-  100% { transform: rotateY(-180deg) scaleX(1); }
-}
-
-@keyframes p-book-flip-prev {
-  0%   { transform: rotateY(0deg) scaleX(1); }
-  45%  { transform: rotateY(86deg) scaleX(0.9); }
-  55%  { transform: rotateY(94deg) scaleX(0.9); }
-  100% { transform: rotateY(180deg) scaleX(1); }
-}
-
-// Bóng đổ theo nếp gấp — đậm nhất khi trang ở vị trí vuông góc (giữa lượt lật)
-@keyframes p-book-fold-shadow {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
 }

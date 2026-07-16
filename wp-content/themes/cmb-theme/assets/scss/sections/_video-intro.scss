@@ -1,0 +1,272 @@
+// ============================================
+// SECTIONS / P-VIDEO-INTRO
+// Trang Giới Thiệu — Video giới thiệu (custom player hoặc nhúng YouTube/Vimeo)
+// ============================================
+@use '../abstracts' as *;
+
+.p-video-intro {
+  padding: rem(100) 0;
+  background: $color-bg;
+
+  @include md { padding: rem(72) 0; }
+  @include sp { padding: rem(56) 0; }
+
+  &__header {
+    margin-bottom: rem(20);
+  }
+}
+
+// ============================================================
+// CUSTOM PLAYER (upload MP4)
+// ============================================================
+.p-video-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: rem(12);
+  overflow: hidden;
+  box-shadow: $shadow-lg;
+
+  &__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: rgba(#000, 0.15);
+    cursor: pointer;
+    transition: background $transition-fast;
+
+    &:hover {
+      background: rgba(#000, 0.25);
+    }
+
+    svg {
+      filter: drop-shadow(0 2px 8px rgba(#000, 0.4));
+    }
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: rem(10);
+    padding: rem(10) rem(14);
+    background: linear-gradient(0deg, rgba(#000, 0.75) 0%, rgba(#000, 0) 100%);
+    color: $color-white;
+
+    @include sp {
+      gap: rem(6);
+      padding: rem(8) rem(10);
+    }
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: rem(28);
+    height: rem(28);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: $color-white;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: opacity $transition-fast;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    svg[hidden] {
+      display: none;
+    }
+  }
+
+  &__time {
+    flex: 0 0 auto;
+    font-family: $font-secondary;
+    font-size: rem(12);
+    white-space: nowrap;
+
+    @include sp {
+      display: none;
+    }
+  }
+
+  &__seek-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  &__seek {
+    width: 100%;
+    height: rem(4);
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba($color-white, 0.3);
+    border-radius: $radius-full;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: rem(12);
+      height: rem(12);
+      border-radius: 50%;
+      background: $color-primary;
+    }
+
+    &::-moz-range-thumb {
+      width: rem(12);
+      height: rem(12);
+      border: 0;
+      border-radius: 50%;
+      background: $color-primary;
+    }
+  }
+
+  &__speed {
+    position: relative;
+    flex: 0 0 auto;
+  }
+
+  &__speed-menu {
+    position: absolute;
+    bottom: calc(100% + #{rem(8)});
+    right: 0;
+    z-index: 2;
+    margin: 0;
+    padding: rem(6) 0;
+    min-width: rem(70);
+    list-style: none;
+    background: $color-white;
+    border-radius: $radius-md;
+    box-shadow: $shadow-lg;
+
+    &[hidden] {
+      display: none;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: rem(6) rem(14);
+      border: 0;
+      background: transparent;
+      color: $color-text;
+      font-family: $font-secondary;
+      font-size: rem(13);
+      text-align: left;
+      cursor: pointer;
+
+      &:hover {
+        background: $color-bg-alt;
+      }
+
+      &.is-active {
+        color: $color-primary;
+        font-weight: $font-weight-semibold;
+      }
+    }
+  }
+}
+
+// ============================================================
+// EMBED (YouTube/Vimeo) — dùng control mặc định của nền tảng
+// ============================================================
+.p-video-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: rem(12);
+  overflow: hidden;
+  box-shadow: $shadow-lg;
+
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}
+
+// ============================================================
+// HÀNG NGANG: Video giới thiệu + Hồ sơ năng lực
+// Bọc 2 section độc lập (mỗi section vẫn giữ nguyên .l-container riêng) vào 1
+// hàng flex — không sửa cấu trúc/markup bên trong .p-profile-book.
+//
+// Chiều cao khung sách (.p-book-wrap) được đồng bộ khớp với video bằng JS
+// (xem assets/js/modules/video-profile-sync.js) — set thẳng height (px) qua
+// inline style, thay vì dùng chuỗi flex/stretch nhiều tầng lồng nhau (CSS
+// percentage-height/stretch không đáng tin cậy qua >2 cấp, dễ khiến khung sập
+// về 0 và toàn bộ nội dung bên trong biến mất).
+// ============================================================
+.p-video-profile-row {
+  display: flex;
+  align-items: flex-start;
+
+  @include md {
+    flex-direction: column;
+    // Khi xếp chồng dọc, trục ngang (cross-axis) giờ là chiều ngang — phải "stretch"
+    // (giá trị mặc định của flex) để mỗi cột full width, nếu không con sẽ co lại
+    // theo kích thước nội dung (fit-content) thay vì lấp đầy container. Đây chính là
+    // lý do khung Hồ sơ năng lực bị hẹp lại dù đã set width:100%/aspect-ratio bên
+    // trong .p-book-wrap: item flex cha (.p-profile-book) không được stretch nên
+    // width:100% của con bên trong resolve sai.
+    align-items: stretch;
+  }
+
+  > .p-video-intro,
+  > .p-profile-book {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-top: rem(80);
+    padding-bottom: rem(80);
+
+    @include md {
+      padding: rem(72) 0;
+    }
+
+    @include sp {
+      padding: rem(56) 0;
+    }
+  }
+
+  // Giảm padding ngang của mỗi .l-container khi 2 section đứng cạnh nhau, tránh
+  // cộng dồn khoảng trắng ở giữa 2 cột.
+  > .p-video-intro .l-container,
+  > .p-profile-book .l-container {
+    padding-inline: rem(24);
+  }
+
+  @include md {
+    > .p-video-intro .l-container,
+    > .p-profile-book .l-container {
+      padding-inline: $container-px;
+    }
+  }
+}
