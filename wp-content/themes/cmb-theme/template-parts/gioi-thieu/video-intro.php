@@ -18,7 +18,7 @@ if (!$has_upload && !$has_embed) return;
 <!-- ======= VIDEO GIỚI THIỆU ======= -->
 <section class="p-video-intro" id="video-intro" aria-label="<?php echo esc_attr($v_title); ?>">
   <div class="l-container">
-    <div class="p-video-intro__card" data-reveal="fade-up">
+    <div class="p-video-intro__card" id="video-intro-card" data-reveal="fade-up">
       <div class="p-video-intro__card-head">
         <span class="p-video-intro__icon" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5.5C2 4.67157 2.67157 4 3.5 4H11.5C12.3284 4 13 4.67157 13 5.5V14.5C13 15.3284 12.3284 16 11.5 16H3.5C2.67157 16 2 15.3284 2 14.5V5.5Z" stroke="currentColor" stroke-width="1.4"/><path d="M13 8L17.1056 5.94721C17.4372 5.78145 17.8284 5.78145 18.16 5.94721C18.4916 6.11296 18.6944 6.44561 18.6944 6.80902V13.191C18.6944 13.5544 18.4916 13.887 18.16 14.0528C17.8284 14.2186 17.4372 14.2186 17.1056 14.0528L13 12V8Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>

@@ -18,6 +18,14 @@
     border-radius: rem(16);
     box-shadow: $shadow-lg;
     padding: rem(24);
+
+    // Desktop (nằm ngang cạnh Hồ sơ năng lực, khớp mốc JS video-profile-sync.js):
+    // cho card thành cột flex để phần video bên dưới giãn lấp đầy khoảng trống
+    // khi 2 khung được đồng bộ chiều cao bằng nhau, thay vì để trống bên dưới.
+    @media (min-width: 1024px) {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &__card-head {
@@ -67,6 +75,7 @@
 // UPLOAD MP4 — <video controls> mặc định của trình duyệt
 // ============================================================
 .p-video-player {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   background: #000;
@@ -74,10 +83,26 @@
   overflow: hidden;
   box-shadow: $shadow-lg;
 
+  // Desktop: bỏ tỉ lệ cố định, giãn lấp đầy phần còn lại của card (đã thành cột
+  // flex ở trên) — tránh để trống phía dưới khi card được kéo cao bằng khung PDF.
+  @media (min-width: 1024px) {
+    aspect-ratio: unset;
+    flex: 1;
+    min-height: rem(240);
+  }
+
   &__video {
+    // Dùng absolute + inset thay vì height:100% — percentage height của thẻ
+    // <video> (replaced element) không phải lúc nào cũng resolve đúng khi cha là
+    // flex item lấy chiều cao từ flex-grow (thiếu chiều cao "definite" theo spec ở
+    // 1 số trình duyệt), khiến video co lại theo tỉ lệ gốc và lộ nền đen bên dưới,
+    // đẩy luôn thanh điều khiển mặc định của trình duyệt lên giữa thay vì đáy.
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     display: block;
+    object-fit: cover;
   }
 }
 
@@ -91,6 +116,14 @@
   border-radius: rem(12);
   overflow: hidden;
   box-shadow: $shadow-lg;
+
+  // Desktop: giãn lấp đầy phần còn lại của card, giống .p-video-player — iframe
+  // vốn đã absolute + inset:0 nên tự động phủ kín, không cần đổi gì thêm.
+  @media (min-width: 1024px) {
+    aspect-ratio: unset;
+    flex: 1;
+    min-height: rem(240);
+  }
 
   iframe {
     position: absolute;

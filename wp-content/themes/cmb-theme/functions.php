@@ -136,6 +136,9 @@ function cmb_enqueue_assets() {
 
         // Hồ sơ năng lực — nhúng bằng plugin "3D FlipBook" (DearFlip), shortcode [dflip]
         // được gọi trực tiếp trong profile-book.php, script/style của plugin tự enqueue.
+
+        // Đồng bộ chiều cao 2 khung Video giới thiệu / Hồ sơ năng lực cho cân đối
+        wp_enqueue_script( 'cmb-video-profile-sync', $uri . '/assets/js/modules/video-profile-sync.js', ['cmb-global'], $ver, true );
     }
 
     // Trang liên hệ
@@ -1149,3 +1152,14 @@ add_action( 'acf/save_post', function( $post_id ) {
         update_field( 'document_pages', $meta['pages'], $post_id );
     }
 }, 20 );
+
+// Ép màu nền flipbook (plugin 3D FlipBook/DearFlip) luôn là trắng — cấu hình này
+// vốn nằm trong DB (option _dflip_settings), set tay trên từng site sẽ không đồng
+// bộ giữa local/staging/production. Ép cứng qua code để chạy đúng ở mọi môi trường.
+add_filter( 'option__dflip_settings', function ( $settings ) {
+    if ( ! is_array( $settings ) ) {
+        $settings = [];
+    }
+    $settings['bg_color'] = '#FFFFFF';
+    return $settings;
+} );
