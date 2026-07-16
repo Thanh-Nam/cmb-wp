@@ -8,10 +8,6 @@ get_header(); ?>
   <?php
   get_template_part('template-parts/gioi-thieu/intro');
   get_template_part('template-parts/gioi-thieu/stats');
-  get_template_part('template-parts/gioi-thieu/vision');
-  get_template_part('template-parts/gioi-thieu/values');
-  get_template_part('template-parts/gioi-thieu/leadership');
-  get_template_part('template-parts/gioi-thieu/achievements');
   ?>
   <div class="p-video-profile-row">
     <?php
@@ -20,6 +16,10 @@ get_header(); ?>
     ?>
   </div>
   <?php
+  get_template_part('template-parts/gioi-thieu/vision');
+  get_template_part('template-parts/gioi-thieu/values');
+  get_template_part('template-parts/gioi-thieu/leadership');
+  get_template_part('template-parts/gioi-thieu/achievements');
   get_template_part('template-parts/section-partner');
   ?>
 </main>
