@@ -1,6 +1,8 @@
 // ============================================
 // SECTIONS / P-VIDEO-INTRO
-// Trang Giới Thiệu — Video giới thiệu (custom player hoặc nhúng YouTube/Vimeo)
+// Trang Giới Thiệu — Video giới thiệu (upload MP4 hoặc nhúng YouTube/Vimeo)
+// Cả 2 kiểu đều dùng control mặc định (trình duyệt / nền tảng nhúng), không tự vẽ
+// nút bấm riêng — để giao diện nhất quán giữa 2 kiểu nguồn.
 // ============================================
 @use '../abstracts' as *;
 
@@ -11,16 +13,60 @@
   @include md { padding: rem(72) 0; }
   @include sp { padding: rem(56) 0; }
 
-  &__header {
-    margin-bottom: rem(20);
+  &__card {
+    background: $color-white;
+    border-radius: rem(16);
+    box-shadow: $shadow-lg;
+    padding: rem(24);
+  }
+
+  &__card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: rem(12);
+    margin-bottom: rem(16);
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: rem(60);
+    height: rem(60);
+    border-radius: rem(14);
+    background: $color-primary-light;
+    color: $color-primary;
+
+    svg {
+      width: rem(30);
+      height: rem(30);
+    }
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: rem(22);
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  &__desc {
+    font-family: $font-secondary;
+    font-size: rem(13);
+    font-weight: $font-weight-regular;
+    line-height: 1.6;
+    color: $color-primary;
+    margin: rem(4) 0 0;
   }
 }
 
 // ============================================================
-// CUSTOM PLAYER (upload MP4)
+// UPLOAD MP4 — <video controls> mặc định của trình duyệt
 // ============================================================
 .p-video-player {
-  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   background: #000;
@@ -29,168 +75,9 @@
   box-shadow: $shadow-lg;
 
   &__video {
-    position: absolute;
-    inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    cursor: pointer;
-  }
-
-  &__overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    border: 0;
-    background: rgba(#000, 0.15);
-    cursor: pointer;
-    transition: background $transition-fast;
-
-    &:hover {
-      background: rgba(#000, 0.25);
-    }
-
-    svg {
-      filter: drop-shadow(0 2px 8px rgba(#000, 0.4));
-    }
-
-    &[hidden] {
-      display: none;
-    }
-  }
-
-  &__controls {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    gap: rem(10);
-    padding: rem(10) rem(14);
-    background: linear-gradient(0deg, rgba(#000, 0.75) 0%, rgba(#000, 0) 100%);
-    color: $color-white;
-
-    @include sp {
-      gap: rem(6);
-      padding: rem(8) rem(10);
-    }
-  }
-
-  &__btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 auto;
-    width: rem(28);
-    height: rem(28);
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: $color-white;
-    cursor: pointer;
-    opacity: 0.9;
-    transition: opacity $transition-fast;
-
-    &:hover {
-      opacity: 1;
-    }
-
-    svg[hidden] {
-      display: none;
-    }
-  }
-
-  &__time {
-    flex: 0 0 auto;
-    font-family: $font-secondary;
-    font-size: rem(12);
-    white-space: nowrap;
-
-    @include sp {
-      display: none;
-    }
-  }
-
-  &__seek-wrap {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    min-width: 0;
-  }
-
-  &__seek {
-    width: 100%;
-    height: rem(4);
-    -webkit-appearance: none;
-    appearance: none;
-    background: rgba($color-white, 0.3);
-    border-radius: $radius-full;
-    cursor: pointer;
-
-    &::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: rem(12);
-      height: rem(12);
-      border-radius: 50%;
-      background: $color-primary;
-    }
-
-    &::-moz-range-thumb {
-      width: rem(12);
-      height: rem(12);
-      border: 0;
-      border-radius: 50%;
-      background: $color-primary;
-    }
-  }
-
-  &__speed {
-    position: relative;
-    flex: 0 0 auto;
-  }
-
-  &__speed-menu {
-    position: absolute;
-    bottom: calc(100% + #{rem(8)});
-    right: 0;
-    z-index: 2;
-    margin: 0;
-    padding: rem(6) 0;
-    min-width: rem(70);
-    list-style: none;
-    background: $color-white;
-    border-radius: $radius-md;
-    box-shadow: $shadow-lg;
-
-    &[hidden] {
-      display: none;
-    }
-
-    button {
-      display: block;
-      width: 100%;
-      padding: rem(6) rem(14);
-      border: 0;
-      background: transparent;
-      color: $color-text;
-      font-family: $font-secondary;
-      font-size: rem(13);
-      text-align: left;
-      cursor: pointer;
-
-      &:hover {
-        background: $color-bg-alt;
-      }
-
-      &.is-active {
-        color: $color-primary;
-        font-weight: $font-weight-semibold;
-      }
-    }
+    display: block;
   }
 }
 
@@ -218,12 +105,6 @@
 // HÀNG NGANG: Video giới thiệu + Hồ sơ năng lực
 // Bọc 2 section độc lập (mỗi section vẫn giữ nguyên .l-container riêng) vào 1
 // hàng flex — không sửa cấu trúc/markup bên trong .p-profile-book.
-//
-// Chiều cao khung sách (.p-book-wrap) được đồng bộ khớp với video bằng JS
-// (xem assets/js/modules/video-profile-sync.js) — set thẳng height (px) qua
-// inline style, thay vì dùng chuỗi flex/stretch nhiều tầng lồng nhau (CSS
-// percentage-height/stretch không đáng tin cậy qua >2 cấp, dễ khiến khung sập
-// về 0 và toàn bộ nội dung bên trong biến mất).
 // ============================================================
 .p-video-profile-row {
   display: flex;

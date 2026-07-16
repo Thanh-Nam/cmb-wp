@@ -3,32 +3,6 @@
     "title": "Hồ sơ năng lực",
     "fields": [
         {
-            "key": "field_6b4200500001",
-            "label": "Ảnh bìa (đóng)",
-            "name": "profile_book_cover",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "Ảnh bìa hiển thị khi sách đang đóng — bấm vào ảnh này để mở sách. Nếu để trống sẽ dùng trang đầu của file PDF.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "allow_in_bindings": 0,
-            "preview_size": "medium"
-        },
-        {
             "key": "field_6b4200500002",
             "label": "Tiêu đề",
             "name": "profile_book_title",
@@ -65,6 +39,48 @@
             "maxlength": "",
             "allow_in_bindings": 0,
             "placeholder": ""
+        },
+        {
+            "key": "field_6b4200500004",
+            "label": "Mô tả",
+            "name": "profile_book_desc",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Tài liệu giới thiệu năng lực, kinh nghiệm và các dự án tiêu biểu của CMB.",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": "",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_6b4200500005",
+            "label": "Mô tả (EN)",
+            "name": "profile_book_desc_en",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Company profile with CMB's capabilities, experience and notable projects.",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": "",
+            "allow_in_bindings": 0
         },
         {
             "key": "field_6b4200500007",

@@ -41,6 +41,48 @@
             "placeholder": ""
         },
         {
+            "key": "field_6b4300000008",
+            "label": "Mô tả",
+            "name": "video_intro_desc",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Video tổng quan về quá trình hình thành, phát triển và giá trị cốt lõi của CMB.",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": "",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_6b4300000009",
+            "label": "Mô tả (EN)",
+            "name": "video_intro_desc_en",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Overview video of CMB's formation, development and core values.",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": "",
+            "allow_in_bindings": 0
+        },
+        {
             "key": "field_6b4300000003",
             "label": "Nguồn video",
             "name": "video_intro_source",

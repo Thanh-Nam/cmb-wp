@@ -10,15 +10,19 @@
   background: $color-white;
   padding: rem(32) 0;
 
+  &__box {
+    background: $color-white;
+    border-radius: rem(16);
+    box-shadow: $shadow-md;
+    padding: rem(24);
+  }
+
   &__list {
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
     justify-content: center;
     gap: rem(24) rem(16);
-    border: 1px solid $color-border;
-    border-radius: rem(16);
-    padding: rem(24);
   }
 
   &__item {
@@ -119,9 +123,12 @@
   }
 
   @include md {
+    &__box {
+      padding: rem(18);
+    }
+
     &__list {
       gap: rem(18) rem(12);
-      padding: rem(18);
     }
 
     &__item {
@@ -142,10 +149,13 @@
   @include sp {
     padding: rem(20) 0;
 
-    &__list {
-      gap: rem(16) rem(10);
+    &__box {
       padding: rem(14);
       border-radius: rem(12);
+    }
+
+    &__list {
+      gap: rem(16) rem(10);
     }
 
     &__item {
@@ -161,6 +171,187 @@
     &__icon {
       width: rem(18);
       height: rem(18);
+    }
+  }
+
+  // ============================================================
+  // ROW 2 — dạng thanh pill ngang (icon trái + chữ phải), item đầu
+  // "Công bố thông tin" nổi bật hơn (icon tròn nền trắng + chữ đậm 2 dòng, nền
+  // xanh phủ cả ô + tam giác góc). Nằm chung 1 box với row 1 (xem &__box),
+  // ngăn cách bằng viền mảnh phía trên thay vì tách box riêng.
+  // ============================================================
+  &__list--pill {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 3rem;
+    padding: 0 rem(16) 0 0;
+    margin-top: rem(20);
+    border: 1px solid $color-border;
+    border-radius: rem(12);
+    overflow: hidden;
+  }
+
+  &__item--pill {
+    flex: none;
+    width: auto;
+    display: flex;
+    align-items: center;
+    align-self: center;
+  }
+
+  // "Công bố thông tin" luôn cao full theo hàng, sát mép trái — chỉ các box con
+  // bên cạnh mới thu nhỏ lại và cách đều nhau.
+  &__item--header {
+    align-self: stretch;
+  }
+
+  &__link--pill {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: rem(10);
+    width: auto;
+    padding: rem(14) rem(22);
+    background: $color-white;
+    border: 1px solid transparent;
+    border-radius: rem(10);
+    box-shadow: 0 5px 8px rgba(17, 24, 39, 0.04), 0 1px 6px rgba(17, 24, 39, 0.06);
+    font-size: rem(14);
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+    white-space: nowrap;
+
+    // Hover/active giống hệt row 1 — nền xanh đặc + góc gấp dưới-phải + gạch chân
+    // khi active. Loại trừ item header (Công bố thông tin không tương tác được).
+    &:hover:not(.p-ir-tabs__link--header),
+    &.is-active:not(.p-ir-tabs__link--header) {
+      color: $color-white;
+      background: $color-primary;
+      border-color: $color-primary;
+      z-index: 1;
+
+      &::before {
+        content: '';
+        position: absolute;
+        right: -1px;
+        bottom: -1px;
+        width: rem(26);
+        height: rem(26);
+        background:
+          linear-gradient(135deg, transparent 50%, $color-white 50%) right rem(6) bottom rem(6.5) / rem(13) rem(13) no-repeat,
+          linear-gradient(135deg, transparent 50%, rgba($color-white, 0.35) 50%) bottom right / rem(26) rem(26) no-repeat;
+        pointer-events: none;
+      }
+
+      .p-ir-tabs__icon {
+        color: $color-white;
+      }
+    }
+
+    &.is-active:not(.p-ir-tabs__link--header) {
+      box-shadow: 0 4px 10px rgba(3, 121, 204, 0.28);
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: rem(-14);
+        transform: translateX(-50%);
+        width: rem(28);
+        height: rem(4);
+        border-radius: rem(2);
+        background: $color-primary;
+      }
+    }
+
+    .p-ir-tabs__icon {
+      width: rem(24);
+      height: rem(24);
+      color: $color-primary;
+      transition: color $transition-fast;
+    }
+
+    .p-ir-tabs__label {
+      text-align: left;
+    }
+  }
+
+  &__link--header {
+    position: relative;
+    height: 100%;
+    gap: rem(16);
+    padding: rem(20) rem(36) rem(20) rem(28);
+    background: $color-primary-light;
+    border-radius: 0;
+    box-shadow: none;
+    cursor: default;
+    // Vô hiệu hoàn toàn hover/tương tác chuột — không phải nút bấm, chỉ là nhãn.
+    pointer-events: none;
+
+    // Tam giác trỏ phải, căn giữa theo chiều cao, cùng màu nền với ô — như 1 mũi
+    // tên chỉ sang các mục bên cạnh, không phải góc gấp giấy nữa.
+    &::before {
+      content: '';
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: rem(16) 0 rem(16) rem(16);
+      border-color: transparent transparent transparent $color-primary-light;
+      pointer-events: none;
+    }
+
+    .p-ir-tabs__icon {
+      width: rem(48);
+      height: rem(48);
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: $color-white;
+      box-shadow: 0 2px 8px rgba(3, 121, 204, 0.15);
+    }
+
+    .p-ir-tabs__label {
+      font-size: rem(15);
+      font-weight: $font-weight-bold;
+      color: $color-primary;
+      text-transform: uppercase;
+      line-height: 1.35;
+      max-width: rem(130);
+      white-space: normal;
+    }
+  }
+
+  @include sp {
+    &__list--pill {
+      padding: rem(12);
+      gap: rem(10);
+    }
+
+    &__link--pill {
+      padding: rem(12) rem(16);
+      font-size: rem(13);
+
+      .p-ir-tabs__icon {
+        width: rem(20);
+        height: rem(20);
+      }
+    }
+
+    &__link--header {
+      padding: rem(12) rem(24) rem(12) rem(16);
+
+      .p-ir-tabs__icon {
+        width: rem(32);
+        height: rem(32);
+      }
+
+      .p-ir-tabs__label {
+        font-size: rem(13);
+      }
     }
   }
 }

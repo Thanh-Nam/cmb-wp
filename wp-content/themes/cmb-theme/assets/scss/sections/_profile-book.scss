@@ -1,9 +1,10 @@
 // ============================================
 // SECTIONS / P-PROFILE-BOOK
 // Trang Giới Thiệu — Hồ sơ năng lực
-// Flipbook thật (StPageFlip) — kéo chuột/chạm để lật trang.
-// Cấu trúc DOM bên trong .p-book__flip do thư viện StPageFlip tự dựng
-// (xem assets/css/stPageFlip.css cho các class .stf__*).
+// Nhúng bằng plugin "3D FlipBook" (DearFlip) qua shortcode [dflip] — xem
+// template-parts/gioi-thieu/profile-book.php. Giao diện lật trang/toolbar do
+// plugin tự vẽ (assets/css/dflip.min.css của plugin), section này chỉ chịu
+// trách nhiệm bố cục khung chứa xung quanh.
 // ============================================
 @use '../abstracts' as *;
 
@@ -14,271 +15,57 @@
   @include md { padding: rem(72) 0; }
   @include sp { padding: rem(56) 0; }
 
-  &__header {
-    margin-bottom: rem(20);
+  &__card {
+    background: $color-white;
+    border-radius: rem(16);
+    box-shadow: $shadow-lg;
+    padding: rem(24);
   }
 
-  &__footer {
+  &__card-head {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: rem(16);
-    min-height: rem(20);
-    margin-top: rem(20);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-
-    &.is-visible {
-      opacity: 1;
-    }
-  }
-}
-
-// ============================================================
-// BÌA ĐÓNG — bấm vào để mở sách
-// ============================================================
-// Bìa đóng (portrait) và sách mở (landscape) có tỉ lệ khác nhau — đặt cả 2 chồng lên
-// nhau (absolute, canh giữa) trong 1 khung có kích thước cố định, để chuyển đổi giữa
-// 2 trạng thái không làm nội dung phía dưới trang bị đẩy/giật.
-// Desktop (nằm ngang cạnh video, >= 1024px): min-height là giá trị dự phòng, chiều
-// cao thật sự được đồng bộ khớp với video bằng JS (video-profile-sync.js), set
-// thẳng qua inline style nên sẽ override giá trị min-height này.
-//
-// Mobile/tablet (2 cột xếp chồng dọc, < 1024px): JS không set height (xem
-// isRowLayout() trong video-profile-sync.js), nên khung phải tự quyết định chiều
-// cao theo đúng chiều rộng thật của nó qua aspect-ratio — nếu dùng 1 con số cố định
-// (px) như trước, khung sẽ không khớp chiều rộng màn hình thật, khiến bìa sách
-// (cao 100% theo khung) bị co hẹp lại, để lại khoảng trắng 2 bên thay vì full width.
-.p-book-wrap {
-  position: relative;
-  max-width: rem(1040);
-  margin: 0 auto;
-  min-height: rem(520);
-
-  @include md {
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    min-height: 0;
-  }
-}
-
-.p-book-cover {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  // Cao theo đúng khung cha (inset:0 => auto = 100%), rộng suy ra theo tỉ lệ —
-  // để bìa luôn vừa khít bất kể .p-book-wrap cao bao nhiêu (cố định hay do JS set).
-  height: 100%;
-  width: auto;
-  max-width: 100%;
-  aspect-ratio: 3 / 4;
-  padding: 0;
-  border: 0;
-  border-radius: rem(16);
-  overflow: hidden;
-  cursor: pointer;
-  background: $color-cmb-navy;
-  box-shadow: $shadow-xl;
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  transition: transform 0.7s cubic-bezier(0.45, 0.05, 0.35, 1), opacity 0.5s ease 0.15s;
-
-  &:hover .p-book-cover__img {
-    transform: scale(1.03);
-  }
-
-  .p-book-wrap.is-opening & {
-    transform: rotateY(-100deg);
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  &[hidden] {
-    display: none;
-  }
-
-  &__img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-  }
-
-  &__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba($color-cmb-navy, 0.1) 0%, rgba($color-cmb-navy, 0.55) 55%, rgba($color-cmb-navy, 0.92) 100%);
-  }
-
-  &__body {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: rem(44) rem(36);
-    text-align: center;
-  }
-
-  &__eyebrow {
-    font-family: $font-secondary;
-    font-size: rem(13);
-    letter-spacing: 0.12em;
-    color: rgba($color-white, 0.75);
-    margin: 0 0 rem(14);
-  }
-
-  &__title {
-    font-family: $font-primary;
-    font-size: rem(36);
-    font-weight: $font-weight-bold;
-    line-height: 1.25;
-    color: $color-white;
-    text-transform: uppercase;
-    margin: 0 0 rem(24);
-
-    @include sp {
-      font-size: rem(26);
-    }
-  }
-
-  &__hint {
-    display: inline-flex;
-    align-items: center;
-    gap: rem(8);
-    font-family: $font-secondary;
-    font-size: rem(15);
-    font-weight: $font-weight-semibold;
-    color: $color-white;
-    background: rgba($color-white, 0.12);
-    border: 1px solid rgba($color-white, 0.35);
-    border-radius: $radius-full;
-    padding: rem(10) rem(20);
-  }
-}
-
-// ============================================================
-// BOOK VIEWER
-// ============================================================
-.p-book {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  display: flex;
-  width: 100%;
-  height: fit-content;
-  max-width: rem(1040);
-  opacity: 0;
-  // pointer-events:none khi ẩn — nếu không, sách (dù trong suốt) vẫn nằm trên bìa
-  // trong thứ tự DOM và sẽ chặn mất click vào nút "Bấm để mở".
-  pointer-events: none;
-  transition: opacity 0.4s ease 0.25s;
-
-  &.is-visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  &__stage {
-    position: relative;
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    // Kích thước tạm trong lúc StPageFlip chưa khởi tạo (để spinner có chỗ hiển thị)
-    min-height: rem(460);
-
-    @include sp {
-      min-height: rem(380);
-    }
-  }
-
-  &__flip {
-    // Kích thước thực do StPageFlip set inline (size: 'stretch' + min/max).
-    // Đổ bóng khung ngoài cho cuốn sách, thư viện tự vẽ bóng lật bên trong.
-    filter: drop-shadow(0 20px 40px rgba(#000, 0.18));
-  }
-
-  &__loading {
-    position: absolute;
-    inset: 0;
-    z-index: 6;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
     gap: rem(12);
-    background: rgba($color-white, 0.85);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity $transition-fast;
-    pointer-events: none;
-    border-radius: rem(8);
-
-    &.is-visible {
-      opacity: 1;
-      visibility: visible;
-    }
+    margin-bottom: rem(16);
   }
 
-  &__spinner {
-    width: rem(40);
-    height: rem(40);
-    border: 3px solid rgba($color-primary, 0.2);
-    border-top-color: $color-primary;
-    border-radius: 50%;
-    animation: p-book-spin 0.8s linear infinite;
-  }
-
-  &__loading-text {
-    font-family: $font-secondary;
-    font-size: rem(13);
-    color: $color-text-muted;
-  }
-
-  &__pager {
-    font-family: $font-secondary;
-    font-size: rem(13);
-    color: $color-text-muted;
-    letter-spacing: 0.04em;
-    min-width: rem(50);
-    text-align: center;
-  }
-
-  &__nav-btn {
+  &__icon {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: rem(32);
-    height: rem(32);
-    padding: 0;
-    border: 1px solid $color-border;
-    border-radius: 50%;
-    background: $color-white;
-    color: $color-text;
-    cursor: pointer;
-    transition: background $transition-fast, border-color $transition-fast, opacity $transition-fast;
+    width: rem(60);
+    height: rem(60);
+    border-radius: rem(14);
+    background: $color-primary-light;
+    color: $color-primary;
 
-    &:hover:not(:disabled) {
-      background: $color-bg-alt;
-      border-color: $color-primary;
-      color: $color-primary;
-    }
-
-    &:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
+    svg {
+      width: rem(30);
+      height: rem(30);
     }
   }
 
-  &__error {
+  &__title {
+    font-family: $font-primary;
+    font-size: rem(22);
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  &__desc {
     font-family: $font-secondary;
     font-size: rem(13);
-    color: $color-error;
+    font-weight: $font-weight-regular;
+    line-height: 1.6;
+    color: $color-primary;
+    margin: rem(4) 0 0;
   }
 }
 
-@keyframes p-book-spin {
-  to { transform: rotate(360deg); }
+.p-book-wrap {
+  max-width: rem(1040);
+  margin: 0 auto;
 }

@@ -16,19 +16,70 @@ if (empty($ir_terms)) : ?>
 <div class="l-container" style="padding:4rem 0;text-align:center;color:#888;"><?php echo cmb_txt('Chưa có tài liệu nào.', 'No documents available yet.'); ?></div>
 <?php return; endif; ?>
 
+
+<?php
+/**
+ * Icon cho hàng pill (row 2) — chọn theo từ khóa trong slug, có icon mặc định
+ * dự phòng cho các category chưa khớp từ khóa nào.
+ */
+function cmb_ir_tab_icon($slug) {
+    if ($slug === 'cong-bo-thong-tin') {
+        return '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 8V12H4.5L9 15V5L4.5 8H2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M11.5 7C12.5 7.8 13 8.9 13 10C13 11.1 12.5 12.2 11.5 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M13.5 4.5C15.2 5.9 16.2 7.9 16.2 10C16.2 12.1 15.2 14.1 13.5 15.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+    }
+    if (strpos($slug, 'tai-chinh') !== false) {
+        return '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 2.5H12L16 6.5V17.5H4V2.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 2.5V6.5H16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 14V11.5M10 14V9.5M13 14V12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+    }
+    if (strpos($slug, 'thuong-nien') !== false) {
+        return '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="2.5" width="14" height="15" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 6.5H13.5M6.5 10H13.5M6.5 13.5H10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+    }
+    if (strpos($slug, 'quan-tri') !== false) {
+        return '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 17.5V8L10 3L17 8V17.5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 17.5V12H13V17.5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+    }
+    if (strpos($slug, 'tai-lieu') !== false || strpos($slug, 'co-dong') !== false) {
+        return '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5.5C3 4.67157 3.67157 4 4.5 4H8L9.5 5.5H15.5C16.3284 5.5 17 6.17157 17 7V14.5C17 15.3284 16.3284 16 15.5 16H4.5C3.67157 16 3 15.3284 3 14.5V5.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+    }
+    return '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 2.5H12L16 6.5V17.5H4V2.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 2.5V6.5H16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M6.5 10H13.5M6.5 13.5H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+}
+
+/**
+ * "Công bố thông tin" luôn thuộc row 2 (kiểu header nổi bật), bất kể thứ tự
+ * alphabet đưa nó vào vị trí nào — tách riêng ra trước, rồi mới chia phần còn
+ * lại thành row 1 (tối đa 4) và phần còn dư của row 2.
+ */
+$ir_header = null;
+$ir_rest   = [];
+foreach ($ir_terms as $term) {
+    if ($term->slug === 'cong-bo-thong-tin') {
+        $ir_header = $term;
+    } else {
+        $ir_rest[] = $term;
+    }
+}
+
+$ir_row1 = array_slice($ir_rest, 0, 4);
+$ir_row2 = array_slice($ir_rest, 4);
+if ($ir_header) {
+    array_unshift($ir_row2, $ir_header);
+}
+
+// Tab/panel mặc định active — dựa theo slug của item đầu row 1 (không phải $i===0
+// của $ir_terms gốc), để tab đang bấm sáng và panel đang hiện luôn khớp nhau dù
+// "Công bố thông tin" bị tách ra khỏi thứ tự gốc.
+$ir_default_slug = !empty($ir_row1) ? $ir_row1[0]->slug : (!empty($ir_terms) ? $ir_terms[0]->slug : null);
+?>
 <!-- ======= TAB NAVIGATION ======= -->
 <nav class="p-ir-tabs" id="ir-tabs" aria-label="<?php echo esc_attr(cmb_txt('Danh mục quan hệ cổ đông', 'Shareholder Relations Categories')); ?>">
   <div class="l-container">
+    <div class="p-ir-tabs__box">
     <ul class="p-ir-tabs__list" role="tablist">
-      <?php foreach ($ir_terms as $i => $term) : ?>
-      <?php if ($i > 0 && $i % 4 === 0) : ?>
-      <li class="p-ir-tabs__divider" aria-hidden="true"></li>
-      <?php endif; ?>
+      <?php foreach ($ir_row1 as $term) :
+        $is_default = ($term->slug === $ir_default_slug);
+      ?>
       <li class="p-ir-tabs__item" role="presentation">
-        <button class="p-ir-tabs__link<?php echo ($i === 0) ? ' is-active' : ''; ?>"
+        <button class="p-ir-tabs__link<?php echo $is_default ? ' is-active' : ''; ?>"
                 id="<?php echo esc_attr('tab-' . $term->slug); ?>"
                 role="tab"
-                aria-selected="<?php echo ($i === 0) ? 'true' : 'false'; ?>"
+                aria-selected="<?php echo $is_default ? 'true' : 'false'; ?>"
                 aria-controls="<?php echo esc_attr('panel-' . $term->slug); ?>"
                 data-target="<?php echo esc_attr('panel-' . $term->slug); ?>">
           <span class="p-ir-tabs__label"><?php echo $term->name; ?></span>
@@ -36,6 +87,34 @@ if (empty($ir_terms)) : ?>
       </li>
       <?php endforeach; ?>
     </ul>
+
+    <?php if (!empty($ir_row2)) : ?>
+    <ul class="p-ir-tabs__list p-ir-tabs__list--pill" role="tablist">
+      <?php foreach ($ir_row2 as $term) :
+        $is_header = ($term->slug === 'cong-bo-thong-tin');
+      ?>
+      <li class="p-ir-tabs__item p-ir-tabs__item--pill<?php echo $is_header ? ' p-ir-tabs__item--header' : ''; ?>" role="presentation">
+        <?php if ($is_header) : ?>
+        <span class="p-ir-tabs__link p-ir-tabs__link--pill p-ir-tabs__link--header" aria-hidden="true">
+          <span class="p-ir-tabs__icon"><?php echo cmb_ir_tab_icon($term->slug); ?></span>
+          <span class="p-ir-tabs__label"><?php echo $term->name; ?></span>
+        </span>
+        <?php else : ?>
+        <button class="p-ir-tabs__link p-ir-tabs__link--pill"
+                id="<?php echo esc_attr('tab-' . $term->slug); ?>"
+                role="tab"
+                aria-selected="false"
+                aria-controls="<?php echo esc_attr('panel-' . $term->slug); ?>"
+                data-target="<?php echo esc_attr('panel-' . $term->slug); ?>">
+          <span class="p-ir-tabs__icon"><?php echo cmb_ir_tab_icon($term->slug); ?></span>
+          <span class="p-ir-tabs__label"><?php echo $term->name; ?></span>
+        </button>
+        <?php endif; ?>
+      </li>
+      <?php endforeach; ?>
+    </ul>
+    <?php endif; ?>
+    </div>
   </div>
 </nav>
 <!-- ======= /TAB NAVIGATION ======= -->
@@ -117,7 +196,7 @@ if (empty($ir_terms)) : ?>
     }
   ?>
 
-  <div class="p-ir-panel<?php echo ($i === 0) ? ' is-active' : ''; ?>"
+  <div class="p-ir-panel<?php echo ($term->slug === $ir_default_slug) ? ' is-active' : ''; ?>"
        id="<?php echo esc_attr('panel-' . $term->slug); ?>"
        role="tabpanel"
        aria-labelledby="<?php echo esc_attr('tab-' . $term->slug); ?>">
