@@ -6,6 +6,15 @@
  */
 $pb_pdf = get_field('profile_book_pdf', 'option');
 
+// Bản tiếng Anh dùng file PDF riêng nếu có nhập trong CMS (field profile_book_pdf_en,
+// tùy chọn) — không có thì tự rơi về lại file PDF tiếng Việt, không lỗi 500/trắng trang.
+if ( function_exists( 'pll_current_language' ) && pll_current_language() === 'en' ) {
+    $pb_pdf_en = get_field('profile_book_pdf_en', 'option');
+    if ( ! empty( $pb_pdf_en['url'] ) ) {
+        $pb_pdf = $pb_pdf_en;
+    }
+}
+
 if (empty($pb_pdf['url'])) return;
 
 $pb_fields = get_fields('option') ?: [];

@@ -101,6 +101,26 @@
             "min_size": "",
             "max_size": "",
             "mime_types": "pdf"
+        },
+        {
+            "key": "field_6b4200500008",
+            "label": "File PDF hồ sơ năng lực (EN)",
+            "name": "profile_book_pdf_en",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "Tùy chọn — dùng riêng khi xem trang ở phiên bản tiếng Anh. Nếu để trống, hệ thống sẽ dùng lại file PDF tiếng Việt ở trên.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "pdf"
         }
     ],
     "location": [
