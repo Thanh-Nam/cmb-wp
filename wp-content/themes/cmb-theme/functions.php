@@ -131,8 +131,10 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'cmb-leadership',   $uri . '/assets/js/modules/leadership-swiper.js', ['swiper', 'cmb-global'], $ver, true );
         wp_enqueue_script( 'cmb-stat-counter', $uri . '/assets/js/modules/stat-counter.js',      ['cmb-global'],           $ver, true );
 
-        // Video giới thiệu — dùng player mặc định của trình duyệt (controls gốc),
-        // không cần custom player JS nữa.
+        // Video giới thiệu — dùng player mặc định của trình duyệt (controls gốc);
+        // riêng ảnh che (poster) tự chụp khung hình đầu + icon play vẫn cần 1 script
+        // nhỏ vì trình duyệt không tự vẽ khung hình đầu khi chỉ preload="metadata".
+        wp_enqueue_script( 'cmb-video-poster', $uri . '/assets/js/modules/video-poster.js', ['cmb-global'], $ver, true );
 
         // Hồ sơ năng lực — nhúng bằng plugin "3D FlipBook" (DearFlip), shortcode [dflip]
         // được gọi trực tiếp trong profile-book.php, script/style của plugin tự enqueue.

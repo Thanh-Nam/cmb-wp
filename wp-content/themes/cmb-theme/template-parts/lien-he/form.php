@@ -18,6 +18,10 @@ if ($cf7_query->have_posts()) {
 $privacy_url = function_exists('get_privacy_policy_url') && get_privacy_policy_url()
     ? get_privacy_policy_url()
     : '#';
+
+// Ảnh minh hoạ: ưu tiên field cấu hình trong "Cấu hình trang liên hệ" (dễ tìm, cùng
+// chỗ với địa chỉ/SĐT/email) -> Featured Image của trang (cách cũ) -> ảnh mặc định.
+$contact_image = get_field('contact_page_image', 'option');
 ?>
 <!-- ======= CONTACT FORM ======= -->
 <section class="p-lh-body" id="gui-thong-tin" aria-labelledby="form-title">
@@ -26,7 +30,12 @@ $privacy_url = function_exists('get_privacy_policy_url') && get_privacy_policy_u
 
       <!-- Left: Image -->
       <div class="p-lh-body__image" data-reveal="fade-right">
-        <?php if (has_post_thumbnail()) :
+        <?php if (!empty($contact_image['url'])) : ?>
+          <img src="<?php echo esc_url($contact_image['url']); ?>"
+               alt="<?php echo esc_attr($contact_image['alt'] ?: cmb_txt('Liên hệ CMB', 'Contact CMB')); ?>"
+               class="p-lh-body__img"
+               loading="lazy" />
+        <?php elseif (has_post_thumbnail()) :
           the_post_thumbnail('large', ['class' => 'p-lh-body__img', 'alt' => cmb_txt('Liên hệ CMB', 'Contact CMB'), 'loading' => 'lazy']);
         else : ?>
           <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero_port.jpg"

@@ -107,12 +107,45 @@
             "allow_in_bindings": 0
         },
         {
+            "key": "field_6b430000000a",
+            "label": "Ảnh che video (poster)",
+            "name": "video_intro_poster",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Ảnh hiển thị che phía trên video (kèm icon play ở giữa) trước khi bấm play. Không chọn thì hệ thống sẽ tự lấy khung hình đầu tiên của video.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6b4300000003",
+                        "operator": "==",
+                        "value": "upload"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
             "key": "field_6b4300000004",
             "label": "File video (MP4)",
             "name": "video_intro_file",
             "aria-label": "",
             "type": "file",
-            "instructions": "Nên nén dưới ~30-50MB để trang tải nhanh. Ảnh đại diện sẽ tự lấy khung hình đầu tiên của video.",
+            "instructions": "Nên nén dưới ~30-50MB để trang tải nhanh. Không nhập ảnh che riêng thì ảnh đại diện sẽ tự lấy khung hình đầu tiên của video.",
             "required": 0,
             "conditional_logic": [
                 [

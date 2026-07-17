@@ -6,6 +6,7 @@
 $v_fields = get_fields('option') ?: [];
 $v_source = $v_fields['video_intro_source'] ?? 'upload';
 $v_file   = get_field('video_intro_file', 'option');
+$v_poster = get_field('video_intro_poster', 'option');
 $v_embed  = get_field('video_intro_embed_url', 'option');
 $v_title  = cmb_arr($v_fields, 'video_intro_title') ?: cmb_txt('Giới thiệu về CMB', 'About CMB');
 $v_desc   = cmb_arr($v_fields, 'video_intro_desc');
@@ -36,6 +37,13 @@ if (!$has_upload && !$has_embed) return;
         <video class="p-video-player__video" playsinline controls preload="metadata">
           <source src="<?php echo esc_url($v_file['url']); ?>" type="<?php echo esc_attr($v_file['mime_type'] ?: 'video/mp4'); ?>">
         </video>
+        <button type="button" class="p-video-player__poster<?php echo !empty($v_poster['url']) ? ' has-manual-poster' : ''; ?>"
+                aria-label="<?php echo esc_attr(cmb_txt('Phát video', 'Play video')); ?>"
+                <?php if (!empty($v_poster['url'])) : ?>style="background-image:url('<?php echo esc_url($v_poster['url']); ?>')"<?php endif; ?>>
+          <span class="p-video-player__play-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 4.5L19 12L6 19.5V4.5Z" fill="currentColor"/></svg>
+          </span>
+        </button>
       </div>
       <?php elseif ($has_embed) : ?>
       <div class="p-video-embed" data-reveal-delay="1">
