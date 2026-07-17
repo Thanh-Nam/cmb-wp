@@ -142,6 +142,13 @@
 .p-video-profile-row {
   display: flex;
   align-items: flex-start;
+  // Mỗi section con (.p-video-intro/.p-profile-book) tự có .l-container riêng,
+  // nhưng bản thân hàng này thì không — trên màn hình rất rộng (> container-max),
+  // 2 section chia đôi full viewport nên tràn ra sát 2 mép, không khớp với các
+  // section khác trên trang (vốn tự canh giữa qua .l-container max-width). Giới
+  // hạn/căn giữa chính hàng này để nhất quán.
+  max-width: $container-max;
+  margin-inline: auto;
 
   @include md {
     flex-direction: column;
@@ -168,6 +175,20 @@
     @include sp {
       padding: rem(56) 0;
     }
+  }
+
+  // Khi xếp chồng dọc (md/sp), padding-bottom của video + padding-top của PDF
+  // cộng dồn lại (56px + 56px ở sp) khiến 2 box cách nhau quá xa. Thu gọn phần
+  // padding ở mặt TIẾP GIÁP giữa 2 section, chỉ giữ nguyên padding ở mặt NGOÀI
+  // (đầu video, cuối PDF).
+  @include md {
+    > .p-video-intro { padding-bottom: rem(24); }
+    > .p-profile-book { padding-top: rem(24); }
+  }
+
+  @include sp {
+    > .p-video-intro { padding-bottom: rem(20); }
+    > .p-profile-book { padding-top: rem(20); }
   }
 
   // Giảm padding ngang của mỗi .l-container khi 2 section đứng cạnh nhau, tránh

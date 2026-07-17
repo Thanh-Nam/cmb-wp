@@ -311,13 +311,17 @@
 // ======= 5. SERVICES GRID =======
 .p-project-services {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  // Số cột lấy từ CSS custom property do PHP tính theo ĐÚNG số dịch vụ đã nhập
+  // (xem single-detail.php) — luôn chia đều hết chiều rộng thay vì cố định 6 cột
+  // rồi để dư khoảng trống khi nhập ít hơn 6 dịch vụ. Giá trị mặc định (6/3) chỉ
+  // là dự phòng khi thiếu custom property.
+  grid-template-columns: repeat(var(--services-cols, 6), 1fr);
   border: 1px solid $color-border;
   border-radius: rem(12);
   overflow: hidden;
 
-  @include md { grid-template-columns: repeat(3, 1fr); }
-  @include sp { grid-template-columns: repeat(3, 1fr); }
+  @include md { grid-template-columns: repeat(var(--services-cols-md, 3), 1fr); }
+  @include sp { grid-template-columns: repeat(var(--services-cols-md, 3), 1fr); }
 
   &__item {
     display: flex;
@@ -327,27 +331,21 @@
     gap: rem(10);
     padding: rem(20) rem(12);
     position: relative;
+    border-right: 1px solid $color-border;
 
-    &:not(:nth-child(6n))::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 15%;
-      height: 70%;
-      width: 1px;
-      background: $color-border;
+    // Số cột giờ động theo từng dự án nên không thể biết trước vị trí "cuối hàng"
+    // bằng nth-child cố định — bỏ border-right ở phần tử cuối cùng là đủ cho
+    // trường hợp phổ biến (số dịch vụ nằm gọn trong 1 hàng).
+    &:last-child {
+      border-right: none;
     }
 
     @include md {
-      &:not(:nth-child(3n))::after { content: ''; }
-      &:nth-child(3n)::after { display: none; }
       &:nth-child(n+4) { border-top: 1px solid $color-border; }
     }
 
     @include sp {
       padding: rem(16) rem(8);
-      &:not(:nth-child(3n))::after { content: ''; }
-      &:nth-child(3n)::after { display: none; }
       &:nth-child(n+4) { border-top: 1px solid $color-border; }
     }
   }

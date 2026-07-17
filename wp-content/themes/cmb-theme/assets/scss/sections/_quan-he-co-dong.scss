@@ -229,6 +229,15 @@
     white-space: normal;
     text-align: center;
 
+    // Các box con (không phải header) tự canh giữa theo chiều cao riêng của từng
+    // item (align-self: center trên .p-ir-tabs__item--pill), nên item nào có label
+    // xuống 2 dòng (vd "Quy chế hoạt động hội đồng quản trị") sẽ CAO HƠN hẳn các
+    // item 1 dòng còn lại — nhìn lệch nhau dù cùng canh giữa 1 hàng. Đặt min-height
+    // bằng đúng chiều cao khi label xuống 2 dòng để mọi box con luôn đồng nhất.
+    &:not(.p-ir-tabs__link--header) {
+      min-height: rem(66);
+    }
+
     // Hover/active giống hệt row 1 — nền xanh đặc + góc gấp dưới-phải + gạch chân
     // khi active. Loại trừ item header (Công bố thông tin không tương tác được).
     &:hover:not(.p-ir-tabs__link--header),

@@ -1160,11 +1160,17 @@ add_action( 'acf/save_post', function( $post_id ) {
 // - texture_size: giảm độ phân giải render mỗi trang PDF (1600 -> 1024px) để
 //   tải/render nhanh hơn đáng kể với các file PDF dung lượng lớn, đổi lấy một
 //   chút độ nét khi zoom sâu.
+// - height: mặc định "auto" khiến DearFlip tự đo lại chiều cao khung theo tỉ lệ
+//   trang thật SAU KHI PDF load xong (lúc đang load nó dùng 1 tỉ lệ mặc định tạm
+//   thời) -> khung bị nhảy cao giữa lúc đang tải và lúc hiển thị xong. Ép height
+//   "100%" để khung luôn khóa theo chiều cao của .p-book-wrap (đã có aspect-ratio
+//   cố định trong CSS) ngay từ đầu, không đổi giữa 2 giai đoạn nữa.
 add_filter( 'option__dflip_settings', function ( $settings ) {
     if ( ! is_array( $settings ) ) {
         $settings = [];
     }
     $settings['bg_color']     = '#FFFFFF';
     $settings['texture_size'] = '1024';
+    $settings['height']       = '100%';
     return $settings;
 } );

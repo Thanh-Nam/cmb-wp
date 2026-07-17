@@ -48,12 +48,23 @@ if ($proj_custom_date) {
           </div>
         </div>
 
-        <?php if ($services_list) : ?>
+        <?php
+        // Lọc trước các dịch vụ hợp lệ (có tên) để đếm ĐÚNG số phần tử sẽ hiển thị
+        // -> chia số cột grid theo đúng số đó, tránh bị dư cột trống khi khách nhập
+        // ít hơn 6 dịch vụ. Giới hạn tối đa 6 cột (desktop) / 3 cột (tablet, mobile)
+        // để không bị quá hẹp khi nhập nhiều dịch vụ (giữ đúng thiết kế gốc).
+        $services_valid = array_values( array_filter( (array) $services_list, function ( $s ) {
+            return ! empty( $s['name'] );
+        } ) );
+        $services_count   = count( $services_valid );
+        $services_cols_lg = max( 1, min( $services_count, 6 ) );
+        $services_cols_md = max( 1, min( $services_count, 3 ) );
+        ?>
+        <?php if ($services_valid) : ?>
         <div class="p-project-section" id="section-services">
           <h2 class="p-project-section__title"><?php echo cmb_txt( 'DỊCH VỤ CMB ĐẢM NHẬN', 'CMB SERVICES PROVIDED' ); ?></h2>
-          <div class="p-project-services" id="project-services-grid">
-            <?php foreach ($services_list as $i => $service) :
-              if (empty($service['name'])) continue;
+          <div class="p-project-services" id="project-services-grid" style="--services-cols: <?php echo $services_cols_lg; ?>; --services-cols-md: <?php echo $services_cols_md; ?>;">
+            <?php foreach ($services_valid as $i => $service) :
               $icon_url = '';
               if (!empty($service['icon'])) {
                 $icon_src = wp_get_attachment_image_src($service['icon'], 'full');

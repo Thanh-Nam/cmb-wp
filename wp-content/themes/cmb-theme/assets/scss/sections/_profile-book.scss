@@ -68,4 +68,16 @@
 .p-book-wrap {
   max-width: rem(1040);
   margin: 0 auto;
+  // Đặt aspect-ratio cố định để khung có chiều cao xác định NGAY khi vừa render
+  // (thuần CSS, không cần chờ JS/PDF load) — kết hợp height:100% ép qua filter
+  // option__dflip_settings (functions.php) khiến DearFlip khóa chiều cao theo
+  // khung này thay vì tự đo lại theo tỉ lệ trang thật sau khi PDF load xong.
+  // Nhờ vậy chiều cao lúc đang load và lúc hiển thị xong luôn giống nhau, không
+  // còn bị nhảy/giật layout nữa.
+  position: relative;
+  aspect-ratio: 1.4 / 1; // desktop: DearFlip thường hiển thị 2 trang song song (khổ ngang)
+
+  @include sp {
+    aspect-ratio: 3 / 4; // mobile: ép hiển thị 1 trang/lần (khổ dọc)
+  }
 }
