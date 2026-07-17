@@ -226,7 +226,8 @@
     font-size: rem(14);
     font-weight: $font-weight-semibold;
     color: $color-text;
-    white-space: nowrap;
+    white-space: normal;
+    text-align: center;
 
     // Hover/active giống hệt row 1 — nền xanh đặc + góc gấp dưới-phải + gạch chân
     // khi active. Loại trừ item header (Công bố thông tin không tương tác được).
@@ -279,7 +280,7 @@
     }
 
     .p-ir-tabs__label {
-      text-align: left;
+      text-align: center;
     }
   }
 

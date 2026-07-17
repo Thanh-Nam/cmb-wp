@@ -1153,13 +1153,18 @@ add_action( 'acf/save_post', function( $post_id ) {
     }
 }, 20 );
 
-// Ép màu nền flipbook (plugin 3D FlipBook/DearFlip) luôn là trắng — cấu hình này
-// vốn nằm trong DB (option _dflip_settings), set tay trên từng site sẽ không đồng
-// bộ giữa local/staging/production. Ép cứng qua code để chạy đúng ở mọi môi trường.
+// Ép cấu hình flipbook (plugin 3D FlipBook/DearFlip) qua code thay vì để trong
+// DB (option _dflip_settings) — set tay trên từng site sẽ không đồng bộ giữa
+// local/staging/production. Ép cứng qua code để chạy đúng ở mọi môi trường:
+// - bg_color: nền trắng thay vì xám mặc định.
+// - texture_size: giảm độ phân giải render mỗi trang PDF (1600 -> 1024px) để
+//   tải/render nhanh hơn đáng kể với các file PDF dung lượng lớn, đổi lấy một
+//   chút độ nét khi zoom sâu.
 add_filter( 'option__dflip_settings', function ( $settings ) {
     if ( ! is_array( $settings ) ) {
         $settings = [];
     }
-    $settings['bg_color'] = '#FFFFFF';
+    $settings['bg_color']     = '#FFFFFF';
+    $settings['texture_size'] = '1024';
     return $settings;
 } );

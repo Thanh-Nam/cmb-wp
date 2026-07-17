@@ -7,6 +7,11 @@
  * Chỉ chỉnh min-height của khung NGOÀI (card), không đụng vào nội dung bên
  * trong (video hoặc plugin DearFlip) — mỗi bên vẫn tự render kích thước thật
  * của nó, tránh lặp lại sự cố ép chiều cao vào chính khung PDF trước đây.
+ *
+ * DearFlip (plugin PDF) đổi chiều cao thật của nó không đồng bộ — với file PDF
+ * lớn, việc "chốt" kích thước cuối cùng có thể xảy ra bất kỳ lúc nào (không có
+ * mốc thời gian cố định), nên dùng ResizeObserver theo dõi trực tiếp khung PDF
+ * thay vì đoán vài mốc thời gian cụ thể — bắt được thay đổi dù xảy ra muộn.
  */
 
 'use strict';
@@ -14,6 +19,7 @@
 (function initVideoProfileSync() {
   var videoCard = document.getElementById('video-intro-card');
   var bookCard = document.getElementById('profile-book-card');
+  var bookWrap = document.getElementById('profile-book-wrap');
   if (!videoCard || !bookCard) return;
 
   var MD_BREAKPOINT = 1024; // khớp @include md trong _mixins.scss
@@ -38,16 +44,23 @@
   syncHeight();
   window.addEventListener('load', syncHeight);
 
-  // DearFlip (plugin hiển thị PDF) load ảnh trang PDF không đồng bộ nên chiều
-  // cao thật của khung có thể thay đổi sau khi trang đã load xong — đo lại vài
-  // lần trong 3s đầu để bắt kịp, sau đó dừng hẳn.
-  [500, 1000, 1800, 3000].forEach(function (delay) {
-    setTimeout(syncHeight, delay);
-  });
+  var syncTimer = null;
+  function scheduleSync() {
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(syncHeight, 150);
+  }
 
-  var resizeTimer = null;
-  window.addEventListener('resize', function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(syncHeight, 150);
-  });
+  window.addEventListener('resize', scheduleSync);
+
+  // Theo dõi trực tiếp khung PDF — bắt được mọi thay đổi kích thước bất kể xảy
+  // ra lúc nào (DearFlip render xong trang, load thêm trang, đổi chế độ xem...).
+  if (bookWrap && window.ResizeObserver) {
+    var ro = new ResizeObserver(scheduleSync);
+    ro.observe(bookWrap);
+  } else {
+    // Trình duyệt cũ không có ResizeObserver — dự phòng bằng vài mốc thời gian.
+    [500, 1000, 1800, 3000, 5000, 8000].forEach(function (delay) {
+      setTimeout(syncHeight, delay);
+    });
+  }
 })();
