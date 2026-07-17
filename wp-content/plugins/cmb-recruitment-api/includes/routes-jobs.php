@@ -78,6 +78,21 @@ function cmb_get_job_location_facets() {
 	], $terms );
 }
 
+function cmb_get_job_application_count( $job_id ) {
+	static $cache = [];
+	if ( isset( $cache[ $job_id ] ) ) return $cache[ $job_id ];
+
+	$query = new WP_Query( [
+		'post_type'      => 'don_ung_tuyen',
+		'post_status'    => 'publish',
+		'posts_per_page' => 1,
+		'fields'         => 'ids',
+		'meta_query'     => [ [ 'key' => 'job_id', 'value' => (string) $job_id ] ],
+	] );
+
+	return $cache[ $job_id ] = (int) $query->found_posts;
+}
+
 function cmb_transform_job( $post ) {
 	$id          = $post->ID;
 	$salary_type = cmb_get_acf_or( $id, 'salary_type', 'negotiable' );
@@ -116,6 +131,7 @@ function cmb_transform_job( $post ) {
 		'experience'     => cmb_get_acf_or( $id, 'kinh_nghiem', '' ),
 		'education'      => cmb_get_acf_or( $id, 'hoc_van', '' ),
 		'gender'         => cmb_get_acf_or( $id, 'gioi_tinh', 'any' ),
+		'applicationCount' => cmb_get_job_application_count( $id ),
 	];
 }
 
@@ -179,12 +195,62 @@ add_action( 'rest_api_init', function () {
 				'orderby'        => 'date',
 				'order'          => 'DESC',
 			];
+			if ( $req->get_param( 'sort' ) === 'salary' ) {
+				// Job "Thoả thuận" không lưu meta salary_max (field bị ẩn theo điều kiện salary_type == range),
+				// nên không dùng orderby=meta_value_num + meta_key đơn thuần vì cách đó sẽ LOẠI HẲN các job
+				// không có meta này ra khỏi kết quả. Dùng named clause với relation OR (EXISTS/NOT EXISTS) để
+				// giữ đủ tất cả job, đồng thời job "Thoả thuận" (không có giá trị) sẽ tự rơi xuống cuối khi order DESC.
+				$meta_query['salary_sort_clause'] = [
+					'relation' => 'OR',
+					'salary_sort' => [
+						'key'     => 'salary_max',
+						'compare' => 'EXISTS',
+						'type'    => 'NUMERIC',
+					],
+					[
+						'key'     => 'salary_max',
+						'compare' => 'NOT EXISTS',
+					],
+				];
+				$args['orderby'] = [ 'salary_sort' => 'DESC' ];
+			}
+
+			$applications_join_cb    = null;
+			$applications_orderby_cb = null;
+			if ( $req->get_param( 'sort' ) === 'applications' ) {
+				global $wpdb;
+				// Số hồ sơ ứng tuyển nằm ở CPT don_ung_tuyen riêng (meta job_id), không phải meta của chính job,
+				// nên không dùng orderby=meta_value được — phải JOIN với bảng đếm số ứng tuyển theo từng job.
+				$applications_join_cb = function ( $join, $q ) use ( $wpdb ) {
+					if ( ! $q->get( 'cmb_sort_by_applications' ) ) return $join;
+					return $join . " LEFT JOIN (
+						SELECT pm.meta_value AS job_id, COUNT(*) AS app_count
+						FROM {$wpdb->postmeta} pm
+						INNER JOIN {$wpdb->posts} ap ON ap.ID = pm.post_id AND ap.post_type = 'don_ung_tuyen' AND ap.post_status = 'publish'
+						WHERE pm.meta_key = 'job_id'
+						GROUP BY pm.meta_value
+					) cmb_app_counts ON cmb_app_counts.job_id = {$wpdb->posts}.ID ";
+				};
+				$applications_orderby_cb = function ( $orderby, $q ) use ( $wpdb ) {
+					if ( ! $q->get( 'cmb_sort_by_applications' ) ) return $orderby;
+					return "COALESCE(cmb_app_counts.app_count, 0) DESC, {$wpdb->posts}.post_date DESC";
+				};
+				add_filter( 'posts_join', $applications_join_cb, 10, 2 );
+				add_filter( 'posts_orderby', $applications_orderby_cb, 10, 2 );
+				$args['cmb_sort_by_applications'] = true;
+			}
+
 			if ( count( $meta_query ) > 1 ) $args['meta_query'] = $meta_query;
 			if ( $tax_query ) $args['tax_query'] = $tax_query;
 			if ( $date_query ) $args['date_query'] = $date_query;
 			if ( $search = $req->get_param( 'search' ) ) $args['s'] = sanitize_text_field( $search );
 
 			$query = new WP_Query( $args );
+
+			if ( $applications_join_cb ) {
+				remove_filter( 'posts_join', $applications_join_cb, 10 );
+				remove_filter( 'posts_orderby', $applications_orderby_cb, 10 );
+			}
 
 			return new WP_REST_Response( [
 				'items'      => array_map( 'cmb_transform_job', $query->posts ),
