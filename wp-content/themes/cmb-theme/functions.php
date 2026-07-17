@@ -242,8 +242,14 @@ function cmb_enqueue_assets() {
                 $city = get_field( 'project_city', $loc_post->ID );
                 if ( empty( $city ) || ! in_array( $city, $loc_provinces, true ) ) continue;
 
+                // get_the_title() chạy qua filter "the_title" (wptexturize/convert_chars) nên tự
+                // convert ký tự "&" thành entity "&#038;" — đúng khi echo thẳng ra HTML, nhưng ở
+                // đây giá trị này được JSON hóa rồi JS (location-map.js) tự escape lại 1 lần nữa
+                // (_escapeHtml) trước khi chèn vào innerHTML, khiến bị encode 2 lần và hiển thị
+                // chữ thô "&#038;" thay vì ký tự "&". Decode ngược lại về text thuần trước khi
+                // đưa vào JSON để JS chỉ escape đúng 1 lần.
                 $p = [
-                    'project' => get_the_title( $loc_post ),
+                    'project' => html_entity_decode( get_the_title( $loc_post ), ENT_QUOTES, 'UTF-8' ),
                     'link'    => get_permalink( $loc_post ),
                 ];
 
@@ -253,7 +259,7 @@ function cmb_enqueue_assets() {
                 $img = get_the_post_thumbnail_url( $loc_post->ID, 'large' );
                 if ( $img ) {
                     $p['imgSrc'] = $img;
-                    $p['imgAlt'] = get_the_title( $loc_post );
+                    $p['imgAlt'] = html_entity_decode( get_the_title( $loc_post ), ENT_QUOTES, 'UTF-8' );
                 }
 
                 $location_data[ $city ]['projects'][] = $p;
