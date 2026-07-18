@@ -24,6 +24,11 @@
   ExpiresByType application/javascript "access plus 1 month"
   ExpiresByType font/woff2        "access plus 1 year"
   ExpiresByType font/woff         "access plus 1 year"
+  # File PDF (vd: Hồ sơ năng lực) chưa có Cache-Control -> mỗi lần quay lại
+  # trang tải lại từ đầu dù nội dung không đổi. WordPress không ghi đè file
+  # trùng tên khi upload lại (tự thêm hậu tố -1, -2...) nên cache dài hạn ở đây
+  # là an toàn, không sợ hiển thị nhầm file cũ sau khi khách thay PDF mới.
+  ExpiresByType application/pdf   "access plus 1 month"
 </IfModule>
 
 # ============================================================

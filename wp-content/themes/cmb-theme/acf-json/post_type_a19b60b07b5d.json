@@ -69,7 +69,8 @@
     "supports": [
         "title",
         "editor",
-        "custom-fields"
+        "custom-fields",
+        "thumbnail"
     ],
     "taxonomies": "",
     "has_archive": false,

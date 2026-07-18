@@ -1173,6 +1173,8 @@ add_action( 'acf/save_post', function( $post_id ) {
 //   thời) -> khung bị nhảy cao giữa lúc đang tải và lúc hiển thị xong. Ép height
 //   "100%" để khung luôn khóa theo chiều cao của .p-book-wrap (đã có aspect-ratio
 //   cố định trong CSS) ngay từ đầu, không đổi giữa 2 giai đoạn nữa.
+// - text_loading: chuỗi mặc định "DearFlip: Loading " lộ tên plugin ra ngoài giao
+//   diện — đổi thành text trung tính, không nhắc tên plugin.
 add_filter( 'option__dflip_settings', function ( $settings ) {
     if ( ! is_array( $settings ) ) {
         $settings = [];
@@ -1180,5 +1182,6 @@ add_filter( 'option__dflip_settings', function ( $settings ) {
     $settings['bg_color']     = '#FFFFFF';
     $settings['texture_size'] = '1024';
     $settings['height']       = '100%';
+    $settings['text_loading'] = cmb_txt( 'Đang tải tài liệu ', 'Loading document ' );
     return $settings;
 } );

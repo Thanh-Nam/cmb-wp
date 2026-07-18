@@ -5,7 +5,57 @@
  */
 $services_list = get_field('project_services_list');
 $gallery       = get_field('project_gallery');
-$tech_specs    = get_field('project_tech_specs');
+
+// Thông tin dự án (sidebar) — trước đây nằm ở khối p-project-infobar riêng phía
+// trên hero, giờ gộp thẳng vào sidebar "THÔNG TIN DỰ ÁN" cho gọn, dùng lại đúng
+// CSS p-project-info-card__label/__value đã có sẵn.
+$info_owner    = get_field('project_owner');
+$info_location = get_field('project_location_detail');
+$info_scale    = get_field('project_scale');
+$info_timeline = get_field('project_timeline');
+$info_services = get_field('project_services');
+
+$info_items = [];
+
+if ($info_owner) {
+    $info_items[] = [
+        'label' => cmb_txt( 'CHỦ ĐẦU TƯ', 'PROJECT OWNER' ),
+        'value' => $info_owner,
+        'icon'  => '<svg width="16" height="16" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 19C3 15.134 6.134 12 10 12H12C15.866 12 19 15.134 19 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    ];
+}
+
+if ($info_location) {
+    $info_items[] = [
+        'label' => cmb_txt( 'ĐỊA ĐIỂM', 'LOCATION' ),
+        'value' => $info_location,
+        'icon'  => '<svg width="16" height="16" viewBox="0 0 22 22" fill="none"><path d="M11 2C7.96 2 5.5 4.46 5.5 7.5C5.5 11.88 11 18 11 18C11 18 16.5 11.88 16.5 7.5C16.5 4.46 14.04 2 11 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="11" cy="7.5" r="2.25" stroke="currentColor" stroke-width="1.5"/></svg>',
+    ];
+}
+
+if ($info_scale) {
+    $info_items[] = [
+        'label' => cmb_txt( 'QUY MÔ', 'SCALE' ),
+        'value' => $info_scale,
+        'icon'  => '<svg width="16" height="16" viewBox="0 0 22 22" fill="none"><rect x="2" y="9" width="18" height="4" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 9V7M11 9V5M16 9V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    ];
+}
+
+if ($info_timeline) {
+    $info_items[] = [
+        'label' => cmb_txt( 'THỜI GIAN', 'TIMELINE' ),
+        'value' => $info_timeline,
+        'icon'  => '<svg width="16" height="16" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 6V11L14.5 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    ];
+}
+
+if ($info_services) {
+    $info_items[] = [
+        'label' => cmb_txt( 'DỊCH VỤ TƯ VẤN CHÍNH', 'KEY CONSULTING SERVICES' ),
+        'value' => $info_services,
+        'icon'  => '<svg width="16" height="16" viewBox="0 0 22 22" fill="none"><rect x="3" y="2" width="13" height="17" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 7H13M7 11H13M7 15H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="16" r="3.5" fill="white" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 16L16.5 17L18.5 15" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    ];
+}
 
 // Thời gian đăng bài — có nhập ACF thì dùng, không thì lấy mặc định của WordPress
 $proj_custom_date = get_field('project_publish_date');
@@ -41,12 +91,17 @@ if ($proj_custom_date) {
           </time>
         </div>
 
+        <?php
+        $proj_content = apply_filters( 'the_content', get_the_content() );
+        ?>
+        <?php if ( trim( wp_strip_all_tags( $proj_content ) ) !== '' ) : ?>
         <div class="p-project-section" id="section-intro">
           <h2 class="p-project-section__title"><?php echo cmb_txt( 'GIỚI THIỆU DỰ ÁN', 'PROJECT INTRODUCTION' ); ?></h2>
           <div class="p-project-section__content">
-            <?php the_content(); ?>
+            <?php echo $proj_content; ?>
           </div>
         </div>
+        <?php endif; ?>
 
         <?php
         // Lọc trước các dịch vụ hợp lệ (có tên) để đếm ĐÚNG số phần tử sẽ hiển thị
@@ -118,23 +173,18 @@ if ($proj_custom_date) {
 
       <!-- SIDEBAR -->
       <aside class="p-project-detail__sidebar" id="project-sidebar">
-        <?php if ($tech_specs) : ?>
+        <?php if ($info_items) : ?>
         <div class="p-project-info-card" id="project-info-card">
           <h2 class="p-project-info-card__title"><?php echo cmb_txt( 'THÔNG TIN DỰ ÁN', 'PROJECT INFORMATION' ); ?></h2>
           <ul class="p-project-info-card__list" role="list">
-            <?php foreach ($tech_specs as $spec) :
-              if (empty($spec['label'])) continue;
-            ?>
+            <?php foreach ($info_items as $item) : ?>
             <li class="p-project-info-card__item">
               <div class="p-project-info-card__icon" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.3"/>
-                  <path d="M5.5 8L7.5 10L10.5 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                <?php echo $item['icon']; ?>
               </div>
               <div class="p-project-info-card__text">
-                <span class="p-project-info-card__label"><?php echo $spec['label']; ?></span>
-                <span class="p-project-info-card__value"><?php echo wp_kses($spec['value'] ?? '', ['br' => []]); ?></span>
+                <span class="p-project-info-card__label"><?php echo $item['label']; ?></span>
+                <span class="p-project-info-card__value"><?php echo wp_kses($item['value'] ?? '', ['br' => []]); ?></span>
               </div>
             </li>
             <?php endforeach; ?>

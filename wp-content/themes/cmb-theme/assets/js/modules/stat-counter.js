@@ -150,7 +150,6 @@
   function startAll() {
     observeItems('.p-stats__item--anim', 0.25);
     observeItems('.p-projects-stats__item--anim', 0.25);
-    observeItems('.p-project-infobar__item--anim', 0.2);
     observeInfoNumbers();
   }
 

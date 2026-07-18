@@ -112,6 +112,7 @@ function cmb_transform_job( $post ) {
 		// Nhiều khu vực cách nhau bởi dấu phẩy (slug không dấu, label có dấu để hiển thị).
 		'location'       => implode( ',', wp_list_pluck( $location_terms, 'slug' ) ),
 		'locationLabel'  => implode( ', ', wp_list_pluck( $location_terms, 'name' ) ),
+		'image'          => get_the_post_thumbnail_url( $id, 'large' ) ?: null,
 		'description'    => apply_filters( 'the_content', $post->post_content ),
 		'postedAt'       => get_the_date( 'c', $id ),
 		'category'       => $category_term ? $category_term->slug : '',

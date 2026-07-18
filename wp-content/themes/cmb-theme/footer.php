@@ -19,6 +19,7 @@
   $float_zalo      = get_field( 'float_zalo_url', 'option' ) ?: '#';
   $float_messenger = get_field( 'float_messenger_url', 'option' ) ?: '#';
   $float_phone     = get_field( 'float_phone', 'option' );
+  $footer_copy     = cmb_get_option( 'footer_copy' ) ?: "© " . date( 'Y' ) . " CMB. All Rights Reserved.\nCreated by CMB Center for Information Technology & AI.";
   ?>
   <section class="p-contact" id="contact" aria-label="<?php echo esc_attr( cmb_txt( 'Liên hệ tư vấn', 'Contact for consulting' ) ); ?>">
     <div class="l-container">
@@ -84,8 +85,9 @@
             </nav>
 
             <div class="l-footer__copy">
-              <p>&copy; <?php echo date( 'Y' ); ?> CMB. All Rights Reserved.</p>
-              <p>Created by CMB Center for Information Technology &amp; AI.</p>
+              <?php foreach ( explode( "\n", trim( $footer_copy ) ) as $footer_copy_line ) : ?>
+              <p><?php echo esc_html( trim( $footer_copy_line ) ); ?></p>
+              <?php endforeach; ?>
             </div>
           </div>
 

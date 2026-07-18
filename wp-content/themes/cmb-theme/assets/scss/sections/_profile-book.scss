@@ -80,4 +80,29 @@
   @include sp {
     aspect-ratio: 3 / 4; // mobile: ép hiển thị 1 trang/lần (khổ dọc)
   }
+
+  // ==========================================================
+  // Override giao diện loading mặc định của plugin DearFlip — bản gốc là 1 vòng
+  // tròn trắng + hộp chữ xám khá thô, không khớp màu thương hiệu của site. Chỉ
+  // đổi màu/bóng đổ/bo góc qua CSS của theme (không sửa file plugin) để không bị
+  // mất khi plugin cập nhật. Giữ nguyên kích thước/vị trí gốc của plugin để
+  // không ảnh hưởng cách nó tự canh giữa.
+  // dflip.min.css của plugin được enqueue SAU main.css của theme (độ ưu tiên
+  // bằng nhau nhưng nằm sau trong DOM sẽ thắng) nên cần !important để chắc chắn
+  // override được, không phụ thuộc thứ tự load.
+  // ==========================================================
+  .df-loading-icon {
+    background-color: $color-white !important;
+    box-shadow: 0 rem(6) rem(20) rgba(3, 121, 204, 0.22) !important;
+  }
+
+  .df-loading-info {
+    background: $color-white !important;
+    color: $color-primary !important;
+    font-family: $font-secondary !important;
+    font-weight: $font-weight-medium !important;
+    letter-spacing: normal !important;
+    border-radius: rem(24) !important;
+    box-shadow: 0 rem(6) rem(20) rgba(3, 121, 204, 0.16) !important;
+  }
 }

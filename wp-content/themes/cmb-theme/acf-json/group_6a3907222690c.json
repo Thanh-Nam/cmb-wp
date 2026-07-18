@@ -64,6 +64,48 @@
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_6aff00100030",
+            "label": "Copyright Footer (VI)",
+            "name": "footer_copy",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Mỗi dòng sẽ hiển thị thành một đoạn riêng trong footer.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_6aff00100031",
+            "label": "Copyright Footer (EN)",
+            "name": "footer_copy_en",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Mỗi dòng sẽ hiển thị thành một đoạn riêng trong footer.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "rows": 3,
+            "new_lines": ""
         }
     ],
     "location": [
