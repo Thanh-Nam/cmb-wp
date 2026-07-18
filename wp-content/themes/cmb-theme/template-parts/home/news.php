@@ -116,9 +116,12 @@ $arrow_svg = '<svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns=
 
     <!-- Small articles list -->
     <?php
+    // Lấy nhiều hơn 3 rồi tự sắp xếp theo "Thứ tự trong mục Tin nổi bật"
+    // (featured_order) trước khi cắt còn 3 bài — trước đây orderby chỉ có
+    // 'date' nên đổi featured_order không hề đổi vị trí hiển thị.
     $hp_list_q = new WP_Query([
         'post_type'      => 'post',
-        'posts_per_page' => 3,
+        'posts_per_page' => 20,
         'orderby'        => 'date',
         'order'          => 'DESC',
         'post__not_in'   => $hp_featured_id ? [ $hp_featured_id ] : [],
@@ -128,6 +131,19 @@ $arrow_svg = '<svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns=
             'compare' => '=',
         ]],
     ]);
+
+    usort( $hp_list_q->posts, function ( $a, $b ) {
+        $order_a = get_field( 'featured_order', $a->ID );
+        $order_b = get_field( 'featured_order', $b->ID );
+        $order_a = ( $order_a === '' || $order_a === null ) ? PHP_INT_MAX : (int) $order_a;
+        $order_b = ( $order_b === '' || $order_b === null ) ? PHP_INT_MAX : (int) $order_b;
+        if ( $order_a === $order_b ) {
+            return strtotime( $b->post_date ) <=> strtotime( $a->post_date );
+        }
+        return $order_a <=> $order_b;
+    } );
+    $hp_list_q->posts      = array_slice( $hp_list_q->posts, 0, 3 );
+    $hp_list_q->post_count = count( $hp_list_q->posts );
     ?>
     <div class="p-news__list">
       <?php $hp_i = 0; while ( $hp_list_q->have_posts() ) : $hp_list_q->the_post();
