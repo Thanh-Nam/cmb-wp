@@ -1,9 +1,12 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Trang Liên hệ của site tuyển dụng React — dùng chung nội dung với trang "Liên hệ" của
+// Trang Liên hệ của site tuyển dụng React — dùng chung nội dung text với trang "Liên hệ" của
 // site WP chính (ACF Options Page slug "lien-he": company_address/phone/email/working_hours,
 // repeater "offices"). Fallback giống hệt template-parts/lien-he/*.php khi admin chưa nhập.
+// Riêng ảnh minh hoạ (tuyen_dung_contact_image) nằm ở Options Page "Cấu hình trang tuyển dụng"
+// (slug "cau-hinh-tuyen-dung") — tách riêng vì chỉ dùng cho site React, không liên quan trang
+// Liên hệ của site WP chính.
 
 function cmb_contact_lines( $raw, $fallback ) {
 	if ( ! $raw ) return $fallback;
@@ -33,6 +36,8 @@ add_action( 'rest_api_init', function () {
 			$emails_raw    = $has_acf ? get_field( 'company_email', 'option' ) : '';
 			$working_hours = $has_acf ? get_field( 'company_working_hours', 'option' ) : '';
 			$offices       = $has_acf ? get_field( 'offices', 'option' ) : [];
+			$page_image    = $has_acf ? get_field( 'tuyen_dung_contact_image', 'option' ) : null;
+			$image_url     = is_array( $page_image ) ? ( $page_image['url'] ?? null ) : null;
 
 			if ( ! $address ) {
 				$address = "Tầng 11, Tòa nhà CMB, 512 Tôn Thất Thuyết,\nCầu Giấy, Hà Nội, Việt Nam";
@@ -69,6 +74,7 @@ add_action( 'rest_api_init', function () {
 				'emails'        => cmb_contact_lines( $emails_raw, [ 'info@cmb.com.vn', 'ir@cmb.com.vn' ] ),
 				'workingHours'  => $working_hours,
 				'offices'       => array_map( 'cmb_transform_office', $offices ),
+				'imageUrl'      => $image_url,
 			], 200 );
 		},
 	] );
