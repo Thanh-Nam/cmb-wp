@@ -161,10 +161,6 @@
 
   &__sidebar {
     grid-area: sidebar;
-    position: sticky;
-    top: calc(#{$header-topbar-height} + #{$header-height-desktop} + #{rem(24)});
-
-    @include sp { position: static; }
   }
 }
 
@@ -349,6 +345,7 @@
 
   &__title {
     display: block;
+    position: relative;
     font-family: $font-primary;
     font-size: rem(17);
     font-weight: $font-weight-bold;
@@ -357,7 +354,18 @@
     color: $color-primary;
     background: $color-white;
     margin: 0;
-    padding: rem(18) rem(16) rem(16);
+    padding: rem(18) rem(16) rem(22);
+
+    // Gạch chân ngắn dưới tiêu đề thay cho border-bottom full-width
+    &::after {
+      content: '';
+      position: absolute;
+      left: rem(16);
+      bottom: rem(10);
+      width: rem(28);
+      height: rem(3);
+      background: $color-primary;
+    }
   }
 
   &__list {
@@ -366,28 +374,74 @@
     padding: 0;
   }
 
+  // Đường gạch chân giữa 2 item tách làm 2 đoạn riêng (khớp icon/nội dung) thay
+  // vì 1 đường liền full-width — dùng ::before/::after định vị tuyệt đối theo
+  // đúng chiều rộng icon và nội dung để luôn thẳng hàng dù nội dung dài ngắn
+  // khác nhau (item xuống 2 dòng vẫn không lệch đường kẻ).
   &__item {
+    position: relative;
     display: flex;
     align-items: flex-start;
     gap: rem(12);
     padding: rem(14) rem(16);
-    border-bottom: 1px solid $color-border;
 
-    &:last-child { border-bottom: none; }
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      height: 1px;
+      background: $color-border;
+    }
 
+    &::before {
+      left: rem(16);
+      width: rem(40); // = chiều rộng __icon
+    }
+
+    &::after {
+      left: rem(16 + 40 + 12);
+      right: rem(16);
+    }
+
+    &:last-child::before,
+    &:last-child::after {
+      display: none;
+    }
   }
 
   &__icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: rem(30);
-    height: rem(30);
-    background: $color-primary-light;
-    border-radius: rem(7);
+    width: rem(40); // 4rem
+    height: rem(40);
+    border: 1px solid $color-border;
+    border-radius: 50%;
     flex-shrink: 0;
     margin-top: rem(2);
     color: $color-primary;
+
+    svg {
+      width: rem(24); // 2.4rem
+      height: rem(24);
+    }
+
+    // Chấm tròn nhỏ giữa đoạn gạch chân của icon — cùng màu với gạch
+    &::after {
+      content: '';
+      position: absolute;
+      left: rem(34); // giữa đoạn gạch icon: 16 (padding) + 40/2 (icon) - 4/2 (bán kính chấm)
+      bottom: -1px;
+      width: rem(4);
+      height: rem(4);
+      border-radius: 50%;
+      background: $color-border;
+    }
+  }
+
+  &__item:last-child &__icon::after {
+    display: none;
   }
 
   &__text {
