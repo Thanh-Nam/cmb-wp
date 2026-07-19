@@ -161,6 +161,28 @@
 
   &__sidebar {
     grid-area: sidebar;
+    position: relative;
+
+    // Vạch ngăn dọc giữa content/sidebar — mờ dần ở 2 đầu, cao bằng đúng chiều
+    // cao sidebar (top/bottom: 0 trong lúc sidebar position:relative nên tự
+    // giãn theo chiều cao thật của sidebar, không phải theo cả row grid).
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: rem(-20); // nửa column-gap desktop (40/2)
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, $color-border, transparent);
+    }
+
+    @include md {
+      &::before { left: rem(-14); } // nửa column-gap md (28/2)
+    }
+
+    @include sp {
+      &::before { display: none; } // layout xếp dọc, không có cột kề nhau để ngăn
+    }
   }
 }
 
@@ -351,15 +373,15 @@
     text-transform: uppercase;
     color: $color-primary;
     background: $color-white;
-    margin: 0;
-    padding: rem(18) rem(16) rem(22);
+    margin: 0 0 rem(20);
+    padding: 0;
 
     // Gạch chân ngắn dưới tiêu đề thay cho border-bottom full-width
     &::after {
       content: '';
       position: absolute;
-      left: rem(16);
-      bottom: rem(10);
+      left: 0;
+      bottom: rem(-12);
       width: rem(28);
       height: rem(3);
       background: $color-primary;
