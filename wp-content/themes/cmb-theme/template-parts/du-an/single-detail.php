@@ -78,19 +78,6 @@ if ($proj_custom_date) {
       <!-- ARTICLE -->
       <article class="p-project-detail__body" id="project-body">
 
-        <!-- Published meta -->
-        <div class="p-project-detail__meta">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <rect x="1" y="2" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.3"/>
-            <path d="M1 5.5H13" stroke="currentColor" stroke-width="1.3"/>
-            <path d="M4 1V3M10 1V3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-          </svg>
-          <time datetime="<?php echo esc_attr($proj_datetime); ?>">
-            <?php echo cmb_txt( 'Đăng lúc', 'Posted at' ); ?> <strong><?php echo esc_html($proj_time); ?></strong>
-            <?php echo cmb_txt( 'ngày', 'on' ); ?> <strong><?php echo esc_html($proj_date_str); ?></strong>
-          </time>
-        </div>
-
         <?php
         $proj_content = apply_filters( 'the_content', get_the_content() );
         ?>
@@ -168,6 +155,19 @@ if ($proj_custom_date) {
           <?php endif; ?>
         </div>
         <?php endif; ?>
+
+        <!-- Published meta -->
+        <div class="p-project-detail__meta">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <rect x="1" y="2" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M1 5.5H13" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M4 1V3M10 1V3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          <time datetime="<?php echo esc_attr($proj_datetime); ?>">
+            <?php echo cmb_txt( 'Đăng lúc', 'Posted at' ); ?> <strong><?php echo esc_html($proj_time); ?></strong>
+            <?php echo cmb_txt( 'ngày', 'on' ); ?> <strong><?php echo esc_html($proj_date_str); ?></strong>
+          </time>
+        </div>
 
       </article>
 

@@ -338,10 +338,8 @@
 // ======= 7. SIDEBAR INFO CARD =======
 .p-project-info-card {
   background: $color-white;
-  border: 1px solid $color-border;
   border-radius: rem(12);
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 
   &__title {
     display: block;

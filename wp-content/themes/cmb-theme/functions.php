@@ -653,6 +653,24 @@ add_action( 'wp_head', function() {
 remove_action( 'wp_head', 'rel_canonical' );
 
 // ============================================================
+// FAVICON — lấy từ ACF Options (Cấu hình chung > Logo > Favicon)
+// ============================================================
+add_action( 'wp_head', function() {
+    if ( ! function_exists( 'get_field' ) ) {
+        return;
+    }
+    $favicon = get_field( 'favicon', 'option' );
+    if ( empty( $favicon['url'] ) ) {
+        return;
+    }
+    $url  = esc_url( $favicon['url'] );
+    $type = ! empty( $favicon['mime_type'] ) ? esc_attr( $favicon['mime_type'] ) : 'image/png';
+
+    echo '<link rel="icon" href="' . $url . '" type="' . $type . '">' . "\n";
+    echo '<link rel="apple-touch-icon" href="' . $url . '">' . "\n";
+}, 1 );
+
+// ============================================================
 // SEO: Meta Description + Canonical + Open Graph + Twitter Card
 // ============================================================
 add_action( 'wp_head', function() {

@@ -302,6 +302,25 @@ window.CMB_lazyInit = function(selector, initFn, rootMargin) {
     window.addEventListener('load', onPageLoad);
   }
 
+  // Trang được phục hồi từ bfcache (bấm Back/Forward) không fire lại sự kiện
+  // 'load' — nếu lúc rời trang preloader đang hiện dở (do showOverlay() bên
+  // dưới gọi ngay trước khi điều hướng), nó sẽ bị đóng băng ở trạng thái đang
+  // hiện và không bao giờ tự ẩn lại. Ẩn ngay (không animation) khi phát hiện
+  // phục hồi từ bfcache.
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) return;
+    preloader.style.transition = 'none';
+    preloader.classList.add('is-done');
+    document.body.classList.add('is-loaded');
+    if (line) {
+      line.style.transition = 'none';
+      line.style.animation = 'none';
+      line.style.width = '100%';
+    }
+    void preloader.offsetWidth;
+    preloader.style.transition = '';
+  });
+
   function showOverlay() {
     preloader.style.transition = 'none';
     preloader.classList.remove('is-done');
