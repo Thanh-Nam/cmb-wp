@@ -131,27 +131,6 @@
   @include sp { padding: rem(32) 0 rem(48); }
 
   &__layout {
-    display: grid;
-    grid-template-columns: 1fr rem(296);
-    grid-template-areas: "body sidebar";
-    column-gap: rem(40);
-    align-items: start;
-
-    @include md {
-      grid-template-columns: 1fr rem(260);
-      column-gap: rem(28);
-    }
-
-    @include sp {
-      grid-template-columns: 1fr;
-      grid-template-areas: "body" "sidebar";
-      row-gap: rem(40);
-    }
-  }
-
-  &__body {
-    grid-area: body;
-    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: rem(48);
@@ -159,30 +138,32 @@
     @include sp { gap: rem(36); }
   }
 
-  &__sidebar {
-    grid-area: sidebar;
-    position: relative;
+  // Row 1: Giới thiệu dự án + Thông tin dự án, canh giữa theo chiều dọc
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: rem(48);
 
-    // Vạch ngăn dọc giữa content/sidebar — mờ dần ở 2 đầu, cao bằng đúng chiều
-    // cao sidebar (top/bottom: 0 trong lúc sidebar position:relative nên tự
-    // giãn theo chiều cao thật của sidebar, không phải theo cả row grid).
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: rem(-20); // nửa column-gap desktop (40/2)
-      width: 1px;
-      background: linear-gradient(to bottom, transparent, $color-border, transparent);
-    }
-
-    @include md {
-      &::before { left: rem(-14); } // nửa column-gap md (28/2)
-    }
+    @include md { gap: rem(32); }
 
     @include sp {
-      &::before { display: none; } // layout xếp dọc, không có cột kề nhau để ngăn
+      flex-direction: column;
+      align-items: stretch;
+      gap: rem(28);
     }
+  }
+
+  // Giới thiệu dự án chiếm ~2/5, Thông tin dự án chiếm ~3/5 chiều rộng hàng
+  &__intro {
+    flex: 2 1 0%;
+    min-width: 0;
+  }
+
+  &__sidebar {
+    flex: 3 1 0%;
+    min-width: 0;
+
+    @include sp { flex: 1 1 auto; }
   }
 }
 
@@ -227,30 +208,23 @@
   @include md { grid-template-columns: repeat(var(--services-cols-md, 3), 1fr); }
   @include sp { grid-template-columns: repeat(var(--services-cols-md, 3), 1fr); }
 
+  // Một khối viền chung duy nhất — các mục ngăn cách bằng đường kẻ dọc, không
+  // tách ô riêng, không nền/không đổ bóng.
   &__item {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: rem(10);
-    padding: rem(20) rem(12);
-    position: relative;
+    padding: rem(24) rem(16);
     border-right: 1px solid $color-border;
 
-    // Số cột giờ động theo từng dự án nên không thể biết trước vị trí "cuối hàng"
-    // bằng nth-child cố định — bỏ border-right ở phần tử cuối cùng là đủ cho
-    // trường hợp phổ biến (số dịch vụ nằm gọn trong 1 hàng).
     &:last-child {
       border-right: none;
     }
 
-    @include md {
-      &:nth-child(n+4) { border-top: 1px solid $color-border; }
-    }
-
     @include sp {
       padding: rem(16) rem(8);
-      &:nth-child(n+4) { border-top: 1px solid $color-border; }
     }
   }
 
@@ -270,12 +244,13 @@
     font-size: rem(12);
     line-height: 1.5;
     color: $color-text;
-    font-weight: $font-weight-regular;
+    font-weight: $font-weight-medium;
   }
 }
 
 
 // ======= 6. GALLERY =======
+// Ảnh đầu to (chiếm 2 hàng), 4 ảnh còn lại nhỏ chia 2 hàng bên phải.
 .p-project-gallery {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr;
@@ -360,121 +335,75 @@
 // ======= 7. SIDEBAR INFO CARD =======
 .p-project-info-card {
   background: $color-white;
-  border-radius: rem(12);
-  overflow: hidden;
+  border: 1px solid $color-border;
+  border-radius: rem(16);
+  box-shadow: $shadow-md;
+  padding: rem(24);
 
   &__title {
     display: block;
     position: relative;
     font-family: $font-primary;
-    font-size: rem(17);
+    font-size: rem(15);
     font-weight: $font-weight-bold;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: $color-primary;
-    background: $color-white;
+    background: transparent;
     margin: 0 0 rem(20);
-    padding: 0;
-
-    // Gạch chân ngắn dưới tiêu đề thay cho border-bottom full-width
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: rem(-12);
-      width: rem(28);
-      height: rem(3);
-      background: $color-primary;
-    }
+    padding: 0 0 rem(14);
+    border-bottom: 1px solid $color-border;
   }
 
   &__list {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: rem(16);
+    row-gap: rem(20);
+
+    @include sp {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
-  // Đường gạch chân giữa 2 item tách làm 2 đoạn riêng (khớp icon/nội dung) thay
-  // vì 1 đường liền full-width — dùng ::before/::after định vị tuyệt đối theo
-  // đúng chiều rộng icon và nội dung để luôn thẳng hàng dù nội dung dài ngắn
-  // khác nhau (item xuống 2 dòng vẫn không lệch đường kẻ).
   &__item {
-    position: relative;
     display: flex;
     align-items: flex-start;
     gap: rem(12);
-    padding: rem(14) rem(16);
-
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      height: 1px;
-      background: $color-border;
-    }
-
-    &::before {
-      left: rem(16);
-      width: rem(40); // = chiều rộng __icon
-    }
-
-    &::after {
-      left: rem(16 + 40 + 12);
-      right: rem(16);
-    }
-
-    &:last-child::before,
-    &:last-child::after {
-      display: none;
-    }
   }
 
   &__icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: rem(40); // 4rem
-    height: rem(40);
+    width: rem(32);
+    height: rem(32);
+    flex-shrink: 0;
+    color: $color-primary;
     border: 1px solid $color-border;
     border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: rem(2);
-    color: $color-primary;
 
     svg {
-      width: rem(24); // 2.4rem
-      height: rem(24);
+      width: rem(20);
+      height: rem(20);
     }
-
-    // Chấm tròn nhỏ giữa đoạn gạch chân của icon — cùng màu với gạch
-    &::after {
-      content: '';
-      position: absolute;
-      left: rem(34); // giữa đoạn gạch icon: 16 (padding) + 40/2 (icon) - 4/2 (bán kính chấm)
-      bottom: -1px;
-      width: rem(4);
-      height: rem(4);
-      border-radius: 50%;
-      background: $color-border;
-    }
-  }
-
-  &__item:last-child &__icon::after {
-    display: none;
   }
 
   &__text {
     display: flex;
     flex-direction: column;
-    gap: rem(3);
+    gap: rem(4);
     min-width: 0;
   }
 
   &__label {
     font-family: $font-secondary;
-    font-size: rem(13);
-    font-weight: $font-weight-semibold;
+    font-size: rem(12);
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.02em;
     color: $color-primary;
   }
 
@@ -482,7 +411,7 @@
     font-family: $font-secondary;
     font-size: rem(13);
     font-weight: $font-weight-regular;
-    color: $color-text;
+    color: $color-text-muted;
     line-height: 1.5;
   }
 }
