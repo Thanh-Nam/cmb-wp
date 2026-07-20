@@ -1,21 +1,23 @@
 /**
  * modules/gallery-lightbox.js - CMB Theme
- * Event gallery lightbox cho single post
+ * Gallery lightbox dùng chung cho:
+ * - #event-gallery  (single tin tức — ảnh/video sự kiện)
+ * - #project-gallery (single dự án — ảnh dự án)
  */
 
 'use strict';
 
-(function initGalleryLightbox() {
+(function () {
   var _lang = (window.CMB_Theme && window.CMB_Theme.lang) ? window.CMB_Theme.lang : 'vi';
   function _t(vi, en) { return _lang === 'en' ? en : vi; }
 
-  var gallery = document.getElementById('event-gallery');
-  if (!gallery) return;
+  var GALLERY_IDS = ['event-gallery', 'project-gallery'];
+  var galleries = GALLERY_IDS
+    .map(function (id) { return document.getElementById(id); })
+    .filter(Boolean);
+  if (!galleries.length) return;
 
-  var figures = Array.from(gallery.querySelectorAll('figure'));
-  if (!figures.length) return;
-
-  // Inject CSS
+  // Inject CSS 1 lần cho tất cả gallery trên trang
   var style = document.createElement('style');
   style.textContent = [
     '#gallery-lb{display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;background:rgba(0,0,0,.88)}',
@@ -28,17 +30,17 @@
     '#gallery-lb .lb-prev{left:1rem;top:50%;transform:translateY(-50%)}',
     '#gallery-lb .lb-next{right:1rem;top:50%;transform:translateY(-50%)}',
     '#gallery-lb .lb-counter{position:fixed;bottom:1.25rem;left:50%;transform:translateX(-50%);color:#fff;font-size:.875rem;opacity:.7}',
-    '.p-news-detail__gallery-grid figure{cursor:pointer;overflow:hidden;border-radius:4px}',
-    '.p-news-detail__gallery-grid figure:focus-visible{outline:2px solid #0379CC;outline-offset:2px}',
+    '.p-news-detail__gallery-grid figure,.p-project-gallery__item{cursor:zoom-in}',
+    '.p-news-detail__gallery-grid figure:focus-visible,.p-project-gallery__item:focus-visible{outline:2px solid #0379CC;outline-offset:2px}',
   ].join('');
   document.head.appendChild(style);
 
-  // Build DOM
+  // Build DOM lightbox dùng chung
   var lb = document.createElement('div');
   lb.id = 'gallery-lb';
   lb.setAttribute('role', 'dialog');
   lb.setAttribute('aria-modal', 'true');
-  lb.setAttribute('aria-label', _t('Xem ảnh sự kiện', 'View event photos'));
+  lb.setAttribute('aria-label', _t('Xem ảnh', 'View photos'));
   lb.innerHTML = [
     '<div class="lb-img-wrap">',
     '<img class="lb-img" src="" alt="" />',
@@ -56,6 +58,8 @@
   var counter = lb.querySelector('.lb-counter');
   var prevBtn = lb.querySelector('.lb-prev');
   var nextBtn = lb.querySelector('.lb-next');
+
+  var figures = [];
   var cur = 0;
 
   function show(index) {
@@ -96,14 +100,6 @@
     window.CMB.unlockScroll();
   }
 
-  figures.forEach(function (fig, i) {
-    fig.setAttribute('tabindex', '0');
-    fig.addEventListener('click', function () { open(i); });
-    fig.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
-    });
-  });
-
   lb.querySelector('.lb-close').addEventListener('click', close);
   prevBtn.addEventListener('click', function () { if (cur > 0) show(cur - 1); });
   nextBtn.addEventListener('click', function () { if (cur < figures.length - 1) show(cur + 1); });
@@ -117,5 +113,26 @@
     if (e.key === 'Escape') close();
     if (e.key === 'ArrowLeft') { if (cur > 0) show(cur - 1); }
     if (e.key === 'ArrowRight') { if (cur < figures.length - 1) show(cur + 1); }
+  });
+
+  // Mỗi gallery trên trang dùng riêng mảng figures của nó — bấm vào ảnh nào,
+  // dựng lại mảng "figures" từ đúng gallery chứa ảnh đó rồi mới mở lightbox,
+  // để prev/next chỉ chạy trong phạm vi gallery đang xem (không lẫn 2 gallery).
+  galleries.forEach(function (gallery) {
+    var galleryFigures = Array.from(gallery.querySelectorAll('figure'));
+    galleryFigures.forEach(function (fig, i) {
+      fig.setAttribute('tabindex', '0');
+      fig.addEventListener('click', function () {
+        figures = galleryFigures;
+        open(i);
+      });
+      fig.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          figures = galleryFigures;
+          open(i);
+        }
+      });
+    });
   });
 })();

@@ -139,6 +139,10 @@ function cmb_enqueue_assets() {
         // Hồ sơ năng lực — nhúng bằng plugin "3D FlipBook" (DearFlip), shortcode [dflip]
         // được gọi trực tiếp trong profile-book.php, script/style của plugin tự enqueue.
 
+        // Book loader thuần CSS thay cho spinner mặc định của DearFlip — xem
+        // assets/js/modules/profile-book-loader.js + _profile-book.scss.
+        wp_enqueue_script( 'cmb-profile-book-loader', $uri . '/assets/js/modules/profile-book-loader.js', ['cmb-global'], $ver, true );
+
         // Đồng bộ chiều cao 2 khung Video giới thiệu / Hồ sơ năng lực cho cân đối
         wp_enqueue_script( 'cmb-video-profile-sync', $uri . '/assets/js/modules/video-profile-sync.js', ['cmb-global'], $ver, true );
     }
@@ -180,6 +184,7 @@ function cmb_enqueue_assets() {
     }
     if ( is_singular( 'du-an' ) ) {
         wp_enqueue_script( 'cmb-project-gallery', $uri . '/assets/js/modules/project-gallery.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-gallery-lightbox', $uri . '/assets/js/modules/gallery-lightbox.js', ['cmb-global'], $ver, true );
     }
     if ( is_post_type_archive( 'du-an' ) ) {
         wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );
