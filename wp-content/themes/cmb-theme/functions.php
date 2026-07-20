@@ -1198,7 +1198,7 @@ add_action( 'acf/save_post', function( $post_id ) {
 //   cố định trong CSS) ngay từ đầu, không đổi giữa 2 giai đoạn nữa.
 // - text_loading: chuỗi mặc định "DearFlip: Loading " lộ tên plugin ra ngoài giao
 //   diện — đổi thành text trung tính, không nhắc tên plugin.
-add_filter( 'option__dflip_settings', function ( $settings ) {
+function cmb_dflip_settings_override( $settings ) {
     if ( ! is_array( $settings ) ) {
         $settings = [];
     }
@@ -1207,4 +1207,13 @@ add_filter( 'option__dflip_settings', function ( $settings ) {
     $settings['height']       = '100%';
     $settings['text_loading'] = cmb_txt( 'Đang tải tài liệu ', 'Loading document ' );
     return $settings;
-} );
+}
+// - option__dflip_settings: áp dụng khi row "_dflip_settings" ĐÃ tồn tại trong
+//   bảng wp_options (VD: đã từng lưu qua trang cài đặt DearFlip ở wp-admin).
+// - default_option__dflip_settings: WordPress dùng hook RIÊNG này (không phải
+//   option__dflip_settings) khi row đó CHƯA từng được lưu vào DB — bỏ sót hook
+//   này khiến toàn bộ override vô tác dụng trên site chưa từng lưu cài đặt
+//   DearFlip qua UI (dù code không lỗi gì) — phải đăng ký cả 2 mới chắc chắn
+//   override có hiệu lực bất kể option đã tồn tại trong DB hay chưa.
+add_filter( 'option__dflip_settings', 'cmb_dflip_settings_override' );
+add_filter( 'default_option__dflip_settings', 'cmb_dflip_settings_override' );

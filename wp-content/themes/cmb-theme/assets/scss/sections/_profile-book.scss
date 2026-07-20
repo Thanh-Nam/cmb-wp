@@ -99,9 +99,8 @@
     margin: 0 !important;
     left: 50% !important;
     top: 50% !important;
-    // Dời lên khỏi tâm 1 chút để chừa chỗ cho .df-loading-info (luôn nằm đúng
-    // giữa container) hiện ngay bên dưới, không bị 2 khối đè lên nhau.
-    transform: translate(-50%, calc(-50% - #{rem(20)}));
+    // Không còn .df-loading-info bên dưới nữa (đã ẩn) nên canh đúng giữa tâm.
+    transform: translate(-50%, -50%);
     background: none !important;
     background-image: none !important;
     box-shadow: none !important;
@@ -111,14 +110,10 @@
     justify-content: center;
   }
 
+  // Bỏ hẳn text loading mặc định của plugin ("Đang tải tài liệu..."/"DearFlip:
+  // Loading..."), chỉ để lại icon quyển sách cho gọn.
   .df-loading-info {
-    background: $color-white !important;
-    color: $color-primary !important;
-    font-family: $font-secondary !important;
-    font-weight: $font-weight-medium !important;
-    letter-spacing: normal !important;
-    border-radius: rem(24) !important;
-    box-shadow: 0 rem(6) rem(20) rgba(3, 121, 204, 0.16) !important;
+    display: none !important;
   }
 }
 
@@ -134,8 +129,8 @@
   width: 32px;
   height: 12px;
   position: relative;
-  margin: rem(32) 0 0 0;
-  zoom: 1.5;
+  margin: 0;
+  zoom: 0.85;
 
   &__inner {
     width: 32px;
