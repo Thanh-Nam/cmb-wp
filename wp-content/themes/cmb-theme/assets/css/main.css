@@ -11859,7 +11859,7 @@ li:last-child .p-lab-detail__related-item {
 }
 .p-project-detail__top {
   display: flex;
-  align-items: center;
+  align-items: start;
   gap: 4.8rem;
 }
 @media (max-width: 1023px) {

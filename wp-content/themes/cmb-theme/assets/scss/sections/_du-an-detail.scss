@@ -13,8 +13,13 @@
   align-items: flex-end;
   overflow: hidden;
 
-  @include md { min-height: rem(340); }
-  @include sp { min-height: rem(260); }
+  @include md {
+    min-height: rem(340);
+  }
+
+  @include sp {
+    min-height: rem(260);
+  }
 
   // ------ Background image ------
   &__image-wrap {
@@ -36,12 +41,10 @@
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(
-      to top,
-      rgba(#002036, 0.88) 0%,
-      rgba(#002036, 0.55) 50%,
-      rgba(#002036, 0.2) 100%
-    );
+    background: linear-gradient(to top,
+        rgba(#002036, 0.88) 0%,
+        rgba(#002036, 0.55) 50%,
+        rgba(#002036, 0.2) 100%);
   }
 
   // ------ Container ------
@@ -52,8 +55,13 @@
     padding-top: rem(32);
     padding-bottom: rem(80);
 
-    @include md { padding-bottom: rem(72); }
-    @include sp { padding-bottom: rem(64); }
+    @include md {
+      padding-bottom: rem(72);
+    }
+
+    @include sp {
+      padding-bottom: rem(64);
+    }
   }
 
   // ------ Back link ------
@@ -69,7 +77,9 @@
     margin-bottom: rem(28);
     transition: color $transition-fast, gap $transition-fast;
 
-    svg { flex-shrink: 0; }
+    svg {
+      flex-shrink: 0;
+    }
 
     &:hover {
       color: $color-white;
@@ -104,8 +114,13 @@
     margin: 0;
     letter-spacing: -0.01em;
 
-    @include md { font-size: rem(30); }
-    @include sp { font-size: rem(22); }
+    @include md {
+      font-size: rem(30);
+    }
+
+    @include sp {
+      font-size: rem(22);
+    }
   }
 
   &__location {
@@ -118,7 +133,10 @@
     margin: 0;
     line-height: 1.55;
 
-    svg { flex-shrink: 0; margin-top: rem(2); }
+    svg {
+      flex-shrink: 0;
+      margin-top: rem(2);
+    }
   }
 }
 
@@ -127,24 +145,33 @@
 .p-project-detail {
   padding: rem(80) 0 rem(72);
 
-  @include md { padding: rem(40) 0 rem(56); }
-  @include sp { padding: rem(32) 0 rem(48); }
+  @include md {
+    padding: rem(40) 0 rem(56);
+  }
+
+  @include sp {
+    padding: rem(32) 0 rem(48);
+  }
 
   &__layout {
     display: flex;
     flex-direction: column;
     gap: rem(48);
 
-    @include sp { gap: rem(36); }
+    @include sp {
+      gap: rem(36);
+    }
   }
 
   // Row 1: Giới thiệu dự án + Thông tin dự án, canh giữa theo chiều dọc
   &__top {
     display: flex;
-    align-items: center;
+    align-items: start;
     gap: rem(48);
 
-    @include md { gap: rem(32); }
+    @include md {
+      gap: rem(32);
+    }
 
     @include sp {
       flex-direction: column;
@@ -163,7 +190,9 @@
     flex: 3 1 0%;
     min-width: 0;
 
-    @include sp { flex: 1 1 auto; }
+    @include sp {
+      flex: 1 1 auto;
+    }
   }
 }
 
@@ -205,8 +234,13 @@
   border-radius: rem(12);
   overflow: hidden;
 
-  @include md { grid-template-columns: repeat(var(--services-cols-md, 3), 1fr); }
-  @include sp { grid-template-columns: repeat(var(--services-cols-md, 3), 1fr); }
+  @include md {
+    grid-template-columns: repeat(var(--services-cols-md, 3), 1fr);
+  }
+
+  @include sp {
+    grid-template-columns: repeat(var(--services-cols-md, 3), 1fr);
+  }
 
   // Một khối viền chung duy nhất — các mục ngăn cách bằng đường kẻ dọc, không
   // tách ô riêng, không nền/không đổ bóng.
@@ -236,7 +270,10 @@
     height: rem(48);
     flex-shrink: 0;
 
-    svg { width: rem(32); height: rem(32); }
+    svg {
+      width: rem(32);
+      height: rem(32);
+    }
   }
 
   &__label {
@@ -323,10 +360,16 @@
     background: $color-white;
     border: 1px solid $color-primary;
     border-radius: rem(8);
-    svg { flex-shrink: 0; transition: transform $transition-fast; }
+
+    svg {
+      flex-shrink: 0;
+      transition: transform $transition-fast;
+    }
 
     &:hover {
-      svg { transform: translateX(4px); }
+      svg {
+        transform: translateX(4px);
+      }
     }
   }
 }
@@ -422,7 +465,9 @@
   padding: rem(56) 0 rem(100);
   border-top: 1px solid $color-border;
 
-  @include sp { padding: rem(40) 0 rem(48); }
+  @include sp {
+    padding: rem(40) 0 rem(48);
+  }
 
   &__title {
     font-family: $font-primary;
@@ -442,7 +487,10 @@
     border-radius: rem(12);
     overflow: hidden;
 
-    @include md { grid-template-columns: 1fr rem(260); }
+    @include md {
+      grid-template-columns: 1fr rem(260);
+    }
+
     @include sp {
       grid-template-columns: 1fr;
     }
@@ -452,7 +500,9 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 
-    @include sp { grid-template-columns: repeat(2, 1fr); }
+    @include sp {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   &__all-wrap {
@@ -476,9 +526,14 @@
     border: 1px solid $color-primary;
     border-radius: rem(8);
 
-    svg { flex-shrink: 0; transition: transform $transition-fast; }
+    svg {
+      flex-shrink: 0;
+      transition: transform $transition-fast;
+    }
 
-    &:hover svg { transform: translateX(4px); }
+    &:hover svg {
+      transform: translateX(4px);
+    }
   }
 
   &__card {
