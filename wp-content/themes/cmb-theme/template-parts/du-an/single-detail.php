@@ -91,38 +91,83 @@ if ($proj_custom_date) {
       $services_cols_md = max( 1, min( $services_count, 3 ) );
       ?>
 
-      <!-- ROW 1: Giới thiệu dự án + Thông tin dự án -->
-      <?php if ( $has_intro || $info_items ) : ?>
+      <!-- ROW 1: Giới thiệu dự án (kèm thông tin dự án) + Hình ảnh dự án (slider) -->
+      <?php if ( $has_intro || $info_items || $gallery ) : ?>
       <div class="p-project-detail__top" id="project-top">
 
-        <?php if ( $has_intro ) : ?>
+        <?php if ( $has_intro || $info_items ) : ?>
         <div class="p-project-detail__intro p-project-section" id="section-intro">
+          <?php if ( $has_intro ) : ?>
           <h2 class="p-project-section__title"><?php echo cmb_txt( 'GIỚI THIỆU DỰ ÁN', 'PROJECT INTRODUCTION' ); ?></h2>
           <div class="p-project-section__content">
             <?php echo $proj_content; ?>
           </div>
+          <?php endif; ?>
+
+          <?php if ($info_items) : ?>
+          <ul class="p-project-info-list" role="list" id="project-info-list">
+            <?php foreach ($info_items as $item) : ?>
+            <li class="p-project-info-list__item">
+              <div class="p-project-info-list__icon" aria-hidden="true">
+                <?php echo $item['icon']; ?>
+              </div>
+              <div class="p-project-info-list__text">
+                <span class="p-project-info-list__label"><?php echo $item['label']; ?></span>
+                <span class="p-project-info-list__value"><?php echo wp_kses($item['value'] ?? '', ['br' => []]); ?></span>
+              </div>
+            </li>
+            <?php endforeach; ?>
+          </ul>
+          <?php endif; ?>
         </div>
         <?php endif; ?>
 
-        <?php if ($info_items) : ?>
-        <aside class="p-project-detail__sidebar" id="project-sidebar">
-          <div class="p-project-info-card" id="project-info-card">
-            <h2 class="p-project-info-card__title"><?php echo cmb_txt( 'THÔNG TIN DỰ ÁN', 'PROJECT INFORMATION' ); ?></h2>
-            <ul class="p-project-info-card__list" role="list">
-              <?php foreach ($info_items as $item) : ?>
-              <li class="p-project-info-card__item">
-                <div class="p-project-info-card__icon" aria-hidden="true">
-                  <?php echo $item['icon']; ?>
+        <?php if ($gallery) : ?>
+        <div class="p-project-detail__media" id="section-gallery">
+          <h2 class="p-project-section__title"><?php echo cmb_txt( 'HÌNH ẢNH DỰ ÁN', 'PROJECT IMAGES' ); ?></h2>
+
+          <div class="p-project-gallery-slider" id="project-gallery-slider">
+            <div class="swiper p-project-gallery-slider__main" id="project-gallery">
+              <div class="swiper-wrapper">
+                <?php foreach ($gallery as $i => $img) : ?>
+                <div class="swiper-slide">
+                  <figure class="p-project-gallery-slider__slide">
+                    <img src="<?php echo $img['url']; ?>"
+                         alt="<?php echo $img['alt']; ?>"
+                         class="p-project-gallery-slider__img" loading="<?php echo $i === 0 ? 'eager' : 'lazy'; ?>" />
+                  </figure>
                 </div>
-                <div class="p-project-info-card__text">
-                  <span class="p-project-info-card__label"><?php echo $item['label']; ?></span>
-                  <span class="p-project-info-card__value"><?php echo wp_kses($item['value'] ?? '', ['br' => []]); ?></span>
+                <?php endforeach; ?>
+              </div>
+            </div>
+
+            <?php if (count($gallery) > 1) : ?>
+            <div class="p-project-gallery-slider__thumbs-row">
+              <button type="button" class="p-project-gallery-slider__prev" id="project-gallery-prev" aria-label="<?php echo esc_attr( cmb_txt( 'Ảnh trước', 'Previous image' ) ); ?>">
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
+                  <path d="M15 6H1M6 1L1 6L6 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+
+              <div class="swiper p-project-gallery-slider__thumbs" id="project-gallery-thumbs">
+                <div class="swiper-wrapper">
+                  <?php foreach ($gallery as $i => $img) : ?>
+                  <div class="swiper-slide">
+                    <img src="<?php echo $img['url']; ?>" alt="" loading="lazy" />
+                  </div>
+                  <?php endforeach; ?>
                 </div>
-              </li>
-              <?php endforeach; ?>
-            </ul>
+              </div>
+
+              <button type="button" class="p-project-gallery-slider__next" id="project-gallery-next" aria-label="<?php echo esc_attr( cmb_txt( 'Ảnh tiếp theo', 'Next image' ) ); ?>">
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
+                  <path d="M1 6H15M10 1L15 6L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+            <?php endif; ?>
           </div>
-        </aside>
+        </div>
         <?php endif; ?>
 
       </div>
@@ -155,32 +200,6 @@ if ($proj_custom_date) {
           </div>
           <?php endforeach; ?>
         </div>
-      </div>
-      <?php endif; ?>
-
-      <!-- ROW 3: Hình ảnh dự án -->
-      <?php if ($gallery) : ?>
-      <div class="p-project-section" id="section-gallery">
-        <h2 class="p-project-section__title"><?php echo cmb_txt( 'HÌNH ẢNH DỰ ÁN', 'PROJECT IMAGES' ); ?></h2>
-        <div class="p-project-gallery" id="project-gallery">
-          <?php foreach ($gallery as $i => $img) : ?>
-          <figure class="p-project-gallery__item<?php echo $i >= 5 ? ' is-hidden-extra' : ''; ?>" data-lightbox-index="<?php echo $i; ?>">
-            <img src="<?php echo $img['url']; ?>"
-                 alt="<?php echo $img['alt']; ?>"
-                 class="p-project-gallery__img" loading="lazy" />
-          </figure>
-          <?php endforeach; ?>
-        </div>
-        <?php if (count($gallery) > 5) : ?>
-        <div class="p-project-gallery__footer">
-          <a href="#" class="p-project-gallery__all" id="btn-all-photos">
-            <?php echo cmb_txt( 'Xem tất cả hình ảnh', 'View all images' ); ?>
-            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
-              <path d="M1 6H15M10 1L15 6L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
-        </div>
-        <?php endif; ?>
       </div>
       <?php endif; ?>
 

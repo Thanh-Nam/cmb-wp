@@ -163,7 +163,7 @@
     }
   }
 
-  // Row 1: Giới thiệu dự án + Thông tin dự án, canh giữa theo chiều dọc
+  // Row 1: Giới thiệu dự án (kèm thông tin dự án) + Hình ảnh dự án (slider)
   &__top {
     display: flex;
     align-items: start;
@@ -180,19 +180,11 @@
     }
   }
 
-  // Giới thiệu dự án chiếm ~2/5, Thông tin dự án chiếm ~3/5 chiều rộng hàng
-  &__intro {
-    flex: 2 1 0%;
+  // Giới thiệu dự án + Hình ảnh dự án chia đôi chiều rộng hàng
+  &__intro,
+  &__media {
+    flex: 1 1 0%;
     min-width: 0;
-  }
-
-  &__sidebar {
-    flex: 3 1 0%;
-    min-width: 0;
-
-    @include sp {
-      flex: 1 1 auto;
-    }
   }
 }
 
@@ -286,51 +278,28 @@
 }
 
 
-// ======= 6. GALLERY =======
-// Ảnh đầu to (chiếm 2 hàng), 4 ảnh còn lại nhỏ chia 2 hàng bên phải.
-.p-project-gallery {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  grid-template-rows: rem(180) rem(180);
-  gap: rem(12);
-  margin-bottom: rem(16);
+// ======= 6. GALLERY SLIDER (Swiper: main + thumbs) =======
+// Ảnh chính lớn phía trên (Swiper), dải thumbnail (Swiper Thumbs module) + nút
+// prev/next phía dưới. Bấm vào ảnh chính vẫn mở lightbox riêng (xem
+// assets/js/modules/gallery-lightbox.js) — lightbox tự lấy toàn bộ <figure>
+// bên trong #project-gallery nên vẫn prev/next được hết ảnh trong bài.
+.p-project-gallery-slider {
 
-  @include md {
-    grid-template-rows: rem(160) rem(160);
-  }
-
-  @include sp {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    gap: rem(8);
-  }
-
-  &__item {
-    margin: 0;
+  &__main {
+    border-radius: rem(12);
     overflow: hidden;
-    border-radius: rem(10);
+    margin-bottom: rem(12);
+
+    .swiper-slide {
+      aspect-ratio: 16 / 10;
+    }
+  }
+
+  &__slide {
+    margin: 0;
+    width: 100%;
+    height: 100%;
     cursor: zoom-in;
-
-    &:first-child {
-      grid-row: 1 / 3;
-    }
-
-    @include sp {
-      &:first-child {
-        grid-column: 1 / -1;
-        grid-row: auto;
-        aspect-ratio: 16 / 9;
-        height: auto;
-      }
-    }
-
-    &:hover .p-project-gallery__img {
-      transform: scale(1.04);
-    }
-
-    &.is-hidden-extra {
-      display: none;
-    }
   }
 
   &__img {
@@ -338,78 +307,90 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform $transition-slow;
   }
 
-  &__footer {
+  &__thumbs-row {
     display: flex;
-    justify-content: center;
-    margin-top: rem(16);
+    align-items: center;
+    gap: rem(10);
   }
 
-  &__all {
-    display: inline-flex;
-    align-items: center;
-    gap: rem(8);
-    padding: rem(10) rem(24);
-    font-family: $font-primary;
-    font-size: rem(13);
-    font-weight: $font-weight-semibold;
-    color: $color-primary;
-    text-decoration: none;
-    background: $color-white;
-    border: 1px solid $color-primary;
-    border-radius: rem(8);
+  &__thumbs {
+    flex: 1 1 0%;
+    min-width: 0;
 
-    svg {
-      flex-shrink: 0;
-      transition: transform $transition-fast;
+    .swiper-slide {
+      aspect-ratio: 4 / 3;
+      border-radius: rem(8);
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity $transition-fast;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      &:hover {
+        opacity: 0.85;
+      }
     }
 
+    .swiper-slide-thumb-active {
+      opacity: 1;
+    }
+  }
+
+  &__prev,
+  &__next {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(40);
+    height: rem(40);
+    border: none;
+    border-radius: 50%;
+    background: $color-primary;
+    color: $color-white;
+    cursor: pointer;
+    transition: background $transition-fast;
+
     &:hover {
-      svg {
-        transform: translateX(4px);
-      }
+      background: darken($color-primary, 8%);
+    }
+
+    &.swiper-button-disabled {
+      opacity: 0.4;
+      cursor: default;
     }
   }
 }
 
 
-// ======= 7. SIDEBAR INFO CARD =======
-.p-project-info-card {
-  background: $color-white;
-  border: 1px solid $color-border;
-  border-radius: rem(16);
-  box-shadow: $shadow-md;
-  padding: rem(24);
+// ======= 7. INFO LIST (gộp trong khối giới thiệu) =======
+.p-project-info-list {
+  list-style: none;
+  margin: rem(24) 0 0;
+  padding: rem(20) 0 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: rem(16);
 
-  &__title {
-    display: block;
-    position: relative;
-    font-family: $font-primary;
-    font-size: rem(15);
-    font-weight: $font-weight-bold;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: $color-primary;
-    background: transparent;
-    margin: 0 0 rem(20);
-    padding: 0 0 rem(14);
-    border-bottom: 1px solid $color-border;
-  }
-
-  &__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: rem(16);
-    row-gap: rem(20);
-
-    @include sp {
-      grid-template-columns: 1fr 1fr;
-    }
+  // Gạch ngang ngắn ngăn với khối giới thiệu dự án phía trên, thay cho
+  // border-top full-width.
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: rem(40);
+    height: 2px;
+    background: $color-border;
   }
 
   &__item {
