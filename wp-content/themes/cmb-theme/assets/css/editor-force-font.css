@@ -1,0 +1,13 @@
+body#tinymce,
+body#tinymce p,
+body#tinymce h1,
+body#tinymce h2,
+body#tinymce h3,
+body#tinymce h4,
+body#tinymce h5,
+body#tinymce h6,
+body#tinymce li,
+body#tinymce blockquote,
+body#tinymce table {
+  font-family: 'CMB', sans-serif !important;
+}

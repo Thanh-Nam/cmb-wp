@@ -1217,5 +1217,36 @@ function cmb_dflip_settings_override( $settings ) {
 //   này khiến toàn bộ override vô tác dụng trên site chưa từng lưu cài đặt
 //   DearFlip qua UI (dù code không lỗi gì) — phải đăng ký cả 2 mới chắc chắn
 //   override có hiệu lực bất kể option đã tồn tại trong DB hay chưa.
+
+// ============================================================
+// CLASSIC EDITOR (TinyMCE) — Ép font mặc định CMB + dropdown Font Size
+// ============================================================
+
+// Hàng nút thứ 2 của toolbar: chỉ thêm dropdown chọn cỡ chữ (không có
+// fontselect — font chữ luôn cố định là CMB, không cho đổi).
+function cmb_mce_buttons_2( $buttons ) {
+    array_unshift( $buttons, 'fontsizeselect' );
+    return $buttons;
+}
+add_filter( 'mce_buttons_2', 'cmb_mce_buttons_2' );
+
+// Danh sách cỡ chữ (đơn vị px, đồng bộ với hệ đo của frontend) cho dropdown
+// "fontsizeselect" — mặc định TinyMCE dùng pt, đổi sang px cho khỏi lệch.
+function cmb_mce_before_init( $settings ) {
+    $settings['fontsize_formats'] = '10px 12px 14px 16px 18px 20px 24px 28px 32px 36px 48px';
+    return $settings;
+}
+add_filter( 'tiny_mce_before_init', 'cmb_mce_before_init' );
+
+// Nạp font CMB + ép toàn bộ nội dung trong iframe editor dùng font này làm
+// mặc định, để khi soạn thấy đúng font hiển thị ngoài frontend.
+function cmb_mce_css( $mce_css ) {
+    $fonts_css = get_template_directory_uri() . '/assets/css/fonts.css';
+    $mce_css   = $mce_css ? $mce_css . ',' . $fonts_css : $fonts_css;
+
+    $force_css = get_template_directory_uri() . '/assets/css/editor-force-font.css';
+    return $mce_css . ',' . $force_css;
+}
+add_filter( 'mce_css', 'cmb_mce_css' );
 add_filter( 'option__dflip_settings', 'cmb_dflip_settings_override' );
 add_filter( 'default_option__dflip_settings', 'cmb_dflip_settings_override' );
