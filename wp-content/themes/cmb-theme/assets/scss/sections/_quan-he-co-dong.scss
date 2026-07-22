@@ -393,6 +393,33 @@
     padding: rem(96) 0 rem(100);
   }
 
+  &__filters {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: rem(24);
+  }
+
+  &__select {
+    width: auto; // override _reset.scss width: 100%
+    appearance: none;
+    padding: rem(10) rem(36) rem(10) rem(14);
+    font-family: $font-primary;
+    font-size: rem(14);
+    font-weight: $font-weight-medium;
+    color: $color-text;
+    background: $color-white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") no-repeat right rem(14) center;
+    border: 1px solid $color-border;
+    border-radius: rem(8);
+    cursor: pointer;
+    transition: border-color $transition-fast;
+    min-width: rem(150);
+
+    &:hover, &:focus {
+      border-color: $color-primary;
+      outline: none;
+    }
+  }
+
   &__grid {
     display: grid;
     grid-template-columns: 1fr rem(330);

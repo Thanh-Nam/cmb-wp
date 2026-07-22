@@ -17,7 +17,9 @@ function cmb_contact_lines( $raw, $fallback ) {
 function cmb_transform_office( $row ) {
 	return [
 		'name'    => $row['office_name'] ?? '',
-		'address' => $row['office_address'] ?? '',
+		// office_address đến từ get_field(..., true) nên ACF đã tự chèn "<br />" trước mỗi
+		// \n (do field textarea new_lines=br) — bóc bỏ để chỉ còn xuống dòng thật.
+		'address' => str_replace( '<br />', '', $row['office_address'] ?? '' ),
 		'phone'   => $row['office_phone'] ?? '',
 		'mapSrc'  => $row['office_map_src'] ?? '',
 	];
@@ -31,10 +33,16 @@ add_action( 'rest_api_init', function () {
 		'callback'            => function () {
 			$has_acf = function_exists( 'get_field' );
 
-			$address       = $has_acf ? get_field( 'company_address', 'option' ) : '';
-			$phones_raw    = $has_acf ? get_field( 'company_phone', 'option' ) : '';
-			$emails_raw    = $has_acf ? get_field( 'company_email', 'option' ) : '';
-			$working_hours = $has_acf ? get_field( 'company_working_hours', 'option' ) : '';
+			// format_value=false: lấy giá trị thô (chỉ chứa \n thật), tránh ACF tự chèn
+			// "<br />" (do field textarea có new_lines=br) — chuỗi đó bị React escape thành
+			// text hiển thị "<br />" thay vì xuống dòng.
+			$address       = $has_acf ? get_field( 'company_address', 'option', false ) : '';
+			$phones_raw    = $has_acf ? get_field( 'company_phone', 'option', false ) : '';
+			$emails_raw    = $has_acf ? get_field( 'company_email', 'option', false ) : '';
+			$working_hours = $has_acf ? get_field( 'company_working_hours', 'option', false ) : '';
+			// Repeater phải lấy format_value=true (mặc định): với false, ACF trả sub-field theo
+			// field key (field_xxxx) thay vì theo tên (office_name, office_address...), khiến
+			// cmb_transform_office() đọc toàn rỗng.
 			$offices       = $has_acf ? get_field( 'offices', 'option' ) : [];
 			$page_image    = $has_acf ? get_field( 'tuyen_dung_contact_image', 'option' ) : null;
 			$image_url     = is_array( $page_image ) ? ( $page_image['url'] ?? null ) : null;

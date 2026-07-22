@@ -202,6 +202,19 @@ $ir_default_slug = !empty($ir_row1) ? $ir_row1[0]->slug : (!empty($ir_terms) ? $
        aria-labelledby="<?php echo esc_attr('tab-' . $term->slug); ?>">
     <div class="p-ir-panel__inner">
       <div class="l-container">
+
+        <?php if (!empty($grouped)) : ?>
+        <div class="p-ir-panel__filters">
+          <select class="p-ir-panel__select" data-ir-year-filter
+                  aria-label="<?php echo esc_attr(cmb_txt('Lọc theo năm', 'Filter by year')); ?>">
+            <option value=""><?php echo cmb_txt('Tất cả năm', 'All years'); ?></option>
+            <?php foreach (array_keys($grouped) as $year) : ?>
+            <option value="<?php echo esc_attr($year); ?>"><?php echo esc_html($year); ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <?php endif; ?>
+
         <div class="p-ir-panel__grid">
 
           <!-- TIMELINE -->
@@ -211,7 +224,7 @@ $ir_default_slug = !empty($ir_row1) ? $ir_row1[0]->slug : (!empty($ir_terms) ? $
               foreach ($grouped as $year => $posts) :
                 $first_post = true;
             ?>
-            <div class="p-ir-timeline__group">
+            <div class="p-ir-timeline__group" data-year="<?php echo esc_attr($year); ?>">
               <div class="p-ir-timeline__year">
                 <span class="p-ir-timeline__year-ghost" aria-hidden="true"><?php echo substr($year, -2); ?></span>
                 <span class="p-ir-timeline__year-label"><?php echo $year; ?></span>

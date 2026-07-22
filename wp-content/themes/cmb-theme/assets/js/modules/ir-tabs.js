@@ -29,3 +29,25 @@
     });
   });
 })();
+
+/**
+ * Year filter — mỗi panel lọc riêng các nhóm .p-ir-timeline__group theo năm.
+ */
+(function initIRYearFilter() {
+  var selects = document.querySelectorAll('[data-ir-year-filter]');
+  if (!selects.length) return;
+
+  selects.forEach(function (select) {
+    var panel = select.closest('.p-ir-panel');
+    if (!panel) return;
+    var groups = panel.querySelectorAll('.p-ir-timeline__group');
+
+    select.addEventListener('change', function () {
+      var year = this.value;
+      groups.forEach(function (group) {
+        var match = !year || group.getAttribute('data-year') === year;
+        group.style.display = match ? '' : 'none';
+      });
+    });
+  });
+})();
