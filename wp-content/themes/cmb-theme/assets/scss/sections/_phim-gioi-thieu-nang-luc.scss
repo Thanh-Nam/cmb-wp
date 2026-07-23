@@ -74,17 +74,24 @@
   }
 }
 
+// Icon dùng chung với "about_stat_list" (field cho thanh Stats trang Giới
+// thiệu) — file gốc thường vẽ màu trắng để đặt trên nền tối/màu, vô hình nếu
+// hiện trực tiếp trên card nền trắng ở đây. Dùng CSS mask để tô lại icon
+// theo đúng hình dạng (dựa vào alpha, không phụ thuộc màu gốc) bằng màu
+// primary, đảm bảo luôn hiện rõ bất kể admin upload icon màu gì.
 .p-capability-video__stat-icon {
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    width: rem(56);
-    height: rem(56);
-    object-fit: contain;
-  }
+  width: rem(56);
+  height: rem(56);
+  background-color: $color-primary;
+  -webkit-mask-image: var(--icon-url);
+  mask-image: var(--icon-url);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
 .p-capability-video__stat-text {

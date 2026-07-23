@@ -2,17 +2,18 @@
 /**
  * template-parts/phim-gioi-thieu-nang-luc/content.php
  * Section: Sidebar số liệu (trái) + Video giới thiệu (phải)
- * Dữ liệu lấy từ Options Page riêng "Cấu hình trang năng lực" (menu_slug
- * "nang-luc", xem acf-json/ui_options_page_94bb12c2e4c2.json +
- * acf-json/group_0b2576ef0a6f.json) — sửa nội dung tại wp-admin > Cấu hình
- * chung > Cấu hình trang năng lực.
+ * Tái dùng đúng dữ liệu đã có ở Options Page "Giới thiệu" (menu_slug
+ * "gioi-thieu"): field "about_stat_list" (cùng số liệu với section Stats ở
+ * trang Giới thiệu) và "video_intro_*" (cùng video/poster với section Video
+ * giới thiệu ở trang Giới thiệu) — sửa nội dung tại wp-admin > Cấu hình
+ * chung > Cấu hình trang giới thiệu.
  */
 $is_en = function_exists('pll_current_language') && pll_current_language() === 'en';
 
-// ---- Sidebar: 4 số liệu ----
+// ---- Sidebar: 4 số liệu (dùng chung với section Stats trang Giới thiệu) ----
 $stat_items = [];
-if (have_rows('nangluc_stat_list', 'option')) {
-  while (have_rows('nangluc_stat_list', 'option')) {
+if (have_rows('about_stat_list', 'option')) {
+  while (have_rows('about_stat_list', 'option')) {
     the_row();
     $stat_items[] = [
       'icon'    => get_sub_field('icon'),
@@ -22,14 +23,14 @@ if (have_rows('nangluc_stat_list', 'option')) {
   }
 }
 
-// ---- Video ----
+// ---- Video (dùng chung với section Video giới thiệu trang Giới thiệu) ----
 $v_fields = get_fields('option') ?: [];
-$v_source = $v_fields['nangluc_video_source'] ?? 'upload';
-$v_file   = get_field('nangluc_video_file', 'option');
-$v_poster = get_field('nangluc_video_poster', 'option');
-$v_embed  = get_field('nangluc_video_embed_url', 'option');
-$v_title  = cmb_arr($v_fields, 'nangluc_video_title') ?: cmb_txt('CMB - Hành trình kiến tạo giá trị bền vững', 'CMB - A Journey of Building Sustainable Value');
-$v_desc   = cmb_arr($v_fields, 'nangluc_video_desc');
+$v_source = $v_fields['video_intro_source'] ?? 'upload';
+$v_file   = get_field('video_intro_file', 'option');
+$v_poster = get_field('video_intro_poster', 'option');
+$v_embed  = get_field('video_intro_embed_url', 'option');
+$v_title  = cmb_arr($v_fields, 'video_intro_title') ?: cmb_txt('CMB - Hành trình kiến tạo giá trị bền vững', 'CMB - A Journey of Building Sustainable Value');
+$v_desc   = cmb_arr($v_fields, 'video_intro_desc');
 
 $has_upload = $v_source === 'upload' && !empty($v_file['url']);
 $has_embed  = $v_source === 'embed' && !empty($v_embed);
@@ -49,13 +50,11 @@ $has_embed  = $v_source === 'embed' && !empty($v_embed);
         <?php foreach ($stat_items as $stat) : ?>
         <div class="p-capability-video__stat">
           <?php if ($stat['icon']) : ?>
-          <div class="p-capability-video__stat-icon" aria-hidden="true">
-            <img src="<?php echo esc_url($stat['icon']['url']); ?>" alt="" width="44" height="44" loading="lazy" />
-          </div>
+          <div class="p-capability-video__stat-icon" aria-hidden="true" style="--icon-url: url('<?php echo esc_url($stat['icon']['url']); ?>');"></div>
           <?php endif; ?>
           <span class="p-capability-video__stat-text">
-            <?php if ($stat['number']) : ?>
-            <strong><?php echo esc_html($stat['number']); ?></strong>
+            <?php if ($stat['number'] !== '' && $stat['number'] !== null) : ?>
+            <strong><?php echo cmb_txt('Hơn', 'Over'); ?> <?php echo esc_html($stat['number']); ?></strong>
             <?php endif; ?>
             <?php echo esc_html($stat['content']); ?>
           </span>
