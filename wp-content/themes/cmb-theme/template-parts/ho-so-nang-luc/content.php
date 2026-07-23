@@ -1,11 +1,13 @@
 <?php
 /**
  * template-parts/ho-so-nang-luc/content.php
- * Section: Thông tin hồ sơ PDF (trái) + PDF hiển thị trực tiếp (phải)
+ * Section: Thông tin hồ sơ PDF (trái) + Hồ sơ hiển thị dạng quyển sách lật
+ * trang (phải, plugin "3D FlipBook"/DearFlip, shortcode [dflip] — cùng cách
+ * nhúng với section Hồ sơ năng lực bên trang Giới thiệu, xem
+ * template-parts/gioi-thieu/profile-book.php).
  * Tái dùng đúng file PDF + tiêu đề/mô tả đã có ở Options Page "Giới thiệu"
- * (field "profile_book_pdf"/"profile_book_title"/"profile_book_desc" — cùng
- * file đang dùng cho flipbook ở section Hồ sơ năng lực trang Giới thiệu) —
- * sửa nội dung tại wp-admin > Cấu hình chung > Cấu hình trang giới thiệu.
+ * (field "profile_book_pdf"/"profile_book_title"/"profile_book_desc") — sửa
+ * nội dung tại wp-admin > Cấu hình chung > Cấu hình trang giới thiệu.
  * Số trang/dung lượng/ngày cập nhật tự tính từ file PDF, không cần field
  * riêng (xem cmb_pdf_page_count() trong functions.php).
  */
@@ -30,10 +32,6 @@ $updated = (!empty($pdf['modified'])) ? date_i18n('m/Y', strtotime($pdf['modifie
 <!-- ======= HỒ SƠ NĂNG LỰC ======= -->
 <section class="p-profile-file" id="profile-file-content">
   <div class="l-container">
-
-    <div class="p-profile-file__header" data-reveal="fade-up">
-      <h2 class="c-section-title p-profile-file__title-main"><?php echo cmb_txt('Hồ sơ năng lực', 'Company Profile'); ?></h2>
-    </div>
 
     <?php if (!empty($pdf['url'])) : ?>
     <div class="p-profile-file__layout">
@@ -76,14 +74,15 @@ $updated = (!empty($pdf['modified'])) ? date_i18n('m/Y', strtotime($pdf['modifie
         </a>
       </div>
 
-      <!-- ---- PDF hiển thị trực tiếp (phải) ---- -->
+      <!-- ---- Hồ sơ dạng quyển sách (phải) ---- -->
       <div class="p-profile-file__viewer">
-        <iframe
-          src="<?php echo esc_url($pdf['url']); ?>"
-          title="<?php echo esc_attr($title); ?>"
-          loading="lazy"
-          aria-label="<?php echo esc_attr(cmb_txt('Xem hồ sơ năng lực PDF', 'View company profile PDF')); ?>">
-        </iframe>
+        <div class="p-book-wrap">
+          <?php
+          echo do_shortcode(
+            '[dflip source="' . esc_url($pdf['url']) . '" id="cmb-profile-book-page" class="cmb-profile-book"]' . esc_html($title) . '[/dflip]'
+          );
+          ?>
+        </div>
       </div>
 
     </div>

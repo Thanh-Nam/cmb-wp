@@ -39,10 +39,6 @@ $has_embed  = $v_source === 'embed' && !empty($v_embed);
 <section class="p-capability-video" id="capability-video-content">
   <div class="l-container">
 
-    <div class="p-capability-video__header" data-reveal="fade-up">
-      <h2 class="c-section-title p-capability-video__title-main"><?php echo cmb_txt('Video giới thiệu', 'Introduction Video'); ?></h2>
-    </div>
-
     <div class="p-capability-video__layout">
 
       <!-- ---- Sidebar (trái) ---- -->

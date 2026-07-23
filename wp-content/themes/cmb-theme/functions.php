@@ -156,6 +156,12 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'cmb-video-poster', $uri . '/assets/js/modules/video-poster.js', ['cmb-global'], $ver, true );
     }
 
+    // Trang Hồ sơ năng lực — cùng plugin "3D FlipBook" (DearFlip) + book loader
+    // thuần CSS như section Hồ sơ năng lực bên trang Giới thiệu.
+    if ( is_page_template( 'page-ho-so-nang-luc.php' ) ) {
+        wp_enqueue_script( 'cmb-profile-book-loader', $uri . '/assets/js/modules/profile-book-loader.js', ['cmb-global'], $ver, true );
+    }
+
     // Trang liên hệ
     if ( is_page( 'lien-he' ) ) {
         wp_enqueue_script( 'cmb-form-validation', $uri . '/assets/js/modules/form-validation.js', ['cmb-global'], $ver, true );

@@ -1,7 +1,9 @@
 // ============================================
 // SECTIONS / P-PROFILE-FILE
-// Trang "Hồ sơ năng lực" — thông tin PDF (trái) + PDF hiển thị trực tiếp
-// bằng iframe (phải), không cần bấm mới xem được. Chỉ có nút "Tải xuống".
+// Trang "Hồ sơ năng lực" — thông tin PDF (trái) + hồ sơ hiển thị dạng quyển
+// sách lật trang (phải, plugin "3D FlipBook"/DearFlip qua .p-book-wrap, style
+// lật trang/toolbar xem _profile-book.scss — file này chỉ chịu bố cục khung
+// chứa xung quanh + cột thông tin bên trái).
 // ============================================
 @use '../abstracts' as *;
 
@@ -12,19 +14,6 @@
   @include sp {
     padding: rem(32) 0 rem(56);
   }
-}
-
-.p-profile-file__header {
-  margin-bottom: rem(40);
-
-  @include sp {
-    margin-bottom: rem(28);
-    text-align: center;
-  }
-}
-
-.p-profile-file__title-main {
-  color: $color-primary;
 }
 
 .p-profile-file__layout {
@@ -127,29 +116,12 @@
   }
 }
 
-// ---- PDF hiển thị trực tiếp (phải) ----
+// ---- Hồ sơ dạng quyển sách (phải) ----
+// .p-book-wrap bên trong tự lo aspect-ratio/kích thước (xem _profile-book.scss),
+// cột này chỉ cần chiếm hết chiều rộng còn lại của layout.
 .p-profile-file__viewer {
   width: 100%;
-  border: 1px solid $color-border;
-  border-radius: rem(12);
-  overflow: hidden;
-  background: #525659;
-  box-shadow: $shadow-lg;
-
-  iframe {
-    display: block;
-    width: 100%;
-    height: rem(800);
-    border: none;
-
-    @include md {
-      height: rem(640);
-    }
-
-    @include sp {
-      height: rem(480);
-    }
-  }
+  min-width: 0;
 }
 
 .p-profile-file__empty {
