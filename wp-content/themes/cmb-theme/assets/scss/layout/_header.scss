@@ -13,8 +13,13 @@ $header-bp: 1023px;
 // l-header — Wrapper chính
 // ============================================
 @keyframes l-header-slide-down {
-  from { transform: translateY(-100%); }
-  to   { transform: translateY(0); }
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 .l-header {
@@ -75,7 +80,7 @@ $header-bp: 1023px;
       position: absolute;
       top: 0;
       left: 0;
-      width: calc((100vw - 1920px) / 2);
+      width: calc((100vw - 1920px + 4px) / 2);
       height: 100%;
       background-color: #0061a6; // khớp cạnh trái bg-header.webp
       z-index: 0;
@@ -86,7 +91,7 @@ $header-bp: 1023px;
       position: absolute;
       top: 0;
       right: 0;
-      width: calc((100vw - 1920px) / 2);
+      width: calc((100vw - 1920px + 4px) / 2);
       height: $header-topbar-height;
       background-color: #0398e7; // khớp màu topbar cạnh phải bg-header.webp
       z-index: 0;
@@ -705,7 +710,11 @@ $header-bp: 1023px;
     cursor: default;
     user-select: none;
 
-    &:hover::after { transform: scaleX(0); } // tắt underline slide-in
+    &:hover::after {
+      transform: scaleX(0);
+    }
+
+    // tắt underline slide-in
   }
 
   &__dropdown-arrow {
@@ -773,8 +782,8 @@ $header-bp: 1023px;
       &:hover {
         background: $color-primary-light;
         color: $color-cmb-blue;
-        padding-left: rem(22);  
-        
+        padding-left: rem(22);
+
         &::before {
           opacity: 1;
         }

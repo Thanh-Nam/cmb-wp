@@ -1,0 +1,141 @@
+// ============================================
+// SECTIONS / P-CAPABILITY-VIDEO
+// Trang "Phim giới thiệu năng lực" — sidebar số liệu (trái) + video (phải).
+// Bố cục lấy mẫu từ .p-lab-detail__layout (đổi thứ tự cột: sidebar sang trái).
+// Khối video tái dùng nguyên class .p-video-player/.p-video-embed đã có ở
+// _video-intro.scss để không lặp lại style — chỉ ép cố định aspect-ratio vì ở
+// đây khối video KHÔNG nằm trong .p-video-intro__card (flex column) như bên
+// trang Giới thiệu, nên override "aspect-ratio: unset" (>=1024px) của 2 class
+// đó không áp dụng được, cần ghi đè lại trong phạm vi trang này.
+// ============================================
+@use '../abstracts' as *;
+
+.p-capability-video {
+  padding: rem(96) 0 rem(100);
+  background: $color-white;
+
+  @include sp {
+    padding: rem(32) 0 rem(56);
+  }
+}
+
+.p-capability-video__header {
+  margin-bottom: rem(40);
+
+  @include sp {
+    margin-bottom: rem(28);
+    text-align: center;
+  }
+}
+
+.p-capability-video__title-main {
+  color: $color-primary;
+}
+
+.p-capability-video__layout {
+  display: grid;
+  grid-template-columns: rem(300) 1fr;
+  gap: rem(48);
+  align-items: start;
+
+  @include md {
+    grid-template-columns: rem(240) 1fr;
+    gap: rem(32);
+  }
+
+  @include sp {
+    grid-template-columns: 1fr;
+    gap: rem(32);
+  }
+}
+
+// ---- Sidebar (trái) ----
+// Mỗi mục là 1 box trắng độc lập có shadow (không còn gộp chung khung viền
+// như 1 list), khớp với ảnh mẫu: icon tròn bên trái + 2 dòng text bên phải.
+.p-capability-video__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16);
+}
+
+.p-capability-video__stat {
+  display: flex;
+  align-items: center;
+  gap: rem(14);
+  padding: rem(18) rem(16);
+  background: $color-white;
+  border-radius: rem(12);
+  box-shadow: $shadow-md;
+  transition: box-shadow $transition-fast, transform $transition-fast;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+}
+
+.p-capability-video__stat-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: rem(56);
+    height: rem(56);
+    object-fit: contain;
+  }
+}
+
+.p-capability-video__stat-text {
+  display: flex;
+  flex-direction: column;
+  gap: rem(2);
+  font-family: $font-secondary;
+  font-size: rem(16);
+  line-height: 1.4;
+  color: $color-text-muted;
+
+  strong {
+    font-family: $font-primary;
+    font-size: rem(19);
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+  }
+}
+
+// ---- Video (phải) ----
+.p-capability-video__main {
+  min-width: 0;
+
+  .p-video-player,
+  .p-video-embed {
+    aspect-ratio: 16 / 9 !important;
+    flex: none !important;
+  }
+}
+
+.p-capability-video__body {
+  margin-top: rem(24);
+}
+
+.p-capability-video__title {
+  font-family: $font-primary;
+  font-size: rem(28);
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  line-height: 1.4;
+  margin: 0 0 rem(12);
+
+  @include sp {
+    font-size: rem(20);
+  }
+}
+
+.p-capability-video__desc {
+  font-family: $font-secondary;
+  font-size: rem(17);
+  line-height: 1.7;
+  color: $color-primary;
+  margin: 0;
+}

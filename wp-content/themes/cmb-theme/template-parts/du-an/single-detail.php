@@ -97,8 +97,11 @@ if ($proj_custom_date) {
 
         <?php if ( $has_intro || $info_items ) : ?>
         <div class="p-project-detail__intro p-project-section" id="section-intro">
-          <?php if ( $has_intro ) : ?>
+          <?php if ( $has_intro || $info_items ) : ?>
           <h2 class="p-project-section__title"><?php echo cmb_txt( 'GIỚI THIỆU DỰ ÁN', 'PROJECT INTRODUCTION' ); ?></h2>
+          <?php endif; ?>
+
+          <?php if ( $has_intro ) : ?>
           <div class="p-project-section__content">
             <?php echo $proj_content; ?>
           </div>

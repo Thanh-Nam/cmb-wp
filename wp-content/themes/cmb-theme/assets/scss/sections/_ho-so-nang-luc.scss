@@ -1,0 +1,159 @@
+// ============================================
+// SECTIONS / P-PROFILE-FILE
+// Trang "Hồ sơ năng lực" — thông tin PDF (trái) + PDF hiển thị trực tiếp
+// bằng iframe (phải), không cần bấm mới xem được. Chỉ có nút "Tải xuống".
+// ============================================
+@use '../abstracts' as *;
+
+.p-profile-file {
+  padding: rem(96) 0 rem(100);
+  background: $color-white;
+
+  @include sp {
+    padding: rem(32) 0 rem(56);
+  }
+}
+
+.p-profile-file__header {
+  margin-bottom: rem(40);
+
+  @include sp {
+    margin-bottom: rem(28);
+    text-align: center;
+  }
+}
+
+.p-profile-file__title-main {
+  color: $color-primary;
+}
+
+.p-profile-file__layout {
+  display: grid;
+  grid-template-columns: rem(360) 1fr;
+  gap: rem(48);
+  align-items: start;
+
+  @include md {
+    grid-template-columns: 1fr;
+    gap: rem(32);
+  }
+}
+
+// ---- Thông tin (trái) ----
+.p-profile-file__info {
+  min-width: 0;
+}
+
+.p-profile-file__title {
+  font-family: $font-primary;
+  font-size: rem(24);
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  line-height: 1.35;
+  margin: 0 0 rem(12);
+
+  @include sp {
+    font-size: rem(20);
+  }
+}
+
+.p-profile-file__desc {
+  font-family: $font-secondary;
+  font-size: rem(15);
+  line-height: 1.7;
+  color: $color-text-muted;
+  margin: 0 0 rem(24);
+}
+
+.p-profile-file__meta {
+  list-style: none;
+  margin: 0 0 rem(28);
+  padding: 0;
+  border: 1px solid $color-border;
+  border-radius: rem(10);
+  overflow: hidden;
+}
+
+.p-profile-file__meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(12);
+  padding: rem(13) rem(18);
+  border-bottom: 1px solid $color-border;
+  background: $color-white;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.p-profile-file__meta-label {
+  font-family: $font-secondary;
+  font-size: rem(14);
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+}
+
+.p-profile-file__meta-value {
+  font-family: $font-primary;
+  font-size: rem(14.5);
+  font-weight: $font-weight-regular;
+  color: $color-cmb-navy;
+}
+
+.p-profile-file__download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(10);
+  width: 100%;
+  padding: rem(14) rem(24);
+  background: $color-primary;
+  color: $color-white;
+  font-family: $font-primary;
+  font-size: rem(15);
+  font-weight: $font-weight-semibold;
+  border-radius: rem(8);
+  text-decoration: none;
+  transition: background $transition-fast;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: $color-primary-dark;
+  }
+}
+
+// ---- PDF hiển thị trực tiếp (phải) ----
+.p-profile-file__viewer {
+  width: 100%;
+  border: 1px solid $color-border;
+  border-radius: rem(12);
+  overflow: hidden;
+  background: #525659;
+  box-shadow: $shadow-lg;
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: rem(800);
+    border: none;
+
+    @include md {
+      height: rem(640);
+    }
+
+    @include sp {
+      height: rem(480);
+    }
+  }
+}
+
+.p-profile-file__empty {
+  font-family: $font-secondary;
+  font-size: rem(15);
+  color: $color-text-muted;
+}

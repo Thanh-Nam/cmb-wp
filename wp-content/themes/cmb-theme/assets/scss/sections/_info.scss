@@ -32,6 +32,13 @@
   >.l-container {
     position: relative;
     z-index: 1;
+
+    // Màn hình rất rộng (>1920px): bỏ giới hạn max-width mặc định của
+    // l-container để card + stats kéo full hết chiều rộng màn hình, tránh bị
+    // "lọt thỏm" lệch trái khi khoảng trắng 2 bên container ngày càng lớn.
+    @media (min-width: 1921px) {
+      max-width: 100%;
+    }
   }
 
   // ------ Card: border trong container, không có background ------

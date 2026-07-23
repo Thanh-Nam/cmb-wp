@@ -1,0 +1,155 @@
+{
+    "key": "group_fdf91f4ccdb5",
+    "title": "Hồ sơ năng lực",
+    "fields": [
+        {
+            "key": "field_b6ce15f9508f",
+            "label": "Tiêu đề",
+            "name": "nangluc_profile_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Hồ sơ năng lực CMB (PDF)",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_bef2cdc47737",
+            "label": "Tiêu đề (EN)",
+            "name": "nangluc_profile_title_en",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "CMB Company Profile (PDF)",
+            "maxlength": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_3e6bea13fa47",
+            "label": "Mô tả",
+            "name": "nangluc_profile_desc",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Tìm hiểu chi tiết về năng lực, kinh nghiệm, các dự án tiêu biểu và đối tác của chúng tôi.",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_a4c263883316",
+            "label": "Mô tả (EN)",
+            "name": "nangluc_profile_desc_en",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_e0561bc4fab1",
+            "label": "Số trang (dự phòng)",
+            "name": "nangluc_profile_pages",
+            "type": "number",
+            "instructions": "Hệ thống tự đếm số trang từ file PDF — chỉ cần nhập ở đây nếu việc tự đếm không chính xác.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "placeholder": "",
+            "step": ""
+        },
+        {
+            "key": "field_987fc0e2f978",
+            "label": "File PDF hồ sơ năng lực",
+            "name": "nangluc_profile_pdf",
+            "type": "file",
+            "instructions": "File này vừa để hiển thị trực tiếp trên trang, vừa dùng cho nút Tải xuống.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "pdf"
+        },
+        {
+            "key": "field_7089f92173e4",
+            "label": "File PDF hồ sơ năng lực (EN)",
+            "name": "nangluc_profile_pdf_en",
+            "type": "file",
+            "instructions": "Tùy chọn — dùng riêng khi xem trang ở phiên bản tiếng Anh. Nếu để trống, hệ thống sẽ dùng lại file PDF tiếng Việt ở trên.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "pdf"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "nang-luc"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1784802819
+}

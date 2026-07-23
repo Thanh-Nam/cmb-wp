@@ -7,11 +7,15 @@
 @use '../abstracts' as *;
 
 // ------ Marquee animations ------
+// Dịch chuyển đúng 1/N chiều rộng track (N = --marquee-copies, số bộ logo
+// lặp lại, tính động trong section-partner.php theo số lượng logo thực tế)
+// thay vì cố định 50% (tương đương N=2) — với N bộ giống hệt nhau, dịch đúng
+// 1 bộ luôn cho hiệu ứng lặp liền mạch, không lộ khoảng trống dù N thay đổi.
 @keyframes partner-marquee-rtl {
 
-  // chạy trái→phải: track bắt đầu từ -50%, về 0
+  // chạy trái→phải: track bắt đầu từ -1/N, về 0
   from {
-    transform: translateX(-50%);
+    transform: translateX(calc(-100% / var(--marquee-copies, 2)));
   }
 
   to {
@@ -21,13 +25,13 @@
 
 @keyframes partner-marquee-ltr {
 
-  // chạy phải→trái: track từ 0 về -50%
+  // chạy phải→trái: track từ 0 về -1/N
   from {
     transform: translateX(0);
   }
 
   to {
-    transform: translateX(-50%);
+    transform: translateX(calc(-100% / var(--marquee-copies, 2)));
   }
 }
 
@@ -65,6 +69,15 @@
   &::after {
     bottom: 0;
     background: linear-gradient(to top, $color-white, transparent);
+  }
+
+  // Màn hình rất rộng (>1920px): l-container bọc tiêu đề cũng bỏ giới hạn
+  // max-width cho đồng bộ với phần track marquee (vốn đã nằm ngoài
+  // l-container nên luôn full-width sẵn, không đụng tới ở đây).
+  > .l-container {
+    @media (min-width: 1921px) {
+      max-width: 100%;
+    }
   }
 
   // ------ Header ------

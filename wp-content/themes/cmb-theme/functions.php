@@ -122,6 +122,7 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'],           $ver, true );
         wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'],           $ver, true );
         wp_enqueue_script( 'cmb-news-swiper',    $uri . '/assets/js/modules/news-swiper.js',    ['swiper', 'cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-partner-marquee', $uri . '/assets/js/modules/partner-marquee.js', ['cmb-global'], $ver, true );
     }
 
     // Trang giới thiệu
@@ -145,6 +146,14 @@ function cmb_enqueue_assets() {
 
         // Đồng bộ chiều cao 2 khung Video giới thiệu / Hồ sơ năng lực cho cân đối
         wp_enqueue_script( 'cmb-video-profile-sync', $uri . '/assets/js/modules/video-profile-sync.js', ['cmb-global'], $ver, true );
+
+        wp_enqueue_script( 'cmb-partner-marquee', $uri . '/assets/js/modules/partner-marquee.js', ['cmb-global'], $ver, true );
+    }
+
+    // Trang Phim giới thiệu năng lực — cùng player mặc định của trình duyệt,
+    // dùng lại đúng script che ảnh/play (video-poster.js) như trang Giới thiệu.
+    if ( is_page_template( 'page-phim-gioi-thieu-nang-luc.php' ) ) {
+        wp_enqueue_script( 'cmb-video-poster', $uri . '/assets/js/modules/video-poster.js', ['cmb-global'], $ver, true );
     }
 
     // Trang liên hệ
@@ -507,6 +516,54 @@ if ( ! function_exists( 'cmb_get_medal_img' ) ) {
         ];
     }
 }
+
+// ============================================================
+// HELPER: Đếm số trang PDF tự động (không cần Imagick/Ghostscript)
+// Đọc trực tiếp nội dung file, đếm số object "/Type /Page" (không tính
+// "/Type /Pages") — không chính xác 100% với mọi PDF (vd: file nén object
+// stream có thể lệch) nhưng đủ dùng cho hồ sơ năng lực, tránh phải cài thêm
+// thư viện xử lý PDF trên server. Kết quả cache vào postmeta của attachment
+// để không phải đọc lại file (có thể vài chục MB) ở mỗi lượt tải trang.
+// ============================================================
+if ( ! function_exists( 'cmb_pdf_page_count' ) ) {
+    function cmb_pdf_page_count( $attachment_id ) {
+        $attachment_id = (int) $attachment_id;
+        if ( ! $attachment_id ) return null;
+
+        $cache_key = '_cmb_pdf_page_count';
+        $cached    = get_post_meta( $attachment_id, $cache_key, true );
+        if ( $cached !== '' ) return (int) $cached;
+
+        $path = get_attached_file( $attachment_id );
+        if ( ! $path || ! file_exists( $path ) ) return null;
+
+        $data = @file_get_contents( $path );
+        if ( $data === false ) return null;
+
+        $count = null;
+
+        // Cách 1: đọc /Count trong dict gốc /Type /Pages (nhanh, chính xác khi có)
+        if ( preg_match_all( '/\/Type\s*\/Pages\b[^>]{0,500}?\/Count\s+(\d+)/', $data, $m ) && ! empty( $m[1] ) ) {
+            $count = (int) max( $m[1] );
+        }
+
+        // Cách 2: đếm số object "/Type /Page" (loại trừ "/Type /Pages")
+        if ( ! $count ) {
+            $count = preg_match_all( '/\/Type\s*\/Page(?!s)\b/', $data ) ?: null;
+        }
+
+        if ( $count ) {
+            update_post_meta( $attachment_id, $cache_key, $count );
+        }
+
+        return $count;
+    }
+}
+
+// Xóa cache số trang khi admin upload lại / thay file đính kèm
+add_action( 'edit_attachment', function ( $attachment_id ) {
+    delete_post_meta( $attachment_id, '_cmb_pdf_page_count' );
+} );
 
 // ============================================================
 // TRANSIENT CACHE INVALIDATION

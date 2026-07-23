@@ -21,7 +21,7 @@ $footer-border: rgba($color-white, 0.12);
   pointer-events: none;
 
   @include mq(1480px) {
-    margin-top: -33vw;
+    margin-top: -25vw;
   }
 
   @include md {
