@@ -19,6 +19,23 @@
   }
 }
 
+// PC: padding 2 bên 150px cho trang Phim giới thiệu năng lực (hero + content)
+// Màn laptop (<1440px) thu nhỏ padding lại để cột phải không bị bóp quá bé.
+#capability-video-hero,
+#capability-video-content {
+  .l-container {
+    padding-inline: rem(150);
+
+    @include mq(1439px) {
+      padding-inline: rem(100);
+    }
+
+    @include md {
+      padding-inline: $container-px;
+    }
+  }
+}
+
 .p-capability-video__header {
   margin-bottom: rem(40);
 
@@ -37,6 +54,11 @@
   grid-template-columns: rem(300) 1fr;
   gap: rem(48);
   align-items: start;
+
+  @include mq(1439px) {
+    grid-template-columns: rem(260) 1fr;
+    gap: rem(32);
+  }
 
   @include md {
     grid-template-columns: rem(240) 1fr;
@@ -68,6 +90,11 @@
   box-shadow: $shadow-md;
   transition: box-shadow $transition-fast, transform $transition-fast;
 
+  @include mq(1439px) {
+    gap: rem(10);
+    padding: rem(14) rem(12);
+  }
+
   &:hover {
     box-shadow: $shadow-lg;
     transform: translateY(-2px);
@@ -92,6 +119,11 @@
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
+
+  @include mq(1439px) {
+    width: rem(44);
+    height: rem(44);
+  }
 }
 
 .p-capability-video__stat-text {
@@ -103,11 +135,19 @@
   line-height: 1.4;
   color: $color-text-muted;
 
+  @include mq(1439px) {
+    font-size: rem(13.5);
+  }
+
   strong {
     font-family: $font-primary;
     font-size: rem(19);
     font-weight: $font-weight-bold;
     color: $color-primary;
+
+    @include mq(1439px) {
+      font-size: rem(16);
+    }
   }
 }
 
@@ -134,6 +174,10 @@
   line-height: 1.4;
   margin: 0 0 rem(12);
 
+  @include mq(1439px) {
+    font-size: rem(22);
+  }
+
   @include sp {
     font-size: rem(20);
   }
@@ -145,4 +189,8 @@
   line-height: 1.7;
   color: $color-primary;
   margin: 0;
+
+  @include mq(1439px) {
+    font-size: rem(14.5);
+  }
 }

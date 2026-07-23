@@ -16,11 +16,33 @@
   }
 }
 
+// PC: padding 2 bên 150px cho trang Hồ sơ năng lực (hero + content)
+// Màn laptop (<1440px) thu nhỏ padding lại để cột phải không bị bóp quá bé.
+#profile-file-hero,
+#profile-file-content {
+  .l-container {
+    padding-inline: rem(150);
+
+    @include mq(1439px) {
+      padding-inline: rem(100);
+    }
+
+    @include md {
+      padding-inline: $container-px;
+    }
+  }
+}
+
 .p-profile-file__layout {
   display: grid;
   grid-template-columns: rem(360) 1fr;
   gap: rem(48);
   align-items: start;
+
+  @include mq(1439px) {
+    grid-template-columns: rem(280) 1fr;
+    gap: rem(32);
+  }
 
   @include md {
     grid-template-columns: 1fr;
@@ -41,8 +63,12 @@
   line-height: 1.35;
   margin: 0 0 rem(12);
 
-  @include sp {
+  @include mq(1439px) {
     font-size: rem(20);
+  }
+
+  @include sp {
+    font-size: rem(18);
   }
 }
 
@@ -52,6 +78,10 @@
   line-height: 1.7;
   color: $color-text-muted;
   margin: 0 0 rem(24);
+
+  @include mq(1439px) {
+    font-size: rem(13.5);
+  }
 }
 
 .p-profile-file__meta {
@@ -72,6 +102,10 @@
   border-bottom: 1px solid $color-border;
   background: $color-white;
 
+  @include mq(1439px) {
+    padding: rem(11) rem(14);
+  }
+
   &:last-child {
     border-bottom: none;
   }
@@ -82,6 +116,10 @@
   font-size: rem(14);
   font-weight: $font-weight-bold;
   color: $color-primary;
+
+  @include mq(1439px) {
+    font-size: rem(12.5);
+  }
 }
 
 .p-profile-file__meta-value {
@@ -89,6 +127,10 @@
   font-size: rem(14.5);
   font-weight: $font-weight-regular;
   color: $color-cmb-navy;
+
+  @include mq(1439px) {
+    font-size: rem(13);
+  }
 }
 
 .p-profile-file__download {
@@ -106,6 +148,11 @@
   border-radius: rem(8);
   text-decoration: none;
   transition: background $transition-fast;
+
+  @include mq(1439px) {
+    font-size: rem(13.5);
+    padding: rem(12) rem(20);
+  }
 
   svg {
     flex-shrink: 0;
