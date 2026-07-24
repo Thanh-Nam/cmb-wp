@@ -528,6 +528,10 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    // Fix lỗi Safari/iOS (một số iPad): dấu thanh tiếng Việt (sắc/huyền/hỏi/ngã/nặng)
+    // bị mất khi dùng background-clip:text + text-fill-color:transparent. Thêm
+    // viền trong suốt cực mảnh để ép WebKit render lại đúng layer glyph dấu.
+    -webkit-text-stroke: 0.02em transparent;
   }
 }
 

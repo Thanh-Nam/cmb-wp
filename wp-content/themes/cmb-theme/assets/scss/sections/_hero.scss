@@ -14,13 +14,9 @@
     width: 100%;
     height: 60rem; // Default: 600px
 
-    // >=1920px: giữ đúng tỉ lệ 1920x600 (600/1920 = 31.25vw) thay vì cố định 600px
-    @media (min-width: 1920px) {
-      height: 31.25vw;
-    }
-
-    @media (min-width: 768px) and (max-width: 1279px) {
-      height: 45rem; // 768-1279px: 450px
+    // >=768px: giữ đúng tỉ lệ 1920x706 (706/1920 = 36.7708vw) thay vì cố định
+    @media (min-width: 768px) {
+      height: 36.7708vw;
     }
 
     @include sp {
