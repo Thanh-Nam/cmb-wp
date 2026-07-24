@@ -12,16 +12,8 @@
   // ------ Block ------
   &__slider {
     width: 100%;
-    height: 60rem; // Default: 600px
-
-    // >=768px: giữ đúng tỉ lệ 1920x706 (706/1920 = 36.7708vw) thay vì cố định
-    @media (min-width: 768px) {
-      height: 36.7708vw;
-    }
-
-    @include sp {
-      height: 30rem; // Mobile <=767px: 300px
-    }
+    // Giữ đúng tỉ lệ 1920x706 (706/1920 = 36.7708vw) ở mọi kích thước màn hình
+    height: 36.7708vw;
   }
 
   &__slide {
