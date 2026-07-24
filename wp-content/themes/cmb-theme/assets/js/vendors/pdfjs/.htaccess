@@ -1,0 +1,7 @@
+# Apache không tự nhận diện MIME type cho file .mjs (ES module), khiến trình
+# duyệt từ chối chạy pdf.mjs/viewer.mjs với lỗi "Failed to load module script:
+# ... server responded with a MIME type of ''". Khai báo rõ MIME type ở đây để
+# module JS của pdf.js load được.
+<IfModule mod_mime.c>
+  AddType text/javascript .mjs
+</IfModule>

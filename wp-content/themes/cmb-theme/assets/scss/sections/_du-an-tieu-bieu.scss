@@ -729,6 +729,60 @@
 
         &__body { padding: rem(24) rem(28) rem(16); }
         &__footer { padding: rem(12) rem(28) rem(20); }
+
+        // Mobile: vẫn giữ ảnh + text nằm ngang (không xếp chồng như lưới),
+        // chỉ thu nhỏ cột ảnh + chữ lại để hiển thị đủ thông tin, không tràn/cắt.
+        @include sp {
+          grid-template-columns: rem(104) 1fr;
+          grid-template-rows: 1fr auto;
+          grid-template-areas:
+            "image body"
+            "image footer";
+
+          &__img-wrap {
+            aspect-ratio: unset;
+            min-height: unset;
+          }
+
+          &__img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+          }
+
+          &__tag {
+            top: rem(6);
+            left: rem(6);
+            padding: rem(2) rem(6);
+            font-size: rem(8);
+          }
+
+          &__body {
+            padding: rem(12) rem(12) rem(8);
+            gap: rem(4);
+          }
+
+          &__footer {
+            padding: rem(8) rem(12) rem(10);
+          }
+
+          &__name {
+            font-size: rem(13);
+          }
+
+          &__location {
+            font-size: rem(11);
+          }
+
+          &__services {
+            display: none;
+          }
+
+          &__cta {
+            font-size: rem(12);
+          }
+        }
       }
     }
 
@@ -744,12 +798,20 @@
   }
 
   // ------ Pagination ------
+  // Nav luôn render (kể cả rỗng) để JS filter/AJAX có sẵn chỗ nhét lại
+  // pagination mới — ẩn hẳn (bỏ luôn margin-top) khi không có trang nào,
+  // tránh khoảng trắng thừa lúc lọc dự án chỉ có <=6 kết quả.
   &__pagination {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: rem(8);
     margin-top: rem(48);
+
+    &:empty {
+      display: none;
+      margin-top: 0;
+    }
   }
 
   &__page-btn {

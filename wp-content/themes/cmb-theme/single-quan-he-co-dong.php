@@ -155,30 +155,16 @@ $related_q    = new WP_Query([
               </div>
               <?php endif; ?>
 
+              <!-- Nhúng qua bộ viewer chính thức của pdf.js thay vì để trình duyệt tự xử lý
+                   PDF trong iframe: trình xem PDF built-in của Safari trên iOS không co giãn
+                   theo chiều rộng iframe, khiến nội dung bị cắt bên phải trên iPhone. -->
               <div class="p-lab-detail__viewer">
                 <iframe
-                  id="<?php echo esc_attr('pdf-iframe-' . $doc['index']); ?>"
-                  src="<?php echo esc_url($doc['url']); ?>"
+                  src="<?php echo esc_url(cmb_pdf_viewer_url($doc['url'])); ?>"
                   title="<?php echo esc_attr($doc['title']); ?>"
-                  allowfullscreen
                   loading="lazy"
-                  aria-label="<?php echo esc_attr(cmb_txt('Xem tài liệu PDF', 'View PDF document')); ?>">
+                  aria-label="<?php echo esc_attr(sprintf(cmb_txt('Xem tài liệu %s', 'View document %s'), $doc['title'])); ?>">
                 </iframe>
-                <div class="p-lab-detail__viewer-fallback" id="<?php echo esc_attr('pdf-fallback-' . $doc['index']); ?>" aria-live="polite">
-                  <svg width="48" height="60" viewBox="0 0 48 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 4H30L44 18V56H6V4Z" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
-                    <path d="M30 4V18H44" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
-                    <path d="M14 28H34M14 34H28M14 40H22" stroke="#0379CC" stroke-width="1.5" stroke-linecap="round"/>
-                  </svg>
-                  <p><?php echo cmb_txt('Trình duyệt của bạn không hỗ trợ xem PDF trực tiếp.', 'Your browser does not support viewing PDF files directly.'); ?></p>
-                  <a href="<?php echo esc_url($doc['url']); ?>" download>
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                      <path d="M7 1V9M7 9L4 6M7 9L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M2 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                    <?php echo cmb_txt('Tải xuống để xem', 'Download to view'); ?>
-                  </a>
-                </div>
               </div>
 
             </div>
@@ -186,7 +172,7 @@ $related_q    = new WP_Query([
             <?php endforeach; ?>
             <?php else : ?>
             <div class="p-lab-detail__viewer">
-              <div class="p-lab-detail__viewer-fallback" style="display:flex;">
+              <div class="p-lab-detail__viewer-fallback is-visible">
                 <svg width="48" height="60" viewBox="0 0 48 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6 4H30L44 18V56H6V4Z" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>
                   <path d="M30 4V18H44" stroke="#0379CC" stroke-width="2" stroke-linejoin="round"/>

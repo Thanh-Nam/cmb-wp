@@ -30,7 +30,6 @@ $v_file   = get_field('video_intro_file', 'option');
 $v_poster = get_field('video_intro_poster', 'option');
 $v_embed  = get_field('video_intro_embed_url', 'option');
 $v_title  = cmb_arr($v_fields, 'video_intro_title') ?: cmb_txt('CMB - Hành trình kiến tạo giá trị bền vững', 'CMB - A Journey of Building Sustainable Value');
-$v_desc   = cmb_arr($v_fields, 'video_intro_desc');
 
 $has_upload = $v_source === 'upload' && !empty($v_file['url']);
 $has_embed  = $v_source === 'embed' && !empty($v_embed);
@@ -40,6 +39,11 @@ $has_embed  = $v_source === 'embed' && !empty($v_embed);
   <div class="l-container">
 
     <div class="p-capability-video__layout">
+
+      <!-- ---- Tiêu đề (trên, full width) ---- -->
+      <div class="p-capability-video__body">
+        <h2 class="p-capability-video__title"><?php echo esc_html($v_title); ?></h2>
+      </div>
 
       <!-- ---- Sidebar (trái) ---- -->
       <aside class="p-capability-video__sidebar">
@@ -78,13 +82,6 @@ $has_embed  = $v_source === 'embed' && !empty($v_embed);
           <?php echo $v_embed; ?>
         </div>
         <?php endif; ?>
-
-        <div class="p-capability-video__body">
-          <h2 class="p-capability-video__title"><?php echo esc_html($v_title); ?></h2>
-          <?php if ($v_desc) : ?>
-          <p class="p-capability-video__desc"><?php echo esc_html($v_desc); ?></p>
-          <?php endif; ?>
-        </div>
       </div>
 
     </div>

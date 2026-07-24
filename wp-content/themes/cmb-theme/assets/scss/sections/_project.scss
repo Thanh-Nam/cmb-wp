@@ -73,10 +73,6 @@
     justify-content: center;
     align-items: center;
     min-width: max-content;
-
-    @include md {
-      justify-content: flex-start;
-    }
   }
 
   &__tab {

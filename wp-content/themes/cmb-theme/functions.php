@@ -154,6 +154,7 @@ function cmb_enqueue_assets() {
     // dùng lại đúng script che ảnh/play (video-poster.js) như trang Giới thiệu.
     if ( is_page_template( 'page-phim-gioi-thieu-nang-luc.php' ) ) {
         wp_enqueue_script( 'cmb-video-poster', $uri . '/assets/js/modules/video-poster.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-capability-video-fit', $uri . '/assets/js/modules/capability-video-fit.js', ['cmb-global'], $ver, true );
     }
 
     // Trang Hồ sơ năng lực — cùng plugin "3D FlipBook" (DearFlip) + book loader
@@ -212,6 +213,9 @@ function cmb_enqueue_assets() {
     // Quan hệ cổ đông
     if ( is_post_type_archive( 'quan-he-co-dong' ) || is_singular( 'quan-he-co-dong' ) ) {
         wp_enqueue_script( 'cmb-ir-tabs', $uri . '/assets/js/modules/ir-tabs.js', ['cmb-global'], $ver, true );
+    }
+    if ( is_post_type_archive( 'quan-he-co-dong' ) ) {
+        wp_enqueue_script( 'cmb-ir-tabs-height-sync', $uri . '/assets/js/modules/ir-tabs-height-sync.js', ['cmb-global'], $ver, true );
     }
 
     // CMB_Theme và CMB_Ajax — luôn cần cho global
@@ -379,7 +383,7 @@ function cmb_filter_news_handler() {
     ] );
 }
 
-function cmb_build_ajax_pagination( $current, $total ) {
+function cmb_build_ajax_pagination( $current, $total, $btn_class = 'p-news-all__page-btn' ) {
     if ( $total <= 1 ) return '';
 
     $html  = '';
@@ -387,33 +391,93 @@ function cmb_build_ajax_pagination( $current, $total ) {
     $end   = min( $total, $current + 2 );
 
     if ( $current > 1 ) {
-        $html .= '<button class="p-news-all__page-btn" data-paged="' . ( $current - 1 ) . '" aria-label="' . esc_attr( cmb_txt( 'Trang trước', 'Previous page' ) ) . '">&laquo;</button>';
+        $html .= '<button class="' . $btn_class . '" data-paged="' . ( $current - 1 ) . '" aria-label="' . esc_attr( cmb_txt( 'Trang trước', 'Previous page' ) ) . '">&laquo;</button>';
     }
 
     if ( $start > 1 ) {
-        $html .= '<button class="p-news-all__page-btn" data-paged="1">1</button>';
+        $html .= '<button class="' . $btn_class . '" data-paged="1">1</button>';
         if ( $start > 2 ) {
-            $html .= '<span class="p-news-all__page-btn p-news-all__page-btn--dots">&#8230;</span>';
+            $html .= '<span class="' . $btn_class . ' ' . $btn_class . '--dots">&#8230;</span>';
         }
     }
 
     for ( $i = $start; $i <= $end; $i++ ) {
         $active = ( $i === $current ) ? ' is-active" aria-current="page' : '';
-        $html  .= '<button class="p-news-all__page-btn' . $active . '" data-paged="' . $i . '">' . $i . '</button>';
+        $html  .= '<button class="' . $btn_class . $active . '" data-paged="' . $i . '">' . $i . '</button>';
     }
 
     if ( $end < $total ) {
         if ( $end < $total - 1 ) {
-            $html .= '<span class="p-news-all__page-btn p-news-all__page-btn--dots">&#8230;</span>';
+            $html .= '<span class="' . $btn_class . ' ' . $btn_class . '--dots">&#8230;</span>';
         }
-        $html .= '<button class="p-news-all__page-btn" data-paged="' . $total . '">' . $total . '</button>';
+        $html .= '<button class="' . $btn_class . '" data-paged="' . $total . '">' . $total . '</button>';
     }
 
     if ( $current < $total ) {
-        $html .= '<button class="p-news-all__page-btn" data-paged="' . ( $current + 1 ) . '" aria-label="' . esc_attr( cmb_txt( 'Trang tiếp', 'Next page' ) ) . '">&raquo;</button>';
+        $html .= '<button class="' . $btn_class . '" data-paged="' . ( $current + 1 ) . '" aria-label="' . esc_attr( cmb_txt( 'Trang tiếp', 'Next page' ) ) . '">&raquo;</button>';
     }
 
     return $html;
+}
+
+// ============================================================
+// PROJECTS (DỰ ÁN) FILTER — AJAX HANDLER
+// Lọc danh sách dự án theo lĩnh vực (du-an-category) + phân trang. Cần AJAX
+// vì tabs lọc trước đó chỉ ẩn/hiện card bằng JS trên đúng 6 dự án của trang
+// hiện tại — không tính lại số dự án/số trang thực tế theo từng lĩnh vực,
+// khiến phân trang bị sai (vẫn hiện như lúc xem "Tất cả") khi đổi tab.
+// ============================================================
+add_action( 'wp_ajax_cmb_filter_projects',        'cmb_filter_projects_handler' );
+add_action( 'wp_ajax_nopriv_cmb_filter_projects', 'cmb_filter_projects_handler' );
+
+function cmb_filter_projects_handler() {
+    check_ajax_referer( 'cmb_projects_filter', 'nonce' );
+
+    $cat_slug = isset( $_POST['category'] ) ? sanitize_key( $_POST['category'] ) : '';
+    $paged    = isset( $_POST['paged'] )    ? max( 1, absint( $_POST['paged'] ) ) : 1;
+
+    $featured_id = (int) get_transient( 'cmb_featured_du_an_id' );
+
+    $args = [
+        'post_type'      => 'du-an',
+        'posts_per_page' => 6,
+        'paged'          => $paged,
+        'orderby'        => 'menu_order date',
+        'order'          => 'ASC',
+        'post__not_in'   => $featured_id ? [ $featured_id ] : [],
+    ];
+
+    if ( $cat_slug && $cat_slug !== 'all' ) {
+        $args['tax_query'] = [[
+            'taxonomy' => 'du-an-category',
+            'field'    => 'slug',
+            'terms'    => $cat_slug,
+        ]];
+    }
+
+    $q = new WP_Query( $args );
+
+    ob_start();
+    if ( $q->have_posts() ) {
+        $ci = 0;
+        while ( $q->have_posts() ) {
+            $q->the_post();
+            $ci++;
+            get_template_part( 'template-parts/du-an/project-card', null, [ 'ci' => $ci ] );
+        }
+        wp_reset_postdata();
+    } else {
+        wp_reset_postdata();
+        echo '<p class="p-projects-list__empty">' . esc_html( cmb_txt( 'Chưa có dự án nào.', 'No projects available yet.' ) ) . '</p>';
+    }
+    $html = ob_get_clean();
+
+    wp_send_json_success( [
+        'html'       => $html,
+        'pagination' => cmb_build_ajax_pagination( $paged, $q->max_num_pages, 'p-projects-list__page-btn' ),
+        'found'      => $q->found_posts,
+        'max_pages'  => $q->max_num_pages,
+    ] );
 }
 
 // ============================================================
@@ -500,6 +564,20 @@ function cmb_txt( $vi, $en ) {
         return $en;
     }
     return $vi;
+}
+
+// ============================================================
+// HELPER: URL khung xem PDF — nhúng qua bộ viewer chính thức của pdf.js
+// (assets/js/vendors/pdfjs/web/viewer.html) thay vì để trình duyệt tự xử lý
+// PDF trong iframe. Lý do: trình xem PDF built-in của Safari trên iOS không
+// co giãn theo chiều rộng iframe (giữ nguyên 1 mức zoom cố định), khiến nội
+// dung bị cắt bên phải. Viewer của pdf.js tự vẽ bằng canvas/JS nên hiển thị
+// nhất quán, đúng kích thước trên mọi trình duyệt kể cả iOS Safari.
+// ============================================================
+function cmb_pdf_viewer_url( $pdf_url ) {
+    if ( empty( $pdf_url ) ) return '';
+    $viewer = get_template_directory_uri() . '/assets/js/vendors/pdfjs/web/viewer.html';
+    return $viewer . '?file=' . rawurlencode( $pdf_url );
 }
 
 // ============================================================

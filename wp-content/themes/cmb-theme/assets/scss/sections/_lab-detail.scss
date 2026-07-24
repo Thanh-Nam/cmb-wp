@@ -388,7 +388,13 @@
 
 
 // ======= 4. PDF VIEWER =======
+// Nhúng qua bộ viewer chính thức của pdf.js (assets/js/vendors/pdfjs/web/viewer.html)
+// thay vì để trình duyệt tự xử lý PDF trong iframe — trình xem PDF built-in của
+// Safari trên iOS không co giãn theo chiều rộng iframe (giữ nguyên 1 mức zoom cố
+// định), khiến nội dung bị cắt bên phải trên iPhone. Viewer của pdf.js tự vẽ bằng
+// canvas/JS bên trong iframe nên hiển thị đúng, nhất quán trên mọi trình duyệt.
 .p-lab-detail__viewer {
+  position: relative;
   width: 100%;
   border: 1px solid $color-border;
   border-radius: rem(12);
@@ -412,7 +418,7 @@
   }
 }
 
-// Fallback khi iframe không load được PDF
+// Fallback khi chưa có PDF được tải lên
 .p-lab-detail__viewer-fallback {
   display: none;
   flex-direction: column;
@@ -422,6 +428,10 @@
   padding: rem(60) rem(20);
   background: #f8f9fa;
   text-align: center;
+
+  &.is-visible {
+    display: flex;
+  }
 
   svg { opacity: 0.35; }
 

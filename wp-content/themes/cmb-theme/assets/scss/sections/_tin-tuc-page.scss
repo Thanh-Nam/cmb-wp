@@ -120,16 +120,17 @@
     display: block;
   }
 
-  // Gradient tối từ dưới lên — để đọc text
+  // Phủ tối khắp ảnh (không để hở phần trong suốt phía trên) — tránh chữ có sẵn
+  // trong ảnh (logo/tên công ty đóng dấu lên ảnh gốc) hiện ra đè lên chữ overlay.
   &__featured-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(
       to top,
       rgba(#002036, 0.96) 0%,
-      rgba(#002036, 0.65) 45%,
-      rgba(#002036, 0.15) 75%,
-      transparent 100%
+      rgba(#002036, 0.85) 45%,
+      rgba(#002036, 0.7) 75%,
+      rgba(#002036, 0.55) 100%
     );
   }
 

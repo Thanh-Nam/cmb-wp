@@ -158,14 +158,18 @@
       gap: rem(16) rem(10);
     }
 
+    // 2 cột x 2 hàng thay vì 4 cột nhồi nhét làm vỡ layout trên màn hình hẹp.
     &__item {
-      width: calc((100% - #{rem(30)}) / 4);
+      width: calc((100% - #{rem(10)}) / 2);
     }
 
     &__link {
       padding: rem(12) rem(14);
       font-size: rem(12);
       gap: rem(5);
+      // Chiều cao đồng bộ bằng đúng box cao nhất (đo bằng JS, xem
+      // ir-tabs-height-sync.js) — không hardcode 1 con số cố định vì sẽ làm
+      // các box 1 dòng bị to hẳn lên so với nội dung thật của nó.
     }
 
     &__icon {
@@ -342,14 +346,33 @@
   }
 
   @include sp {
+    // Danh sách pill (row 2): "Công bố thông tin" chiếm trọn 1 hàng riêng, các
+    // mục còn lại xếp lưới 2 cột x 2 hàng — thay vì nowrap làm chữ đè/vỡ chồng
+    // lên nhau khi màn hình hẹp.
     &__list--pill {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       padding: rem(12);
       gap: rem(10);
+    }
+
+    &__item--pill {
+      width: auto;
+    }
+
+    &__item--header {
+      grid-column: 1 / -1;
     }
 
     &__link--pill {
       padding: rem(12) rem(16);
       font-size: rem(13);
+      // Chiều cao đồng bộ bằng đúng box cao nhất (đo bằng JS, xem
+      // ir-tabs-height-sync.js) — ghi đè min-height rem(66) cố định của bản
+      // desktop vì ở mobile box hẹp hơn hẳn, không đủ cho label 2 dòng.
+      &:not(.p-ir-tabs__link--header) {
+        min-height: 0;
+      }
 
       .p-ir-tabs__icon {
         width: rem(20);
@@ -359,6 +382,16 @@
 
     &__link--header {
       padding: rem(12) rem(24) rem(12) rem(16);
+
+      // Mũi tên vốn chỉ sang phải (nối sang các mục bên cạnh) — ở mobile các mục
+      // giờ nằm bên DƯỚI (không còn bên phải nữa), nên xoay lại chỉ xuống dưới.
+      &::before {
+        left: 50%;
+        top: 100%;
+        transform: translateX(-50%);
+        border-width: rem(16) rem(16) 0 rem(16);
+        border-color: $color-primary-light transparent transparent transparent;
+      }
 
       .p-ir-tabs__icon {
         width: rem(32);

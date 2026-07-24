@@ -61,13 +61,59 @@
 
 
   // ============================================
-  // ARCHIVE version: .p-projects-filter__tab + .p-projects-card + view toggle
+  // ARCHIVE version: .p-projects-filter__tab + #projects-grid (AJAX) + view toggle
+  // Lọc bằng AJAX (không phải ẩn/hiện client-side) vì mỗi tab cần tính lại
+  // đúng số dự án/số trang thực tế theo lĩnh vực để phân trang không bị sai
+  // (VD: tab ít/không có dự án vẫn hiện phân trang như lúc xem "Tất cả").
   // ============================================
   (function initProjectsArchiveFilter() {
     var tabs = document.querySelectorAll('.p-projects-filter__tab');
-    var cards = document.querySelectorAll('.p-projects-card[data-category]');
+    var grid = document.getElementById('projects-grid');
+    var pagination = document.getElementById('projects-pagination');
 
-    if (tabs.length) {
+    if (tabs.length && grid) {
+      var nonce = grid.dataset.nonce;
+      var ajaxUrl = (window.CMB_Ajax && window.CMB_Ajax.url) || '/wp-admin/admin-ajax.php';
+      var isLoading = false;
+      var currentFilter = 'all';
+
+      function fetchProjects(filter, page) {
+        if (isLoading) return;
+        isLoading = true;
+        currentFilter = filter;
+
+        grid.style.opacity = '0.5';
+        grid.style.pointerEvents = 'none';
+
+        var body = new FormData();
+        body.append('action', 'cmb_filter_projects');
+        body.append('nonce', nonce);
+        body.append('category', filter);
+        body.append('paged', page || 1);
+
+        fetch(ajaxUrl, { method: 'POST', body: body })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data.success) {
+              grid.innerHTML = data.data.html;
+              if (pagination) {
+                pagination.innerHTML = data.data.pagination;
+              }
+              if (window.CMB_revealObserver) {
+                grid.querySelectorAll('[data-reveal]').forEach(function (el) {
+                  window.CMB_revealObserver.observe(el);
+                });
+              }
+            }
+          })
+          .catch(function () { })
+          .finally(function () {
+            grid.style.opacity = '';
+            grid.style.pointerEvents = '';
+            isLoading = false;
+          });
+      }
+
       tabs.forEach(function (tab) {
         tab.addEventListener('click', function () {
           tabs.forEach(function (t) {
@@ -77,22 +123,36 @@
           tab.classList.add('is-active');
           tab.setAttribute('aria-selected', 'true');
 
-          var filter = tab.getAttribute('data-filter');
-          cards.forEach(function (card) {
-            if (filter === 'all' || card.getAttribute('data-category') === filter) {
-              card.style.display = '';
-            } else {
-              card.style.display = 'none';
-            }
-          });
+          fetchProjects(tab.getAttribute('data-filter'), 1);
         });
       });
+
+      // Pagination clicks — AJAX <button data-paged> (kết quả trả về từ filter)
+      // hoặc <a> phân trang gốc lúc PHP render lần đầu (chỉ khi đang lọc theo
+      // 1 lĩnh vực cụ thể, để tính đúng lại số dự án/số trang theo lĩnh vực đó).
+      if (pagination) {
+        pagination.addEventListener('click', function (e) {
+          var btn = e.target.closest('[data-paged]');
+          if (btn) {
+            e.preventDefault();
+            var page = parseInt(btn.dataset.paged, 10);
+            if (page) fetchProjects(currentFilter, page);
+            return;
+          }
+          var link = e.target.closest('a.p-projects-list__page-btn');
+          if (link && currentFilter !== 'all') {
+            e.preventDefault();
+            var match = link.href.match(/paged=(\d+)/);
+            var page2 = match ? parseInt(match[1], 10) : 1;
+            fetchProjects(currentFilter, page2);
+          }
+        });
+      }
     }
 
     // View toggle (grid / list)
     var gridBtn = document.getElementById('view-grid-btn');
     var listBtn = document.getElementById('view-list-btn');
-    var grid = document.getElementById('projects-grid');
 
     if (gridBtn && listBtn && grid) {
       gridBtn.addEventListener('click', function () {
