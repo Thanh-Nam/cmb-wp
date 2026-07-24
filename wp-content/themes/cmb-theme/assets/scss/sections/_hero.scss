@@ -19,8 +19,8 @@
       height: 31.25vw;
     }
 
-    @include md {
-      height: 45rem; // Tablet 768-1023px: 450px
+    @media (min-width: 768px) and (max-width: 1279px) {
+      height: 45rem; // 768-1279px: 450px
     }
 
     @include sp {
