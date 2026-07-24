@@ -14,12 +14,17 @@
     width: 100%;
     height: 60rem; // Default: 600px
 
+    // >=1920px: giữ đúng tỉ lệ 1920x600 (600/1920 = 31.25vw) thay vì cố định 600px
+    @media (min-width: 1920px) {
+      height: 31.25vw;
+    }
+
     @include md {
-      height: 60rem;
+      height: 45rem; // Tablet 768-1023px: 450px
     }
 
     @include sp {
-      height: 40rem;
+      height: 30rem; // Mobile <=767px: 300px
     }
   }
 

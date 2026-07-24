@@ -76,7 +76,7 @@ $updated = (!empty($pdf['modified'])) ? date_i18n('m/Y', strtotime($pdf['modifie
 
       <!-- ---- Hồ sơ dạng quyển sách (phải) ---- -->
       <div class="p-profile-file__viewer">
-        <div class="p-book-wrap">
+        <div class="p-book-wrap" id="profile-book-wrap">
           <?php
           echo do_shortcode(
             '[dflip source="' . esc_url($pdf['url']) . '" id="cmb-profile-book-page" class="cmb-profile-book"]' . esc_html($title) . '[/dflip]'
