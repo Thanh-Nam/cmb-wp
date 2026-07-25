@@ -86,6 +86,16 @@ add_action( 'after_setup_theme', 'cmb_theme_setup' );
 // ============================================================
 // ENQUEUE SCRIPTS & STYLES
 // ============================================================
+// Version theo filemtime cho từng file JS lẻ trong assets/js/modules — trước
+// đây các script này dùng chung $ver (version cố định của theme), nên mỗi lần
+// sửa code JS mà không tăng version theme thủ công thì URL enqueue không đổi,
+// khiến trình duyệt (đặc biệt Safari/iOS cache rất chặt) tiếp tục dùng bản JS
+// cũ trong cache dù server đã có bản mới — sửa code tưởng không thấy tác dụng.
+function cmb_asset_ver( $rel_path ) {
+    $file = get_template_directory() . $rel_path;
+    return file_exists( $file ) ? filemtime( $file ) : wp_get_theme()->get( 'Version' );
+}
+
 function cmb_enqueue_assets() {
     $ver = wp_get_theme()->get( 'Version' );
     $uri = get_template_directory_uri();
@@ -115,106 +125,106 @@ function cmb_enqueue_assets() {
     if ( is_front_page() ) {
         wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );
         wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
-        wp_enqueue_script( 'cmb-hero-slider',    $uri . '/assets/js/modules/hero-slider.js',    ['swiper', 'cmb-global'], $ver, true );
-        wp_enqueue_script( 'cmb-history',        $uri . '/assets/js/modules/history.js',        ['cmb-global'],           $ver, true );
-        wp_enqueue_script( 'cmb-location-map',   $uri . '/assets/js/modules/location-map.js',   ['swiper', 'cmb-global'], $ver, true );
-        wp_enqueue_script( 'cmb-field-swiper',   $uri . '/assets/js/modules/field-swiper.js',   ['swiper', 'cmb-global'], $ver, true );
-        wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'],           $ver, true );
-        wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'],           $ver, true );
-        wp_enqueue_script( 'cmb-news-swiper',    $uri . '/assets/js/modules/news-swiper.js',    ['swiper', 'cmb-global'], $ver, true );
-        wp_enqueue_script( 'cmb-partner-marquee', $uri . '/assets/js/modules/partner-marquee.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-hero-slider',    $uri . '/assets/js/modules/hero-slider.js',    ['swiper', 'cmb-global'], cmb_asset_ver('/assets/js/modules/hero-slider.js'), true );
+        wp_enqueue_script( 'cmb-history',        $uri . '/assets/js/modules/history.js',        ['cmb-global'], cmb_asset_ver('/assets/js/modules/history.js'), true );
+        wp_enqueue_script( 'cmb-location-map',   $uri . '/assets/js/modules/location-map.js',   ['swiper', 'cmb-global'], cmb_asset_ver('/assets/js/modules/location-map.js'), true );
+        wp_enqueue_script( 'cmb-field-swiper',   $uri . '/assets/js/modules/field-swiper.js',   ['swiper', 'cmb-global'], cmb_asset_ver('/assets/js/modules/field-swiper.js'), true );
+        wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/project-filter.js'), true );
+        wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'], cmb_asset_ver('/assets/js/modules/stat-counter.js'), true );
+        wp_enqueue_script( 'cmb-news-swiper',    $uri . '/assets/js/modules/news-swiper.js',    ['swiper', 'cmb-global'], cmb_asset_ver('/assets/js/modules/news-swiper.js'), true );
+        wp_enqueue_script( 'cmb-partner-marquee', $uri . '/assets/js/modules/partner-marquee.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/partner-marquee.js'), true );
     }
 
     // Trang giới thiệu
     if ( is_page( 'gioi-thieu' ) ) {
         wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );
         wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
-        wp_enqueue_script( 'cmb-leadership',   $uri . '/assets/js/modules/leadership-swiper.js', ['swiper', 'cmb-global'], $ver, true );
-        wp_enqueue_script( 'cmb-stat-counter', $uri . '/assets/js/modules/stat-counter.js',      ['cmb-global'],           $ver, true );
+        wp_enqueue_script( 'cmb-leadership',   $uri . '/assets/js/modules/leadership-swiper.js', ['swiper', 'cmb-global'], cmb_asset_ver('/assets/js/modules/leadership-swiper.js'), true );
+        wp_enqueue_script( 'cmb-stat-counter', $uri . '/assets/js/modules/stat-counter.js',      ['cmb-global'], cmb_asset_ver('/assets/js/modules/stat-counter.js'), true );
 
         // Video giới thiệu — dùng player mặc định của trình duyệt (controls gốc);
         // riêng ảnh che (poster) tự chụp khung hình đầu + icon play vẫn cần 1 script
         // nhỏ vì trình duyệt không tự vẽ khung hình đầu khi chỉ preload="metadata".
-        wp_enqueue_script( 'cmb-video-poster', $uri . '/assets/js/modules/video-poster.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-video-poster', $uri . '/assets/js/modules/video-poster.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/video-poster.js'), true );
 
         // Hồ sơ năng lực — nhúng bằng plugin "3D FlipBook" (DearFlip), shortcode [dflip]
         // được gọi trực tiếp trong profile-book.php, script/style của plugin tự enqueue.
 
         // Book loader thuần CSS thay cho spinner mặc định của DearFlip — xem
         // assets/js/modules/profile-book-loader.js + _profile-book.scss.
-        wp_enqueue_script( 'cmb-profile-book-loader', $uri . '/assets/js/modules/profile-book-loader.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-profile-book-loader', $uri . '/assets/js/modules/profile-book-loader.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/profile-book-loader.js'), true );
 
         // Đồng bộ chiều cao 2 khung Video giới thiệu / Hồ sơ năng lực cho cân đối
-        wp_enqueue_script( 'cmb-video-profile-sync', $uri . '/assets/js/modules/video-profile-sync.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-video-profile-sync', $uri . '/assets/js/modules/video-profile-sync.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/video-profile-sync.js'), true );
 
-        wp_enqueue_script( 'cmb-partner-marquee', $uri . '/assets/js/modules/partner-marquee.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-partner-marquee', $uri . '/assets/js/modules/partner-marquee.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/partner-marquee.js'), true );
     }
 
     // Trang Phim giới thiệu năng lực — cùng player mặc định của trình duyệt,
     // dùng lại đúng script che ảnh/play (video-poster.js) như trang Giới thiệu.
     if ( is_page_template( 'page-phim-gioi-thieu-nang-luc.php' ) ) {
-        wp_enqueue_script( 'cmb-video-poster', $uri . '/assets/js/modules/video-poster.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-video-poster', $uri . '/assets/js/modules/video-poster.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/video-poster.js'), true );
     }
 
     // Trang Hồ sơ năng lực — cùng plugin "3D FlipBook" (DearFlip) + book loader
     // thuần CSS như section Hồ sơ năng lực bên trang Giới thiệu.
     if ( is_page_template( 'page-ho-so-nang-luc.php' ) ) {
-        wp_enqueue_script( 'cmb-profile-book-loader', $uri . '/assets/js/modules/profile-book-loader.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-profile-book-loader', $uri . '/assets/js/modules/profile-book-loader.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/profile-book-loader.js'), true );
     }
 
     // Trang liên hệ
     if ( is_page( 'lien-he' ) ) {
-        wp_enqueue_script( 'cmb-form-validation', $uri . '/assets/js/modules/form-validation.js', ['cmb-global'], $ver, true );
-        wp_enqueue_script( 'cmb-google-map',      $uri . '/assets/js/modules/google-map.js',      ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-form-validation', $uri . '/assets/js/modules/form-validation.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/form-validation.js'), true );
+        wp_enqueue_script( 'cmb-google-map',      $uri . '/assets/js/modules/google-map.js',      ['cmb-global'], cmb_asset_ver('/assets/js/modules/google-map.js'), true );
     }
 
     // Archive tin tức
     if ( is_home() || ( is_archive() && get_post_type() === 'post' ) ) {
         wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );
         wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
-        wp_enqueue_script( 'cmb-news-swiper', $uri . '/assets/js/modules/news-swiper.js', ['swiper', 'cmb-global'], $ver, true );
-        wp_enqueue_script( 'cmb-news-filter', $uri . '/assets/js/modules/news-filter.js', ['cmb-global'],           $ver, true );
+        wp_enqueue_script( 'cmb-news-swiper', $uri . '/assets/js/modules/news-swiper.js', ['swiper', 'cmb-global'], cmb_asset_ver('/assets/js/modules/news-swiper.js'), true );
+        wp_enqueue_script( 'cmb-news-filter', $uri . '/assets/js/modules/news-filter.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/news-filter.js'), true );
     }
 
     // Single tin tức
     if ( is_singular( 'post' ) ) {
-        wp_enqueue_script( 'cmb-gallery-lightbox', $uri . '/assets/js/modules/gallery-lightbox.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-gallery-lightbox', $uri . '/assets/js/modules/gallery-lightbox.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/gallery-lightbox.js'), true );
     }
 
     // Archive thiết bị
     if ( is_post_type_archive( 'thiet-bi' ) ) {
-        wp_enqueue_script( 'cmb-equipment-modal', $uri . '/assets/js/modules/equipment-modal.js', ['cmb-global'], $ver, true );
-        wp_enqueue_script( 'cmb-stat-counter',    $uri . '/assets/js/modules/stat-counter.js',    ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-equipment-modal', $uri . '/assets/js/modules/equipment-modal.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/equipment-modal.js'), true );
+        wp_enqueue_script( 'cmb-stat-counter',    $uri . '/assets/js/modules/stat-counter.js',    ['cmb-global'], cmb_asset_ver('/assets/js/modules/stat-counter.js'), true );
     }
 
     // Archive phần mềm
     if ( is_post_type_archive( 'phan-mem' ) ) {
-        wp_enqueue_script( 'cmb-software-modal', $uri . '/assets/js/modules/software-modal.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-software-modal', $uri . '/assets/js/modules/software-modal.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/software-modal.js'), true );
     }
 
     // Archive / single dự án
     if ( is_post_type_archive( 'du-an' ) || is_singular( 'du-an' ) ) {
-        wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'], $ver, true );
-        wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-project-filter', $uri . '/assets/js/modules/project-filter.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/project-filter.js'), true );
+        wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'], cmb_asset_ver('/assets/js/modules/stat-counter.js'), true );
     }
     if ( is_singular( 'du-an' ) ) {
         wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );
         wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
-        wp_enqueue_script( 'cmb-project-gallery', $uri . '/assets/js/modules/project-gallery.js', ['swiper', 'cmb-global'], $ver, true );
-        wp_enqueue_script( 'cmb-gallery-lightbox', $uri . '/assets/js/modules/gallery-lightbox.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-project-gallery', $uri . '/assets/js/modules/project-gallery.js', ['swiper', 'cmb-global'], cmb_asset_ver('/assets/js/modules/project-gallery.js'), true );
+        wp_enqueue_script( 'cmb-gallery-lightbox', $uri . '/assets/js/modules/gallery-lightbox.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/gallery-lightbox.js'), true );
     }
     if ( is_post_type_archive( 'du-an' ) ) {
         wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );
         wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
-        wp_enqueue_script( 'cmb-featured-swiper', $uri . '/assets/js/modules/featured-swiper.js', ['swiper', 'cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-featured-swiper', $uri . '/assets/js/modules/featured-swiper.js', ['swiper', 'cmb-global'], cmb_asset_ver('/assets/js/modules/featured-swiper.js'), true );
     }
 
     // Quan hệ cổ đông
     if ( is_post_type_archive( 'quan-he-co-dong' ) || is_singular( 'quan-he-co-dong' ) ) {
-        wp_enqueue_script( 'cmb-ir-tabs', $uri . '/assets/js/modules/ir-tabs.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-ir-tabs', $uri . '/assets/js/modules/ir-tabs.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/ir-tabs.js'), true );
     }
     if ( is_post_type_archive( 'quan-he-co-dong' ) ) {
-        wp_enqueue_script( 'cmb-ir-tabs-height-sync', $uri . '/assets/js/modules/ir-tabs-height-sync.js', ['cmb-global'], $ver, true );
+        wp_enqueue_script( 'cmb-ir-tabs-height-sync', $uri . '/assets/js/modules/ir-tabs-height-sync.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/ir-tabs-height-sync.js'), true );
     }
 
     // CMB_Theme và CMB_Ajax — luôn cần cho global

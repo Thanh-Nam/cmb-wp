@@ -43,21 +43,11 @@
   }
 }
 
-@keyframes loc-ripple {
-  0% {
-    transform: scale(1);
-    opacity: 0.7;
-  }
-
-  70% {
-    opacity: 0.25;
-  }
-
-  100% {
-    transform: scale(3.5);
-    opacity: 0;
-  }
-}
+// Hiệu ứng ripple (vòng lan toả quanh dot khi active) giờ chạy bằng SMIL
+// (<animate> gắn trực tiếp vào từng circle trong location-map.js) thay vì CSS
+// animation — đã thử 2 cách CSS (transform+fill-box, rồi animate thuộc tính r)
+// đều không chạy ổn định trên 1 số bản Safari. SMIL được WebKit hỗ trợ ổn định
+// hơn nhiều cho đúng kiểu hiệu ứng này. Xem circle[data-loc-ripple] bên dưới.
 
 
 // ============================================
@@ -451,7 +441,11 @@
   // ============================================
   &__map-wrap {
     // orbit-r = bán kính vòng tròn ngoài SVG: r=489 trong viewBox 980 → 49.9% width
-    // cqw = 1% của map-wrap inline-size (nhờ container-type: inline-size ở trên)
+    // cqw = 1% của map-wrap inline-size (nhờ container-type: inline-size ở trên).
+    // JS luôn ghi đè left/top/transform-origin của wheel-pivot bằng giá trị px đo
+    // thực tế ở MỌI kích thước màn hình (xem syncMapScale() trong location-map.js)
+    // vì cqw không tin cậy trên 1 số bản Safari/iOS — giá trị cqw dưới đây chỉ là
+    // fallback cho khoảnh khắc trước khi JS kịp chạy.
     --orbit-r: 49.9cqw;
   }
 
@@ -593,6 +587,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    // Đây là thẻ <button> — reset background/border ở _reset.scss chưa đủ vì
+    // Safari/iOS còn áp riêng native button chrome (-webkit-appearance) có
+    // padding/canh dọc mặc định của hệ điều hành, đè lên TRƯỚC CẢ flexbox của
+    // mình, khiến chữ lệch dù đã align-items:center. appearance:none tắt hẳn
+    // native chrome đó; margin:0 vì <button> có margin mặc định khác nhau
+    // giữa các engine.
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+    // JS luôn đo bề rộng map-wrap thật rồi set thẳng width/height/font-size...
+    // bằng inline style lên từng tag (xem applyTagSizes() trong location-map.js)
+    // ở MỌI kích thước màn hình — vì cqw không tin cậy trên 1 số bản Safari/iOS
+    // (khiến clamp() bị invalid, box co về auto vừa khít text). clamp(cqw) dưới
+    // đây chỉ là fallback cho khoảnh khắc trước khi JS kịp chạy.
     width: clamp(92px, 17.5cqw, 172px);
     height: clamp(26px, 4cqw, 38px);
     white-space: nowrap;
@@ -600,6 +608,12 @@
     font-family: $font-primary;
     font-weight: $font-weight-bold;
     letter-spacing: 0.02em;
+    // line-height "normal" (mặc định) lấy theo bảng metrics riêng của font —
+    // với font custom "CMB" thì Safari/WebKit và Chrome tính "normal" khác
+    // nhau (khác baseline/leading), khiến chữ bị lệch dọc trong box dù đã
+    // align-items:center. Set 1 con số cố định để nhất quán trên mọi trình
+    // duyệt, không phụ thuộc cách mỗi engine đọc metrics của font.
+    line-height: 1;
     color: $color-primary;
     background: $color-white;
     border: none;
@@ -634,18 +648,10 @@
   // ============================================
   &__map-svg {
     circle[data-loc-ripple] {
-      transform-box: fill-box;
-      transform-origin: center;
+      // r/opacity giờ do SMIL (<animate>) điều khiển trực tiếp qua JS
+      // (beginElement/endElement trong setActiveLabel), không còn dùng CSS
+      // animation/class nữa — chỉ cần đảm bảo không chặn click bản đồ.
       pointer-events: none;
-      opacity: 0;
-
-      &.is-loc-ripple-active {
-        animation: loc-ripple 2s ease-out infinite;
-
-        &[data-ripple-delay='1'] {
-          animation-delay: 0.75s;
-        }
-      }
     }
   }
 }

@@ -168,7 +168,11 @@ window.CMB_lazyInit = function(selector, initFn, rootMargin) {
       if (!target) return;
       e.preventDefault();
 
-      const headerHeight = document.getElementById('site-header')?.offsetHeight ?? 0;
+      // Không dùng ?./?? (ES2020, cần Safari 13.1+/iOS 13.4+) — 1 lỗi cú pháp
+      // ở đây khiến TOÀN BỘ global.js không parse được, kéo theo hỏng luôn cả
+      // scroll-reveal, CMB_lazyInit, lockScroll... trên các iPad đời cũ hơn.
+      const siteHeaderEl = document.getElementById('site-header');
+      const headerHeight = siteHeaderEl ? siteHeaderEl.offsetHeight : 0;
       const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 16;
 
       window.scrollTo({ top, behavior: 'smooth' });

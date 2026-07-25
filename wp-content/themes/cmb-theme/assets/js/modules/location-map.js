@@ -183,6 +183,14 @@
 
   function _closeLocPopup() {
     if (!_locPopup) return;
+    // Bỏ focus khỏi phần tử đang active TRƯỚC khi set aria-hidden="true" — nếu
+    // không, khi đóng bằng bàn phím/nút X (đang giữ focus) mà phần tử đó nằm
+    // trong popup, trình duyệt sẽ chặn aria-hidden và báo warning ra console
+    // ("Blocked aria-hidden on an element because its descendant retained
+    // focus"), vì phần tử ẩn không được phép chứa phần tử đang có focus.
+    if (_locPopup.contains(document.activeElement)) {
+      document.activeElement.blur();
+    }
     _locPopup.classList.remove('is-open');
     _locPopup.setAttribute('aria-hidden', 'true');
     window.CMB.unlockScroll();
@@ -198,6 +206,74 @@
     var SVG_NS = 'http://www.w3.org/2000/svg';
     var VB_W = 980, VB_H = 981;
 
+    // Bánh lái orbit + kích thước nhãn tỉnh trước dùng đơn vị Container Query
+    // (cqw) để tỉ lệ theo bề rộng map-wrap — nhưng 1 số bản Safari/iOS không hỗ
+    // trợ đúng cqw khiến khai báo bị invalid (bánh lái lệch tâm/không quay, box
+    // nhãn co về vừa khít text, mất dấu do overflow:hidden bó sát chữ). Việc
+    // đoán ngưỡng theo breakpoint (tablet, rồi 1024px) đều không khớp đúng với
+    // thiết bị thật (không debug trực tiếp được) — nên bỏ hẳn breakpoint, tính
+    // bằng JS (đáng tin cậy, không phụ thuộc đơn vị CSS đặc biệt nào) cho MỌI
+    // kích thước màn hình luôn, không phân biệt mobile/tablet/desktop nữa.
+    //
+    // Set thẳng inline style lên TỪNG phần tử (left/top/transform-origin của
+    // wheel-pivot, width/height/font-size của từng tag) thay vì set 1 custom
+    // property trên map-wrap rồi để con kế thừa qua var() — vì 1 số bản WebKit
+    // cũ có bug không recompute lại style của phần tử con khi custom property
+    // của cha bị đổi qua JS (CSSOM), dù giá trị đã đúng trong DevTools. Set
+    // trực tiếp trên chính phần tử tránh hoàn toàn phụ thuộc đó.
+    var wheelPivotEl = wrap.querySelector('.p-location__wheel-pivot');
+
+    function clampNum(min, val, max) {
+      return Math.max(min, Math.min(max, val));
+    }
+
+    function applyTagSizes(w) {
+      var tags = wrap.querySelectorAll('.p-location__tag');
+      // Sàn (min) trước đây 92px/26px/9px là kích thước tính cho map cỡ tablet
+      // trở lên — ở mobile map-wrap chỉ còn ~350-400px, nhiều tỉnh nằm khá gần
+      // nhau (vd Thanh Hóa/Nghệ An, Khánh Hòa/Đà Nẵng) nên box giữ nguyên sàn
+      // cũ sẽ chạm/đè nhau theo chiều DỌC là chính (khoảng cách giữa các dot
+      // hẹp theo trục y hơn trục x). Giảm HEIGHT là chính, giữ nguyên WIDTH —
+      // giảm width sẽ làm tên dài như "BÀ RỊA - VŨNG TÀU" bị bó chật/khó đọc.
+      var tw = clampNum(92, w * 0.175, 172);
+      var th = clampNum(18, w * 0.04, 38);
+      var tfs = clampNum(8, w * 0.0135, 14);
+      var tr = clampNum(3, w * 0.006, 6);
+      var tp = clampNum(4, w * 0.006, 8);
+      tags.forEach(function (tag) {
+        tag.style.width = tw + 'px';
+        tag.style.height = th + 'px';
+        tag.style.fontSize = tfs + 'px';
+        tag.style.borderRadius = tr + 'px';
+        tag.style.padding = '0 ' + tp + 'px';
+      });
+    }
+
+    function syncMapScale() {
+      var w = wrap.getBoundingClientRect().width;
+      if (!w) return;
+      var orbitR = w * 0.499;
+      if (wheelPivotEl) {
+        // KHÔNG dùng getBoundingClientRect() ở đây: wheel-pivot đang chạy
+        // animation rotate() liên tục (loc-orbit), nên bounding box đo được
+        // thay đổi theo góc xoay tại đúng thời điểm gọi hàm (bounding box của
+        // 1 hình vuông xoay lệch luôn lớn hơn cạnh gốc, sai lệch tuỳ góc).
+        // getComputedStyle().width lấy đúng layout width, không bị transform
+        // ảnh hưởng.
+        var halfW = (parseFloat(getComputedStyle(wheelPivotEl).width) || 44) / 2;
+        wheelPivotEl.style.left = 'calc(50% + ' + orbitR + 'px - ' + halfW + 'px)';
+        wheelPivotEl.style.top = 'calc(50% - ' + halfW + 'px)';
+        wheelPivotEl.style.transformOrigin = (-orbitR + halfW) + 'px ' + halfW + 'px';
+      }
+      applyTagSizes(w);
+    }
+
+    syncMapScale();
+    window.addEventListener('resize', function () {
+      clearTimeout(window._cmbLocScaleTimer);
+      window._cmbLocScaleTimer = setTimeout(syncMapScale, 150);
+    });
+
     fetch(imgEl.src)
       .then(function (r) { return r.text(); })
       .then(function (svgText) {
@@ -211,13 +287,19 @@
         svg.removeAttribute('height');
 
         // 1. Extract golden wheel image from SVG pattern → apply to orbit element
+        // map.svg trước đây nhúng base64 4096x4096 trực tiếp (~8MB) cho ảnh này —
+        // đã tách ra file riêng assets/images/wheel-icon.png (đã resize + nén) để
+        // map.svg nhẹ hơn nhiều. href giờ là đường dẫn tương đối theo map.svg,
+        // không phải theo URL trang hiện tại, nên phải tự ghép với _themeUri.
         var wheelImgEl = svg.querySelector('#image0_57023_32');
         if (wheelImgEl) {
           var wheelSrc = wheelImgEl.getAttribute('href') ||
             wheelImgEl.getAttributeNS('http://www.w3.org/1999/xlink', 'href');
           if (wheelSrc) {
+            var isAbsolute = /^(https?:)?\/\//.test(wheelSrc) || wheelSrc.indexOf('data:') === 0;
+            var resolvedWheelSrc = isAbsolute ? wheelSrc : (_themeUri + '/assets/images/' + wheelSrc);
             var orbitWheel = document.querySelector('.p-location__wheel');
-            if (orbitWheel) orbitWheel.src = wheelSrc;
+            if (orbitWheel) orbitWheel.src = resolvedWheelSrc;
           }
         }
         // Hide the static wheel from its original position in the map
@@ -344,6 +426,15 @@
           svg.appendChild(dot);
 
           // --- Ripple: 2 vòng lan toả quanh dot, chỉ hiện khi active ---
+          // Đã thử 3 cách khác nhau đều không chạy ổn định trên 1 số bản
+          // Safari: CSS transform+transform-box:fill-box, CSS animate thuộc
+          // tính r, rồi SMIL (<animate> + beginElement()/endElement() — chính
+          // các PHƯƠNG THỨC JS điều khiển SMIL này cũng có lịch sử hỗ trợ chập
+          // chờn trên WebKit dù bản thân SMIL declaration thì được). Giờ tự
+          // chạy animation hoàn toàn bằng JS thuần (rAF, xem tickRipples() bên
+          // dưới) — chỉ set attribute r/opacity trực tiếp mỗi khung hình,
+          // không phụ thuộc bất kỳ animation API (CSS hay SMIL) nào nữa nên
+          // không thể bị vấn đề hỗ trợ trình duyệt.
           var rings = [];
           [false, true].forEach(function (delayed) {
             var ring = document.createElementNS(SVG_NS, 'circle');
@@ -353,8 +444,10 @@
             ring.setAttribute('fill', 'none');
             ring.setAttribute('stroke', '#8BCBFF');
             ring.setAttribute('stroke-width', '1.5');
+            ring.setAttribute('opacity', '0');
             ring.setAttribute('data-loc-ripple', p.id);
             if (delayed) ring.setAttribute('data-ripple-delay', '1');
+            ring._rippleDelay = delayed ? 750 : 0;
             svg.insertBefore(ring, dot);
             rings.push(ring);
           });
@@ -387,7 +480,12 @@
           tagEls[p.id] = el;
 
           el.addEventListener('click', function () {
-            if (window.innerWidth > 1024) {
+            // CSS coi từ 1024px trở lên là desktop (@include md chỉ áp dụng
+            // đến max-width: 1023px) — phải dùng >= 1024 khớp đúng mốc đó.
+            // Lệch 1px (> 1024) khiến đúng lúc 1024px, CSS hiện layout desktop
+            // nhưng JS lại tưởng là mobile và gọi mở popup — mà popup cũng chỉ
+            // hiện từ ≤1023px nên không hiện gì cả, bấm vào không thấy active.
+            if (window.innerWidth >= 1024) {
               setActiveLabel(p.id);
               _updateLocPanel(p.id);
             } else {
@@ -396,34 +494,77 @@
           });
         });
 
+        // Các tag vừa tạo xong ở trên chưa tồn tại lúc syncMapScale() chạy lần
+        // đầu (gọi ngay khi lazyInit, trước khi fetch xong) nên phải áp lại.
+        syncMapScale();
+
+        // --- Ripple engine: 1 vòng lặp rAF dùng chung cho MỌI ring đang active,
+        // tự tính r/opacity theo thời gian trôi qua rồi set attribute trực
+        // tiếp — không dùng CSS animation hay SMIL, nên không phụ thuộc hỗ trợ
+        // trình duyệt (xem lý do ở comment tạo ring phía trên). ---
+        var RIPPLE_DUR = 2000; // ms, khớp @keyframes loc-ripple cũ (2s)
+        var activeRipples = []; // { ring, startTime }
+        var rippleRafId = null;
+
+        function rippleTick(now) {
+          activeRipples.forEach(function (item) {
+            var elapsed = now - item.startTime;
+            if (elapsed < 0) return; // chưa tới lúc bắt đầu (còn đang delay)
+            var progress = (elapsed % RIPPLE_DUR) / RIPPLE_DUR; // 0..1 lặp lại
+            var r = DOT_R + progress * (DOT_R * 2.5); // 9 → 31.5, khớp cũ
+            var opacity = progress < 0.35
+              ? 0.7 - (progress / 0.35) * (0.7 - 0.25)
+              : 0.25 - ((progress - 0.35) / 0.65) * 0.25;
+            item.ring.setAttribute('r', r);
+            item.ring.setAttribute('opacity', opacity);
+          });
+          rippleRafId = activeRipples.length ? requestAnimationFrame(rippleTick) : null;
+        }
+
+        function startRipple(ring, delayMs) {
+          if (ring._rippleActive) return;
+          ring._rippleActive = true;
+          activeRipples.push({ ring: ring, startTime: performance.now() + delayMs });
+          if (!rippleRafId) rippleRafId = requestAnimationFrame(rippleTick);
+        }
+
+        function stopRipple(ring) {
+          ring._rippleActive = false;
+          activeRipples = activeRipples.filter(function (item) { return item.ring !== ring; });
+          ring.setAttribute('r', DOT_R);
+          ring.setAttribute('opacity', '0');
+        }
+
         function setActiveLabel(locKey) {
           Object.keys(tagEls).forEach(function (id) {
             tagEls[id].classList.toggle('is-active', id === locKey);
           });
           Object.keys(dotRippleRings).forEach(function (id) {
             dotRippleRings[id].forEach(function (ring) {
-              ring.classList.toggle('is-loc-ripple-active', id === locKey);
+              if (id === locKey) {
+                startRipple(ring, ring._rippleDelay || 0);
+              } else {
+                stopRipple(ring);
+              }
             });
           });
         }
 
-        // HẢI PHÒNG active by default — desktop only
-        if (window.innerWidth > 1024) {
+        // HẢI PHÒNG active by default — desktop only (>=1024, khớp @include md)
+        if (window.innerWidth >= 1024) {
           setActiveLabel('hai-phong');
         }
 
         // Khi resize: đồng bộ active state với breakpoint
         window.addEventListener('resize', function () {
-          if (window.innerWidth <= 1024) {
+          if (window.innerWidth < 1024) {
             Object.keys(tagEls).forEach(function (id) {
               tagEls[id].classList.remove('is-active');
             });
             if (hpBlueOuter) hpBlueOuter.style.display = 'none';
             if (hpBlueMid) hpBlueMid.style.display = 'none';
             Object.keys(dotRippleRings).forEach(function (id) {
-              dotRippleRings[id].forEach(function (ring) {
-                ring.classList.remove('is-loc-ripple-active');
-              });
+              dotRippleRings[id].forEach(stopRipple);
             });
           } else {
             var hasActive = Object.keys(tagEls).some(function (id) { return tagEls[id].classList.contains('is-active'); });

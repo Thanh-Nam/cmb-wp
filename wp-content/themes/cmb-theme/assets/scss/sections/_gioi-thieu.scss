@@ -274,6 +274,11 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    color: transparent;
+    // Fix mất dấu tiếng Việt trên Safari/iOS (xem chi tiết ở &__item-label bên dưới).
+    -webkit-text-stroke: 0.5px transparent;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
     text-transform: uppercase;
     letter-spacing: 0.03em;
     line-height: 1.4;
@@ -528,10 +533,19 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    // Fix lỗi Safari/iOS (một số iPad): dấu thanh tiếng Việt (sắc/huyền/hỏi/ngã/nặng)
-    // bị mất khi dùng background-clip:text + text-fill-color:transparent. Thêm
-    // viền trong suốt cực mảnh để ép WebKit render lại đúng layer glyph dấu.
-    -webkit-text-stroke: 0.02em transparent;
+    color: transparent;
+    -webkit-text-stroke: 0.5px transparent;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    // Fix lỗi Safari/iOS: chỉ mất phần dấu/mũ Ở TRÊN (dấu nặng dưới vẫn còn) —
+    // vùng gradient được tô (background-clip:text) của 1 inline element bị bó
+    // sát theo font metrics, không đủ chỗ phía trên cho dấu vượt lên cao hơn
+    // ascent của font. Ép thành inline-block + line-height/padding-top riêng
+    // để có thêm khoảng đệm phía trên cho vùng tô gradient.
+    display: inline-block;
+    line-height: 1.5;
+    padding-top: 0.25em;
+    margin-top: -0.25em;
   }
 }
 
@@ -909,8 +923,13 @@
 
   // ------ Swiper overrides ------
   &__swiper {
-    padding: rem(56) rem(5) rem(5) !important;
-    overflow: visible !important;
+    padding: 0 rem(5) rem(5) !important;
+    // overflow mặc định của Swiper là hidden — bắt buộc phải giữ để clip các
+    // slide/clone nằm ngoài viewport (loop). Trước đây set visible để ảnh
+    // tràn lên không bị cắt, nhưng làm vậy phá luôn cơ chế clip ngang của
+    // Swiper (slide clone hiện ra thành "hàng" riêng trên Safari cũ, tự "đúng"
+    // khi transform áp lại được). Giờ không cần visible nữa vì đã chừa đủ chỗ
+    // tràn ảnh bằng padding-top % ở &__photo-outer bên dưới.
 
     .swiper-wrapper {
       height: auto;
@@ -946,11 +965,15 @@
     text-align: center;
   }
 
-  // Top padding makes room for photo overflow above bg shape
+  // Top padding makes room for photo overflow above bg shape.
+  // &__photo tràn lên trên đúng 51% chiều rộng của box này, bất kể AR ảnh gốc
+  // (do height:180% cố định trên &__photo-wrap rộng 85% x tỉ lệ 4:3 — toán:
+  // 0.8 * 0.75 * 0.85 = 0.51). Dùng % để tự scale đúng theo mọi breakpoint
+  // slidesPerView của swiper, không cần overflow:visible trên .swiper nữa.
   &__photo-outer {
     display: flex;
     justify-content: center;
-    padding: rem(56) rem(24) 0;
+    padding: calc(51% + #{rem(8)}) rem(24) 0;
     margin-bottom: rem(16);
   }
 
@@ -960,6 +983,17 @@
     width: 85%;
     aspect-ratio: 4 / 3;
     overflow: visible;
+
+    // Fallback cho Safari < 15 (chưa hỗ trợ aspect-ratio): không có fallback
+    // thì box này height:auto (không xác định), khiến &__photo bên dưới
+    // (position:absolute; height:180% của box cha) không resolve được % nên
+    // fallback tiếp về "auto" — ảnh hiện theo đúng kích thước gốc file upload,
+    // rất cao nếu ảnh chụp dọc. padding-top theo % width luôn cho height xác
+    // định bất kể trình duyệt nào (kỹ thuật cũ, không phụ thuộc aspect-ratio).
+    @supports not (aspect-ratio: 4 / 3) {
+      height: 0;
+      padding-top: 75%; // 3/4 — cùng tỉ lệ 4:3 ở trên
+    }
 
     // Parallelogram bg — only this pseudo-element is skewed
     &::before {

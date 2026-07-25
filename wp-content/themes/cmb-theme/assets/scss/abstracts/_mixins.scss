@@ -152,6 +152,14 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: transparent;
+  // Fix mất dấu tiếng Việt trên Safari/iOS: WebKit đôi khi làm rơi dấu thanh
+  // (sắc/huyền/hỏi/ngã/nặng) khi dùng background-clip:text. Ép stroke trong
+  // suốt bằng đơn vị px cố định (không dùng em vì quy đổi ra dưới 0.5px ở
+  // font nhỏ sẽ không đủ) + tạo compositing layer riêng để WebKit render đúng.
+  -webkit-text-stroke: 0.5px transparent;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 // ============================================

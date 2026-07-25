@@ -33,6 +33,13 @@ $leadership_list     = get_field('about_leadership_list', 'option');
         <div class="swiper-wrapper">
 
           <?php if (!empty($leadership_list)) :
+            // 2 vòng foreach: bộ sau (aria-hidden) là bù cho việc Swiper
+            // loop:true cần đủ số slide tối thiểu (khoảng gấp đôi slidesPerView
+            // lớn nhất = 4 ở breakpoint 1024) mới loop mượt được — số thành
+            // viên ban lãnh đạo thường chỉ 4-6 người, không đủ nếu không nhân
+            // đôi. ĐÃ THỬ bỏ đi (tưởng là dư thừa/lỗi) nhưng làm Swiper mất
+            // loop luôn (không tự chạy) — không phải nguyên nhân gây layout
+            // cao/lệch, revert lại.
             foreach ($leadership_list as $member) :
               $m_name     = cmb_arr( $member, 'name' );
               $m_position = cmb_arr( $member, 'position' );
