@@ -13,12 +13,6 @@
 .p-capability-video {
   padding: rem(96) 0 rem(140);
   background: $color-white;
-  // min-height được set bằng JS (capability-video-fit.js) để cả trang (header +
-  // hero + section này) vừa đúng 1 màn hình — center nội dung theo chiều dọc
-  // trong khoảng dư đó thay vì dồn hết lên trên, để lại khoảng trắng lớn phía dưới.
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 
   @include sp {
     padding: rem(32) 0 rem(56);

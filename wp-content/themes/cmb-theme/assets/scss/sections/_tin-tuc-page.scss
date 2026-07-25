@@ -171,6 +171,7 @@
     line-height: 1.38;
     color: $color-white;
     margin: 0;
+    @include text-truncate(3);
 
     a {
       color: inherit;

@@ -78,8 +78,8 @@
                     "label": "Nội dung",
                     "name": "content",
                     "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
+                    "type": "textarea",
+                    "instructions": "Có thể xuống dòng — trang Giới thiệu sẽ hiển thị liền mạch (bỏ xuống dòng), trang Phim giới thiệu năng lực sẽ giữ nguyên xuống dòng như nhập ở đây.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -91,8 +91,8 @@
                     "maxlength": "",
                     "allow_in_bindings": 0,
                     "placeholder": "",
-                    "prepend": "",
-                    "append": "",
+                    "rows": 3,
+                    "new_lines": "",
                     "parent_repeater": "field_6a37b45f64e3b"
                 },
                 {
@@ -100,7 +100,7 @@
                     "label": "Nội dung (EN)",
                     "name": "content_en",
                     "aria-label": "",
-                    "type": "text",
+                    "type": "textarea",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -113,8 +113,8 @@
                     "maxlength": "",
                     "allow_in_bindings": 0,
                     "placeholder": "",
-                    "prepend": "",
-                    "append": "",
+                    "rows": 3,
+                    "new_lines": "",
                     "parent_repeater": "field_6a37b45f64e3b"
                 }
             ]

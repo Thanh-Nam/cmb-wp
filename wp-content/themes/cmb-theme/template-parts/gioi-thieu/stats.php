@@ -32,7 +32,12 @@ if (have_rows('about_stat_list', 'option')) {
         </div>
         <?php endif; ?>
         <span class="p-stats__value" data-countup><?php echo $stat['number']; ?></span>
-        <span class="p-stats__label"><?php echo $stat['content']; ?></span>
+        <?php
+          // Field cho phép nhập xuống dòng (dùng chung với trang Phim giới thiệu
+          // năng lực) — ở đây bỏ xuống dòng, hiển thị liền mạch bình thường.
+          $stat_label = preg_replace('/\s*[\r\n]+\s*/', ' ', trim($stat['content']));
+        ?>
+        <span class="p-stats__label"><?php echo esc_html($stat_label); ?></span>
       </div>
       <?php endforeach; ?>
 

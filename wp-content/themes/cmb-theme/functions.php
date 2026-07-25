@@ -154,7 +154,6 @@ function cmb_enqueue_assets() {
     // dùng lại đúng script che ảnh/play (video-poster.js) như trang Giới thiệu.
     if ( is_page_template( 'page-phim-gioi-thieu-nang-luc.php' ) ) {
         wp_enqueue_script( 'cmb-video-poster', $uri . '/assets/js/modules/video-poster.js', ['cmb-global'], $ver, true );
-        wp_enqueue_script( 'cmb-capability-video-fit', $uri . '/assets/js/modules/capability-video-fit.js', ['cmb-global'], $ver, true );
     }
 
     // Trang Hồ sơ năng lực — cùng plugin "3D FlipBook" (DearFlip) + book loader

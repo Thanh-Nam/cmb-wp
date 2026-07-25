@@ -4512,7 +4512,7 @@ const defaultOptions = {
     kind: OptionKind.WORKER
   },
   workerSrc: {
-    value: "../build/pdf.worker.mjs",
+    value: "../build/pdf.worker.js",
     kind: OptionKind.WORKER
   }
 };
@@ -15111,4 +15111,4 @@ __webpack_async_result__();
 /******/ export { __webpack_exports__PDFViewerApplication as PDFViewerApplication, __webpack_exports__PDFViewerApplicationConstants as PDFViewerApplicationConstants, __webpack_exports__PDFViewerApplicationOptions as PDFViewerApplicationOptions };
 /******/ 
 
-//# sourceMappingURL=viewer.mjs.map
+//# sourceMappingURL=viewer.js.map
