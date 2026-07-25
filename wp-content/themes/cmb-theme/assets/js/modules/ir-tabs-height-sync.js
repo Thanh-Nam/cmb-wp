@@ -17,10 +17,11 @@
   var tabsNav = document.getElementById('ir-tabs');
   if (!tabsNav) return;
 
-  var SP_BREAKPOINT = 767; // khớp @include sp trong _mixins.scss
+  var MD_BREAKPOINT = 1023; // khớp @include md trong _mixins.scss — row 1 đã
+  // xếp lưới 2x2 từ tablet (md) trở xuống, không chỉ riêng mobile (sp).
 
   function isMobile() {
-    return window.innerWidth <= SP_BREAKPOINT;
+    return window.innerWidth <= MD_BREAKPOINT;
   }
 
   function syncGroup(items) {

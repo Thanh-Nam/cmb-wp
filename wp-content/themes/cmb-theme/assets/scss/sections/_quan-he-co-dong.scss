@@ -131,8 +131,10 @@
       gap: rem(18) rem(12);
     }
 
+    // Tablet: 4 phần tử nhồi 1 hàng bị vỡ chữ/icon — chia 2 cột x 2 hàng
+    // giống mobile để đủ chỗ hiển thị.
     &__item {
-      width: calc((100% - #{rem(36)}) / 4);
+      width: calc((100% - #{rem(12)}) / 2);
     }
 
     &__link {
@@ -200,13 +202,20 @@
     flex: none;
     width: auto;
     display: flex;
-    align-items: center;
-    align-self: center;
+    align-items: stretch;
+    // stretch (không phải center): item con cao bằng đúng hàng — hàng lại cao
+    // bằng đúng item cao nhất (align-items: stretch trên &__list--pill) — tự
+    // động đồng nhất chiều cao, không cần hardcode hay đo bằng JS.
+    align-self: stretch;
 
     // Trừ "Công bố thông tin" ra, phần còn lại chia đều thành 4 cột bằng nhau.
+    // "Công bố thông tin" giữ nguyên full height (sát viền trên/dưới, không
+    // margin) — chỉ 4 ô con này mới cần margin dọc để không chạm sát border
+    // ngoài khi chúng tự stretch cao bằng nhau.
     &:not(.p-ir-tabs__item--header) {
       flex: 1 1 0;
       min-width: 0;
+      margin: rem(10) 0;
     }
   }
 
@@ -232,12 +241,11 @@
     color: $color-text;
     white-space: normal;
     text-align: center;
+    height: 100%;
 
-    // Các box con (không phải header) tự canh giữa theo chiều cao riêng của từng
-    // item (align-self: center trên .p-ir-tabs__item--pill), nên item nào có label
-    // xuống 2 dòng (vd "Quy chế hoạt động hội đồng quản trị") sẽ CAO HƠN hẳn các
-    // item 1 dòng còn lại — nhìn lệch nhau dù cùng canh giữa 1 hàng. Đặt min-height
-    // bằng đúng chiều cao khi label xuống 2 dòng để mọi box con luôn đồng nhất.
+    // Item cha giờ stretch theo hàng cao nhất (xem &__item--pill), nên link chỉ
+    // cần cao 100% theo item + giữ 1 sàn tối thiểu cho các label 1 dòng đỡ bị
+    // lùn — không hardcode chiều cao cố định nữa.
     &:not(.p-ir-tabs__link--header) {
       min-height: rem(66);
     }
@@ -342,6 +350,38 @@
       line-height: 1.35;
       max-width: rem(130);
       white-space: normal;
+    }
+  }
+
+  @include md {
+    // Tablet (768-1023): vẫn để "Công bố thông tin" nằm ngang bên trái (không
+    // đẩy xuống dưới như mobile), nhưng 4 mục còn lại xếp thành lưới 2 cột x 2
+    // hàng bên phải thay vì nowrap làm chữ bị bóp hẹp/vỡ dòng.
+    &__list--pill {
+      display: grid;
+      grid-template-columns: auto repeat(2, 1fr);
+      grid-auto-rows: 1fr;
+      gap: rem(10);
+      padding: rem(12);
+    }
+
+    &__item--pill {
+      width: auto;
+      align-self: stretch;
+    }
+
+    &__item--header {
+      grid-column: 1;
+      grid-row: 1 / 3;
+    }
+
+    &__link--pill {
+      padding: rem(12) rem(16);
+      font-size: rem(13);
+
+      &:not(.p-ir-tabs__link--header) {
+        min-height: 0;
+      }
     }
   }
 
