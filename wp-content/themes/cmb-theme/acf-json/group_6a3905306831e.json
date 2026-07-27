@@ -4,6 +4,27 @@
     "fields": [
         {
             "key": "field_6a39055a517f5",
+            "label": "Tên E-Office CMB",
+            "name": "header_eoffice_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "E-Office CMB",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a39055a527f5",
             "label": "URL E-Office CMB",
             "name": "header_eoffice_url",
             "aria-label": "",
@@ -22,6 +43,27 @@
         },
         {
             "key": "field_6a39055a517f6",
+            "label": "Tên E-Office V1MC",
+            "name": "header_eoffice_v1mc_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "E-Office V1MC",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a39055a527f6",
             "label": "URL E-Office V1MC",
             "name": "header_eoffice_v1mc_url",
             "aria-label": "",
