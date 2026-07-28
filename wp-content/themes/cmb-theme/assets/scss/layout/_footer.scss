@@ -177,7 +177,7 @@ $footer-border: rgba($color-white, 0.12);
     p {
       font-size: $font-size-sm;
       font-weight: $font-weight-regular;
-      font-family: 'Google Sans Flex', $font-secondary;
+      font-family: $font-primary;
       color: $color-white;
       margin: 0;
       line-height: 1.4;
@@ -196,7 +196,7 @@ $footer-border: rgba($color-white, 0.12);
   &__branch-title {
     font-size: $font-size-md;
     font-weight: $font-weight-semibold;
-    font-family: 'Google Sans Flex', $font-secondary;
+    font-family: $font-primary;
     color: $color-white;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -216,7 +216,7 @@ $footer-border: rgba($color-white, 0.12);
     gap: 0.8rem;
     font-size: $font-size-sm;
     font-weight: $font-weight-regular;
-    font-family: 'Google Sans Flex', $font-secondary;
+    font-family: $font-primary;
     color: $color-white;
     line-height: 1.4;
 

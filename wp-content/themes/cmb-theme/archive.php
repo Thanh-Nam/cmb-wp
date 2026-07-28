@@ -213,7 +213,7 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
                 $cs_cats  = get_the_category();
                 $cs_term  = $cs_cats ? $cs_cats[0] : null;
                 $cs_slug  = $cs_term ? $cs_term->slug : '';
-                $cs_label = $cs_term ? strtoupper($cs_term->name) : '';
+                $cs_label = $cs_term ? mb_strtoupper($cs_term->name, 'UTF-8') : '';
             ?>
             <article class="p-news-columns__item">
               <a href="<?php the_permalink(); ?>" class="p-news-columns__item-img-wrap" tabindex="-1" aria-hidden="true">

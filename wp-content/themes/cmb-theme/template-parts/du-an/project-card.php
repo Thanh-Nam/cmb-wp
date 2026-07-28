@@ -23,7 +23,7 @@ $c_svc   = get_field( 'project_services' );
     <?php endif; ?>
     <?php if ( $c_name ) : ?>
     <span class="p-projects-card__tag p-projects-card__tag--<?php echo esc_attr( $c_slug ); ?>">
-      <?php echo esc_html( strtoupper( $c_name ) ); ?>
+      <?php echo esc_html( mb_strtoupper( $c_name, 'UTF-8' ) ); ?>
     </span>
     <?php endif; ?>
   </div>

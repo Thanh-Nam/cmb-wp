@@ -8,7 +8,7 @@
 $cats      = get_the_category();
 $term      = $cats ? $cats[0] : null;
 $cat_slug  = $term ? $term->slug : '';
-$cat_label = $term ? strtoupper($term->name) : '';
+$cat_label = $term ? mb_strtoupper($term->name, 'UTF-8') : '';
 
 $is_featured = function_exists('get_field') ? get_field('is_featured') : false;
 if ($is_featured) {

@@ -70,7 +70,7 @@ $slide_count = $featured_q->post_count;
           <div class="p-projects-featured__body">
 
             <?php if ($f_cat) : ?>
-            <span class="p-projects-featured__tag"><?php echo esc_html(strtoupper($f_cat)); ?></span>
+            <span class="p-projects-featured__tag"><?php echo esc_html(mb_strtoupper($f_cat, 'UTF-8')); ?></span>
             <?php endif; ?>
 
             <div class="p-projects-featured__img-wrap" data-reveal="fade-right">

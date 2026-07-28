@@ -272,7 +272,7 @@
     @include md {
       background-color: #004E8B;
       color: $color-white;
-      font-family: 'Be Vietnam Pro', sans-serif;
+      font-family: $font-primary;
       border-radius: rem(2);
       font-weight: $font-weight-bold;
       text-transform: uppercase;
