@@ -80,7 +80,8 @@ $header-bp: 1023px;
       position: absolute;
       top: 0;
       left: 0;
-      width: calc((100vw - 1920px + 4px) / 2);
+      // +3px: đè nhẹ lên mép ảnh để che vệt nén ảnh (seam) giữa màu fill và bg-header.webp
+      width: calc((100vw - 1920px + 4px) / 2 + 3px);
       height: 100%;
       background-color: #0061a6; // khớp cạnh trái bg-header.webp
       z-index: 0;
@@ -91,7 +92,8 @@ $header-bp: 1023px;
       position: absolute;
       top: 0;
       right: 0;
-      width: calc((100vw - 1920px + 4px) / 2);
+      // +3px: đè nhẹ lên mép ảnh để che vệt nén ảnh (seam) giữa màu fill và bg-header.webp
+      width: calc((100vw - 1920px + 4px) / 2 + 3px);
       height: $header-topbar-height;
       background-color: #0398e7; // khớp màu topbar cạnh phải bg-header.webp
       z-index: 0;
@@ -356,6 +358,11 @@ $header-bp: 1023px;
   @media (max-width: 1750px) and (min-width: 1024px) {
     min-width: calc(320px + 70 * (100vw - 1024px) / 726);
     gap: calc(6px + 6 * (100vw - 1024px) / 726);
+  }
+
+  // Màn ≥ 1920px: kéo logo lệch trái thêm cho cân với khoảng trắng 2 bên
+  @media (min-width: 1920px) {
+    margin-left: -40px;
   }
 
   @media (max-width: 1023px) {
