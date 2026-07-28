@@ -175,7 +175,12 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
             </div>
 
             <?php if ($noi_bo_q->have_posts()) :
-              while ($noi_bo_q->have_posts()) : $noi_bo_q->the_post(); ?>
+              while ($noi_bo_q->have_posts()) : $noi_bo_q->the_post();
+                $nb_cats  = get_the_category();
+                $nb_term  = $nb_cats ? $nb_cats[0] : null;
+                $nb_slug  = $nb_term ? $nb_term->slug : '';
+                $nb_label = $nb_term ? mb_strtoupper($nb_term->name, 'UTF-8') : '';
+            ?>
             <article class="p-news-columns__item">
               <a href="<?php the_permalink(); ?>" class="p-news-columns__item-img-wrap" tabindex="-1" aria-hidden="true">
                 <?php if (has_post_thumbnail()) :
@@ -191,6 +196,11 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
                   datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">
                   <?php echo get_the_date('d/m/Y'); ?>
                 </time>
+                <?php if ($nb_label) : ?>
+                <span class="p-news-columns__item-badge p-news-columns__item-badge--<?php echo esc_attr( $nb_slug ); ?>">
+                  <?php echo esc_html( $nb_label ); ?>
+                </span>
+                <?php endif; ?>
                 <h3 class="p-news-columns__item-title">
                   <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                 </h3>
@@ -226,9 +236,13 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
                 <?php endif; ?>
               </a>
               <div class="p-news-columns__item-content">
+                <time class="p-news-columns__item-date"
+                  datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">
+                  <?php echo get_the_date('d/m/Y'); ?>
+                </time>
                 <?php if ($cs_label) : ?>
-                <span class="p-news-columns__item-badge p-news-columns__item-badge--<?php echo $cs_slug; ?>">
-                  <?php echo $cs_label; ?>
+                <span class="p-news-columns__item-badge p-news-columns__item-badge--<?php echo esc_attr( $cs_slug ); ?>">
+                  <?php echo esc_html( $cs_label ); ?>
                 </span>
                 <?php endif; ?>
                 <h3 class="p-news-columns__item-title">

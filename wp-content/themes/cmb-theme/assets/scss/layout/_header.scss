@@ -349,12 +349,12 @@ $header-bp: 1023px;
   text-decoration: none;
   flex-shrink: 0;
   // Đẩy nav qua đường cong xanh của bg-header.webp (cố định ~510px từ trái sau cover scale)
-  min-width: 350px;
+  min-width: 390px;
   transition: all $transition-normal;
 
-  // Fluid: logo min-width từ 350px (1750px màn) → 290px (1024px màn)
+  // Fluid: logo min-width từ 390px (1750px màn) → 320px (1024px màn)
   @media (max-width: 1750px) and (min-width: 1024px) {
-    min-width: calc(290px + 60 * (100vw - 1024px) / 726);
+    min-width: calc(320px + 70 * (100vw - 1024px) / 726);
     gap: calc(6px + 6 * (100vw - 1024px) / 726);
   }
 
@@ -364,22 +364,22 @@ $header-bp: 1023px;
   }
 
   &__image {
-    height: 58px;
+    height: 72px;
     width: auto;
     flex-shrink: 0;
     transition: height $transition-normal;
 
-    // Fluid: height từ 58px (1750px) → 40px (1024px)
+    // Fluid: height từ 72px (1750px) → 50px (1024px)
     @media (max-width: 1750px) and (min-width: 1024px) {
-      height: calc(40px + 18 * (100vw - 1024px) / 726);
+      height: calc(50px + 22 * (100vw - 1024px) / 726);
     }
 
     @media (max-width: 1023px) {
-      height: 40px;
+      height: 50px;
     }
 
     @include sp {
-      height: 40px;
+      height: 50px;
     }
   }
 
@@ -410,26 +410,26 @@ $header-bp: 1023px;
 
   &__company {
     font-family: $font-primary;
-    font-size: rem(16);
+    font-size: rem(20);
     font-weight: $font-weight-semibold;
     color: $color-white;
     text-transform: uppercase;
     letter-spacing: 0.02em;
     transition: font-size $transition-normal;
 
-    // Fluid: font-size từ 16px (1750px) → 12px (1024px)
+    // Fluid: font-size từ 20px (1750px) → 15px (1024px)
     @media (max-width: 1750px) and (min-width: 1024px) {
-      font-size: calc(10px + 4 * (100vw - 1024px) / 726);
+      font-size: calc(15px + 5 * (100vw - 1024px) / 726);
     }
 
     @media (max-width: 1023px) {
-      font-size: rem(12);
+      font-size: rem(15);
     }
   }
 
   &__slogan {
     font-family: $font-primary;
-    font-size: rem(16);
+    font-size: rem(20);
     font-weight: $font-weight-semibold;
     color: $color-white;
     text-transform: uppercase;
@@ -437,13 +437,13 @@ $header-bp: 1023px;
     white-space: nowrap;
     transition: font-size $transition-normal;
 
-    // Fluid: font-size từ 16px (1750px) → 12px (1024px)
+    // Fluid: font-size từ 20px (1750px) → 15px (1024px)
     @media (max-width: 1750px) and (min-width: 1024px) {
-      font-size: calc(10px + 4 * (100vw - 1024px) / 726);
+      font-size: calc(15px + 5 * (100vw - 1024px) / 726);
     }
 
     @media (max-width: 1023px) {
-      font-size: rem(12);
+      font-size: rem(15);
     }
   }
 
