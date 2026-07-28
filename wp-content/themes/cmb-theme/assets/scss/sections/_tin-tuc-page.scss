@@ -324,12 +324,19 @@
     justify-content: flex-start;
   }
 
+  &__item-meta {
+    display: flex;
+    align-items: center;
+    gap: rem(8);
+    margin-bottom: rem(4);
+  }
+
   &__item-date {
     font-family: $font-primary;
     font-size: rem(11);
     color: $color-text-muted;
     font-weight: $font-weight-medium;
-    margin-bottom: rem(4);
+    white-space: nowrap;
   }
 
   &__item-title {

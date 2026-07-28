@@ -192,15 +192,17 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
                 <?php endif; ?>
               </a>
               <div class="p-news-columns__item-content">
-                <time class="p-news-columns__item-date"
-                  datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">
-                  <?php echo get_the_date('d/m/Y'); ?>
-                </time>
-                <?php if ($nb_label) : ?>
-                <span class="p-news-columns__item-badge p-news-columns__item-badge--<?php echo esc_attr( $nb_slug ); ?>">
-                  <?php echo esc_html( $nb_label ); ?>
-                </span>
-                <?php endif; ?>
+                <div class="p-news-columns__item-meta">
+                  <time class="p-news-columns__item-date"
+                    datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">
+                    <?php echo get_the_date('d/m/Y'); ?>
+                  </time>
+                  <?php if ($nb_label) : ?>
+                  <span class="p-news-columns__item-badge p-news-columns__item-badge--<?php echo esc_attr( $nb_slug ); ?>">
+                    <?php echo esc_html( $nb_label ); ?>
+                  </span>
+                  <?php endif; ?>
+                </div>
                 <h3 class="p-news-columns__item-title">
                   <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                 </h3>
@@ -236,15 +238,17 @@ $news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' 
                 <?php endif; ?>
               </a>
               <div class="p-news-columns__item-content">
-                <time class="p-news-columns__item-date"
-                  datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">
-                  <?php echo get_the_date('d/m/Y'); ?>
-                </time>
-                <?php if ($cs_label) : ?>
-                <span class="p-news-columns__item-badge p-news-columns__item-badge--<?php echo esc_attr( $cs_slug ); ?>">
-                  <?php echo esc_html( $cs_label ); ?>
-                </span>
-                <?php endif; ?>
+                <div class="p-news-columns__item-meta">
+                  <time class="p-news-columns__item-date"
+                    datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">
+                    <?php echo get_the_date('d/m/Y'); ?>
+                  </time>
+                  <?php if ($cs_label) : ?>
+                  <span class="p-news-columns__item-badge p-news-columns__item-badge--<?php echo esc_attr( $cs_slug ); ?>">
+                    <?php echo esc_html( $cs_label ); ?>
+                  </span>
+                  <?php endif; ?>
+                </div>
                 <h3 class="p-news-columns__item-title">
                   <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                 </h3>
