@@ -324,19 +324,12 @@
     justify-content: flex-start;
   }
 
-  &__item-meta {
-    display: flex;
-    align-items: center;
-    gap: rem(8);
-    margin-bottom: rem(4);
-  }
-
   &__item-date {
     font-family: $font-primary;
     font-size: rem(11);
     color: $color-text-muted;
     font-weight: $font-weight-medium;
-    white-space: nowrap;
+    margin-bottom: rem(4);
   }
 
   &__item-title {
@@ -353,22 +346,6 @@
       text-decoration: none;
       &:hover { color: $color-primary; }
     }
-  }
-
-  &__item-badge {
-    display: inline-block;
-    padding: rem(3) rem(8);
-    font-family: $font-primary;
-    font-size: rem(10);
-    font-weight: $font-weight-bold;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    border-radius: rem(3);
-    width: fit-content;
-
-    &--cang-bien  { background: #E6F2FC; color: $color-primary; }
-    &--logistics  { background: #E8F5E9; color: #2E7D32; }
-    &--hang-hai   { background: #FFF3E0; color: #E65100; }
   }
 
   @include md {
