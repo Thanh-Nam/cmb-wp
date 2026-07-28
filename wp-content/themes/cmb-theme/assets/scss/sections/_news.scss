@@ -133,7 +133,7 @@
     font-family: $font-primary;
     font-size: rem(16);
     font-weight: $font-weight-semibold;
-    color: #22313F;
+    color: #222222;
     white-space: nowrap;
   }
 
@@ -302,7 +302,7 @@
     font-size: rem(20);
     font-weight: $font-weight-bold;
     line-height: 1.35;
-    color: #303841;
+    color: #222222;
     margin: 0;
     @include text-truncate(3);
   }

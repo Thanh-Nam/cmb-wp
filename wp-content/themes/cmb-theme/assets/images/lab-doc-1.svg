@@ -47,8 +47,8 @@
   <text x="46" y="142" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle">PDF</text>
 
   <!-- Title text on white strip -->
-  <text x="102" y="228" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#22313F" text-anchor="middle" letter-spacing="0.5">NĂNG LỰC PHÒNG</text>
-  <text x="102" y="240" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#22313F" text-anchor="middle" letter-spacing="0.5">THÍ NGHIỆM</text>
+  <text x="102" y="228" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#222222" text-anchor="middle" letter-spacing="0.5">NĂNG LỰC PHÒNG</text>
+  <text x="102" y="240" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#222222" text-anchor="middle" letter-spacing="0.5">THÍ NGHIỆM</text>
 
   <!-- CMB logo text at bottom -->
   <text x="102" y="256" font-family="Arial, sans-serif" font-size="7" fill="#0379CC" text-anchor="middle" letter-spacing="1" font-weight="bold">CMB • 03/2026</text>

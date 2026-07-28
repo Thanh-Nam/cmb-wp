@@ -576,7 +576,8 @@ $header-bp: 1023px;
     // Font Montserrat theo Figma spec: Medium 18px
     font-family: $font-primary;
     font-size: rem(18);
-    font-weight: $font-weight-medium;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
     line-height: 1.47;
 
     // Nav nằm trên vùng TRẮNG của bg-header.webp → màu tối
@@ -681,7 +682,7 @@ $header-bp: 1023px;
 
     // Mobile styles
     @media (max-width: $header-bp) {
-      color: #22313F;
+      color: #222222;
       padding: rem(8) rem(16);
       font-size: rem(16);
       font-family: $font-primary;
