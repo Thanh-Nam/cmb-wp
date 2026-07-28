@@ -40,24 +40,22 @@
     var SCROLL_VISIBLE = slots.length - 1;
     var scrollSlots = slots.slice(1);
     var startIndex = 1;
-    var prevStartIndex = 1;
 
     // Gán cố định slot 0
     slots[0].querySelector('.p-history__year').textContent = MILESTONES[0].year;
     slots[0].querySelector('.p-history__desc').textContent = MILESTONES[0].desc;
 
     // Desktop: cập nhật 5 slot cuộn
-    function render() {
-      var slidDir = startIndex - prevStartIndex;
-
+    // direction: 1 = next, -1 = prev, bỏ trống = không hiệu ứng (lần render đầu)
+    function render(direction) {
       scrollSlots.forEach(function (slot, i) {
         var m = MILESTONES[startIndex + i];
         slot.querySelector('.p-history__year').textContent = m.year;
         slot.querySelector('.p-history__desc').textContent = m.desc;
       });
 
-      if (slidDir !== 0) {
-        var dirClass = slidDir > 0 ? 'is-sliding-next' : 'is-sliding-prev';
+      if (direction) {
+        var dirClass = direction > 0 ? 'is-sliding-next' : 'is-sliding-prev';
         scrollSlots.forEach(function (slot) {
           slot.classList.remove('is-sliding-next', 'is-sliding-prev');
           void slot.offsetWidth;
@@ -66,7 +64,6 @@
         });
       }
 
-      prevStartIndex = startIndex;
       btnPrev.disabled = startIndex === 1;
       btnNext.disabled = startIndex + SCROLL_VISIBLE >= MILESTONES.length;
 
@@ -109,14 +106,26 @@
       } else {
         startIndex = MILESTONES.length - SCROLL_VISIBLE;
       }
-      render();
+      render(1);
     });
 
     btnPrev.addEventListener('click', function () {
       if (startIndex === 1) return;
       startIndex = Math.max(1, startIndex - SCROLL_VISIBLE);
-      render();
+      render(-1);
     });
+
+    // Gọi khi tàu chạy hết 1 vòng đường (xem initHistoryShipActivation) —
+    // tự động sang mốc tiếp theo; nếu đang ở trang cuối thì quay vòng về đầu.
+    window.CMB_HistoryAutoAdvance = function () {
+      if (startIndex + SCROLL_VISIBLE >= MILESTONES.length) {
+        startIndex = 1;
+      } else {
+        var remaining = MILESTONES.length - (startIndex + SCROLL_VISIBLE);
+        startIndex = remaining >= SCROLL_VISIBLE ? startIndex + SCROLL_VISIBLE : MILESTONES.length - SCROLL_VISIBLE;
+      }
+      render(1);
+    };
 
     render();
   })();
@@ -158,10 +167,18 @@
     });
 
     var rafStarted = false;
+    var lastProgress = 0;
 
     function tick() {
       // Dùng SVG clock thay vì performance.now() để luôn sync với SMIL animateMotion
       var progress = (svgEl.getCurrentTime() % DUR_S) / DUR_S;
+
+      // Progress vừa "rớt" từ gần 1 về gần 0 nghĩa là tàu vừa chạy hết 1 vòng đường
+      // → tự động sang mốc lịch sử tiếp theo (quay vòng về đầu nếu đang ở trang cuối)
+      if (progress < lastProgress - 0.5 && window.CMB_HistoryAutoAdvance) {
+        window.CMB_HistoryAutoAdvance();
+      }
+      lastProgress = progress;
 
       var activeIndex = 0;
       for (var i = 0; i < fractions.length; i++) {

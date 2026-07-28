@@ -28,7 +28,9 @@ $header-bp: 1023px;
   right: 0;
   z-index: $z-header;
 
-  // bg-header.webp phủ toàn bộ header (topbar + main)
+  // bg-header.webp phủ toàn bộ header (topbar + main) — `cover` để bg xanh bên trái
+  // luôn cao đúng bằng header (không hở đáy). Chỉ pan ngang qua background-position
+  // theo từng breakpoint; khoảng hở với menu được bù bằng min-width của .l-logo.
   background-color: #fff; // fallback khi ảnh chưa load
   background-image: url('../images/bg-header.webp');
   background-size: cover;
@@ -82,7 +84,7 @@ $header-bp: 1023px;
       left: 0;
       // +3px: đè nhẹ lên mép ảnh để che vệt nén ảnh (seam) giữa màu fill và bg-header.webp
       width: calc((100vw - 1920px + 4px) / 2 + 3px);
-      height: 100%;
+      height: 100%; // khối màu CSS thuần (không phải ảnh) — cao full header, không bị giới hạn 100px như ảnh
       background-color: #0061a6; // khớp cạnh trái bg-header.webp
       z-index: 0;
     }
@@ -104,8 +106,15 @@ $header-bp: 1023px;
     background-position: -150px center;
   }
 
-  @media (max-width: 1280px) {
+  @media (max-width: 1480px) {
     background-position: -250px center;
+  }
+
+  // Menu 8 mục không đủ chỗ dưới 1200px dù đã dùng min-width nhỏ nhất của logo (440px)
+  // → pan sâu thêm vào ảnh (-320px) để logo có thể thu nhỏ hơn nữa, nhường chỗ cho menu.
+  // (-320, không sâu hơn nữa, để chữ logo 2 dòng vẫn nằm trọn trong nền xanh đặc.)
+  @media (max-width: 1199px) {
+    background-position: -305px center;
   }
 
   @media (max-width: 1023px) {
@@ -350,14 +359,26 @@ $header-bp: 1023px;
   gap: rem(12);
   text-decoration: none;
   flex-shrink: 0;
-  // Đẩy nav qua đường cong xanh của bg-header.webp (cố định ~510px từ trái sau cover scale)
-  min-width: 390px;
-  transition: all $transition-normal;
+  // Đẩy nav qua đường cong xanh của bg-header.webp.
+  // 4 mốc min-width dưới đây khớp đúng 4 vùng background-position của .l-header
+  // (0 / -150px / -250px / -350px tại 1750 / 1480 / 1199px — xem .l-header) + trừ hao
+  // phần container tự canh giữa khi vw > 1600px, đo trực tiếp qua trình duyệt để đảm bảo
+  // menu luôn nằm sau viền cong, không đè lên, đồng thời đủ chỗ cho menu không tràn ngang.
+  min-width: 635px; // > 1750px
 
-  // Fluid: logo min-width từ 390px (1750px màn) → 320px (1024px màn)
-  @media (max-width: 1750px) and (min-width: 1024px) {
-    min-width: calc(320px + 70 * (100vw - 1024px) / 726);
-    gap: calc(6px + 6 * (100vw - 1024px) / 726);
+  @media (max-width: 1750px) and (min-width: 1481px) {
+    min-width: 540px;
+    gap: rem(10);
+  }
+
+  @media (max-width: 1480px) and (min-width: 1200px) {
+    min-width: 440px;
+    gap: rem(8);
+  }
+
+  @media (max-width: 1199px) and (min-width: 1024px) {
+    min-width: 385px;
+    gap: rem(6);
   }
 
   // Màn ≥ 1920px: kéo logo lệch trái thêm cho cân với khoảng trắng 2 bên
@@ -406,6 +427,12 @@ $header-bp: 1023px;
       padding-left: calc(8px + 4 * (100vw - 1024px) / 726);
     }
 
+    // Giữ cố định ở mức nhỏ nhất trong khoảng logo phải thu hẹp tối đa (tránh chữ
+    // phình to dần đè ra khỏi nền xanh khi offset đã pan sâu — xem .l-header)
+    @media (max-width: 1199px) {
+      padding-left: rem(8);
+    }
+
     @media (max-width: 1023px) {
       padding-left: rem(8);
     }
@@ -429,6 +456,12 @@ $header-bp: 1023px;
       font-size: calc(15px + 5 * (100vw - 1024px) / 726);
     }
 
+    // Giữ cố định ở mức nhỏ nhất trong khoảng logo phải thu hẹp tối đa (tránh chữ
+    // phình to dần đè ra khỏi nền xanh khi offset đã pan sâu — xem .l-header)
+    @media (max-width: 1199px) {
+      font-size: rem(15);
+    }
+
     @media (max-width: 1023px) {
       font-size: rem(15);
     }
@@ -447,6 +480,12 @@ $header-bp: 1023px;
     // Fluid: font-size từ 20px (1750px) → 15px (1024px)
     @media (max-width: 1750px) and (min-width: 1024px) {
       font-size: calc(15px + 5 * (100vw - 1024px) / 726);
+    }
+
+    // Giữ cố định ở mức nhỏ nhất trong khoảng logo phải thu hẹp tối đa (tránh chữ
+    // phình to dần đè ra khỏi nền xanh khi offset đã pan sâu — xem .l-header)
+    @media (max-width: 1199px) {
+      font-size: rem(15);
     }
 
     @media (max-width: 1023px) {
@@ -573,9 +612,9 @@ $header-bp: 1023px;
     align-items: center;
     padding: rem(6) rem(13);
 
-    // Font Montserrat theo Figma spec: Medium 18px
+    // Font Montserrat — PC: 16px
     font-family: $font-primary;
-    font-size: rem(18);
+    font-size: rem(16);
     font-weight: $font-weight-bold;
     text-transform: uppercase;
     line-height: 1.47;
@@ -588,17 +627,17 @@ $header-bp: 1023px;
     transition: color $transition-fast, font-size $transition-normal, padding $transition-normal;
 
     @media (max-width: 1599px) {
-      font-size: rem(16);
+      font-size: rem(15);
       padding: rem(6) rem(10);
     }
 
     @media (max-width: 1439px) {
-      font-size: rem(15);
+      font-size: rem(14);
       padding: rem(6) rem(8);
     }
 
     @media (max-width: 1279px) {
-      font-size: rem(13.5);
+      font-size: rem(13);
       padding: rem(6) rem(6);
     }
 
