@@ -28,11 +28,6 @@
 
     @include mq(1480px) {
       margin-bottom: 4rem;
-      max-width: 56rem;
-    }
-
-    @include sp {
-      max-width: 26rem;
     }
   }
 
