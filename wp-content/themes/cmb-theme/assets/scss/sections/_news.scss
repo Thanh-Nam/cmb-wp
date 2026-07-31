@@ -133,7 +133,7 @@
     font-family: $font-primary;
     font-size: rem(16);
     font-weight: $font-weight-semibold;
-    color: #222222;
+    color: #525252;
     white-space: nowrap;
   }
 
@@ -144,7 +144,7 @@
     font-weight: $font-weight-semibold;
 
     line-height: 1.4;
-    color: #0379CC;
+    color: $color-cmb-darkblue;
   }
 
   &__featured-title {
@@ -192,7 +192,7 @@
     font-size: rem(18);
     font-weight: $font-weight-semibold;
     line-height: 1.4;
-    color: $color-primary;
+    color: $color-cmb-darkblue;
 
     transition: color $transition-fast, gap $transition-fast,
       text-decoration-color $transition-fast;
@@ -243,7 +243,7 @@
       font-size: rem(16);
       font-weight: $font-weight-semibold;
       line-height: 1.4;
-      color: $color-cmb-navy;
+      color: #525252;
     }
 
     .p-news__cat {

@@ -94,9 +94,7 @@
 
   &__title {
     font-family: $font-primary;
-    font-size: rem(28);
     font-weight: $font-weight-bold;
-    color: $color-cmb-navy;
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
@@ -180,10 +178,6 @@
   @include md {
     padding: rem(48) 0 rem(44);
 
-    &__title {
-      font-size: rem(22);
-    }
-
     &__track-wrap {
 
       &::before,
@@ -206,10 +200,6 @@
   // ------ Responsive: sp (mobile — 2 hàng chia đôi logo) ------
   @include sp {
     padding: rem(40) 0 rem(36);
-
-    &__title {
-      font-size: rem(18);
-    }
 
     &__rows {
       gap: rem(8);
