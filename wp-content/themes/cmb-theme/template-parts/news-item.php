@@ -7,8 +7,10 @@
 
 $cats      = get_the_category();
 $term      = $cats ? $cats[0] : null;
-$cat_slug  = $term ? $term->slug : '';
-$cat_label = $term ? mb_strtoupper($term->name, 'UTF-8') : '';
+$uncategorized_slugs = ['uncategorized', 'uncategorized-en', 'chua-phan-loai'];
+$is_uncategorized    = $term && in_array($term->slug, $uncategorized_slugs, true);
+$cat_slug  = ($term && !$is_uncategorized) ? $term->slug : '';
+$cat_label = ($term && !$is_uncategorized) ? mb_strtoupper($term->name, 'UTF-8') : '';
 
 $is_featured = function_exists('get_field') ? get_field('is_featured') : false;
 if ($is_featured) {

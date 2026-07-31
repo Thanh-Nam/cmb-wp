@@ -83,11 +83,11 @@
   &__value {
     font-family: $font-secondary;
     font-size: rem(14);
-    color: $color-cmb-navy;
+    color: #333333;
     line-height: 1.6;
 
     a {
-      color: $color-cmb-navy;
+      color: #333333;
       text-decoration: none;
       display: block;
       transition: color $transition-fast;
@@ -237,7 +237,7 @@
     font-family: $font-secondary;
     font-size: rem(13);
     font-weight: $font-weight-medium;
-    color: $color-cmb-navy;
+    color: #333333;
   }
 
   &__required {

@@ -126,7 +126,7 @@
   font-family: $font-primary;
   font-size: rem(14.5);
   font-weight: $font-weight-regular;
-  color: $color-cmb-navy;
+  color: #333333;
 
   @include mq(1439px) {
     font-size: rem(13);

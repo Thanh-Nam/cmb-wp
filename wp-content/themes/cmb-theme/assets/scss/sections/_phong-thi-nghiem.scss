@@ -34,7 +34,7 @@
     font-family: $font-primary;
     font-size: rem(20);
     font-weight: $font-weight-bold;
-    color: $color-cmb-navy;
+    color: #333333;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     margin: 0;
@@ -125,7 +125,7 @@
     font-family: $font-primary;
     font-size: rem(20);
     font-weight: $font-weight-bold;
-    color: $color-cmb-navy;
+    color: #333333;
     line-height: 1.4;
     margin: 0;
 
@@ -198,7 +198,7 @@
 
     &--outline {
       background: $color-white;
-      color: $color-cmb-navy;
+      color: #333333;
       border: 1.5px solid $color-border;
 
       &:hover {

@@ -445,7 +445,7 @@
     font-family: $font-primary;
     font-size: rem(20);
     font-weight: $font-weight-bold;
-    color: $color-cmb-navy;
+    color: #333333;
     line-height: 1;
   }
 
@@ -605,10 +605,11 @@
     letter-spacing: 0.05em;
     border-radius: rem(4);
 
-    &--noi-bo       { background: #E6F2FC; color: $color-primary; }
-    &--chuyen-nganh { background: #E8F5E9; color: #2E7D32; }
-    &--du-an        { background: #FFF3E0; color: #E65100; }
-    &--thong-bao    { background: #F3E5F5; color: #7B1FA2; }
+    &--noi-bo       { background: #E6F2FC; color: $color-cmb-darkblue; }
+    &--chuyen-nganh { background: #E8F5E9; color: $color-cmb-darkblue; }
+    &--du-an        { background: #FFF3E0; color: $color-cmb-darkblue; }
+    &--thong-bao    { background: #F3E5F5; color: $color-cmb-darkblue; }
+    &--tuyen-dung-tin-tuc { color: $color-cmb-darkblue; }
   }
 
   &__item-title {
