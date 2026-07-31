@@ -212,7 +212,7 @@
       display: block;
       font-size: rem(18);
       font-weight: $font-weight-semibold;
-      color: #656565;
+      color: $color-cmb-darkblue;
       margin-top: rem(12);
 
       @include mq(1280px) {

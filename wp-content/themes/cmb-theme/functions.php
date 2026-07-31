@@ -258,8 +258,8 @@ function cmb_enqueue_assets() {
         // thay cho ACF Options. Một tỉnh/thành có thể có nhiều dự án (slide).
         $loc_provinces = [
             'quang-ninh', 'hai-phong', 'thanh-hoa', 'nghe-an', 'quang-tri', 'da-nang',
-            'quang-ngai', 'khanh-hoa', 'ninh-thuan', 'binh-thuan', 'dong-nai',
-            'ba-ria-vung-tau', 'tay-ninh', 'tp-hcm', 'tien-giang', 'ben-tre', 'can-tho',
+            'quang-ngai', 'khanh-hoa', 'lam-dong', 'dong-nai',
+            'tay-ninh', 'tp-hcm', 'dong-thap', 'vinh-long', 'can-tho',
         ];
         $loc_query = new WP_Query( [
             'post_type'      => 'du-an',

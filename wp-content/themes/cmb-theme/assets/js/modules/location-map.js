@@ -65,11 +65,9 @@
     'da-nang': { city: _t('ĐÀ NẴNG', 'DA NANG'), projects: [_placeholderProj('Đà Nẵng', 'Da Nang')] },
     'quang-ngai': { city: _t('QUẢNG NGÃI', 'QUANG NGAI'), projects: [_placeholderProj('Quảng Ngãi', 'Quang Ngai')] },
     'khanh-hoa': { city: _t('KHÁNH HÒA', 'KHANH HOA'), projects: [_placeholderProj('Khánh Hòa', 'Khanh Hoa')] },
-    'ninh-thuan': { city: _t('NINH THUẬN', 'NINH THUAN'), projects: [_placeholderProj('Ninh Thuận', 'Ninh Thuan')] },
-    'binh-thuan': { city: _t('BÌNH THUẬN', 'BINH THUAN'), projects: [_placeholderProj('Bình Thuận', 'Binh Thuan')] },
-    'ba-ria-vung-tau': { city: _t('BÀ RỊA - VŨNG TÀU', 'BA RIA - VUNG TAU'), projects: [_placeholderProj('Bà Rịa - Vũng Tàu', 'Ba Ria - Vung Tau')] },
-    'tien-giang': { city: _t('TIỀN GIANG', 'TIEN GIANG'), projects: [_placeholderProj('Tiền Giang', 'Tien Giang')] },
-    'ben-tre': { city: _t('BẾN TRE', 'BEN TRE'), projects: [_placeholderProj('Bến Tre', 'Ben Tre')] },
+    'lam-dong': { city: _t('LÂM ĐỒNG', 'LAM DONG'), projects: [_placeholderProj('Lâm Đồng', 'Lam Dong')] },
+    'dong-thap': { city: _t('ĐỒNG THÁP', 'DONG THAP'), projects: [_placeholderProj('Đồng Tháp', 'Dong Thap')] },
+    'vinh-long': { city: _t('VĨNH LONG', 'VINH LONG'), projects: [_placeholderProj('Vĩnh Long', 'Vinh Long')] },
     'can-tho': { city: _t('CẦN THƠ', 'CAN THO'), projects: [_placeholderProj('Cần Thơ', 'Can Tho')] }
   };
 
@@ -94,25 +92,25 @@
     var img = p.imgSrc || _placeholderImg;
     return (
       '<div class="swiper-slide p-location__slide">' +
-        '<div class="p-location__details">' +
-          '<div class="p-location__detail-row">' +
-            '<span class="p-location__detail-label">' + _escapeHtml(_t('Dự án:', 'Project:')) + '</span>' +
-            '<p class="p-location__detail-text p-location__detail-text--title" title="' + _escapeHtml(p.project) + '">' + _escapeHtml(p.project) + '</p>' +
-          '</div>' +
-          '<div class="p-location__detail-row">' +
-            '<span class="p-location__detail-label">' + _escapeHtml(_t('Mô tả:', 'Description:')) + '</span>' +
-            '<p class="p-location__detail-text p-location__detail-text--desc" title="' + _escapeHtml(p.desc) + '">' + _escapeHtml(p.desc) + '</p>' +
-          '</div>' +
-        '</div>' +
-        '<div class="p-location__img-wrap">' +
-          '<img src="' + _escapeHtml(img) + '" alt="' + _escapeHtml(p.imgAlt) + '" class="p-location__img" loading="lazy" />' +
-        '</div>' +
-        '<a href="' + _escapeHtml(p.link || '#') + '" class="p-location__link" title="' + _escapeHtml(_t('Xem chi tiết dự án', 'View project details')) + '">' +
-          _escapeHtml(_t('Xem dự án', 'View project')) +
-          '<svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-            '<path d="M1 6H15M10 1L15 6L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />' +
-          '</svg>' +
-        '</a>' +
+      '<div class="p-location__details">' +
+      '<div class="p-location__detail-row">' +
+      '<span class="p-location__detail-label">' + _escapeHtml(_t('Dự án:', 'Project:')) + '</span>' +
+      '<p class="p-location__detail-text p-location__detail-text--title" title="' + _escapeHtml(p.project) + '">' + _escapeHtml(p.project) + '</p>' +
+      '</div>' +
+      '<div class="p-location__detail-row">' +
+      '<span class="p-location__detail-label">' + _escapeHtml(_t('Mô tả:', 'Description:')) + '</span>' +
+      '<p class="p-location__detail-text p-location__detail-text--desc" title="' + _escapeHtml(p.desc) + '">' + _escapeHtml(p.desc) + '</p>' +
+      '</div>' +
+      '</div>' +
+      '<div class="p-location__img-wrap">' +
+      '<img src="' + _escapeHtml(img) + '" alt="' + _escapeHtml(p.imgAlt) + '" class="p-location__img" loading="lazy" />' +
+      '</div>' +
+      '<a href="' + _escapeHtml(p.link || '#') + '" class="p-location__link" title="' + _escapeHtml(_t('Xem chi tiết dự án', 'View project details')) + '">' +
+      _escapeHtml(_t('Xem dự án', 'View project')) +
+      '<svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<path d="M1 6H15M10 1L15 6L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />' +
+      '</svg>' +
+      '</a>' +
       '</div>'
     );
   }
@@ -382,22 +380,20 @@
         // 5. Dữ liệu 17 tỉnh — toạ độ viewBox 980×981, đúng vị trí địa lý thực tế.
         // dot = chấm trên bản đồ; box = tâm nhãn tên tỉnh.
         var PROVINCES = [
-          { id: 'quang-ninh', name: _t('QUẢNG NINH', 'QUANG NINH'), dot: { x: 540, y: 160 }, box: { x: 550, y: 80 } },
-          { id: 'hai-phong', name: _t('HẢI PHÒNG', 'HAI PHONG'), dot: { x: 493.7, y: 182.7 }, box: { x: 660, y: 183 } },
-          { id: 'thanh-hoa', name: _t('THANH HÓA', 'THANH HOA'), dot: { x: 390, y: 300 }, box: { x: 288, y: 222 } },
-          { id: 'nghe-an', name: _t('NGHỆ AN', 'NGHE AN'), dot: { x: 455, y: 350 }, box: { x: 255, y: 320 } },
-          { id: 'quang-tri', name: _t('QUẢNG TRỊ', 'QUANG TRI'), dot: { x: 555, y: 460 }, box: { x: 390, y: 465 } },
-          { id: 'da-nang', name: _t('ĐÀ NẴNG', 'DA NANG'), dot: { x: 607.5, y: 517.9 }, box: { x: 790, y: 500 } },
-          { id: 'quang-ngai', name: _t('QUẢNG NGÃI', 'QUANG NGAI'), dot: { x: 600, y: 554.3 }, box: { x: 400, y: 565 } },
-          { id: 'khanh-hoa', name: _t('KHÁNH HÒA', 'KHANH HOA'), dot: { x: 643.9, y: 683.3 }, box: { x: 790, y: 595 } },
-          { id: 'ninh-thuan', name: _t('NINH THUẬN', 'NINH THUAN'), dot: { x: 650, y: 745 }, box: { x: 830, y: 660 } },
-          { id: 'binh-thuan', name: _t('BÌNH THUẬN', 'BINH THUAN'), dot: { x: 595, y: 780 }, box: { x: 790, y: 720 } },
-          { id: 'dong-nai', name: _t('ĐỒNG NAI', 'DONG NAI'), dot: { x: 564.8, y: 789.6 }, box: { x: 280, y: 630 } },
-          { id: 'ba-ria-vung-tau', name: _t('BÀ RỊA - VŨNG TÀU', 'BA RIA - VUNG TAU'), dot: { x: 570, y: 815 }, box: { x: 800, y: 780 } },
-          { id: 'tay-ninh', name: _t('TÂY NINH', 'TAY NINH'), dot: { x: 470, y: 770 }, box: { x: 300, y: 690 } },
-          { id: 'tp-hcm', name: _t('TP. HỒ CHÍ MINH', 'HO CHI MINH CITY'), dot: { x: 521.3, y: 806.7 }, box: { x: 260, y: 758 } },
-          { id: 'tien-giang', name: _t('TIỀN GIANG', 'TIEN GIANG'), dot: { x: 445, y: 825 }, box: { x: 250, y: 820 } },
-          { id: 'ben-tre', name: _t('BẾN TRE', 'BEN TRE'), dot: { x: 545, y: 828 }, box: { x: 620, y: 895 } },
+          { id: 'quang-ninh', name: _t('QUẢNG NINH', 'QUANG NINH'), dot: { x: 530, y: 170 }, box: { x: 600, y: 80 } },
+          { id: 'hai-phong', name: _t('HẢI PHÒNG', 'HAI PHONG'), dot: { x: 490, y: 190 }, box: { x: 660, y: 183 } },
+          { id: 'thanh-hoa', name: _t('THANH HÓA', 'THANH HOA'), dot: { x: 430, y: 250 }, box: { x: 300, y: 180 } },
+          { id: 'nghe-an', name: _t('NGHỆ AN', 'NGHE AN'), dot: { x: 410, y: 300 }, box: { x: 255, y: 260 } },
+          { id: 'quang-tri', name: _t('QUẢNG TRỊ', 'QUANG TRI'), dot: { x: 485, y: 405 }, box: { x: 350, y: 360 } },
+          { id: 'da-nang', name: _t('ĐÀ NẴNG', 'DA NANG'), dot: { x: 580, y: 505 }, box: { x: 770, y: 480 } },
+          { id: 'quang-ngai', name: _t('QUẢNG NGÃI', 'QUANG NGAI'), dot: { x: 580, y: 570 }, box: { x: 400, y: 505 } },
+          { id: 'khanh-hoa', name: _t('KHÁNH HÒA', 'KHANH HOA'), dot: { x: 643.9, y: 720 }, box: { x: 790, y: 620 } },
+          { id: 'lam-dong', name: _t('LÂM ĐỒNG', 'LAM DONG'), dot: { x: 595, y: 780 }, box: { x: 790, y: 720 } },
+          { id: 'dong-nai', name: _t('ĐỒNG NAI', 'DONG NAI'), dot: { x: 520, y: 770 }, box: { x: 280, y: 630 } },
+          { id: 'tay-ninh', name: _t('TÂY NINH', 'TAY NINH'), dot: { x: 470, y: 770 }, box: { x: 300, y: 720 } },
+          { id: 'tp-hcm', name: _t('TP. HỒ CHÍ MINH', 'HOCHI MINH CITY'), dot: { x: 530, y: 830 }, box: { x: 760, y: 800 } },
+          { id: 'dong-thap', name: _t('ĐỒNG THÁP', 'DONG THAP'), dot: { x: 445, y: 835 }, box: { x: 250, y: 800 } },
+          { id: 'vinh-long', name: _t('VĨNH LONG', 'VINH LONG'), dot: { x: 480, y: 860 }, box: { x: 620, y: 865 } },
           { id: 'can-tho', name: _t('CẦN THƠ', 'CAN THO'), dot: { x: 452, y: 878 }, box: { x: 470, y: 955 } }
         ];
 

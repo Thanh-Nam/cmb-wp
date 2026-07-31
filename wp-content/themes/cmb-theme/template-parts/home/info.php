@@ -11,20 +11,20 @@ $info_items   = get_field( 'info_item', 'option' );
 <!-- ======= INFO ======= -->
 <section class="p-info" id="info" aria-label="<?php echo esc_attr( cmb_txt( 'Giới thiệu chung', 'General Introduction' ) ); ?>">
 
-  <!-- Background: cùng cấp container, absolute full-width, không bị giới hạn bởi container -->
-  <div class="p-info__bg" aria-hidden="true"></div>
-
   <div class="l-container">
     <div class="p-info__card" data-reveal="fade-up">
+      <!-- Background: nằm trong card, giới hạn đúng theo card -->
+      <div class="p-info__bg" aria-hidden="true"></div>
+
       <div class="p-info__inner">
 
         <!-- Left: content -->
         <div class="p-info__left">
           <?php if ( $info_slogan ) : ?>
-            <span class="c-section-label c-section-label--white p-info__label"><?php echo $info_title; ?></span>
+            <span class="c-section-label p-info__label"><?php echo $info_title; ?></span>
           <?php endif; ?>
           <?php if ( $info_title ) : ?>
-            <h2 class="c-section-title c-section-title--white p-info__title"><?php echo $info_slogan; ?></h2>
+            <h2 class="c-section-title p-info__title"><?php echo $info_slogan; ?></h2>
           <?php endif; ?>
           <?php if ( $info_content ) : ?>
             <p class="p-info__desc"><?php echo $info_content; ?></p>
