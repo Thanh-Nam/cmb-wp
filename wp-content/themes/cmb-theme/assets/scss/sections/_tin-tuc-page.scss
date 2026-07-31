@@ -604,12 +604,12 @@
     font-weight: $font-weight-bold;
     letter-spacing: 0.05em;
     border-radius: rem(4);
+    color: $color-cmb-darkblue; // fallback cho danh mục mới thêm ở server chưa có modifier riêng
 
-    &--noi-bo       { background: #E6F2FC; color: $color-cmb-darkblue; }
-    &--chuyen-nganh { background: #E8F5E9; color: $color-cmb-darkblue; }
-    &--du-an        { background: #FFF3E0; color: $color-cmb-darkblue; }
-    &--thong-bao    { background: #F3E5F5; color: $color-cmb-darkblue; }
-    &--tuyen-dung-tin-tuc { color: $color-cmb-darkblue; }
+    &--noi-bo       { background: #E6F2FC; }
+    &--chuyen-nganh { background: #E8F5E9; }
+    &--du-an        { background: #FFF3E0; }
+    &--thong-bao    { background: #F3E5F5; }
   }
 
   &__item-title {
