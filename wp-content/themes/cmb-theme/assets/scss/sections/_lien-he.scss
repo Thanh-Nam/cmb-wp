@@ -184,17 +184,6 @@
     margin: 0 0 rem(32);
     padding-bottom: rem(20);
     border-bottom: 2px solid $color-primary;
-    position: relative;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: rem(48);
-      height: 2px;
-      background: $color-primary;
-    }
   }
 
   @include md {
@@ -332,7 +321,7 @@
   &__submit {
     width: 100%;
     padding: rem(14) rem(24);
-    background: $color-primary;
+    background: $color-cmb-darkblue;
     color: $color-white;
     border: none;
     border-radius: rem(6);
@@ -346,7 +335,7 @@
     margin-top: rem(6);
 
     &:hover {
-      background: $color-primary-dark;
+      background: darken($color-cmb-darkblue, 8%);
       transform: translateY(-1px);
     }
 

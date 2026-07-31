@@ -9,11 +9,12 @@
   position: relative;
   overflow: hidden;
   min-height: rem(360);
-  background-color: $color-cmb-navy;
+  background-color: $color-cmb-darkblue; // Xanh primary pha nhạt hơn — bớt gắt, vẫn đủ tương phản cho chữ trắng
   display: flex;
   align-items: stretch;
 
   // Ảnh phủ từ ~28% bên phải ra tận cạnh màn hình
+  // Mask mờ dần ở mép trái để hoà tan vào vùng màu đặc, tránh lộ đường ranh giới cứng
   &__image-side {
     position: absolute;
     top: 0;
@@ -21,6 +22,8 @@
     bottom: 0;
     width: 72%;
     z-index: 0;
+    mask-image: linear-gradient(to right, transparent 0%, black 30%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%);
   }
 
   &__image {
@@ -41,12 +44,13 @@
     z-index: 1;
     pointer-events: none;
     background: linear-gradient(to right,
-        $color-cmb-navy 0%,
-        $color-cmb-navy 28%,
-        rgba($color-cmb-navy, 0.92) 40%,
-        rgba($color-cmb-navy, 0.6) 54%,
-        rgba($color-cmb-navy, 0.18) 66%,
-        transparent 74%);
+        rgba($color-cmb-darkblue, 0.85) 0%,
+        rgba($color-cmb-darkblue, 0.85) 14%,
+        rgba($color-cmb-darkblue, 0.6) 28%,
+        rgba($color-cmb-darkblue, 0.4) 42%,
+        rgba($color-cmb-darkblue, 0.22) 56%,
+        rgba($color-cmb-darkblue, 0.08) 68%,
+        transparent 78%);
   }
 
   .l-container {
@@ -113,7 +117,7 @@
     font-family: $font-primary;
     font-size: clamp(2.8rem, 3vw, 4rem);
     font-weight: $font-weight-bold;
-    color: $color-cmb-darkblue;
+    color: $color-white;
     line-height: 1.3;
     margin: 0 0 rem(12);
     letter-spacing: 0.01em;
@@ -139,11 +143,12 @@
 
     &__fade {
       background: linear-gradient(to right,
-          $color-cmb-navy 0%,
-          $color-cmb-navy 22%,
-          rgba($color-cmb-navy, 0.9) 36%,
-          rgba($color-cmb-navy, 0.5) 52%,
-          rgba($color-cmb-navy, 0.1) 64%,
+          rgba($color-cmb-darkblue, 0.85) 0%,
+          rgba($color-cmb-darkblue, 0.85) 10%,
+          rgba($color-cmb-darkblue, 0.55) 22%,
+          rgba($color-cmb-darkblue, 0.32) 36%,
+          rgba($color-cmb-darkblue, 0.15) 52%,
+          rgba($color-cmb-darkblue, 0.05) 64%,
           transparent 72%);
     }
 
@@ -165,7 +170,7 @@
     }
 
     &__fade {
-      background: rgba($color-cmb-navy, 0.62); // overlay đặc thay gradient
+      background: rgba($color-cmb-darkblue, 0.62); // overlay đặc thay gradient
     }
 
     .l-container {

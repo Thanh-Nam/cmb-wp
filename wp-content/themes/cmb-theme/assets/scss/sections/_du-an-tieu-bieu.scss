@@ -255,6 +255,7 @@
 // ======= 4. FEATURED PROJECT =======
 .p-projects-featured {
   padding: rem(80) 0 rem(72);
+  background: $color-cmb-darkblue;
 
   // ------ Header ------
   &__header {
@@ -278,7 +279,7 @@
     font-family: $font-primary;
     font-size: rem(20);
     font-weight: $font-weight-bold;
-    color: $color-cmb-darkblue;
+    color: $color-white;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     margin: 0;
@@ -428,7 +429,7 @@
     font-family: $font-primary;
     font-size: rem(28);
     font-weight: $font-weight-bold;
-    color: $color-primary;
+    color: $color-cmb-darkblue;
     line-height: 1.3;
     margin: 0;
   }
@@ -515,7 +516,7 @@
     font-family: $font-primary;
     font-size: rem(14);
     font-weight: $font-weight-semibold;
-    color: $color-primary;
+    color: $color-cmb-darkblue;
     text-decoration: none;
     padding-top: rem(4);
     transition: gap $transition-fast, color $transition-fast;

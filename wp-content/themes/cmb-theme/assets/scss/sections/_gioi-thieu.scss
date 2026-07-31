@@ -624,7 +624,7 @@
 
   &__title {
     font-family: $font-primary;
-    font-size: rem(26);
+    font-size: rem(36);
     font-weight: $font-weight-bold;
     color: $color-cmb-darkblue;
     letter-spacing: 0.1em;
@@ -898,7 +898,7 @@
 
   &__title {
     font-family: $font-primary;
-    font-size: rem(30);
+    font-size: rem(36);
     font-weight: $font-weight-bold;
     color: $color-cmb-darkblue;
     text-transform: uppercase;
@@ -1236,5 +1236,17 @@
 .gioi-thieu {
   .p-partner {
     padding-bottom: rem(100);
+  }
+
+}
+
+// Đồng bộ font-size các tiêu đề section trên PC — chỉ áp dụng riêng
+// trang Giới thiệu, không đụng tới .c-section-title/.p-partner__title
+// dùng chung ở trang chủ. Body class thực tế do WP sinh ra là
+// "page--gioi-thieu" (2 gạch ngang), không phải ".gioi-thieu" ở trên.
+.page--gioi-thieu {
+  .p-achievements__header .c-section-title,
+  .p-partner__title {
+    font-size: rem(36);
   }
 }
