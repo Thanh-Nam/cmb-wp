@@ -261,7 +261,7 @@
     font-family: $font-primary;
     font-size: rem(15);
     font-weight: $font-weight-bold;
-    color: $color-cmb-navy;
+    color: $color-cmb-darkblue;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     margin: 0;
@@ -337,7 +337,7 @@
     font-size: rem(13);
     font-weight: $font-weight-semibold;
     line-height: 1.45;
-    color: $color-cmb-navy;
+    color: $color-cmb-darkblue;
     margin: 0;
     @include text-truncate(3);
 
@@ -483,7 +483,7 @@
     font-family: $font-primary;
     font-size: rem(24);
     font-weight: $font-weight-bold;
-    color: $color-cmb-navy;
+    color: $color-cmb-darkblue;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     margin: 0;
@@ -617,7 +617,7 @@
     font-size: rem(16);
     font-weight: $font-weight-bold;
     line-height: 1.4;
-    color: $color-cmb-navy;
+    color: $color-cmb-darkblue;
     margin: 0;
     transition: color $transition-fast;
     @include text-truncate(2);

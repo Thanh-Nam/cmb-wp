@@ -370,7 +370,7 @@
   font-family: $font-secondary;
   font-size: rem(13.5);
   font-weight: $font-weight-medium;
-  color: $color-cmb-navy;
+  color: $color-cmb-darkblue;
   line-height: 1.45;
   @include text-truncate(2);
   transition: color $transition-fast;
@@ -503,7 +503,7 @@
   font-family: $font-secondary;
   font-size: rem(14);
   font-weight: $font-weight-medium;
-  color: $color-cmb-navy;
+  color: $color-cmb-darkblue;
   line-height: 1.45;
   @include text-truncate(2);
   transition: color $transition-fast;
@@ -555,7 +555,7 @@
   font-family: $font-secondary;
   font-size: rem(13);
   font-weight: $font-weight-medium;
-  color: $color-cmb-navy;
+  color: $color-cmb-darkblue;
   line-height: 1.4;
   @include text-truncate(2);
   transition: color $transition-fast;
