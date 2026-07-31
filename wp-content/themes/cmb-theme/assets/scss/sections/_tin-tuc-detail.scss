@@ -203,7 +203,7 @@
   font-family: $font-secondary;
   font-size: rem(16);
   line-height: $line-height-normal;
-  color: $color-text;
+  color: #333333;
 
   p { margin: 0 0 rem(20); }
 
@@ -214,6 +214,12 @@
     color: $color-cmb-navy;
     margin-bottom: rem(28) !important;
   }
+}
+
+// Trang chi tiết Lĩnh vực hoạt động (single-linh-vuc.php) dùng chung markup
+// nhưng giữ nguyên màu nội dung cũ, không áp #333 của tin tức.
+.p-news-detail__article--full .p-news-detail__body {
+  color: $color-text;
 }
 
 .p-news-detail__quote {
