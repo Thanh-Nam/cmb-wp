@@ -25,17 +25,6 @@
     <div class="l-container">
       <div class="p-contact__inner" data-reveal="fade-up">
 
-        <h2 class="p-contact__title"><?php echo $cta_title; ?></h2>
-
-        <a href="<?php echo $cta_link; ?>" class="p-contact__btn" id="btn-contact-cta">
-          <?php echo cmb_txt( 'Liên hệ tư vấn', 'Contact for consulting' ); ?>
-          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true">
-            <path d="M1 6H15M10 1L15 6L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-        </a>
-
       </div>
     </div>
   </section>

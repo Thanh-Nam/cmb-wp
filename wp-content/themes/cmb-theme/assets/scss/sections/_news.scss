@@ -152,7 +152,7 @@
     font-size: rem(38);
     font-weight: $font-weight-bold;
     line-height: 1.3;
-    color: $color-cmb-navy;
+    color: $color-cmb-darkblue;
     text-transform: uppercase;
     margin: 0;
   }
@@ -302,7 +302,7 @@
     font-size: rem(20);
     font-weight: $font-weight-bold;
     line-height: 1.35;
-    color: #222222;
+    color: $color-cmb-darkblue;
     margin: 0;
     @include text-truncate(3);
   }
