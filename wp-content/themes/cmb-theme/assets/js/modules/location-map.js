@@ -83,6 +83,29 @@
     });
   }
 
+  // Thứ tự cố định để chọn tỉnh mặc định (đầu tiên có dự án thật) khi cần —
+  // trùng danh sách 17 id ở PROVINCES bên dưới, chỉ cần đúng tập id, thứ tự
+  // ưu tiên bắc → nam.
+  var _provinceOrder = [
+    'quang-ninh', 'hai-phong', 'thanh-hoa', 'nghe-an', 'quang-tri', 'da-nang',
+    'quang-ngai', 'khanh-hoa', 'lam-dong', 'dong-nai',
+    'tay-ninh', 'tp-hcm', 'dong-thap', 'vinh-long', 'can-tho'
+  ];
+
+  // Tỉnh chỉ được coi là "đã gắn dự án" khi có dữ liệu thật từ CMB_LocationData
+  // (không tính placeholder "Đang cập nhật") — dùng để ẩn dot/nhãn trên bản đồ.
+  function _hasRealProjects(id) {
+    return !!(window.CMB_LocationData && window.CMB_LocationData[id] &&
+      window.CMB_LocationData[id].projects && window.CMB_LocationData[id].projects.length);
+  }
+
+  function _getDefaultCityKey() {
+    for (var i = 0; i < _provinceOrder.length; i++) {
+      if (_hasRealProjects(_provinceOrder[i])) return _provinceOrder[i];
+    }
+    return 'hai-phong'; // fallback nếu chưa tỉnh nào gắn dự án thật (tránh panel trống)
+  }
+
   function _escapeHtml(str) {
     return String(str == null ? '' : str)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -312,8 +335,39 @@
           }
         });
 
-        // 3. Animate dashed connector lines (bao gồm cả line trang trí gốc)
+        // 3. Animate dashed connector lines (bao gồm cả line trang trí gốc).
+        // 7 line nét đứt này được vẽ SẴN trong map.svg (không phải tạo động
+        // trong PROVINCES.forEach ở dưới), mỗi line toả từ Hà Nội tới đúng toạ
+        // độ dot của 1 tỉnh — nên tỉnh nào chưa gắn dự án thật thì ẩn luôn line
+        // tương ứng theo toạ độ điểm cuối, tránh còn sót line trỏ tới dot đã ẩn.
+        var STATIC_LINE_ENDPOINTS = [
+          { x: 595, y: 780, id: 'lam-dong' },
+          { x: 530, y: 830, id: 'tp-hcm' },
+          { x: 470, y: 770, id: 'tay-ninh' },
+          { x: 530, y: 170, id: 'quang-ninh' },
+          { x: 490, y: 190, id: 'hai-phong' },
+          { x: 430, y: 250, id: 'thanh-hoa' },
+          { x: 410, y: 300, id: 'nghe-an' }
+        ];
         svg.querySelectorAll('[stroke-dasharray]').forEach(function (el, i) {
+          var d = el.getAttribute('d') || '';
+          var nums = d.match(/-?\d+(\.\d+)?/g);
+          var endX = nums ? parseFloat(nums[nums.length - 2]) : null;
+          var endY = nums ? parseFloat(nums[nums.length - 1]) : null;
+          var match = null;
+          if (endX !== null) {
+            STATIC_LINE_ENDPOINTS.some(function (pt) {
+              if (Math.abs(endX - pt.x) < 1 && Math.abs(endY - pt.y) < 1) {
+                match = pt;
+                return true;
+              }
+              return false;
+            });
+          }
+          if (match && !_hasRealProjects(match.id)) {
+            el.style.display = 'none';
+            return;
+          }
           el.classList.add('p-location__map-line');
           el.style.animationDelay = (-i * 0.2) + 's';
         });
@@ -405,6 +459,10 @@
         var dotRippleRings = {};
 
         PROVINCES.forEach(function (p) {
+          // Tỉnh chưa gắn dự án thật (không có trong CMB_LocationData) — ẩn
+          // hẳn dot/nhãn/connector, không render lên bản đồ.
+          if (!_hasRealProjects(p.id)) return;
+
           // --- Dot: halo mờ + chấm trắng, kích thước bằng nhau cho mọi tỉnh ---
           var halo = document.createElementNS(SVG_NS, 'circle');
           halo.setAttribute('cx', p.dot.x);
@@ -546,9 +604,9 @@
           });
         }
 
-        // HẢI PHÒNG active by default — desktop only (>=1024, khớp @include md)
+        // Tỉnh đầu tiên có dự án thật active by default — desktop only (>=1024, khớp @include md)
         if (window.innerWidth >= 1024) {
-          setActiveLabel('hai-phong');
+          setActiveLabel(_getDefaultCityKey());
         }
 
         // Khi resize: đồng bộ active state với breakpoint
@@ -564,7 +622,7 @@
             });
           } else {
             var hasActive = Object.keys(tagEls).some(function (id) { return tagEls[id].classList.contains('is-active'); });
-            if (!hasActive) setActiveLabel('hai-phong');
+            if (!hasActive) setActiveLabel(_getDefaultCityKey());
           }
         });
       })
@@ -581,7 +639,7 @@
     _locSliderWrapper = document.getElementById('location-slider-wrapper');
 
     // Fill panel with default city data immediately (no animation)
-    var def = _locationData['hai-phong'];
+    var def = _locationData[_getDefaultCityKey()];
     if (def) {
       if (_locCityEl) _locCityEl.textContent = def.city;
       _locSwiper = _renderProjectSlider(
