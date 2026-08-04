@@ -312,6 +312,14 @@ function cmb_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'cmb_enqueue_assets' );
 
 // ============================================================
+// ADMIN BAR — ẩn logo WordPress mặc định (góc trái)
+// ============================================================
+add_action( 'wp_before_admin_bar_render', function () {
+    global $wp_admin_bar;
+    $wp_admin_bar->remove_node( 'wp-logo' );
+} );
+
+// ============================================================
 // EXCERPT LENGTH
 // ============================================================
 function cmb_excerpt_length( $length ) {
