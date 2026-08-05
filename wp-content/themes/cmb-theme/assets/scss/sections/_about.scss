@@ -90,27 +90,40 @@
   &__body {
     position: relative;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: rem(18);
+    justify-content: center;
+    align-items: flex-start;
+    gap: rem(48);
 
     @include md {
-      flex-direction: column;
-      align-items: stretch;
-      gap: rem(32);
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: rem(20);
     }
   }
 
-  // ------ Content (Left) ------
+  // ------ Content (Center) ------
   &__content {
-    width: 52%;
+    width: 34%;
+    text-align: center;
+
+    @include mq(1400px) {
+      width: 46%;
+    }
 
     @include md {
+      width: 100%;
+      order: -1;
+    }
+
+    @include sp {
       width: 100%;
     }
   }
 
   &__quote-icon {
+    display: flex;
+    justify-content: center;
     margin-bottom: rem(8);
     color: $color-primary;
 
@@ -121,112 +134,119 @@
 
   &__quote {
     font-family: 'Dancing Script', cursive;
-    font-size: rem(36);
+    font-size: rem(30);
     font-weight: 700;
     line-height: 1.4;
     color: $color-cmb-darkblue;
-    margin: 0 0 rem(40) 0;
+    margin: 0 0 rem(32) 0;
 
     @include mq(1450px) {
-      font-size: rem(28);
+      font-size: rem(24);
     }
 
     @include md {
-      font-size: rem(24);
+      font-size: rem(22);
       margin-bottom: rem(24);
       line-height: 1.5;
     }
 
     @include sp {
-      font-size: rem(20);
+      font-size: rem(18);
     }
   }
 
-  // ------ Author Block ------
-  // Positioned inside .p-about__ceo-wrapper (position: relative)
-  &__author {
-    position: absolute;
-    right: rem(-150);
-    bottom: rem(50);
-    z-index: 10;
+  &__action {
+    display: flex;
+    justify-content: center;
+  }
+
+  // ------ Person Block (Left / Right) ------
+  &__person {
+    position: relative;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 
-    @include mq(1600px) {
-      right: rem(-110);
-      bottom: rem(15);
-    }
-
-    @include mq(1450px) {
-      max-width: rem(290);
-      bottom: rem(5);
-      right: rem(-180);
-    }
-
-    @include mq(1280px) {
-      right: rem(-100);
-      bottom: 0;
+    @include mq(1400px) {
+      width: rem(220);
     }
 
     @include md {
-      right: rem(-75);
-      bottom: rem(25);
+      width: rem(180);
     }
 
     @include sp {
-      position: static;
-      text-align: center;
-      margin-top: rem(16);
+      width: calc(50% - #{rem(10)});
+    }
+  }
+
+  &__person-wrapper {
+    width: 100%;
+    max-width: rem(300);
+    border-radius: 50%;
+    overflow: hidden;
+
+    @include mq(1400px) {
+      max-width: rem(220);
     }
 
-    &-info {
-      text-align: center;
+    @include md {
+      max-width: rem(180);
+    }
+
+    @include sp {
+      max-width: rem(160);
+    }
+  }
+
+  &__person-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  // ------ Author Block ------
+  &__author {
+    position: absolute;
+    left: 64%;
+    bottom: rem(-10);
+    width: max-content;
+    z-index: 10;
+    text-align: center;
+
+    @include mq(1400px) {
+      position: static;
+      left: auto;
+      bottom: auto;
+      width: auto;
+      margin-top: rem(16);
     }
 
     &-name {
       display: block;
-      font-family: 'Dancing Script', cursive;
-      font-size: rem(40);
-      font-weight: 700;
+      font-size: rem(18);
+      font-weight: $font-weight-bold;
       color: $color-cmb-darkblue;
       font-style: normal;
-      line-height: 1.2;
-
-      @include mq(1450px) {
-        font-size: rem(36);
-      }
-
-      @include mq(1280px) {
-        font-size: rem(30);
-      }
+      line-height: 1.3;
 
       @include md {
-        font-size: rem(26);
-      }
-
-      @include sp {
-        font-size: rem(28);
+        font-size: rem(16);
       }
     }
 
     &-title {
       display: block;
-      font-size: rem(18);
-      font-weight: $font-weight-semibold;
+      font-size: rem(14);
+      font-weight: $font-weight-medium;
       color: $color-cmb-darkblue;
-      margin-top: rem(12);
-
-      @include mq(1280px) {
-        font-size: rem(14);
-        margin-top: rem(8);
-      }
-
-      @include md {
-        font-size: rem(12);
-      }
+      margin-top: rem(4);
 
       @include sp {
-        font-size: rem(14);
-        margin-top: rem(8);
+        font-size: rem(13);
       }
     }
   }
@@ -290,40 +310,4 @@
     }
   }
 
-  // ------ CEO (Right) ------
-  &__ceo {
-    width: 48%;
-    display: flex;
-    justify-content: flex-start;
-
-    @include md {
-      width: 100%;
-      justify-content: center;
-      margin: 0 auto;
-    }
-
-    &-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: rem(575);
-
-      @include mq(1450px) {
-        max-width: rem(380);
-      }
-
-      @include md {
-        max-width: rem(420);
-      }
-
-      @include sp {
-        max-width: rem(320);
-      }
-    }
-
-    &-img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-  }
 }

@@ -10,6 +10,9 @@ $about_link      = get_field( 'about_link', 'option' );
 $about_img       = get_field( 'about_img', 'option' );
 $about_name      = cmb_get_option( 'about_name' );
 $about_position  = cmb_get_option( 'about_position' );
+$about_img_2      = get_field( 'about_img_2', 'option' );
+$about_name_2     = cmb_get_option( 'about_name_2' );
+$about_position_2 = cmb_get_option( 'about_position_2' );
 ?>
 <!-- ======= ABOUT ======= -->
 <section class="p-about" id="about">
@@ -28,9 +31,30 @@ $about_position  = cmb_get_option( 'about_position' );
     <!-- Body -->
     <div class="p-about__body">
 
-      <!-- Content Left -->
+      <!-- CEO Left -->
+      <?php if ( $about_img ) : ?>
+        <div class="p-about__person p-about__person--left" data-reveal="fade-right">
+          <div class="p-about__person-wrapper">
+            <img src="<?php echo $about_img['url']; ?>"
+                 alt="<?php echo esc_attr( $about_img['alt'] ?: $about_name ); ?>"
+                 class="p-about__person-img" loading="lazy" />
+          </div>
+          <?php if ( $about_name || $about_position ) : ?>
+            <div class="p-about__author">
+              <?php if ( $about_name ) : ?>
+                <cite class="p-about__author-name"><?php echo $about_name; ?></cite>
+              <?php endif; ?>
+              <?php if ( $about_position ) : ?>
+                <span class="p-about__author-title"><?php echo $about_position; ?></span>
+              <?php endif; ?>
+            </div>
+          <?php endif; ?>
+        </div>
+      <?php endif; ?>
+
+      <!-- Content Center -->
       <div class="p-about__content">
-        <div class="p-about__quote-icon" data-reveal="fade-left">
+        <div class="p-about__quote-icon" data-reveal="fade-up">
           <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g opacity="0.5">
               <path
@@ -48,7 +72,7 @@ $about_position  = cmb_get_option( 'about_position' );
         </div>
 
         <?php if ( $about_content ) : ?>
-          <blockquote class="p-about__quote" data-reveal="fade-left" data-reveal-delay="1">
+          <blockquote class="p-about__quote" data-reveal="fade-up" data-reveal-delay="1">
             <?php echo $about_content; ?>
           </blockquote>
         <?php endif; ?>
@@ -69,26 +93,23 @@ $about_position  = cmb_get_option( 'about_position' );
       </div>
 
       <!-- CEO Right -->
-      <?php if ( $about_img ) : ?>
-        <div class="p-about__ceo" data-reveal="fade-right">
-          <div class="p-about__ceo-wrapper">
-            <img src="<?php echo $about_img['url']; ?>"
-                 alt="<?php echo esc_attr( $about_img['alt'] ?: $about_name ); ?>"
-                 class="p-about__ceo-img" loading="lazy" />
-            <!-- Author info -->
-            <?php if ( $about_name || $about_position ) : ?>
-              <div class="p-about__author">
-                <div class="p-about__author-info">
-                  <?php if ( $about_name ) : ?>
-                    <cite class="p-about__author-name"><?php echo $about_name; ?></cite>
-                  <?php endif; ?>
-                  <?php if ( $about_position ) : ?>
-                    <span class="p-about__author-title"><?php echo $about_position; ?></span>
-                  <?php endif; ?>
-                </div>
-              </div>
-            <?php endif; ?>
+      <?php if ( $about_img_2 ) : ?>
+        <div class="p-about__person p-about__person--right" data-reveal="fade-left">
+          <div class="p-about__person-wrapper">
+            <img src="<?php echo $about_img_2['url']; ?>"
+                 alt="<?php echo esc_attr( $about_img_2['alt'] ?: $about_name_2 ); ?>"
+                 class="p-about__person-img" loading="lazy" />
           </div>
+          <?php if ( $about_name_2 || $about_position_2 ) : ?>
+            <div class="p-about__author">
+              <?php if ( $about_name_2 ) : ?>
+                <cite class="p-about__author-name"><?php echo $about_name_2; ?></cite>
+              <?php endif; ?>
+              <?php if ( $about_position_2 ) : ?>
+                <span class="p-about__author-title"><?php echo $about_position_2; ?></span>
+              <?php endif; ?>
+            </div>
+          <?php endif; ?>
         </div>
       <?php endif; ?>
 
