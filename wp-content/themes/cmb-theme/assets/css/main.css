@@ -2226,9 +2226,14 @@ body.is-loaded .p-page-hero__subtitle {
   width: 67%;
   text-align: center;
 }
+@media (max-width: 1800px) {
+  .p-about__content {
+    width: 34%;
+  }
+}
 @media (max-width: 1400px) {
   .p-about__content {
-    width: 46%;
+    width: 34%;
   }
 }
 @media (max-width: 1023px) {
@@ -2334,10 +2339,16 @@ body.is-loaded .p-page-hero__subtitle {
 .p-about__author {
   position: absolute;
   left: 66%;
-  bottom: -1rem;
+  bottom: 0;
   width: max-content;
+  max-width: 20rem;
   z-index: 10;
   text-align: center;
+}
+@media (max-width: 1600px) {
+  .p-about__author {
+    max-width: 17rem;
+  }
 }
 @media (max-width: 1400px) {
   .p-about__author {
@@ -2345,6 +2356,7 @@ body.is-loaded .p-page-hero__subtitle {
     left: auto;
     bottom: auto;
     width: auto;
+    max-width: none;
     margin-top: 1.6rem;
   }
 }

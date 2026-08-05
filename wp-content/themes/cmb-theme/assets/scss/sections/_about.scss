@@ -107,8 +107,12 @@
     width: 67%;
     text-align: center;
 
+    @include mq(1800px) {
+      width: 34%;
+    }
+
     @include mq(1400px) {
-      width: 46%;
+      width: 34%;
     }
 
     @include md {
@@ -211,16 +215,22 @@
   &__author {
     position: absolute;
     left: 66%;
-    bottom: rem(-10);
+    bottom: 0;
     width: max-content;
+    max-width: rem(200);
     z-index: 10;
     text-align: center;
+
+    @include mq(1600px) {
+      max-width: rem(170);
+    }
 
     @include mq(1400px) {
       position: static;
       left: auto;
       bottom: auto;
       width: auto;
+      max-width: none;
       margin-top: rem(16);
     }
 
