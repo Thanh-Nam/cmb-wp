@@ -2223,7 +2223,7 @@ body.is-loaded .p-page-hero__subtitle {
   }
 }
 .p-about__content {
-  width: 34%;
+  width: 67%;
   text-align: center;
 }
 @media (max-width: 1400px) {
@@ -2308,7 +2308,6 @@ body.is-loaded .p-page-hero__subtitle {
 .p-about__person-wrapper {
   width: 100%;
   max-width: 30rem;
-  border-radius: 50%;
   overflow: hidden;
 }
 @media (max-width: 1400px) {
@@ -2334,7 +2333,7 @@ body.is-loaded .p-page-hero__subtitle {
 }
 .p-about__author {
   position: absolute;
-  left: 64%;
+  left: 66%;
   bottom: -1rem;
   width: max-content;
   z-index: 10;

@@ -104,7 +104,7 @@
 
   // ------ Content (Center) ------
   &__content {
-    width: 34%;
+    width: 67%;
     text-align: center;
 
     @include mq(1400px) {
@@ -185,7 +185,6 @@
   &__person-wrapper {
     width: 100%;
     max-width: rem(300);
-    border-radius: 50%;
     overflow: hidden;
 
     @include mq(1400px) {
@@ -211,7 +210,7 @@
   // ------ Author Block ------
   &__author {
     position: absolute;
-    left: 64%;
+    left: 66%;
     bottom: rem(-10);
     width: max-content;
     z-index: 10;
