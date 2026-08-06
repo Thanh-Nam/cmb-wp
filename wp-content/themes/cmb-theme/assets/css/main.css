@@ -6327,7 +6327,7 @@ body.is-loaded .p-page-hero__subtitle {
   font-family: "CMB", sans-serif;
   font-size: 1.4rem;
   font-weight: 600;
-  color: #074c7d;
+  color: #0379CC;
   text-decoration: none;
   padding-top: 0.4rem;
   transition: gap 0.15s ease, color 0.15s ease;
@@ -7463,7 +7463,7 @@ body.is-loaded .p-page-hero__subtitle {
   font-family: "CMB", sans-serif;
   font-size: 2rem;
   font-weight: 700;
-  color: #333333;
+  color: #074c7d;
   line-height: 1.4;
   margin: 0;
 }
@@ -7693,7 +7693,7 @@ body.is-loaded .p-page-hero__subtitle {
   font-family: "CMB", sans-serif;
   font-size: 1.8rem;
   font-weight: 700;
-  color: #0379CC;
+  color: #074c7d;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin: 0 0 0.4rem;
@@ -11293,7 +11293,7 @@ li:last-child .p-lab-detail__related-item {
   font-family: "CMB", sans-serif;
   font-size: 4rem;
   font-weight: 700;
-  color: #0379CC;
+  color: #074c7d;
   line-height: 1.3;
   margin: 0;
 }
@@ -11367,7 +11367,7 @@ li:last-child .p-lab-detail__related-item {
   font-family: "CMB", sans-serif;
   font-size: 2.4rem;
   font-weight: 700;
-  color: #0379CC;
+  color: #074c7d;
   line-height: 1.35;
   margin: 0 0 1.2rem;
 }
@@ -12625,7 +12625,7 @@ li:last-child .p-lab-detail__related-item {
   font-family: "CMB", sans-serif;
   font-size: 1.4rem;
   font-weight: 600;
-  color: #0379CC;
+  color: #074c7d;
   line-height: 1.45;
   display: block;
 }
