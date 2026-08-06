@@ -6111,7 +6111,6 @@ body.is-loaded .p-page-hero__subtitle {
 
 .p-projects-featured {
   padding: 8rem 0 7.2rem;
-  background: #074c7d;
 }
 .p-projects-featured__header {
   display: flex;
@@ -6132,7 +6131,7 @@ body.is-loaded .p-page-hero__subtitle {
   font-family: "CMB", sans-serif;
   font-size: 2rem;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #074c7d;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   margin: 0;
@@ -6143,7 +6142,7 @@ body.is-loaded .p-page-hero__subtitle {
 .p-projects-featured__swiper .swiper-slide {
   height: auto;
   align-self: stretch;
-  padding: 0 2rem;
+  padding: 2rem;
 }
 .p-projects-featured__body {
   position: relative;
@@ -7389,7 +7388,7 @@ body.is-loaded .p-page-hero__subtitle {
   font-family: "CMB", sans-serif;
   font-size: 2rem;
   font-weight: 700;
-  color: #333333;
+  color: #074c7d;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   margin: 0;
@@ -11731,7 +11730,7 @@ li:last-child .p-lab-detail__related-item {
   font-family: "CMB", sans-serif;
   font-size: 1.7rem;
   font-weight: 700;
-  color: #0379CC;
+  color: #074c7d;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin: 0 0 2rem;
@@ -11882,7 +11881,7 @@ li:last-child .p-lab-detail__related-item {
   font-family: "CMB", sans-serif;
   font-size: 1.7rem;
   font-weight: 700;
-  color: #0379CC;
+  color: #074c7d;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 1.8rem 1.6rem 1.6rem;
@@ -12327,7 +12326,7 @@ li:last-child .p-lab-detail__related-item {
   font-family: "CMB", sans-serif;
   font-size: 1.7rem;
   font-weight: 700;
-  color: #0379CC;
+  color: #074c7d;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   margin: 2.4rem 0 2rem;
@@ -12537,7 +12536,7 @@ li:last-child .p-lab-detail__related-item {
   font-family: "CMB", sans-serif;
   font-size: 1.7rem;
   font-weight: 700;
-  color: #0379CC;
+  color: #074c7d;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   margin: 0 0 2rem;

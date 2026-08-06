@@ -255,7 +255,6 @@
 // ======= 4. FEATURED PROJECT =======
 .p-projects-featured {
   padding: rem(80) 0 rem(72);
-  background: $color-cmb-darkblue;
 
   // ------ Header ------
   &__header {
@@ -279,7 +278,7 @@
     font-family: $font-primary;
     font-size: rem(20);
     font-weight: $font-weight-bold;
-    color: $color-white;
+    color: $color-cmb-darkblue;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     margin: 0;
@@ -296,7 +295,7 @@
     .swiper-slide {
       height: auto;
       align-self: stretch;
-      padding: 0 rem(20);
+      padding: rem(20);
     }
   }
 
