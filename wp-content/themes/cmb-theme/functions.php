@@ -1233,6 +1233,19 @@ add_action( 'admin_menu', function() {
     remove_menu_page( 'edit-comments.php' );
 } );
 
+// "Công bố thông tin" chỉ là danh mục cha để nhóm hiển thị ở trang Quan hệ cổ
+// đông (xem content.php), không phải danh mục để gắn trực tiếp cho bài viết —
+// ẩn nó khỏi checklist chọn danh mục trên màn hình sửa bài viết.
+add_filter( 'wp_terms_checklist_args', function( $args, $post_id ) {
+    if ( get_post_type( $post_id ) === 'quan-he-co-dong' ) {
+        $term = get_term_by( 'slug', 'cong-bo-thong-tin', 'quan-he-co-dong-category' );
+        if ( $term ) {
+            $args['exclude'] = $term->term_id;
+        }
+    }
+    return $args;
+}, 10, 2 );
+
 add_filter( 'custom_menu_order', '__return_true' );
 add_filter( 'menu_order', function( $menu_order ) {
     return [
