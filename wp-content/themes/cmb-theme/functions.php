@@ -1236,13 +1236,31 @@ add_action( 'admin_menu', function() {
 // "Công bố thông tin" chỉ là danh mục cha để nhóm hiển thị ở trang Quan hệ cổ
 // đông (xem content.php), không phải danh mục để gắn trực tiếp cho bài viết —
 // ẩn nó khỏi checklist chọn danh mục trên màn hình sửa bài viết.
+// Lưu ý: wp_terms_checklist() của core không đọc 'exclude' từ $args (nó luôn
+// gọi get_terms(['taxonomy'=>..., 'get'=>'all']) cố định), nên phải chặn bằng
+// walker tuỳ biến thay vì filter exclude. Class cha Walker_Category_Checklist
+// chỉ được load trong wp-admin/includes/template.php, nên phải khai báo class
+// con bên trong callback (lúc filter chạy nó chắc chắn đã load), không khai
+// báo ở top-level của functions.php (sẽ fatal error ở request phía front-end).
 add_filter( 'wp_terms_checklist_args', function( $args, $post_id ) {
-    if ( get_post_type( $post_id ) === 'quan-he-co-dong' ) {
-        $term = get_term_by( 'slug', 'cong-bo-thong-tin', 'quan-he-co-dong-category' );
-        if ( $term ) {
-            $args['exclude'] = $term->term_id;
+    if ( get_post_type( $post_id ) !== 'quan-he-co-dong' ) {
+        return $args;
+    }
+    if ( ! class_exists( 'CMB_Hide_Term_Checklist_Walker' ) ) {
+        class CMB_Hide_Term_Checklist_Walker extends Walker_Category_Checklist {
+            private $hidden_slugs;
+            public function __construct( $hidden_slugs = array() ) {
+                $this->hidden_slugs = $hidden_slugs;
+            }
+            public function start_el( &$output, $data_object, $depth = 0, $args = array(), $current_object_id = 0 ) {
+                if ( in_array( $data_object->slug, $this->hidden_slugs, true ) ) {
+                    return;
+                }
+                parent::start_el( $output, $data_object, $depth, $args, $current_object_id );
+            }
         }
     }
+    $args['walker'] = new CMB_Hide_Term_Checklist_Walker( array( 'cong-bo-thong-tin' ) );
     return $args;
 }, 10, 2 );
 
