@@ -598,6 +598,18 @@ function cmb_pdf_viewer_url( $pdf_url ) {
 }
 
 // ============================================================
+// HELPER: Lấy Youtube video ID từ mọi dạng URL phổ biến (watch?v=,
+// youtu.be/, embed/, shorts/) để dựng link nhúng iframe.
+// ============================================================
+function cmb_youtube_embed_url( $url ) {
+    if ( empty( $url ) ) return '';
+    if ( ! preg_match( '~(?:youtube\.com/(?:watch\?v=|embed/|shorts/)|youtu\.be/)([A-Za-z0-9_-]{11})~', $url, $m ) ) {
+        return '';
+    }
+    return 'https://www.youtube-nocookie.com/embed/' . $m[1];
+}
+
+// ============================================================
 // HELPER: Get medal image src + alt từ ACF field value
 // ============================================================
 if ( ! function_exists( 'cmb_get_medal_img' ) ) {

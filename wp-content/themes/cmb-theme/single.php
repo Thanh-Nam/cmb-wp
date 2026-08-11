@@ -13,6 +13,7 @@ while (have_posts()) : the_post();
   $pub_time      = get_the_date('H:i');
   $pub_date_str  = get_the_date('d.m.Y');
   $gallery       = function_exists('get_field') ? get_field('event_gallery') : [];
+  $youtube_embed = function_exists('get_field') ? cmb_youtube_embed_url(get_field('event_youtube_url')) : '';
   $share_url     = urlencode(get_permalink());
 
   // Detect PDF links inside the post content to render an embedded viewer
@@ -161,6 +162,22 @@ while (have_posts()) : the_post();
                   <?php endif; ?>
                 </figure>
                 <?php endforeach; ?>
+              </div>
+            </div>
+            <?php endif; ?>
+
+
+            <!-- Event Youtube video -->
+            <?php if ($youtube_embed) : ?>
+            <div class="p-news-detail__video">
+              <div class="p-news-detail__video-frame">
+                <iframe
+                  src="<?php echo esc_url($youtube_embed); ?>"
+                  title="<?php echo esc_attr(cmb_txt('Video sự kiện', 'Event video')); ?>"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen>
+                </iframe>
               </div>
             </div>
             <?php endif; ?>

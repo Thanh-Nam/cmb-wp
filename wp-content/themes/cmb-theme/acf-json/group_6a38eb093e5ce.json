@@ -101,6 +101,24 @@
             "mime_types": "",
             "insert": "append",
             "preview_size": "medium"
+        },
+        {
+            "key": "field_6a38eb31ef2bf",
+            "label": "Video Youtube sự kiện",
+            "name": "event_youtube_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "Dán link Youtube của video sự kiện (VD: https:\/\/www.youtube.com\/watch?v=...). Video sẽ hiển thị ngay dưới phần \"Hình ảnh sự kiện\" ở trang chi tiết tin tức. Để trống nếu không có video.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https:\/\/www.youtube.com\/watch?v=...",
+            "allow_in_bindings": 0
         }
     ],
     "location": [
@@ -124,5 +142,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1751347200
+    "modified": 1751347300
 }
