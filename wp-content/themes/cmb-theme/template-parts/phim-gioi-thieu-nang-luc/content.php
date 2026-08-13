@@ -54,7 +54,7 @@ $has_embed  = $v_source === 'embed' && !empty($v_embed);
           <?php endif; ?>
           <span class="p-capability-video__stat-text">
             <?php if ($stat['number'] !== '' && $stat['number'] !== null) : ?>
-            <strong><?php echo cmb_txt('Hơn', 'Over'); ?> <?php echo esc_html($stat['number']); ?></strong>
+            <strong><?php echo esc_html($stat['number']); ?></strong>
             <?php endif; ?>
             <?php echo nl2br(esc_html($stat['content'])); ?>
           </span>
