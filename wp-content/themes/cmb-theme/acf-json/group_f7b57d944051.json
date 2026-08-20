@@ -301,6 +301,40 @@
             "media_upload": 0,
             "delay": 0,
             "allow_in_bindings": 1
+        },
+        {
+            "key": "field_3a8d5c7e9f12",
+            "label": "Hồ sơ dự tuyển",
+            "name": "ho_so_du_tuyen",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0,
+            "allow_in_bindings": 1
+        },
+        {
+            "key": "field_4b9e6d8fa023",
+            "label": "Cách thức ứng tuyển",
+            "name": "cach_thuc_ung_tuyen",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0,
+            "allow_in_bindings": 1
         }
     ],
     "location": [

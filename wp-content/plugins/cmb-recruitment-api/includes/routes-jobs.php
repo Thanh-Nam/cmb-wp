@@ -126,6 +126,8 @@ function cmb_transform_job( $post ) {
 		'salaryText'     => $salary_type === 'range' ? '' : 'Thoả thuận',
 		'requirements'   => cmb_html_to_lines( cmb_get_acf_or( $id, 'yeu_cau', '' ) ),
 		'benefits'       => cmb_html_to_lines( cmb_get_acf_or( $id, 'quyen_loi', '' ) ),
+		'applicationDocuments' => cmb_html_to_lines( cmb_get_acf_or( $id, 'ho_so_du_tuyen', '' ) ),
+		'howToApply'     => cmb_html_to_lines( cmb_get_acf_or( $id, 'cach_thuc_ung_tuyen', '' ) ),
 		'isFeatured'     => (bool) cmb_get_acf_or( $id, 'is_featured', false ),
 		'deadline'       => $deadline,
 		'vacancies'      => (int) cmb_get_acf_or( $id, 'so_luong', 1 ),
