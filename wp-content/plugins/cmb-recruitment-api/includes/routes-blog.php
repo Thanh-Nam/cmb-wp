@@ -25,10 +25,10 @@ function cmb_transform_blog_post( $post ) {
 
 	return [
 		'id'           => (string) $id,
-		'title'        => get_the_title( $id ),
+		'title'        => cmb_decode_entities( get_the_title( $id ) ),
 		'slug'         => $post->post_name,
-		'excerpt'      => wp_strip_all_tags( get_the_excerpt( $post ) ),
-		'content'      => apply_filters( 'the_content', $post->post_content ),
+		'excerpt'      => cmb_decode_entities( wp_strip_all_tags( get_the_excerpt( $post ) ) ),
+		'content'      => cmb_make_links_relative( apply_filters( 'the_content', $post->post_content ) ),
 		'coverImage'   => $thumb_id ? wp_get_attachment_image_url( $thumb_id, 'large' ) : null,
 		'eventGallery' => cmb_get_blog_event_gallery( $id ),
 		'postedAt'     => get_the_date( 'c', $id ),

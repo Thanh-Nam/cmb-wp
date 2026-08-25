@@ -24,8 +24,8 @@ add_action( 'rest_api_init', function () {
 
 			return new WP_REST_Response( [
 				'slug'    => $page->post_name,
-				'title'   => get_the_title( $page ),
-				'content' => apply_filters( 'the_content', $page->post_content ),
+				'title'   => cmb_decode_entities( get_the_title( $page ) ),
+				'content' => cmb_make_links_relative( apply_filters( 'the_content', $page->post_content ) ),
 			], 200 );
 		},
 	] );

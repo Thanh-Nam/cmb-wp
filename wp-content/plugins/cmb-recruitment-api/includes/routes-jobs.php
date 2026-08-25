@@ -33,7 +33,15 @@ function cmb_html_to_lines( $html ) {
 	$html  = preg_replace( '/<li[^>]*>/i', "\n", $html );
 	$text  = wp_strip_all_tags( $html );
 	$lines = preg_split( '/\r\n|\r|\n/', $text );
-	$lines = array_filter( array_map( 'trim', $lines ), fn( $l ) => $l !== '' );
+	$lines = array_map( function ( $line ) {
+		$line = cmb_decode_entities( $line );
+		// Chuẩn hoá non-breaking space (&nbsp; sau khi decode ra ký tự U+00A0) về khoảng trắng thường
+		// rồi mới trim — nếu không, bullet rỗng kiểu "<li>&nbsp;</li>" sẽ bị lọt qua vì trim() không
+		// coi U+00A0 là khoảng trắng để cắt.
+		$line = str_replace( "\xC2\xA0", ' ', $line );
+		return trim( preg_replace( '/\s+/', ' ', $line ) );
+	}, $lines );
+	$lines = array_filter( $lines, fn( $l ) => $l !== '' );
 	return array_values( $lines );
 }
 
@@ -107,13 +115,13 @@ function cmb_transform_job( $post ) {
 
 	return [
 		'id'             => (string) $id,
-		'title'          => get_the_title( $id ),
+		'title'          => cmb_decode_entities( get_the_title( $id ) ),
 		'company'        => 'CMB',
 		// Nhiều khu vực cách nhau bởi dấu phẩy (slug không dấu, label có dấu để hiển thị).
 		'location'       => implode( ',', wp_list_pluck( $location_terms, 'slug' ) ),
 		'locationLabel'  => implode( ', ', wp_list_pluck( $location_terms, 'name' ) ),
 		'image'          => get_the_post_thumbnail_url( $id, 'large' ) ?: null,
-		'description'    => apply_filters( 'the_content', $post->post_content ),
+		'description'    => cmb_make_links_relative( apply_filters( 'the_content', $post->post_content ) ),
 		'postedAt'       => get_the_date( 'c', $id ),
 		'category'       => $category_term ? $category_term->slug : '',
 		'categoryLabel'  => $category_term ? $category_term->name : '',
