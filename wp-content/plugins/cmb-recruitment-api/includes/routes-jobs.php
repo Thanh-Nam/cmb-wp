@@ -86,6 +86,18 @@ function cmb_get_job_location_facets() {
 	], $terms );
 }
 
+// Tất cả tin tuyển dụng đều là của công ty CMB nên dùng chung 1 ảnh đại diện cấu hình ở Options Page
+// "Cấu hình trang tuyển dụng" (field anh_dai_dien_tin_tuyen_dung), thay vì Featured Image riêng từng bài
+// — khung nhập Featured Image trên màn hình sửa bài cũng đã được ẩn (xem admin-job-field-ui.php).
+function cmb_get_default_job_image() {
+	static $url = null;
+	if ( $url !== null ) return $url ?: null;
+
+	$image = function_exists( 'get_field' ) ? get_field( 'anh_dai_dien_tin_tuyen_dung', 'option' ) : null;
+	$url   = is_array( $image ) ? ( $image['sizes']['large'] ?? $image['url'] ?? '' ) : '';
+	return $url ?: null;
+}
+
 function cmb_get_job_application_count( $job_id ) {
 	static $cache = [];
 	if ( isset( $cache[ $job_id ] ) ) return $cache[ $job_id ];
@@ -120,7 +132,7 @@ function cmb_transform_job( $post ) {
 		// Nhiều khu vực cách nhau bởi dấu phẩy (slug không dấu, label có dấu để hiển thị).
 		'location'       => implode( ',', wp_list_pluck( $location_terms, 'slug' ) ),
 		'locationLabel'  => implode( ', ', wp_list_pluck( $location_terms, 'name' ) ),
-		'image'          => get_the_post_thumbnail_url( $id, 'large' ) ?: null,
+		'image'          => cmb_get_default_job_image(),
 		'description'    => cmb_make_links_relative( apply_filters( 'the_content', $post->post_content ) ),
 		'postedAt'       => get_the_date( 'c', $id ),
 		'category'       => $category_term ? $category_term->slug : '',

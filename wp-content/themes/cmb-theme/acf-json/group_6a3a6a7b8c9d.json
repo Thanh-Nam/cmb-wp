@@ -1,0 +1,50 @@
+{
+    "key": "group_6a3a6a7b8c9d",
+    "title": "Ảnh đại diện mặc định - Tin tuyển dụng",
+    "fields": [
+        {
+            "key": "field_6a3a6a7b8c9e",
+            "label": "Ảnh đại diện tin tuyển dụng",
+            "name": "anh_dai_dien_tin_tuyen_dung",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Ảnh dùng chung cho tất cả tin tuyển dụng ở trang danh sách (dạng lưới) và trang chi tiết trên React, vì cùng là tin của công ty CMB nên dùng 1 ảnh đại diện thay vì chọn ảnh riêng cho từng bài.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "cau-hinh-tuyen-dung"
+            }
+        ]
+    ],
+    "menu_order": 3,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1783663921
+}

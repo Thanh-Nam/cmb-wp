@@ -69,8 +69,7 @@
     "supports": [
         "title",
         "editor",
-        "custom-fields",
-        "thumbnail"
+        "custom-fields"
     ],
     "taxonomies": "",
     "has_archive": false,
@@ -87,5 +86,5 @@
     "delete_with_user": false,
     "register_meta_box_cb": "",
     "enter_title_here": "Vị trí tuyển dụng (VD: Kỹ sư cơ khí)",
-    "modified": 1782306992
+    "modified": 1787798116
 }

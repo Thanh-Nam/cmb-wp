@@ -1,6 +1,14 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+// Ảnh đại diện tin tuyển dụng giờ dùng chung 1 ảnh cấu hình ở Options Page "Cấu hình trang tuyển dụng"
+// (field anh_dai_dien_tin_tuyen_dung — xem cmb_get_default_job_image() trong routes-jobs.php), không
+// còn chọn riêng theo từng bài. Gỡ hỗ trợ "thumbnail" ở đây (thay vì chỉ sửa acf-json) để chắc chắn ẩn
+// khung "Ảnh đại diện" trên màn hình sửa bài dù ACF JSON đã được sync vào DB hay chưa.
+add_action( 'init', function () {
+	remove_post_type_support( 'tuyen-dung', 'thumbnail' );
+}, 20 );
+
 // Tinh chỉnh giao diện các field select multi-value (loai_hinh, dia_diem) trên màn hình sửa tin tuyển dụng:
 // - Đưa dòng ghi chú (VD: "Có thể chọn nhiều loại hình cùng lúc.") vào trong ngoặc, ngay cạnh tiêu đề (vẫn màu mờ).
 // - Style lại khung select2 (multi-select) cho giống các field select/input khác trong cùng group.
