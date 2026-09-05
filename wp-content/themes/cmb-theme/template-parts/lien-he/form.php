@@ -49,7 +49,16 @@ $contact_image = get_field('contact_page_image', 'option');
       <div class="p-lh-body__form-wrap" data-reveal="fade-left">
         <h2 id="form-title" class="p-lh-body__form-title"><?php echo cmb_txt('GỬI THÔNG TIN LIÊN HỆ', 'SEND US A MESSAGE'); ?></h2>
 
-          <div class="p-lh-cf7-wrap"><?php the_content(); ?></div>
+          <div class="p-lh-cf7-wrap"><?php
+            // Nội dung trang (nơi editor dán shortcode [contact-form-7]) có thể bị bỏ
+            // trống ở 1 bản dịch (VD: bản EN quên dán shortcode khi tạo trang) — khi đó
+            // dùng $cf7_html (tự tìm form CF7 đầu tiên) làm fallback để form vẫn hiện.
+            if ( trim( get_the_content() ) !== '' ) {
+                the_content();
+            } else {
+                echo $cf7_html;
+            }
+          ?></div>
         
       </div>
 

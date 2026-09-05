@@ -465,6 +465,26 @@ $header-bp: 1023px;
     @media (max-width: 1023px) {
       font-size: rem(15);
     }
+
+    // Bản tiếng Anh dài hơn bản tiếng Việt (nhiều ký tự hơn) nên tràn ra khỏi
+    // vùng nền xanh của bg-header.webp ở các breakpoint 1024–1750px — thu nhỏ
+    // 15% (đo trực tiếp qua trình duyệt, xem lịch sử conversation) chỉ áp dụng
+    // cho :lang(en), không ảnh hưởng bản tiếng Việt.
+    :lang(en) & {
+      font-size: rem(17);
+
+      @media (max-width: 1750px) and (min-width: 1024px) {
+        font-size: calc(12.75px + 4.25 * (100vw - 1024px) / 726);
+      }
+
+      @media (max-width: 1199px) {
+        font-size: rem(12.75);
+      }
+
+      @media (max-width: 1023px) {
+        font-size: rem(12.75);
+      }
+    }
   }
 
   &__slogan {
@@ -490,6 +510,24 @@ $header-bp: 1023px;
 
     @media (max-width: 1023px) {
       font-size: rem(15);
+    }
+
+    // Bản tiếng Anh dài hơn bản tiếng Việt nên tràn ra khỏi vùng nền xanh ở các
+    // breakpoint 1024–1750px — thu nhỏ 15% chỉ áp dụng cho :lang(en).
+    :lang(en) & {
+      font-size: rem(17);
+
+      @media (max-width: 1750px) and (min-width: 1024px) {
+        font-size: calc(12.75px + 4.25 * (100vw - 1024px) / 726);
+      }
+
+      @media (max-width: 1199px) {
+        font-size: rem(12.75);
+      }
+
+      @media (max-width: 1023px) {
+        font-size: rem(12.75);
+      }
     }
   }
 

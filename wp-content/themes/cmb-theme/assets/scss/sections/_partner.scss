@@ -212,15 +212,8 @@
         width: rem(32);
       }
 
-      // Ẩn desktop track, hiện 2 mobile track
-      &--desktop {
-        display: none;
-      }
-
-      &--sp-r1,
-      &--sp-r2 {
-        display: block;
-      }
+      // Khách yêu cầu mobile chỉ hiện 1 hàng — dùng lại track desktop (đã chứa
+      // đủ toàn bộ logo), 2 track riêng cho mobile (sp-r1/sp-r2) giữ ẩn luôn.
     }
 
     &__track {

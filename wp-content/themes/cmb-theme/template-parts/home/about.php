@@ -6,7 +6,7 @@
 $about_sub_title = cmb_get_option( 'about_sub_title' );
 $about_title     = cmb_get_option( 'about_title' );
 $about_content   = cmb_get_option( 'about_content' );
-$about_link      = get_field( 'about_link', 'option' );
+$about_link      = cmb_get_option( 'about_link' );
 $about_img       = get_field( 'about_img', 'option' );
 $about_name      = cmb_get_option( 'about_name' );
 $about_position  = cmb_get_option( 'about_position' );

@@ -113,6 +113,12 @@
 
   function _slideHtml(p) {
     var img = p.imgSrc || _placeholderImg;
+    var descRow = p.desc ? (
+      '<div class="p-location__detail-row">' +
+      '<span class="p-location__detail-label">' + _escapeHtml(_t('Mô tả:', 'Description:')) + '</span>' +
+      '<p class="p-location__detail-text p-location__detail-text--desc" title="' + _escapeHtml(p.desc) + '">' + _escapeHtml(p.desc) + '</p>' +
+      '</div>'
+    ) : '';
     return (
       '<div class="swiper-slide p-location__slide">' +
       '<div class="p-location__details">' +
@@ -120,10 +126,7 @@
       '<span class="p-location__detail-label">' + _escapeHtml(_t('Dự án:', 'Project:')) + '</span>' +
       '<p class="p-location__detail-text p-location__detail-text--title" title="' + _escapeHtml(p.project) + '">' + _escapeHtml(p.project) + '</p>' +
       '</div>' +
-      '<div class="p-location__detail-row">' +
-      '<span class="p-location__detail-label">' + _escapeHtml(_t('Mô tả:', 'Description:')) + '</span>' +
-      '<p class="p-location__detail-text p-location__detail-text--desc" title="' + _escapeHtml(p.desc) + '">' + _escapeHtml(p.desc) + '</p>' +
-      '</div>' +
+      descRow +
       '</div>' +
       '<div class="p-location__img-wrap">' +
       '<img src="' + _escapeHtml(img) + '" alt="' + _escapeHtml(p.imgAlt) + '" class="p-location__img" loading="lazy" />' +
@@ -445,7 +448,7 @@
           { id: 'lam-dong', name: _t('LÂM ĐỒNG', 'LAM DONG'), dot: { x: 595, y: 780 }, box: { x: 790, y: 720 } },
           { id: 'dong-nai', name: _t('ĐỒNG NAI', 'DONG NAI'), dot: { x: 520, y: 770 }, box: { x: 280, y: 630 } },
           { id: 'tay-ninh', name: _t('TÂY NINH', 'TAY NINH'), dot: { x: 470, y: 770 }, box: { x: 300, y: 720 } },
-          { id: 'tp-hcm', name: _t('TP. HỒ CHÍ MINH', 'HOCHI MINH CITY'), dot: { x: 530, y: 830 }, box: { x: 760, y: 800 } },
+          { id: 'tp-hcm', name: _t('TP. HỒ CHÍ MINH', 'HO CHI MINH CITY'), dot: { x: 530, y: 830 }, box: { x: 760, y: 800 } },
           { id: 'dong-thap', name: _t('ĐỒNG THÁP', 'DONG THAP'), dot: { x: 445, y: 835 }, box: { x: 250, y: 800 } },
           { id: 'vinh-long', name: _t('VĨNH LONG', 'VINH LONG'), dot: { x: 480, y: 860 }, box: { x: 620, y: 865 } },
           { id: 'can-tho', name: _t('CẦN THƠ', 'CAN THO'), dot: { x: 452, y: 878 }, box: { x: 470, y: 955 } }

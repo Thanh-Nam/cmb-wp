@@ -135,8 +135,12 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'cmb-partner-marquee', $uri . '/assets/js/modules/partner-marquee.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/partner-marquee.js'), true );
     }
 
-    // Trang giới thiệu
-    if ( is_page( 'gioi-thieu' ) ) {
+    // Trang giới thiệu — dùng is_page_template thay vì is_page( 'gioi-thieu' ):
+    // bản dịch tiếng Anh của trang này có slug khác (vd. "about"), is_page() theo
+    // slug/ID sẽ trả về false trên bản EN khiến các script bên dưới (stat-counter,
+    // leadership-swiper, video-poster...) không được enqueue — mục "Những con số
+    // ấn tượng" và slider lãnh đạo do đó không bao giờ hiện trên /en/about/.
+    if ( is_page_template( 'page-gioi-thieu.php' ) ) {
         wp_enqueue_style( 'swiper', $uri . '/assets/css/swiper.min.css', [], '11.0.0' );
         wp_enqueue_script( 'swiper', $uri . '/assets/js/vendors/swiper.min.js', [], '11.0.0', true );
         wp_enqueue_script( 'cmb-leadership',   $uri . '/assets/js/modules/leadership-swiper.js', ['swiper', 'cmb-global'], cmb_asset_ver('/assets/js/modules/leadership-swiper.js'), true );
@@ -172,8 +176,9 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'cmb-profile-book-loader', $uri . '/assets/js/modules/profile-book-loader.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/profile-book-loader.js'), true );
     }
 
-    // Trang liên hệ
-    if ( is_page( 'lien-he' ) ) {
+    // Trang liên hệ — cùng lý do như trang Giới thiệu ở trên, dùng is_page_template
+    // để không phụ thuộc vào slug (bản EN có slug khác "lien-he").
+    if ( is_page_template( 'page-lien-he.php' ) ) {
         wp_enqueue_script( 'cmb-form-validation', $uri . '/assets/js/modules/form-validation.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/form-validation.js'), true );
         wp_enqueue_script( 'cmb-google-map',      $uri . '/assets/js/modules/google-map.js',      ['cmb-global'], cmb_asset_ver('/assets/js/modules/google-map.js'), true );
     }

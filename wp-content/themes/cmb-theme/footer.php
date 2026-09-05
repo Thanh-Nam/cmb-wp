@@ -7,13 +7,13 @@
   $social_fb       = get_field( 'social_facebook', 'option' );
   $social_yt       = get_field( 'social_youtube', 'option' );
   $social_li       = get_field( 'social_linkedin', 'option' );
-  $branch_hn_addr  = get_field( 'branch_hn_address', 'option' ) ?: 'Tầng 12 Tháp Tây Hancorp Plaza, 72 đường Trần Đăng Ninh, Phường Nghĩa Đô, Thành phố Hà Nội';
+  $branch_hn_addr  = cmb_get_option( 'branch_hn_address' ) ?: 'Tầng 12 Tháp Tây Hancorp Plaza, 72 đường Trần Đăng Ninh, Phường Nghĩa Đô, Thành phố Hà Nội';
   $branch_hn_phone = get_field( 'branch_hn_phone', 'option' ) ?: '(+84) 24.37545.293';
   $branch_hn_email = get_field( 'branch_hn_email', 'option' ) ?: 'cmbsince1966@cmbvn.com.vn';
-  $branch_hp_addr  = get_field( 'branch_hp_address', 'option' ) ?: '112 Lê Thành Tông, Phường Đông Hải, Thành phố Hải Phòng';
+  $branch_hp_addr  = cmb_get_option( 'branch_hp_address' ) ?: '112 Lê Thành Tông, Phường Đông Hải, Thành phố Hải Phòng';
   $branch_hp_phone = get_field( 'branch_hp_phone', 'option' ) ?: '(+84) 225.3826817';
   $branch_hp_email = get_field( 'branch_hp_email', 'option' ) ?: 'cmbhp@cmbvn.com.vn';
-  $branch_hcm_addr  = get_field( 'branch_hcm_address', 'option' ) ?: '123 Tôn Thất Thuyết, Phường Xóm Chiếu, Thành phố Hồ Chí Minh';
+  $branch_hcm_addr  = cmb_get_option( 'branch_hcm_address' ) ?: '123 Tôn Thất Thuyết, Phường Xóm Chiếu, Thành phố Hồ Chí Minh';
   $branch_hcm_phone = get_field( 'branch_hcm_phone', 'option' ) ?: '(+84) 28.628.74840';
   $branch_hcm_email = get_field( 'branch_hcm_email', 'option' ) ?: 'cmbhcm@cmbvn.com.vn';
   $float_zalo      = get_field( 'float_zalo_url', 'option' ) ?: '#';
@@ -39,8 +39,8 @@
         <div class="l-footer__top">
           <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="l-footer__logo" id="footer-logo" title="<?php echo esc_attr( cmb_txt( 'CMB - Trang chủ', 'CMB - Home' ) ); ?>">
             <img src="<?php echo esc_url( $acf_logo_url ?: get_template_directory_uri() . '/assets/images/Company Logo.svg' ); ?>"
-              alt="<?php echo esc_attr( cmb_txt( 'Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải', 'CMB Logo - Marine Construction Consulting Joint Stock Company' ) ); ?>" class="l-footer__logo-img" loading="lazy" />
-            <span class="l-footer__logo-name"><?php echo cmb_txt( 'CÔNG TY CỔ PHẦN TƯ VẤN XÂY DỰNG CÔNG TRÌNH HÀNG HẢI', 'MARINE CONSTRUCTION CONSULTING JOINT STOCK COMPANY' ); ?></span>
+              alt="<?php echo esc_attr( cmb_txt( 'Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải', 'CMB Logo - CONSTRUCTION CONSULTATION JOINT STOCK COMPANY FOR MARITIME BUILDING' ) ); ?>" class="l-footer__logo-img" loading="lazy" />
+            <span class="l-footer__logo-name"><?php echo cmb_txt( 'CÔNG TY CỔ PHẦN TƯ VẤN XÂY DỰNG CÔNG TRÌNH HÀNG HẢI', 'CONSTRUCTION CONSULTATION JOINT STOCK COMPANY FOR MARITIME BUILDING' ); ?></span>
           </a>
         </div>
 

@@ -90,15 +90,15 @@
           <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="l-logo" id="site-logo" title="<?php echo esc_attr( cmb_txt( 'CMB - Trang chủ', 'CMB - Home' ) ); ?>">
             <?php if ( $acf_logo_url ) : ?>
             <img src="<?php echo $acf_logo_url; ?>"
-              alt="<?php echo esc_attr( cmb_txt( 'Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải', 'CMB Logo - Marine Construction Consulting Joint Stock Company' ) ); ?>" class="l-logo__image" />
+              alt="<?php echo esc_attr( cmb_txt( 'Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải', 'CMB Logo - CONSTRUCTION CONSULTATION JOINT STOCK COMPANY FOR MARITIME BUILDING' ) ); ?>" class="l-logo__image" />
             <?php elseif ( has_custom_logo() ) :
                 the_custom_logo();
             else : ?>
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Company Logo.svg"
-              alt="<?php echo esc_attr( cmb_txt( 'Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải', 'CMB Logo - Marine Construction Consulting Joint Stock Company' ) ); ?>" class="l-logo__image" />
+              alt="<?php echo esc_attr( cmb_txt( 'Logo CMB - Công ty Cổ phần Tư vấn Xây dựng Công trình Hàng hải', 'CMB Logo - CONSTRUCTION CONSULTATION JOINT STOCK COMPANY FOR MARITIME BUILDING' ) ); ?>" class="l-logo__image" />
             <div class="l-logo__text-wrap">
-              <span class="l-logo__company"><?php echo cmb_txt( 'CÔNG TY CỔ PHẦN TƯ VẤN', 'MARINE CONSTRUCTION' ); ?></span>
-              <span class="l-logo__slogan"><?php echo cmb_txt( 'XÂY DỰNG CÔNG TRÌNH HÀNG HẢI', 'CONSULTING JOINT STOCK COMPANY' ); ?></span>
+              <span class="l-logo__company"><?php echo cmb_txt( 'CÔNG TY CỔ PHẦN TƯ VẤN', 'CONSTRUCTION CONSULTATION JOINT' ); ?></span>
+              <span class="l-logo__slogan"><?php echo cmb_txt( 'XÂY DỰNG CÔNG TRÌNH HÀNG HẢI', 'STOCK COMPANY FOR MARITIME BUILDING' ); ?></span>
             </div>
             <?php endif; ?>
           </a>

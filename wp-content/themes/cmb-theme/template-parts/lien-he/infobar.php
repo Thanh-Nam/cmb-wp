@@ -3,10 +3,10 @@
  * template-parts/lien-he/infobar.php
  * Section: Info Bar — địa chỉ, điện thoại, email, giờ làm việc
  */
-$address       = function_exists('get_field') ? get_field('company_address',       'option') : '';
+$address       = function_exists('get_field') ? cmb_get_option('company_address')       : '';
 $phones_raw    = function_exists('get_field') ? get_field('company_phone',         'option') : '';
 $emails_raw    = function_exists('get_field') ? get_field('company_email',         'option') : '';
-$working_hours = function_exists('get_field') ? get_field('company_working_hours', 'option') : '';
+$working_hours = function_exists('get_field') ? cmb_get_option('company_working_hours') : '';
 
 if (!$address)       $address       = cmb_txt("Tầng 11, Tòa nhà CMB, 512 Tôn Thất Thuyết,\nCầu Giấy, Hà Nội, Việt Nam", "Floor 11, CMB Building, 512 Ton That Thuyet,\nCau Giay, Hanoi, Vietnam");
 if (!$working_hours) $working_hours = cmb_txt("Thứ 2 – Thứ 6\n08:00 – 17:30", "Monday – Friday\n8:00 AM – 5:30 PM");
