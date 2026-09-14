@@ -1202,19 +1202,31 @@ add_filter('redirect_canonical', function ( $redirect_url, $requested_url ) {
     return $redirect_url;
 }, 10, 2 );
 
-// CF7 — đổi messages theo ngôn ngữ hiện tại (filter này override cả form đã có sẵn)
+// CF7 — đổi messages theo NGÔN NGỮ CỦA CHÍNH FORM đang submit (field "Locale"
+// trong tab Additional Settings của từng form CF7), KHÔNG dùng pll_current_language()
+// như trước đây: request AJAX/REST của CF7 (/wp-json/contact-form-7/...) không có
+// ngữ cảnh trang đang xem, nên pll_current_language() luôn trả về ngôn ngữ mặc định
+// (vi) bất kể form đang submit là form tiếng Anh — khiến message lỗi từng field luôn
+// ra tiếng Việt dù tab Messages của form đã sửa đúng tiếng Anh. Đây chính là nguyên
+// nhân bug "form EN báo lỗi tiếng Việt" trên /en/contact/.
 add_filter('wpcf7_display_message', function($message, $status) {
-    $vi = [
-        'mail_sent_ok'      => cmb_txt( 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.', 'Thank you for contacting us! We will respond as soon as possible.' ),
-        'mail_sent_ng'      => cmb_txt( 'Đã xảy ra lỗi khi gửi mail. Vui lòng thử lại sau.', 'An error occurred while sending the email. Please try again later.' ),
-        'validation_errors' => cmb_txt( 'Vui lòng kiểm tra lại thông tin đã nhập.', 'Please check the information you entered.' ),
-        'spam'              => cmb_txt( 'Có lỗi xảy ra. Vui lòng thử lại.', 'An error occurred. Please try again.' ),
-        'accept_terms'      => cmb_txt( 'Bạn cần đồng ý với Chính sách bảo mật để tiếp tục.', 'You must agree to the Privacy Policy to continue.' ),
-        'invalid_required'  => cmb_txt( 'Vui lòng điền thông tin bắt buộc này.', 'Please fill in this required field.' ),
-        'invalid_email'     => cmb_txt( 'Địa chỉ email không hợp lệ.', 'Invalid email address.' ),
-        'invalid_tel'       => cmb_txt( 'Số điện thoại không hợp lệ.', 'Invalid phone number.' ),
+    $cf7   = function_exists('wpcf7_get_current_contact_form') ? wpcf7_get_current_contact_form() : null;
+    $is_en = $cf7 && strpos( (string) $cf7->locale(), 'en' ) === 0;
+
+    $overrides = [
+        'mail_sent_ok'      => $is_en ? 'Thank you for contacting us! We will respond as soon as possible.' : 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.',
+        'mail_sent_ng'      => $is_en ? 'An error occurred while sending the email. Please try again later.' : 'Đã xảy ra lỗi khi gửi mail. Vui lòng thử lại sau.',
+        // CF7 dùng key số ít 'validation_error' — key 'validation_errors' (số nhiều) ở
+        // bản cũ không khớp nên chưa bao giờ có tác dụng, giữ lại cả 2 cho chắc.
+        'validation_error'  => $is_en ? 'Please check the information you entered.' : 'Vui lòng kiểm tra lại thông tin đã nhập.',
+        'validation_errors' => $is_en ? 'Please check the information you entered.' : 'Vui lòng kiểm tra lại thông tin đã nhập.',
+        'spam'              => $is_en ? 'An error occurred. Please try again.' : 'Có lỗi xảy ra. Vui lòng thử lại.',
+        'accept_terms'      => $is_en ? 'You must agree to the Privacy Policy to continue.' : 'Bạn cần đồng ý với Chính sách bảo mật để tiếp tục.',
+        'invalid_required'  => $is_en ? 'Please fill in this required field.' : 'Vui lòng điền thông tin bắt buộc này.',
+        'invalid_email'     => $is_en ? 'Invalid email address.' : 'Địa chỉ email không hợp lệ.',
+        'invalid_tel'       => $is_en ? 'Invalid phone number.' : 'Số điện thoại không hợp lệ.',
     ];
-    return $vi[$status] ?? $message;
+    return $overrides[$status] ?? $message;
 }, 10, 2);
 
 // ACF Local JSON — lưu field groups vào theme để track bằng git

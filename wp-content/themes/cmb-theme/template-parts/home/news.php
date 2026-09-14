@@ -188,8 +188,8 @@ $arrow_svg = '<svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns=
           <h3 class="p-news__item-title">
             <a href="<?php the_permalink(); ?>" class="p-news__item-title-link"><?php the_title(); ?></a>
           </h3>
-          <a href="<?php the_permalink(); ?>" class="p-news__link" title="Xem chi tiết: <?php the_title_attribute(); ?>">
-            Xem Chi Tiết <?php echo $arrow_svg; ?>
+          <a href="<?php the_permalink(); ?>" class="p-news__link" title="<?php echo esc_attr( sprintf( cmb_txt( 'Xem chi tiết: %s', 'View details: %s' ), get_the_title() ) ); ?>">
+            <?php echo cmb_txt( 'Xem Chi Tiết', 'View Details' ); ?> <?php echo $arrow_svg; ?>
           </a>
         </div>
       </article>

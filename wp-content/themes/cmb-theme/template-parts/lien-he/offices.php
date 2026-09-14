@@ -7,20 +7,26 @@ $offices = function_exists('get_field') ? get_field('offices', 'option') : [];
 if (empty($offices)) {
     $offices = [
         [
-            'office_name'    => cmb_txt('Văn phòng Hà Nội', 'Hanoi Office'),
+            'office_name'    => 'Văn phòng Hà Nội',
+            'office_name_en' => 'Hanoi Office',
             'office_address' => 'Tầng 11, Tòa nhà CMB, 512 Tôn Thất Thuyết, Cầu Giấy, Hà Nội',
+            'office_address_en' => 'Floor 11, CMB Building, 512 Ton That Thuyet, Cau Giay, Hanoi',
             'office_phone'   => '(84) 24 3786 6291',
             'office_map_src' => 'https://maps.google.com/maps?q=512+Ton+That+Thuyet,+Cau+Giay,+Ha+Noi,+Viet+Nam&output=embed&hl=vi',
         ],
         [
-            'office_name'    => cmb_txt('VP Hải Phòng', 'Hai Phong Office'),
+            'office_name'    => 'VP Hải Phòng',
+            'office_name_en' => 'Hai Phong Office',
             'office_address' => 'Số 12 Lô 22 Lê Hồng Phong, Ngô Quyền, Hải Phòng',
+            'office_address_en' => '12 Lot 22 Le Hong Phong, Ngo Quyen, Hai Phong',
             'office_phone'   => '(84) 225 3 768 629',
             'office_map_src' => 'https://maps.google.com/maps?q=Le+Hong+Phong,+Ngo+Quyen,+Hai+Phong,+Viet+Nam&output=embed&hl=vi',
         ],
         [
-            'office_name'    => cmb_txt('VP TP HCM', 'Ho Chi Minh City Office'),
+            'office_name'    => 'VP TP HCM',
+            'office_name_en' => 'Ho Chi Minh City Office',
             'office_address' => 'Tầng 6, Tòa nhà Sailing, 111A Pasteur, Quận 1, TP.HCM',
+            'office_address_en' => 'Floor 6, Sailing Building, 111A Pasteur, District 1, Ho Chi Minh City',
             'office_phone'   => '(84) 28 6287 4840',
             'office_map_src' => 'https://maps.google.com/maps?q=111A+Pasteur,+Quan+1,+Ho+Chi+Minh+City,+Viet+Nam&output=embed&hl=vi',
         ],
@@ -61,10 +67,10 @@ $first_map_src = !empty($offices[0]['office_map_src']) ? $offices[0]['office_map
                 <circle cx="7" cy="6" r="2" stroke="currentColor" stroke-width="1.5"/>
               </svg>
               <?php endif; ?>
-              <?php echo esc_html($office['office_name'] ?? ''); ?>
+              <?php echo esc_html(cmb_arr($office, 'office_name')); ?>
             </div>
-            <?php if (!empty($office['office_address'])) : ?>
-            <p class="p-lh-office__address"><?php echo $office['office_address']; ?></p>
+            <?php if (!empty($office['office_address']) || !empty($office['office_address_en'])) : ?>
+            <p class="p-lh-office__address"><?php echo cmb_arr($office, 'office_address'); ?></p>
             <?php endif; ?>
             <?php if ($phone_raw) : ?>
             <p class="p-lh-office__phone">

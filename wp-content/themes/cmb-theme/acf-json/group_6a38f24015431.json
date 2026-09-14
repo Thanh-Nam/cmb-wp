@@ -47,9 +47,53 @@
                     "parent_repeater": "field_6a38f240d1324"
                 },
                 {
+                    "key": "field_6aff005000001",
+                    "label": "Tên văn phòng (EN)",
+                    "name": "office_name_en",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_6a38f240d1324"
+                },
+                {
                     "key": "field_6a38f26ad1326",
                     "label": "Địa chỉ",
                     "name": "office_address",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": "",
+                    "placeholder": "",
+                    "new_lines": "br",
+                    "parent_repeater": "field_6a38f240d1324"
+                },
+                {
+                    "key": "field_6aff005000002",
+                    "label": "Địa chỉ (EN)",
+                    "name": "office_address_en",
                     "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
@@ -136,5 +180,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1782306992
+    "modified": 1788583814
 }
