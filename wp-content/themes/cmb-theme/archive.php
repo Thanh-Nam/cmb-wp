@@ -62,7 +62,7 @@ $all_q = new WP_Query([
 ]);
 
 // ── 5. Categories for filter dropdown
-$news_cats = get_categories(['hide_empty' => true, 'orderby' => 'name', 'order' => 'ASC']);
+$news_cats = get_categories(['hide_empty' => true, 'orderby' => 'term_order', 'order' => 'ASC']);
 ?>
 
   <!-- ======= MAIN ======= -->

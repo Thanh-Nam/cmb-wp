@@ -7,7 +7,7 @@
 $ir_terms = get_terms([
     'taxonomy'   => 'quan-he-co-dong-category',
     'hide_empty' => false,
-    'orderby'    => 'name',
+    'orderby'    => 'term_order',
     'order'      => 'ASC',
 ]);
 if (is_wp_error($ir_terms)) $ir_terms = [];

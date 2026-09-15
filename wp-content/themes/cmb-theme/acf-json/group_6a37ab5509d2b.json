@@ -129,6 +129,48 @@
             "new_lines": "br"
         },
         {
+            "key": "field_6aff00100000e",
+            "label": "Link nút \"Xem tất cả\"",
+            "name": "info_link",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Để trống sẽ mặc định trỏ về trang Giới thiệu.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6aff00100000f",
+            "label": "Link nút \"Xem tất cả\" (EN)",
+            "name": "info_link_en",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Để trống sẽ mặc định trỏ về trang Giới thiệu (bản EN).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_6a37abef293e8",
             "label": "Danh sách",
             "name": "info_item",
@@ -269,5 +311,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1782552114
+    "modified": 1788583814
 }

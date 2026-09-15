@@ -1,0 +1,23 @@
+{
+    "key": "ui_options_page_6bff00_banner",
+    "title": "Cấu hình banner",
+    "active": true,
+    "menu_order": 0,
+    "page_title": "Cấu hình banner",
+    "menu_slug": "cau-hinh-banner",
+    "parent_slug": "cau-hinh-chung",
+    "advanced_configuration": 1,
+    "icon_url": "",
+    "menu_title": "",
+    "position": "",
+    "redirect": false,
+    "description": "",
+    "menu_icon": [],
+    "update_button": "Update",
+    "updated_message": "Options Updated",
+    "capability": "edit_posts",
+    "data_storage": "options",
+    "post_id": "",
+    "autoload": 0,
+    "modified": 1788583814
+}

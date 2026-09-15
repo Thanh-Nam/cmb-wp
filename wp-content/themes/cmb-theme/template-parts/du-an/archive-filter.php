@@ -3,7 +3,12 @@
  * template-parts/du-an/archive-filter.php
  * Section: Filter Tabs — Lĩnh vực dự án
  */
-$project_cats = get_terms(['taxonomy' => 'du-an-category', 'hide_empty' => false]);
+$project_cats = get_terms([
+    'taxonomy'   => 'du-an-category',
+    'hide_empty' => false,
+    'orderby'    => 'term_order',
+    'order'      => 'ASC',
+]);
 ?>
 <!-- ======= FILTER TABS ======= -->
 <div class="p-projects-filter" id="projects-filter" role="navigation" aria-label="<?php echo esc_attr( cmb_txt( 'Lọc dự án theo lĩnh vực', 'Filter projects by sector' ) ); ?>">

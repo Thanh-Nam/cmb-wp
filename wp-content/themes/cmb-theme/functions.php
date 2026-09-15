@@ -1241,16 +1241,12 @@ add_filter('acf/settings/load_json', function ($paths) {
 // ============================================================
 // ACF OPTIONS: Cấu hình banner
 // ============================================================
-add_action('acf/init', function () {
-    if ( ! function_exists('acf_add_options_sub_page') ) return;
-    acf_add_options_sub_page([
-        'page_title'  => 'Cấu hình banner',
-        'menu_title'  => 'Cấu hình banner',
-        'parent_slug' => 'cau-hinh-chung',
-        'capability'  => 'manage_options',
-        'menu_slug'   => 'cau-hinh-banner',
-    ]);
-});
+// Trang này giờ được đăng ký qua acf-json/ui_options_page_6bff00_banner.json
+// (cùng cách với Cấu hình chung / Thiết bị / Phần mềm) thay vì gọi
+// acf_add_options_sub_page() thẳng ở đây — lý do: trang đăng ký kiểu PHP cũ
+// không được ACF liệt kê trong dropdown "Options Page" của Rule Editor (màn
+// hình sửa Location Rules của field group), chỉ các trang đăng ký qua UI
+// Options Page (JSON "ui_options_page_*") mới hiện ra ở đó.
 
 
 

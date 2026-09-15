@@ -7,6 +7,7 @@ $info_title   = cmb_get_option( 'info_title' );
 $info_slogan  = cmb_get_option( 'info_slogan' );
 $info_content = cmb_get_option( 'info_content' );
 $info_items   = get_field( 'info_item', 'option' );
+$info_link    = cmb_get_option( 'info_link' ) ?: get_permalink( get_page_by_path( 'gioi-thieu' ) ) ?: '#';
 ?>
 <!-- ======= INFO ======= -->
 <section class="p-info" id="info" aria-label="<?php echo esc_attr( cmb_txt( 'Giới thiệu chung', 'General Introduction' ) ); ?>">
@@ -29,7 +30,7 @@ $info_items   = get_field( 'info_item', 'option' );
           <?php if ( $info_content ) : ?>
             <p class="p-info__desc"><?php echo $info_content; ?></p>
           <?php endif; ?>
-          <a href="<?php echo esc_url( get_permalink( get_page_by_path( 'gioi-thieu' ) ) ?: '#' ); ?>" class="p-info__btn" id="btn-info-more">
+          <a href="<?php echo esc_url( $info_link ); ?>" class="p-info__btn" id="btn-info-more">
             <span><?php echo cmb_txt( 'Xem Tất Cả', 'View All' ); ?></span>
             <span class="p-info__btn-arrow" aria-hidden="true">
               <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
