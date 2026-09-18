@@ -217,12 +217,18 @@
     left: 66%;
     bottom: 0;
     width: max-content;
-    max-width: rem(200);
     z-index: 10;
     text-align: center;
 
-    @include mq(1600px) {
-      max-width: rem(170);
+    // Tên/chức danh giữ 1 dòng (không ép xuống dòng) CHỈ ở layout đè lên ảnh
+    // (> 1400px) — độ dài chữ khác nhau theo ngôn ngữ được xử lý bằng cách tự
+    // co font-size vừa đủ để không đè vào cột quote ở giữa, xem
+    // assets/js/modules/about-author-fit.js. Dưới 1400px chuyển về layout
+    // tĩnh xếp dưới ảnh (không còn nguy cơ đè), nên vẫn cho xuống dòng bình
+    // thường như trước — ép nowrap ở đây sẽ làm tràn ngang khung ảnh hẹp.
+    &-name,
+    &-title {
+      white-space: nowrap;
     }
 
     @include mq(1400px) {
@@ -230,8 +236,12 @@
       left: auto;
       bottom: auto;
       width: auto;
-      max-width: none;
       margin-top: rem(16);
+
+      .p-about__author-name,
+      .p-about__author-title {
+        white-space: normal;
+      }
     }
 
     &-name {

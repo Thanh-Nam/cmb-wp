@@ -133,6 +133,7 @@ function cmb_enqueue_assets() {
         wp_enqueue_script( 'cmb-stat-counter',   $uri . '/assets/js/modules/stat-counter.js',   ['cmb-global'], cmb_asset_ver('/assets/js/modules/stat-counter.js'), true );
         wp_enqueue_script( 'cmb-news-swiper',    $uri . '/assets/js/modules/news-swiper.js',    ['swiper', 'cmb-global'], cmb_asset_ver('/assets/js/modules/news-swiper.js'), true );
         wp_enqueue_script( 'cmb-partner-marquee', $uri . '/assets/js/modules/partner-marquee.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/partner-marquee.js'), true );
+        wp_enqueue_script( 'cmb-about-author-fit', $uri . '/assets/js/modules/about-author-fit.js', ['cmb-global'], cmb_asset_ver('/assets/js/modules/about-author-fit.js'), true );
     }
 
     // Trang giới thiệu — dùng is_page_template thay vì is_page( 'gioi-thieu' ):
